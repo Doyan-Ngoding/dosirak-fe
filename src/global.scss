@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Vina+Sans&family=Source+Sans+Pro');
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Source Sans Pro';
   line-height: 1.5;
   font-weight: 400;
 
@@ -30,4 +32,47 @@ body {
   button {
     background-color: #f9f9f9;
   }
+}
+
+.menu-title {
+  color: #393939;
+  font-size: 24px;
+  font-weight: 600;
+  padding: 15px;
+}
+
+.menu-price-1 {
+  color: #FF815B;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.menu-price-2 {
+  color: #FF815B;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.icon-hover {
+  color: #000000;
+}
+
+.icon-hover:hover {
+  color: #393939;
+}
+
+.icon-hover-2 {
+  color: #FF815B;
+}
+
+.icon-hover-2:hover {
+  color: #FA5523;
+}
+
+.icon-hover-3 {
+  background-color: #FA5523;
+}
+
+.icon-hover-3:hover {
+  background-color: #FF815B;
 }
