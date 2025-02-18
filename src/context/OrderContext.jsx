@@ -20,6 +20,18 @@ const Order = ({children }) => {
 
     const [selectedMenu, setSelectedMenu] = useState(JSON.parse(localStorage.getItem('cart')) ? JSON.parse(localStorage.getItem('cart')) : []);
     const [subTotal, setSubTotal] = useState(0);
+    const [deliveryFee, setDeliveryFee] = useState(0);
+    const [packingFee, setPackingFee] = useState(0);
+    const [promo, setPromo] = useState(0);
+    const [total, setTotal] = useState(0);
+
+    const [currStep, setCurrStep] = useState(0);
+
+    const [orderMethod, setOrderMethod] = useState("IMMEDIATELY");
+    const [editAbleAddress, setEditAbleAddress] = useState(false);
+    const [addressUser, setAddressUser] = useState("Jl. Merdeka Barat 88 ");
+    const [showDatePicker, setShowDatePicker] = useState(false);
+    const [selectedDate, setSelectedDate] = useState();
 
     const state = {
         listNearRestaurant, setListNearRestaurant,
@@ -28,6 +40,20 @@ const Order = ({children }) => {
 
         selectedMenu, setSelectedMenu,
         subTotal, setSubTotal,
+        deliveryFee, setDeliveryFee,
+        packingFee, setPackingFee,
+        promo, setPromo,
+        total, setTotal,
+
+        currStep, setCurrStep,
+
+        orderMethod, setOrderMethod,
+
+        editAbleAddress, setEditAbleAddress,
+        addressUser, setAddressUser,
+
+        showDatePicker, setShowDatePicker,
+        selectedDate, setSelectedDate,
     }
 
     return (

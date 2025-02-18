@@ -29,7 +29,7 @@ export default function LayoutComp(props) {
     const pathname = router.pathname
 
     useEffect(() => {
-        let route = Object.keys(routes).find(key => routes[key] === router.pathname);
+        let route = (pathname === "/order-summary" || pathname === "/payment-method") ? 3 : Object.keys(routes).find(key => routes[key] === router.pathname);
         setActiveKey(route?.toString());
     }, [pathname]);
 
@@ -60,7 +60,9 @@ export default function LayoutComp(props) {
                             itemBg: '#F9F9F9',
                         },
                         Button: {
-                            controlHeightSM: 26
+                            controlHeightSM: 26,
+                            controlHeightLG: 50,
+                            fontSizeLG: 16,
                         },
                         Select: {
                             colorBgContainer: '#FA5523',
@@ -83,7 +85,11 @@ export default function LayoutComp(props) {
                         Card: {
                             colorBgContainer: '#FFFFFF',
                             bodyPadding: '0.5em 1em'
-                        }
+                        },
+                        Input: {
+                            fontSize: 16,
+                            controlHeightLG: 80,
+                        },
                     }
                 }}
             >
