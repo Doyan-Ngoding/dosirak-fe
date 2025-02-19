@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Vina+Sans&family=Source+Sans+Pro');
 
+@import 'tailwindcss';
+
 :root {
   font-family: 'Source Sans Pro';
   line-height: 1.5;
