@@ -76,3 +76,44 @@ body {
 .icon-hover-3:hover {
   background-color: #FF815B;
 }
+
+.clicked-text {
+  color: #747bff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.clicked-text:hover {
+  color: royalblue;
+}
+
+.order-method-1 {
+  background-color: #287D3C;
+  width: 100%;
+  color: #FFFFFF;
+  display: flex;
+  justify-content: start;
+  font-weight: 600;
+}
+
+.order-method-2 {
+  width: 100%;
+  color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: start;
+  font-weight: 600;
+}
+
+.input-address {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  color: #FA5523;
+  font-size: 16;
+  font-weight: 600;
+}
+
+.input-address:hover {
+  color: #FF815B;
+  cursor: pointer;
+}

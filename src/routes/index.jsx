@@ -8,6 +8,9 @@ import LandingPage from '../pages/landing';
 import MenuPage from '../pages/menu';
 import OrderPage from '../pages/order';
 import ContactPage from '../pages/contact';
+import OrderSummaryPage from '../pages/orderSummary';
+import PaymentMethodPage from '../pages/paymentMethod';
+import CompletePage from '../pages/complete';
 
 function Index() {
     return (
@@ -16,6 +19,9 @@ function Index() {
             <Route path='/menu' element={<MenuPage />} />
             <Route path='/order' element={<OrderPage />} />
             <Route path='/contact' element={<ContactPage />} />
+            <Route path='/order-summary' element={<OrderSummaryPage />} />
+            <Route path='/payment-method' element={<PaymentMethodPage />} />
+            <Route path='/complete' element={<CompletePage />} />
         </Routes>
     )
 }

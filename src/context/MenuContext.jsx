@@ -7,7 +7,7 @@ import React, {
 const exMenu = [
     {
         id: 1,
-        image: '@/assets/menu/gyoza.jpg',
+        image: '/assets/menu/gyoza.jpg',
         name: 'Ddeok Bokki (Spicy Rice Cake)',
         desc: 'Korean rice pancake with vegetables, egg, and fish cooked in traditional way sjldkajldjal kdjaljdakld salkdjalkd ksdak',
         price: 840000,
@@ -25,7 +25,7 @@ const exMenu = [
     },
     {
         id: 3,
-        image: '@/assets/menu/gyoza.jpg',
+        image: '/assets/menu/gyoza.jpg',
         name: 'Ddeok Bokki (Spicy Rice Cake)',
         desc: 'Korean rice pancake with vegetables, egg, and fish cooked in traditional way sjldkajldjal kdjaljdakld salkdjalkd ksdak',
         price: 840000,
@@ -34,7 +34,7 @@ const exMenu = [
     },
     {
         id: 4,
-        image: '@/assets/menu/gyoza.jpg',
+        image: '/assets/menu/gyoza.jpg',
         name: 'Ddeok Bokki (Spicy Rice Cake)',
         desc: 'Korean rice pancake with vegetables, egg, and fish cooked in traditional way sjldkajldjal kdjaljdakld salkdjalkd ksdak',
         price: 840000,
@@ -43,7 +43,7 @@ const exMenu = [
     },
     {
         id: 5,
-        image: '@/assets/menu/gyoza.jpg',
+        image: '/assets/menu/gyoza.jpg',
         name: 'Ddeok Bokki (Spicy Rice Cake)',
         desc: 'Korean rice pancake with vegetables, egg, and fish cooked in traditional way sjldkajldjal kdjaljdakld salkdjalkd ksdak',
         price: 840000,
@@ -52,7 +52,7 @@ const exMenu = [
     },
     {
         id: 6,
-        image: '@/assets/menu/gyoza.jpg',
+        image: '/assets/menu/gyoza.jpg',
         name: 'Ddeok Bokki (Spicy Rice Cake)',
         desc: 'Korean rice pancake with vegetables, egg, and fish cooked in traditional way sjldkajldjal kdjaljdakld salkdjalkd ksdak',
         price: 840000,
@@ -61,7 +61,7 @@ const exMenu = [
     },
     {
         id: 7,
-        image: '@/assets/menu/gyoza.jpg',
+        image: '/assets/menu/gyoza.jpg',
         name: 'Ddeok Bokki (Spicy Rice Cake)',
         desc: 'Korean rice pancake with vegetables, egg, and fish cooked in traditional way sjldkajldjal kdjaljdakld salkdjalkd ksdak',
         price: 840000,
