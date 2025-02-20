@@ -9,8 +9,10 @@ import {
     Row
 } from 'antd'
 import { Link, useLocation } from 'react-router-dom';
-import { IconShoppingBag } from '@tabler/icons-react';
+import { IconMenu2, IconShoppingBag } from '@tabler/icons-react';
 import { useMediaQuery } from 'react-responsive';
+import { useAuth } from '../../../context/AuthContext';
+
 const {
     Header,
     Content,
@@ -34,13 +36,10 @@ export default function LayoutComp(props) {
         setActiveKey(route?.toString());
     }, [pathname]);
 
-    const isStandard = useMediaQuery({ minWidth: 1025 })
-    const isMobile = useMediaQuery({ maxWidth: 767 })
-    const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1024 })
-
-    const setSize = (standard, tablet, mobile) => {
-        return isStandard ? standard : ( isTablet ? tablet : mobile )   
-    }
+    const {
+        setSize,
+        isStandard, isTablet, isMobile
+    } = useAuth()
 
     return (
         <>
@@ -62,8 +61,8 @@ export default function LayoutComp(props) {
                         },
                         Menu: {
                             activeBarHeight: 0,
-                            colorSplit: '#C5C5C5',
-                            itemPaddingInline: 50,
+                            colorSplit: 'transparent',
+                            itemPaddingInline: setSize(50, 20, 10),
                             fontSize: setSize(18, 16, 14),
                             colorText: '#6B6B6B',
                             itemBg: '#F9F9F9',
@@ -78,17 +77,18 @@ export default function LayoutComp(props) {
                             colorTextPlaceholder: '#F9F9F9',
                             colorText: '#F9F9F9',
                             colorBorder: '#D9D9D9',
-                            controlHeight: 45,
+                            controlHeight: setSize(42, 32, 32),
+                            fontSize: setSize(14, 12, 12),
                             borderRadius: 50,
                             colorBgElevated: '#FA5523',
                             optionSelectedBg: '#E53905'
                         },
                         Tabs: {
                             inkBarColor: '',
-                            fontSize: 18,
+                            fontSize: setSize(18, 16, 14),
                             colorText: '#6B6B6B',
                             colorPrimary: '#000000',
-                            horizontalItemPadding: '20px 90px',
+                            horizontalItemPadding: setSize('20px 50px', '20px', '20px'),
                             itemHoverColor: '#000000'
                         },
                         Card: {
@@ -97,17 +97,25 @@ export default function LayoutComp(props) {
                         },
                         Input: {
                             fontSize: setSize(16, 12, 12),
-                            controlHeightLG: 80,
+                            // controlHeightLG: 80,
+                            controlHeight: setSize(37, 25, 25),
                         },
+                        Modal: {
+                            padding: 25,
+                            borderRadiusLG: 20,
+                        },
+                        Drawer: {
+                            fontSizeLG: 14
+                        }
                     }
                 }}
             >
                 <Layout>
                     <Header
-                        className='flex items-center border-b border-[#C5C5C5] z-1 sticky top-0'
+                        className='flex justify-between items-center border-b border-[#C5C5C5] z-1 sticky top-0'
                     >
                         {
-                            !isMobile && (
+                            isStandard && (
                                 <div
                                     className='h-[50%] rounded-sm bg-[#E83600] lg:w-[8%] md:w-[10%] sm:w-[10%] w-[15%]'
                                 >
@@ -120,44 +128,27 @@ export default function LayoutComp(props) {
                             selectedKeys={[activeKey]} 
                             defaultSelectedKeys={['1']} 
                             onClick={e => setActiveKey(e)}
-                            className='felx flex-1 justify-center min-w-0 relative font-semibold'
+                            className={`felx flex-1 ${setSize("justify-center", "justify-start", "justify-start")} min-w-0 relative font-semibold`}
+                            overflowedIndicator={<IconMenu2 />}
                         >
-                            <Menu.Item
-                                key={'1'}
-                            >
-                                <Link 
-                                    to={'/'}
-                                >
-                                    Home
-                                </Link>
-                            </Menu.Item>
-                            <Menu.Item
-                                key={'2'}
-                            >
-                                <Link 
-                                    to={'/menu'}
-                                >
-                                    Menu
-                                </Link>
-                            </Menu.Item>
-                            <Menu.Item
-                                key={'3'}
-                            >
-                                <Link 
-                                    to={'/order'}
-                                >
-                                    Order
-                                </Link>
-                            </Menu.Item>
-                            <Menu.Item
-                                key={'4'}
-                            >
-                                <Link 
-                                    to={'/contact'}
-                                >
-                                    Contact
-                                </Link>
-                            </Menu.Item>
+                            {
+                                isMobile ? (
+                                    <Menu.SubMenu icon={<IconMenu2 />}>
+                                        <Menu.Item key={'1'}><Link to={'/'}>Home</Link></Menu.Item>
+                                        <Menu.Item key={'2'}><Link to={'/menu'}>Menu</Link></Menu.Item>
+                                        <Menu.Item key={'3'}><Link to={'/order'}>Order</Link></Menu.Item>
+                                        <Menu.Item key={'4'}><Link to={'/contact'}>Contact</Link></Menu.Item>  
+                                    </Menu.SubMenu>
+                                ) : (
+                                    <>
+                                        <Menu.Item key={'1'}><Link to={'/'}>Home</Link></Menu.Item>
+                                        <Menu.Item key={'2'}><Link to={'/menu'}>Menu</Link></Menu.Item>
+                                        <Menu.Item key={'3'}><Link to={'/order'}>Order</Link></Menu.Item>
+                                        <Menu.Item key={'4'}><Link to={'/contact'}>Contact</Link></Menu.Item>  
+                                    </>
+                                )
+                            }
+                                                         
                         </Menu>  
                         <div 
                             className='flex items-center'

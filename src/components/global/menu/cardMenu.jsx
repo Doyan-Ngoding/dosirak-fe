@@ -1,5 +1,7 @@
 import { IconChefHat, IconShoppingBagPlus } from '@tabler/icons-react'
 import React from 'react'
+import { useAuth } from '../../../context/AuthContext'
+import { Col, Row } from 'antd'
 
 export default function CardMenu({
     image,
@@ -10,59 +12,42 @@ export default function CardMenu({
     stock,
     addToCart
 }) {
+
+    const {
+        setSize
+    } = useAuth()
+
     return (
         <>
             <div
-                style={{
-                    backgroundColor: '#FFFFFF',
-                    borderRadius: 12,
-                    border: '1.5px solid #D5D5D5'
-                }}
+                className='bg-white border-[1.5px] border-[#D5D5D5] rounded-xl'
             >
                 <div
-                    style={{
-                        backgroundImage: `url(${image})`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        backgroundRepeat: 'no-repeat',
-                        borderRadius: '15px 15px 0px 0px',
-                        height: 200,
-                        display: 'flex',
-                        alignItems: 'end'
-                    }}
+                    className='bg-[url(/assets/menu/gyoza.jpg)] bg-cover bg-center bg-no-repeat rounded-t-xl flex items-end lg:h-[180px] md:h-[120px] h-[100px]'
                 >
                     <div
-                        style={{
-                            backgroundColor: 'rgba(250, 85, 35, 0.9)',
-                            width: '100%',
-                            padding: '10px 15px',
-                            display: 'flex',
-                            alignItems: 'center'
-                        }}
+                        className='w-full flex items-center bg-[#FA5523E5] px-2 py-2'
                     >
                         <div>
                             <IconChefHat 
                                 color='#FFFFFF'
-                                size={24}
+                                size={setSize(24, 18, 16)}
                             />
                         </div>
                         <div
-                            style={{
-                                paddingLeft: 10,
-                                fontSize: 15,
-                            }}
+                            className='pl-2.5 lg:text-sm md:text-[12px] text-[10px]'
                         >
                             <div
                                 style={{
                                     color: '#FFF948',
-                                    lineHeight: 0.7
+                                    lineHeight: 0.5
                                 }}
                             >
                                 Available At
                             </div>
                             <div
                                 style={{
-                                    fontSize: 16,
+                                    fontSize: setSize(16, 12, 11),
                                     color: '#FFFFFF',
                                     display: "-webkit-box",
                                     WebkitBoxOrient: "vertical",
@@ -77,16 +62,16 @@ export default function CardMenu({
                     </div>
                 </div>
                 <div
-                    className='menu-title'
+                    className='text-[#393939] font-semibold lg:text-2xl md:text-lg text-[16px] lg:p-4 p-2.5'
                 >
                     {title}
                 </div>
                 <div
                     style={{
                         color: '#6B6B6B',
-                        fontSize: 18,
+                        fontSize: setSize(18, 14, 12),
                         fontWeight: 300,
-                        padding: '0px 15px 15px 15px',
+                        padding: setSize('0px 15px 15px 15px', '0px 10px 10px 10px', '0px 10px 10px 10px'),
                         display: "-webkit-box",
                         WebkitBoxOrient: "vertical",
                         WebkitLineClamp: 2,
@@ -97,37 +82,43 @@ export default function CardMenu({
                 >
                     {desc}
                 </div>
-                <div
-                    style={{
-                        padding: '30px 15px 30px 15px',
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center'
-                    }}
+                <Row
+                    justify={"space-between"}
+                    align={"middle"}
+                    className='lg:px-[15px] md:px-[10px] px-[10px] lg:pb-[30px] md:pb-[30px] pb-5 pt-3'
                 >
-                    <div
-                        className='menu-price-1'
+                    <Col
+                        span={setSize('', '', 24)}
                     >
-                        Rp. {price ? parseFloat(price).toLocaleString() : '-'}
-                    </div>
-                    <div
-                        style={{
-                            paddingRight: 20
-                        }}
+                        <div
+                            className='text-[#FF815B] font-bold lg:text-2xl md:text-xl text-xl'
+                        >
+                            Rp. {price ? parseFloat(price).toLocaleString() : '-'}
+                        </div>
+                    </Col>
+                    <Col
+                        span={setSize('', '', 24)}
                     >
-                        <IconShoppingBagPlus 
-                            size={45}
+                        <div
                             style={{
-                                color: '#FFFFFF',
-                                borderRadius: 50,
-                                padding: 10,
-                                cursor: stock && parseInt(stock) > 0 ? 'pointer' : 'not-allowed'
+                                paddingRight: setSize(10, 10, 5),
                             }}
-                            onClick={addToCart}
-                            className='icon-hover-3'
-                        />
-                    </div>
-                </div>
+                            className='flex justify-end'
+                        >
+                            <IconShoppingBagPlus 
+                                size={setSize(45, 30, 30)}
+                                style={{
+                                    color: '#FFFFFF',
+                                    borderRadius: 50,
+                                    padding: setSize(10, 5, 5),
+                                    cursor: stock && parseInt(stock) > 0 ? 'pointer' : 'not-allowed'
+                                }}
+                                onClick={addToCart}
+                                className='icon-hover-3'
+                            />
+                        </div>
+                    </Col>
+                </Row>
             </div>
         </>
     )

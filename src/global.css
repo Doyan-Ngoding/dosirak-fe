@@ -119,3 +119,10 @@ body {
   color: #FF815B;
   cursor: pointer;
 }
+
+.title {
+  color: #FA5523;
+  font-size: 56px;
+  font-family: Vina Sans;
+  line-height: 0.7;
+}

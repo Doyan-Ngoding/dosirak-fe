@@ -8,6 +8,15 @@ import ModalComp from '../../global/modal'
 import { ConfigProvider, Input } from 'antd'
 import { IconCirclePlus } from '@tabler/icons-react'
 import { useNavigate } from 'react-router-dom'
+import LoginStandard from '../../global/modal/loginStandard'
+import LoginMobile from '../../global/modal/loginMobile'
+import SignupStandard from '../../global/modal/signupStandard'
+import SignupMobile from '../../global/modal/signupMobile'
+import VerifyStandard from '../../global/modal/verifyStandard'
+import VerifyMobile from '../../global/modal/verifyMobile'
+import CompleteStandard from '../../global/modal/completeStandard'
+import ResetStandard from '../../global/modal/resetStandard'
+import ResetMobile from '../../global/modal/resetMobile'
 
 export default function SiderOrder() {
 
@@ -16,34 +25,18 @@ export default function SiderOrder() {
     const {
         selectedMenu, setSelectedMenu,
         subTotal, setSubTotal,
+        addQty, subQty,
     } = useOrder();
 
     const {
         isLogin,
         modalLogin, setModalLogin,
         modalOtp, setModalOtp,
+        modalReset, setModalReset,
+        modalForgot, setModalForgot,
+        setSize,
+        isMobile
     } = useAuth();
-
-    const addQty = (id) => {
-        setSelectedMenu((prevCart) => 
-            prevCart.map((item) => 
-                item.id === id
-                    ? { ...item, qty: item.qty + 1, subTotal: (item.qty + 1) * item.price }
-                    : item
-            )
-        );
-    };
-
-    const subQty = (id) => {
-        setSelectedMenu((prevCart) => {
-            const updatedCart = prevCart.map((item) =>
-                item.id === id
-                    ? { ...item, qty: item.qty - 1, subTotal: (item.qty - 1) * item.price }
-                    : item
-            ).filter((item) => item.qty > 0); 
-            return updatedCart;
-        });
-    };
 
     const onCheckout = () => {
         isLogin ? console.log('yes') : setModalLogin(true)
@@ -69,11 +62,7 @@ export default function SiderOrder() {
     return (
         <>
             <div
-                style={{
-                    backgroundColor: '#F4F6F9',
-                    height: '100%',
-                    padding: 16
-                }}
+                className='bg-[#F4F6F9] h-full p-4'
             >
                 <CardTitle 
                     title={'ORDER LIST'}
@@ -99,25 +88,30 @@ export default function SiderOrder() {
                     action={onCheckout}
                 />
             </div>
-            <ModalComp 
-                isOpen={modalLogin}
-                setIsOpen={setModalLogin}
-                title={"Please Login"}
-                name={"phone"}
-                main={
-                    <Input 
-                        type='number'
-                        style={{
-                            borderRadius: 50,
-                            fontSize: 18
-                        }}
-                        placeholder='Phone Number'
-                        prefix={<div style={{ backgroundColor: '#287D3C', padding: '6px 12px', borderRadius: 50, color: 'white', marginRight: 10 }}>+62</div>}
+            {
+                !isMobile ? (
+                    <>
+                        <LoginStandard 
+                            isOpen={modalLogin}
+                            setIsOpen={setModalLogin}
+                        />
+                        <VerifyStandard 
+                            isOpen={modalForgot}
+                            setIsOpen={setModalForgot}
+                        />
+                        <ResetStandard 
+                            isOpen={modalReset}
+                            setIsOpen={setModalReset}
+                        />
+                    </>
+                ) : (
+                    <LoginMobile 
+                        isOpen={modalLogin}
+                        setIsOpen={setModalLogin}
                     />
-                }
-                titleButton={"Send OTP >"}
-                action={handleSubmitEmail}
-            />
+                )
+            }
+
             <ModalComp 
                 isOpen={modalOtp}
                 setIsOpen={setModalOtp}
