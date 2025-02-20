@@ -7,15 +7,14 @@ import {
 } from 'antd'
 import { useAuth } from '../../../context/AuthContext'
 
-export default function LoginStandard({
+export default function ForgotStandard({
     isOpen,
     setIsOpen,
 }) {
 
     const {
         setSize,
-        setModalForgot,
-        setModalSignup,
+        setModalOtp
     } = useAuth()
 
     return (
@@ -29,7 +28,7 @@ export default function LoginStandard({
                     lg: '40%',
                     xl: '30%',
                 }}
-                title={"Log In to Continue Ordering"}
+                title={"Forgot your password?"}
                 styles={{
                     body: {
                         padding: 5,
@@ -41,10 +40,12 @@ export default function LoginStandard({
             >
                 <Form
                     layout="vertical"
-                    style={{
-                        marginTop: 20
-                    }}
                 >
+                    <div
+                        className='pb-5'
+                    >
+                        Please enter your email you used to sign up to Dosirak website.
+                    </div>
                     <Form.Item
                         label="Email"
                         name="email"
@@ -58,25 +59,11 @@ export default function LoginStandard({
                         >
                         <Input />
                     </Form.Item>
-                    <Form.Item
-                        label="Password"
-                        name="password"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please input your password!',
-                            },
-                        ]}
-                        >
-                        <Input.Password />
-                    </Form.Item>
-                    <div className="w-full flex justify-end cursor-pointer text-[#E83600] font-semibold hover:text-[#FA5523]" onClick={() => {setModalForgot(true), setIsOpen(false)}}>Forgot Password?</div>
                     <Form.Item label={null}>
-                        <Button type="primary" htmlType="submit" className='w-full mt-5' style={{ height: setSize(45, 35, 0) }}>
-                            Log In
+                        <Button type="primary" htmlType="submit" className='w-full' style={{ height: setSize(45, 35, 0) }} onClick={() => {setModalOtp(true), setIsOpen(false)}}>
+                            Continue
                         </Button>
                     </Form.Item>
-                    <div className="w-full flex justify-center font-semibold mt-[-10px]">Don't have an account? <span className='text-[#E83600] ml-2 cursor-pointer hover:text-[#FA5523]' onClick={() => {setModalSignup(true), setIsOpen(false)}}>Sign Up</span></div>
                 </Form>
             </Modal>    
         </>

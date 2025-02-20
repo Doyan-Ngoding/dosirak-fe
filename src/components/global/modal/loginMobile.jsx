@@ -14,7 +14,9 @@ export default function LoginMobile({
 }) {
 
     const {
-        setSize 
+        setSize,
+        setModalForgot, 
+        setModalSignup
     } = useAuth()
 
     return (
@@ -99,13 +101,13 @@ export default function LoginMobile({
                             }}
                         />
                     </Form.Item>
-                    <div className="w-full flex justify-end cursor-pointer text-[#E83600] font-semibold text-[12px] mt-[-14px] mb-[-10px]">Forgot Password?</div>
+                    <div className="w-full flex justify-end cursor-pointer text-[#E83600] font-semibold text-[12px] mt-[-14px] mb-[-10px] hover:text-[#FA5523]" onClick={() => {setModalForgot(true), setIsOpen(false)}}>Forgot Password?</div>
                     <Form.Item label={null}>
                         <Button type="primary" htmlType="submit" className='w-full mt-5' style={{ height: setSize(45, 35, 30) }}>
                             Log In
                         </Button>
                     </Form.Item>
-                    <div className="w-full flex justify-center font-semibold mt-[-10px] text-[12px]">Don't have an account? <span className='text-[#E83600] ml-2'>Sign Up</span></div>
+                    <div className="w-full flex justify-center font-semibold mt-[-10px] text-[12px]">Don't have an account? <span className='text-[#E83600] ml-2  cursor-pointer hover:text-[#FA5523]' onClick={() => {setModalSignup(true), setIsOpen(false)}}>Sign Up</span></div>
                 </Form>
             </Drawer>
         </>

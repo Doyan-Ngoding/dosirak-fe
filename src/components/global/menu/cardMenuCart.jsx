@@ -39,8 +39,10 @@ export default function CardMenuCart({
                     <Col
                         span={setSize(6, 6, 4)}
                     >
+                        {/* ${import.meta.env}/iamges${image} */}
+                        {/* ${import.meta.env}${image} */}
                         <div 
-                            className='bg-[url(/assets/menu/gyoza.jpg)] bg-cover bg-center bg-no-repeat w-full aspect-square rounded-sm'
+                            className={`bg-[url(${import.meta.env}/iamges${image})] bg-cover bg-center bg-no-repeat w-full aspect-square rounded-sm`}
                         />
                     </Col>
                     <Col

@@ -14,7 +14,8 @@ export default function VerifyStandard({
 }) {
 
     const {
-        setSize
+        setSize, 
+        setModalForgot
     } = useAuth()
 
     return (
@@ -77,7 +78,7 @@ export default function VerifyStandard({
                             Resend code
                         </Button>
                     </Form.Item>
-                    <div className="w-full flex justify-center font-semibold mt-[-10px]">Entered the wrong number? <span className='text-[#E83600] ml-2'>Change Email</span></div>
+                    <div className="w-full flex justify-center font-semibold mt-[-10px]">Entered the wrong number? <span className='text-[#E83600] ml-2 cursor-pointer hover:text-[#FA5523]' onClick={() => {setModalForgot(true), setIsOpen(false)}}>Change Email</span></div>
                 </Form>
             </Modal>    
         </>

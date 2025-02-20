@@ -17,6 +17,8 @@ import VerifyMobile from '../../global/modal/verifyMobile'
 import CompleteStandard from '../../global/modal/completeStandard'
 import ResetStandard from '../../global/modal/resetStandard'
 import ResetMobile from '../../global/modal/resetMobile'
+import ForgotStandard from '../../global/modal/forgotStandard'
+import ForgotMobile from '../../global/modal/forgotMobile'
 
 export default function SiderOrder() {
 
@@ -31,6 +33,7 @@ export default function SiderOrder() {
     const {
         isLogin,
         modalLogin, setModalLogin,
+        modalSignup, setModalSignup,
         modalOtp, setModalOtp,
         modalReset, setModalReset,
         modalForgot, setModalForgot,
@@ -95,24 +98,50 @@ export default function SiderOrder() {
                             isOpen={modalLogin}
                             setIsOpen={setModalLogin}
                         />
-                        <VerifyStandard 
+                        <ForgotStandard 
                             isOpen={modalForgot}
                             setIsOpen={setModalForgot}
+                        />
+                        <VerifyStandard 
+                            isOpen={modalOtp}
+                            setIsOpen={setModalOtp}
                         />
                         <ResetStandard 
                             isOpen={modalReset}
                             setIsOpen={setModalReset}
                         />
+                        <SignupStandard 
+                            isOpen={modalSignup}
+                            setIsOpen={setModalSignup}
+                        />
                     </>
                 ) : (
-                    <LoginMobile 
-                        isOpen={modalLogin}
-                        setIsOpen={setModalLogin}
-                    />
+                    <>
+                        <LoginMobile 
+                            isOpen={modalLogin}
+                            setIsOpen={setModalLogin}
+                        />
+                        <ForgotMobile 
+                            isOpen={modalForgot}
+                            setIsOpen={setModalForgot}
+                        />
+                        <VerifyMobile 
+                            isOpen={modalOtp}
+                            setIsOpen={setModalOtp}
+                        />
+                        <ResetMobile 
+                            isOpen={modalReset}
+                            setIsOpen={setModalReset}
+                        />
+                        <SignupMobile 
+                            isOpen={modalSignup}
+                            setIsOpen={setModalSignup}
+                        />
+                    </>
                 )
             }
 
-            <ModalComp 
+            {/* <ModalComp 
                 isOpen={modalOtp}
                 setIsOpen={setModalOtp}
                 title={"OTP Code"}
@@ -135,7 +164,7 @@ export default function SiderOrder() {
                 }
                 titleButton={"Confirm >"}
                 action={handleSubmitOtp}
-            />
+            /> */}
         </>
     )
 }

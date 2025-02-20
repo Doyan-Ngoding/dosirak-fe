@@ -22,8 +22,10 @@ export default function CardMenu({
             <div
                 className='bg-white border-[1.5px] border-[#D5D5D5] rounded-xl'
             >
+                {/* ${import.meta.env}/iamges${image} */}
+                {/* ${import.meta.env}${image} */}
                 <div
-                    className='bg-[url(/assets/menu/gyoza.jpg)] bg-cover bg-center bg-no-repeat rounded-t-xl flex items-end lg:h-[180px] md:h-[120px] h-[100px]'
+                    className={`bg-[url(${import.meta.env}/iamges${image})] bg-cover bg-center bg-no-repeat rounded-t-xl flex items-end lg:h-[180px] md:h-[120px] h-[100px]`}
                 >
                     <div
                         className='w-full flex items-center bg-[#FA5523E5] px-2 py-2'
@@ -113,7 +115,7 @@ export default function CardMenu({
                                     padding: setSize(10, 5, 5),
                                     cursor: stock && parseInt(stock) > 0 ? 'pointer' : 'not-allowed'
                                 }}
-                                onClick={addToCart}
+                                onClick={(stock && parseInt(stock) > 0) && addToCart}
                                 className='icon-hover-3'
                             />
                         </div>

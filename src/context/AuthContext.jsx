@@ -20,12 +20,14 @@ const Auth = ({children }) => {
     }
 
     const [modalLogin, setModalLogin] = useState(false);
+    const [modalSignup, setModalSignup] = useState(false);
     const [modalOtp, setModalOtp] = useState(false);
     const [modalForgot, setModalForgot] = useState(false);
     const [modalReset, setModalReset] = useState(false);
 
     const state = {
         modalLogin, setModalLogin,
+        modalSignup, setModalSignup,
         modalOtp, setModalOtp,
         modalReset, setModalReset,
         modalForgot, setModalForgot,

@@ -107,7 +107,7 @@ export default function OrderComp() {
                                                                     title={value.name}
                                                                     desc={value.description}
                                                                     price={value.price}
-                                                                    stock={value.stock}
+                                                                    stock={value.qty}
                                                                     addToCart={() => addedToCart(value)}
                                                                 />
                                                             </Col>

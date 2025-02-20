@@ -15,7 +15,9 @@ export default function SignupMobile({
 }) {
 
     const {
-        setSize 
+        setSize,
+        setModalLogin,
+        setModalOtp
     } = useAuth()
 
     return (
@@ -174,11 +176,11 @@ export default function SignupMobile({
                         <Checkbox style={{ fontSize: 12 }}>By clicking sign up, you are agree to out <soan className='cursor-pointer text-[#E83600] font-semibold underline'>Privacy & Policy</soan></Checkbox>
                     </Form.Item>
                     <Form.Item label={null}>
-                        <Button type="primary" htmlType="submit" className='w-full' style={{ height: setSize(45, 35, 30) }}>
+                        <Button type="primary" htmlType="submit" className='w-full' style={{ height: setSize(45, 35, 30) }} onClick={() => {setModalOtp(true), setIsOpen(false)}}>
                             Sign Up
                         </Button>
                     </Form.Item>
-                    <div className="w-full flex justify-center font-semibold mt-[-12px] text-[12px]">Already have an account? <span className='text-[#E83600] ml-2'>Log In</span></div>
+                    <div className="w-full flex justify-center font-semibold mt-[-12px] text-[12px]">Already have an account? <span className='text-[#E83600] ml-2 cursor-pointer hover:text-[#FA5523]' onClick={() => {setModalLogin(true), setIsOpen(false)}}>Log In</span></div>
                 </Form>
             </Drawer>
         </>
