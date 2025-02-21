@@ -8,11 +8,16 @@ import {
     Row 
 } from 'antd';
 import { IconCreditCard } from '@tabler/icons-react';
+import { useAuth } from '../../../../context/AuthContext';
 
 const { Panel } = Collapse;
 
 
 export default function CardMethod() {
+
+    const {
+        setSize
+    } = useAuth()
 
     const [selectedPayment, setSelectedPayment] = useState(null);
 
@@ -24,29 +29,22 @@ export default function CardMethod() {
         { key: "bank_va", label: "BANK VIRTUAL ACCOUNT", input: true, icon: "🏦" },
     ];
 
-console.log(selectedPayment);
-
 
     return (
         <>
             <Row
-                style={{
-                    padding: 20,
-                    borderRadius: 10,
-                    backgroundColor: '#FFFFFF'
-                }}
                 align={"middle"}
-                gutter={[0, 24]}
+                gutter={setSize([0, 20], [0, 18], [0, 14])}
+                className='bg-white lg:p-5 md:p-3.5 p-3 rounded-lg'
             >
                 <Col
                     span={24}
-                    style={{
-                        color: '#393939',
-                        fontWeight: 600,
-                        fontSize: 20,
-                    }}
                 >
-                    CHOOSE PAYMENT
+                    <div
+                        className='text-[#393939] font-bold lg:text-[24px] md:text-[20px] text-[16px]'
+                    >
+                        CHOOSE PAYMENT
+                    </div>
                 </Col>
                 <Col
                     span={24}
@@ -60,7 +58,7 @@ console.log(selectedPayment);
                                 Collapse: {
                                     // contentBg: '#FFFFFF',
                                     colorBorder: '#FFFFFF',
-                                    borderRadius: 0
+                                    borderRadius: 0,
                                 },
                                 Radio: {
                                     colorPrimary: '#287D3C'
@@ -72,14 +70,15 @@ console.log(selectedPayment);
                             accordion
                             activeKey={selectedPayment}
                             onChange={(key) => setSelectedPayment(key[0])}
-                            expandIconPosition={false}
                             style={{
                                 backgroundColor: '#FFFFFF',
                             }}
+                            
                         >
                             {
                                 paymentOptions.map(option => (
                                     <Panel
+                                        showArrow={false}
                                         key={option.key}
                                         header={
                                             <div
@@ -103,7 +102,12 @@ console.log(selectedPayment);
                                             backgroundColor: selectedPayment === option.key ? "#e6f7e6" : "#fff",
                                             borderRadius: "6px",
                                             marginBottom: "8px",
-                                            border: "1px solid #d9d9d9",
+                                            border: selectedPayment === option.key ?  "1px solid #287D3C" :  "1px solid #d9d9d9",
+                                        }}
+                                        styles={{
+                                            body: {
+                                                backgroundColor: '#e6f7e6',
+                                            }
                                         }}
                                     >
                                         {
@@ -111,7 +115,7 @@ console.log(selectedPayment);
                                                 <Input
                                                     placeholder="Phone Number"
                                                     prefix={<IconCreditCard style={{ marginRight: 10 }} />}
-                                                    type='number'
+                                                    type='number'   
                                                 />
                                             )
                                         }

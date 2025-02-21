@@ -24,11 +24,7 @@ export default function SignupStandard({
             <Modal
                 open={isOpen}
                 footer={null} 
-                width={{
-                    md: '40%',
-                    lg: '40%',
-                    xl: '30%',
-                }}
+                width={setSize('30%', '40%', '0%')}
                 title={"Sign Up!"}
                 onCancel={() => setIsOpen(false)}
                 styles={{

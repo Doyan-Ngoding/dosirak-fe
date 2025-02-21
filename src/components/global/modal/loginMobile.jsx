@@ -10,7 +10,8 @@ import { useAuth } from '../../../context/AuthContext'
 
 export default function LoginMobile({
     isOpen,
-    setIsOpen
+    setIsOpen,
+    action
 }) {
 
     const {
@@ -59,6 +60,7 @@ export default function LoginMobile({
                     wrapperCol={{
                         span: 1
                     }}
+                    onFinish={action}
                 >
                     <Form.Item
                         label={<span className='text-xs'><span className='text-red-600'>*</span>Email</span>}

@@ -10,6 +10,7 @@ import { useAuth } from '../../../context/AuthContext'
 export default function LoginStandard({
     isOpen,
     setIsOpen,
+    action
 }) {
 
     const {
@@ -24,11 +25,7 @@ export default function LoginStandard({
                 open={isOpen}
                 footer={null} 
                 onCancel={() => setIsOpen(false)}
-                width={{
-                    md: '40%',
-                    lg: '40%',
-                    xl: '30%',
-                }}
+                width={setSize('30%', '40%', '0%')}
                 title={"Log In to Continue Ordering"}
                 styles={{
                     body: {
@@ -44,6 +41,7 @@ export default function LoginStandard({
                     style={{
                         marginTop: 20
                     }}
+                    onFinish={action}
                 >
                     <Form.Item
                         label="Email"

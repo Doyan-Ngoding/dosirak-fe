@@ -17,7 +17,7 @@ const Order = ({children }) => {
     const [promo, setPromo] = useState(0);
     const [total, setTotal] = useState(0);
 
-    const [currStep, setCurrStep] = useState(0);
+    const [currStep, setCurrStep] = useState(1);
 
     const [orderMethod, setOrderMethod] = useState("IMMEDIATELY");
     const [editAbleAddress, setEditAbleAddress] = useState(false);

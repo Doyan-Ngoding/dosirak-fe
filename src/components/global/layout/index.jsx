@@ -61,7 +61,7 @@ export default function LayoutComp(props) {
                         },
                         Menu: {
                             activeBarHeight: 0,
-                            colorSplit: 'transparent',
+                            colorSplit: '#C5C5C5',
                             itemPaddingInline: setSize(50, 20, 10),
                             fontSize: setSize(18, 16, 14),
                             colorText: '#6B6B6B',
@@ -112,7 +112,7 @@ export default function LayoutComp(props) {
             >
                 <Layout>
                     <Header
-                        className='flex justify-between items-center border-b border-[#C5C5C5] z-1 sticky top-0'
+                        className='flex justify-between items-center border-b border-[#C5C5C5] z-10 sticky top-0'
                     >
                         {
                             isStandard && (

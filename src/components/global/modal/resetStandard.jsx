@@ -22,11 +22,7 @@ export default function ResetStandard({
                 open={isOpen}
                 footer={null} 
                 onCancel={() => setIsOpen(false)}
-                width={{
-                    md: '40%',
-                    lg: '40%',
-                    xl: '30%',
-                }}
+                width={setSize('30%', '40%', '0%')}
                 title={"Reset Password"}
                 styles={{
                     body: {

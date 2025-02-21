@@ -50,8 +50,8 @@ export default function SiderOrder() {
         await setModalLogin(false);
     }
 
-    const handleSubmitOtp = async () => {
-        setModalOtp(false)
+    const handleSubmitAuth = async () => {
+        setModalLogin(false)
         await navigate("/order-summary"); 
     }
 
@@ -97,6 +97,7 @@ export default function SiderOrder() {
                         <LoginStandard 
                             isOpen={modalLogin}
                             setIsOpen={setModalLogin}
+                            action={handleSubmitAuth}
                         />
                         <ForgotStandard 
                             isOpen={modalForgot}
@@ -120,6 +121,7 @@ export default function SiderOrder() {
                         <LoginMobile 
                             isOpen={modalLogin}
                             setIsOpen={setModalLogin}
+                            action={handleSubmitAuth}
                         />
                         <ForgotMobile 
                             isOpen={modalForgot}
@@ -140,31 +142,6 @@ export default function SiderOrder() {
                     </>
                 )
             }
-
-            {/* <ModalComp 
-                isOpen={modalOtp}
-                setIsOpen={setModalOtp}
-                title={"OTP Code"}
-                name={"otp"}
-                main={
-                    <ConfigProvider
-                        theme={{
-                            components: {
-                                Input: {
-                                    fontSize: 30
-                                }
-                            }
-                        }}
-                    >
-                        <Input.OTP className='input-otp' size='large' type='number' length={4} style={{ width: '100%' }} />
-                    </ConfigProvider>
-                }
-                child={
-                    <div style={{ paddingTop: 10 }}>{`Didn't recieve code?`} <span className='clicked-text'>Resend Code</span></div>
-                }
-                titleButton={"Confirm >"}
-                action={handleSubmitOtp}
-            /> */}
         </>
     )
 }

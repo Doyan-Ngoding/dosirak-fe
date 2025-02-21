@@ -23,13 +23,8 @@ export default function CompleteStandard({
         <>
             <Modal
                 open={isOpen}
-                footer={null} 
-                width={{
-                    xs: '60%',
-                    md: '40%',
-                    lg: '40%',
-                    xl: '30%',
-                }}
+                footer={null}
+                width={setSize('30%', '40%', '60%')}
                 styles={{
                     body: {
                         padding: 5,
