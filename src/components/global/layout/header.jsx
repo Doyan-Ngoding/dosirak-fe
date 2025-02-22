@@ -15,12 +15,11 @@ const routes = {
 
 export default function HeaderComp() {
 
-    const { setSize, isStandard, isMobile } = useAuth()
+    const { setSize, isStandard, isMobile, isTablet } = useAuth()
 
     const [isScrolled, setIsScrolled] = useState(false);
     const [activeKey, setActiveKey] = useState("1");
     const [isDrawer, setIsDrawer] = useState(false);
-    const [isResize, setIsResize] = useState(false);
 
     const router = useLocation();
     const pathname = router.pathname
@@ -30,11 +29,6 @@ export default function HeaderComp() {
         setActiveKey(route?.toString());
     }, [pathname]);
 
-    const handleResize = () => {
-        setIsResize(!isResize)
-    };
-
-
     useEffect(() => {
         const handleScroll = () => {
             if (window.scrollY > 20) {
@@ -43,15 +37,12 @@ export default function HeaderComp() {
                 setIsScrolled(false);
             }
         };
-
         window.addEventListener('scroll', handleScroll);
-        window.addEventListener('resize', handleResize);
         return () => {
             window.removeEventListener('scroll', handleScroll);
-            window.removeEventListener('resize', handleResize);
         }
-    }, [isResize]);
-
+    }, []);
+    
     return (
         <>
             <ConfigComp>

@@ -72,7 +72,7 @@ export default function SliderComp() {
                             </div>
                         </div>
                         <div
-                            className='font-[Plus Jakarta Sans] lg:my-7 md:my-5 my-2 lg:w-[70%] md:w-[60%] w-[60%]'
+                            className='font-[Plus Jakarta Sans] lg:my-7 md:my-5 my-2 lg:w-[70%] md:w-[60%] w-[50%]'
                         >
                             <div 
                                 className='text-[#FFFFFF66] md:leading-4 leading-3 lg:text-[14px] md:text-[12px] text-[10px]'
@@ -104,31 +104,32 @@ export default function SliderComp() {
 
     return (
         <>
-            <Carousel autoplay>
+            <Carousel>
+            {/* <Carousel autoplay> */}
                 <div
                     className={`bg-[url(./assets/cover/banner-1.png)] bg-cover bg-bottom bg-no-repeat lg:h-[75vh] md:h-[350px] h-[250px] w-full max-w-full xl:w-[100%]`}
                 >
                     <ChildComp 
                         text1="TASTE THE LEGEND"
-                        text2="TASTE THE LEGEND"
+                        text2="PAIK'S NOODLES X DOSIRAK PROMO!"
                     />
                 </div>
-                {/* <div
-                    className={`bg-[url(./assets/cover/banner-2.png)] bg-cover bg-bottom bg-no-repeat lg:h-[75vh] md:h-[400px] h-[200px] w-full max-w-full xl:w-[100%]`}
+                <div
+                    className={`bg-[url(./assets/cover/banner-2.png)] bg-cover bg-bottom bg-no-repeat lg:h-[75vh] md:h-[350px] h-[250px] w-full max-w-full xl:w-[100%]`}
                 >
-                    <ChildComp />
+                    <ChildComp 
+                        text1="FIRST ORDER SPESIAL!"
+                        text2="FIND YOUR FAVORITE KOREAN DISH"
+                    />
                 </div>
                 <div
-                    className={`bg-[url(./assets/cover/banner-3.png)] bg-cover bg-bottom bg-no-repeat lg:h-[75vh] md:h-[400px] h-[200px] w-full max-w-full xl:w-[100%]`}
+                    className={`bg-[url(./assets/cover/banner-3.png)] bg-cover bg-bottom bg-no-repeat lg:h-[75vh] md:h-[350px] h-[250px] w-full max-w-full xl:w-[100%]`}
                 >
-                    <ChildComp />
-                </div> */}
-                {/* <div>
-                    <h3 style={contentStyle}>2</h3>
+                    <ChildComp 
+                        text1="TASTE KOREA, ONE BOX AT A TIME!"
+                        text2="ORDER NOW & ENJOY A FLAVORFUL MEAL!"
+                    />
                 </div>
-                <div>
-                    <h3 style={contentStyle}>3</h3>
-                </div> */}
             </Carousel>
         </>
     )
