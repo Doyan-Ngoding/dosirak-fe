@@ -9,6 +9,9 @@ import SplitComp from '../../global/split'
 import ServeComp from './serve'
 import MenuComp from './menu'
 import TestimoniComp from './testimoni'
+import OperationalComp from './operational'
+import LocationComp from './location'
+import FooterComp from './footer'
 
 export default function LandingComp() {
     return (
@@ -59,6 +62,28 @@ export default function LandingComp() {
                         span={24}
                     >
                         <TestimoniComp />
+                    </Col>
+                    <Col
+                        span={24}
+                    >
+                        <OperationalComp />
+                    </Col>
+                    <Col
+                        span={24}
+                    >
+                        <LocationComp />
+                    </Col>
+                    <Col
+                        span={24}
+                    >
+                        <SplitComp 
+                            img={"./assets/cover/split.png"}
+                        />                    
+                    </Col>
+                    <Col
+                        span={24}
+                    >
+                        <FooterComp />
                     </Col>
                 </Row>
             </ConfigComp>

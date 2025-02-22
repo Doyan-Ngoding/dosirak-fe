@@ -20,6 +20,7 @@ export default function HeaderComp() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [activeKey, setActiveKey] = useState("1");
     const [isDrawer, setIsDrawer] = useState(false);
+    const [isResize, setIsResize] = useState(false);
 
     const router = useLocation();
     const pathname = router.pathname
@@ -28,6 +29,11 @@ export default function HeaderComp() {
         let route = (pathname === "/order-summary" || pathname === "/payment-method" || pathname === "/complete") ? 3 : Object.keys(routes).find(key => routes[key] === router.pathname);
         setActiveKey(route?.toString());
     }, [pathname]);
+
+    const handleResize = () => {
+        setIsResize(!isResize)
+    };
+
 
     useEffect(() => {
         const handleScroll = () => {
@@ -39,8 +45,12 @@ export default function HeaderComp() {
         };
 
         window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('resize', handleResize);
+        }
+    }, [isResize]);
 
     return (
         <>
