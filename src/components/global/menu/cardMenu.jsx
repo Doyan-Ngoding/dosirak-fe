@@ -10,7 +10,8 @@ export default function CardMenu({
     desc,
     price,
     stock,
-    addToCart
+    addToCart,
+    showResto = true
 }) {
 
     const {
@@ -25,43 +26,47 @@ export default function CardMenu({
                 {/* ${import.meta.env}/iamges${image} */}
                 {/* ${import.meta.env}${image} */}
                 <div
-                    className={`bg-[url(${import.meta.env}/iamges${image})] bg-cover bg-center bg-no-repeat rounded-t-xl flex items-end lg:h-[180px] md:h-[120px] h-[100px]`}
+                    className={`bg-[url(./assets/menu/gyoza.jpg)] bg-cover bg-center bg-no-repeat rounded-t-xl flex items-end lg:h-[180px] md:h-[120px] h-[100px]`}
                 >
-                    <div
-                        className='w-full flex items-center bg-[#FA5523E5] px-2 py-2'
-                    >
-                        <div>
-                            <IconChefHat 
-                                color='#FFFFFF'
-                                size={setSize(24, 18, 16)}
-                            />
-                        </div>
-                        <div
-                            className='pl-2.5 lg:text-sm md:text-[12px] text-[10px]'
-                        >
+                    {
+                        showResto && (
                             <div
-                                style={{
-                                    color: '#FFF948',
-                                    lineHeight: 0.5
-                                }}
+                                className='w-full flex items-center bg-[#FA5523E5] px-2 py-2'
                             >
-                                Available At
+                                <div>
+                                    <IconChefHat 
+                                        color='#FFFFFF'
+                                        size={setSize(24, 18, 16)}
+                                    />
+                                </div>
+                                <div
+                                    className='pl-2.5 lg:text-sm md:text-[12px] text-[10px]'
+                                >
+                                    <div
+                                        style={{
+                                            color: '#FFF948',
+                                            lineHeight: 0.5
+                                        }}
+                                    >
+                                        Available At
+                                    </div>
+                                    <div
+                                        style={{
+                                            fontSize: setSize(16, 12, 11),
+                                            color: '#FFFFFF',
+                                            display: "-webkit-box",
+                                            WebkitBoxOrient: "vertical",
+                                            WebkitLineClamp: 1,
+                                            lineHeight: "1.5em",
+                                            height: "1em", 
+                                        }}
+                                    >
+                                        {restaurant} 
+                                    </div>
+                                </div>
                             </div>
-                            <div
-                                style={{
-                                    fontSize: setSize(16, 12, 11),
-                                    color: '#FFFFFF',
-                                    display: "-webkit-box",
-                                    WebkitBoxOrient: "vertical",
-                                    WebkitLineClamp: 1,
-                                    lineHeight: "1.5em",
-                                    height: "1em", 
-                                }}
-                            >
-                                {restaurant} 
-                            </div>
-                        </div>
-                    </div>
+                        )
+                    }
                 </div>
                 <div
                     className='text-[#393939] font-semibold lg:text-2xl md:text-lg text-[16px] lg:p-4 p-2.5'

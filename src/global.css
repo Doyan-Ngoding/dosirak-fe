@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Vina+Sans&family=Source+Sans+Pro');
+@import url('https://fonts.googleapis.com/css2?family=Vina+Sans&family=Source+Sans+Pro&family=Plus+Jakarta+Sans');
 
 @import 'tailwindcss';
 
@@ -15,6 +15,11 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+  font-family: 'Thunder';
+  src: url('./assets/font/Thunder-VF.ttf') format('truetype');
 }
 
 body {

@@ -12,6 +12,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { IconMenu2, IconShoppingBag } from '@tabler/icons-react';
 import { useMediaQuery } from 'react-responsive';
 import { useAuth } from '../../../context/AuthContext';
+import ConfigComp from './configComp';
 
 const {
     Header,
@@ -27,6 +28,8 @@ const routes = {
 
 export default function LayoutComp(props) {
 
+    const { setSize, isStandard, isMobile } = useAuth();
+
     const [activeKey, setActiveKey] = useState("1");
     const router = useLocation();
     const pathname = router.pathname
@@ -36,80 +39,9 @@ export default function LayoutComp(props) {
         setActiveKey(route?.toString());
     }, [pathname]);
 
-    const {
-        setSize,
-        isStandard, isTablet, isMobile
-    } = useAuth()
-
     return (
         <>
-            <ConfigProvider
-                theme={{
-                    token: {
-                        colorPrimary: '#FA5523',
-                    },
-                    components: {
-                        Layout: {
-                            headerBg: '#F9F9F9',
-                            siderBg: '#F9F9F9',
-                            triggerBg: '#F9F9F9',
-                            bodyBg: '#FFFFFF',
-                            footerBg: '#FFFFFF',
-                            headerHeight: setSize(75, 65, 55),
-                            footerPadding: '0',
-                            headerPadding: setSize('10px 80px', '10px 50px', '10px 30px'), 
-                        },
-                        Menu: {
-                            activeBarHeight: 0,
-                            colorSplit: '#C5C5C5',
-                            itemPaddingInline: setSize(50, 20, 10),
-                            fontSize: setSize(18, 16, 14),
-                            colorText: '#6B6B6B',
-                            itemBg: '#F9F9F9',
-                        },
-                        Button: {
-                            controlHeightSM: 26,
-                            controlHeightLG: 50,
-                            fontSize: setSize(16, 12, 12),
-                        },
-                        Select: {
-                            colorBgContainer: '#FA5523',
-                            colorTextPlaceholder: '#F9F9F9',
-                            colorText: '#F9F9F9',
-                            colorBorder: '#D9D9D9',
-                            controlHeight: setSize(42, 32, 32),
-                            fontSize: setSize(14, 12, 12),
-                            borderRadius: 50,
-                            colorBgElevated: '#FA5523',
-                            optionSelectedBg: '#E53905'
-                        },
-                        Tabs: {
-                            inkBarColor: '',
-                            fontSize: setSize(18, 16, 14),
-                            colorText: '#6B6B6B',
-                            colorPrimary: '#000000',
-                            horizontalItemPadding: setSize('20px 50px', '20px', '20px'),
-                            itemHoverColor: '#000000'
-                        },
-                        Card: {
-                            colorBgContainer: '#FFFFFF',
-                            bodyPadding: '0.5em 1em'
-                        },
-                        Input: {
-                            fontSize: setSize(16, 12, 12),
-                            // controlHeightLG: 80,
-                            controlHeight: setSize(37, 25, 25),
-                        },
-                        Modal: {
-                            padding: 25,
-                            borderRadiusLG: 20,
-                        },
-                        Drawer: {
-                            fontSizeLG: 14
-                        }
-                    }
-                }}
-            >
+            <ConfigComp>
                 <Layout>
                     <Header
                         className='flex justify-between items-center border-b border-[#C5C5C5] z-10 sticky top-0'
@@ -330,7 +262,7 @@ export default function LayoutComp(props) {
                         </Row>
                     </Footer>
                 </Layout>
-            </ConfigProvider>
+            </ConfigComp>
         </>
     )
 }
