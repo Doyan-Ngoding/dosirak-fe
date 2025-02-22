@@ -6,30 +6,31 @@ import {
     Row 
 } from 'antd'
 import { IconShieldCheck, IconShieldCheckFilled, IconTicket } from '@tabler/icons-react'
+import { useAuth } from '../../../../context/AuthContext'
 
 export default function CardTotal({
     handleClick
 }) {
+
+    const {
+        setSize
+    } = useAuth()
+
     return (
         <>
             <Row
-                style={{
-                    padding: 20,
-                    borderRadius: 10,
-                    backgroundColor: '#FFFFFF'
-                }}
                 align={"middle"}
-                gutter={[0, 12]}
+                gutter={setSize([0, 20], [0, 18], [0, 14])}
+                className='bg-white lg:p-5 md:p-3.5 p-3 rounded-lg'
             >
                 <Col
                     span={24}
-                    style={{
-                        color: '#393939',
-                        fontWeight: 600,
-                        fontSize: 20,
-                    }}
                 >
-                    Total Order   
+                    <div
+                        className='text-[#393939] font-bold lg:text-[24px] md:text-[20px] text-[16px]'
+                    >
+                        Total Order   
+                    </div>
                 </Col>
                 <Col
                     span={24}
@@ -49,7 +50,7 @@ export default function CardTotal({
                 >
                     <Button
                         type='primary'
-                        size='large'
+                        size={setSize("large", "medium", "medium")}
                         style={{
                             width: '100%',
                             borderRadius: 50

@@ -3,50 +3,39 @@ import {
     IconBasket, 
     IconRosetteFilled 
 } from '@tabler/icons-react'
+import { useAuth } from '../../../context/AuthContext'
 
 export default function CardTitle({
     title,
 }) {
+
+    const {
+        setSize
+    } = useAuth()
+
     return (
         <>
             <div
-                style={{
-                    backgroundColor: 'rgba(232, 54, 0, 0.9)',
-                    borderRadius: 16,
-                    padding: 14,
-                    display: 'flex',
-                    alignItems: 'center',
-                    marginBottom: 20,
-                }}
+                className='bg-[#FA5523E5] rounded-2xl lg:p-3.5 md:p-1 p-1 flex items-center mb-5'
             >
                 <div
-                    style={{
-                        position: 'relative', 
-                        width: '56px', 
-                        height: '56px'
-                    }}
+                    className='relative lg:w-14 md:w-10 w-10 lg:h-14 md:h-10 h-10'
                 >
                     <IconRosetteFilled 
                         color='#FFFFFF'
-                        size={56}
-                        style={{
-                            position: 'absolute'
-                        }}
+                        size={setSize(54, 40, 40)}
+                        className='absolute'
                     />
                     <IconBasket 
                         color='#E83600'
-                        size={36}
-                        style={{
-                            position: 'absolute',
-                            top: '10px', 
-                            left: '10px',
-                        }}
+                        size={setSize(34, 20, 20)}
+                        className='absolute top-2.5 left-2.5'
                     />
                 </div>
                 <div
                     style={{
                         fontFamily: 'Vina Sans',
-                        fontSize: 48,
+                        fontSize: setSize(48, 30, 30),
                         paddingLeft: 10,
                         paddingBottom: 5,
                         color: '#FFFFFF'   

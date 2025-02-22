@@ -10,6 +10,7 @@ import {
     IconPencilMinus 
 } from '@tabler/icons-react';
 import { useOrder } from '../../../../context/OrderContext';
+import { useAuth } from '../../../../context/AuthContext';
 const { TextArea } = Input;
 
 export default function CardAddress() {
@@ -19,26 +20,26 @@ export default function CardAddress() {
         addressUser, setAddressUser,
     } = useOrder()
 
+    const {
+        setSize
+    } = useAuth()
+
     return (
         <>
             <Row
-                style={{
-                    padding: 20,
-                    borderRadius: 10,
-                    backgroundColor: '#FFFFFF'
-                }}
                 align={"middle"}
+                justify={"end"}
                 gutter={[0, 12]}
+                className='bg-white lg:p-5 md:p-3.5 p-3 rounded-lg'
             >
                 <Col
                     span={24}
-                    style={{
-                        color: '#393939',
-                        fontWeight: 600,
-                        fontSize: 20,
-                    }}
                 >
-                    SELECT ADDRESS
+                    <div
+                        className='text-[#393939] font-semibold lg:text-lg md:text-[16px] text-[12px]'
+                    >
+                        SELECT ADDRESS
+                    </div>
                 </Col>
                 <Col
                     span={24}
@@ -47,7 +48,7 @@ export default function CardAddress() {
                         theme={{
                             components: {
                                 Input: {
-                                    fontSize: 14
+                                    fontSize: setSize(14, 14, 12)
                                 }
                             }
                         }}
@@ -78,7 +79,6 @@ export default function CardAddress() {
                     </ConfigProvider>
                 </Col>
                 <Col
-                    span={24}
                     style={{
                         padding: '0px 5px'
                     }}
@@ -87,10 +87,13 @@ export default function CardAddress() {
                         className='input-address'
                         onClick={() => setEditAbleAddress(!editAbleAddress)}
                     >
-                        <IconPencilMinus />
+                        <IconPencilMinus 
+                            size={setSize(20, 18, 16)}
+                        />
                         <div
                             style={{
-                                paddingLeft: 10
+                                paddingLeft: 10,
+                                fontSize: setSize(14, 14, 12)
                             }}
                         >
                             Change Address

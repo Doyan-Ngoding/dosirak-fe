@@ -6,55 +6,35 @@ import {
 } from 'antd'
 import { IconCircleMinus, IconCirclePlusFilled } from '@tabler/icons-react'
 import { useOrder } from '../../../../context/OrderContext'
+import { useAuth } from '../../../../context/AuthContext'
 
 export default function OrderListComp() {
 
     const {
-        selectedMenu, setSelectedMenu
+        selectedMenu, setSelectedMenu,
+        addQty, subQty
     } = useOrder()
+
+    const {
+        setSize,
+        isStandard
+    } = useAuth()
     
-    const addQty = (id) => {
-        setSelectedMenu((prevCart) => 
-            prevCart.map((item) => 
-                item.id === id
-                    ? { ...item, qty: item.qty + 1, subTotal: (item.qty + 1) * item.price }
-                    : item
-            )
-        );
-    };
-
-    const subQty = (id) => {
-        setSelectedMenu((prevCart) => {
-            const updatedCart = prevCart.map((item) =>
-                item.id === id
-                    ? { ...item, qty: item.qty - 1, subTotal: (item.qty - 1) * item.price }
-                    : item
-            ).filter((item) => item.qty > 0); 
-            return updatedCart;
-        });
-    };
-
     return (
         <>
             <Row
-                style={{
-                    marginTop: 10,
-                    padding: 20,
-                    borderRadius: 10,
-                    backgroundColor: '#FFFFFF'
-                }}
                 align={"middle"}
-                gutter={[0, 24]}
+                gutter={setSize([0, 20], [0, 18], [0, 14])}
+                className='bg-white lg:p-5 md:p-3.5 p-3 rounded-lg mt-2.5'
             >
                 <Col
                     span={24}
-                    style={{
-                        color: '#393939',
-                        fontWeight: 600,
-                        fontSize: 30,
-                    }}
                 >
-                    ORDER LIST
+                    <div
+                        className='text-[#393939] font-bold lg:text-[24px] md:text-[20px] text-[16px]'
+                    >
+                        ORDER LIST
+                    </div>
                 </Col>
                 {
                     selectedMenu && selectedMenu.map(value => (
@@ -68,87 +48,151 @@ export default function OrderListComp() {
                                     gutter={[12, 12]}
                                 >
                                     <Col
-                                        span={4}
+                                        span={setSize(4, 6, 6)}
                                         style={{
-                                            height: 100
+                                            height: setSize(100, 70, 60)
                                         }}
                                     >
                                         <div 
-                                            style={{
-                                                width: '100%',
-                                                height: '100%',
-                                                aspectRatio: '1 / 1',
-                                                borderRadius: 4,
-                                                backgroundImage: `url(${value.image})`,
-                                                backgroundSize: 'cover',
-                                                backgroundPosition: 'center',
-                                                backgroundRepeat: 'no-repeat',
-                                            }}
+                                            className={`bg-[url(/assets/menu/gyoza.jpg)] bg-cover bg-center bg-no-repeat rounded-sm h-[100%] w-[100%] aspect-square`}
                                         />
                                     </Col>
                                     <Col
-                                        span={16}
-                                        style={{
-                                            fontSize: 20,
-                                            fontWeight: 600,
-                                        }}
+                                        span={setSize(16, 18, 18)}
                                     >
-                                        <div
-                                            style={{
-                                                fontSize: 20,
-                                                fontWeight: 600,
-                                            }}
-                                        >
-                                            {value.name}
-                                        </div>
-                                        <div
-                                            style={{
-                                                fontSize: 20,
-                                                fontWeight: 600,
-                                                color: '#FF815B'
-                                            }}
-                                        >
-                                            Rp. {value.price ? parseFloat(value.price).toLocaleString() : '-'}
-                                        </div>
-                                    </Col>
-                                    <Col
-                                        span={4}
-                                    >
-                                        <Row
-                                            justify='space-between'
-                                            align='middle'
-                                        >
+                                        <Row>
                                             <Col
-                                                className='icon-hover'
+                                                span={24}
                                             >
-                                                <IconCircleMinus 
-                                                    size={28}
-                                                    style={{
-                                                        marginTop: 3,
-                                                        cursor: 'pointer'
-                                                    }}
-                                                    onClick={() => subQty(value.id)}
-                                                />
+                                                <div
+                                                    className='lg:text-[20px] md:text-[16px] text-[14px] font-semibold'
+                                                >
+                                                    {value.name}
+                                                </div>
+                                                {
+                                                    isStandard && (
+                                                        <div
+                                                            className='lg:text-[20px] md:text-[18px] text-[16px] font-semibold text-[#FF815B]'
+                                                        >
+                                                            Rp. {value.price ? parseFloat(value.price).toLocaleString() : '-'}
+                                                        </div>
+                                                    )
+                                                }
                                             </Col>
-                                            <Col
-                                                className='menu-price-2'
-                                            >
-                                                {value.qty ? 'x' + value.qty : '0'}
-                                            </Col>
-                                            <Col
-                                                className='icon-hover-2'
-                                            >
-                                                <IconCirclePlusFilled 
-                                                    size={28}
-                                                    style={{
-                                                        marginTop: 3,
-                                                        cursor: 'pointer',
-                                                    }}
-                                                    onClick={() => addQty(value.id)}
-                                                />
-                                            </Col>
+                                            {
+                                                !isStandard && (
+                                                    <Col
+                                                        span={24}
+                                                    >
+                                                        <Row
+                                                            justify='space-between'
+                                                            align='middle'
+                                                            gutter={[30, 30]}
+                                                        >
+                                                            <Col
+                                                                span={14}
+                                                            >
+                                                                <div
+                                                                    className='lg:text-[20px] md:text-[16px] text-[14px] font-semibold text-[#FF815B]'
+                                                                >
+                                                                    Rp. {value.price ? parseFloat(value.price).toLocaleString() : '-'}
+                                                                </div>
+                                                            </Col>
+                                                            <Col
+                                                                span={10}
+                                                            >
+                                                                <Row
+                                                                    justify={"space-between"}
+                                                                    align={"middle"}
+                                                                >
+                                                                    <Col>
+                                                                        <div
+                                                                            className='icon-hover'
+                                                                        >
+                                                                            <IconCircleMinus 
+                                                                                size={setSize(28, 20, 18)}
+                                                                                style={{
+                                                                                    marginTop: 3,
+                                                                                    cursor: 'pointer'
+                                                                                }}
+                                                                                onClick={() => subQty(value.id)}
+                                                                            /> 
+                                                                        </div>   
+                                                                    </Col> 
+                                                                    <Col>
+                                                                        <div
+                                                                            className='menu-price-2'
+                                                                            style={{
+                                                                                fontSize: setSize(20, 18, 18)
+                                                                            }}
+                                                                        >
+                                                                            {value.qty ? 'x' + value.qty : '0'}  
+                                                                        </div>
+                                                                    </Col> 
+                                                                    <Col>
+                                                                        <div
+                                                                            className='icon-hover-2'
+                                                                        >
+                                                                            <IconCirclePlusFilled 
+                                                                                size={setSize(28, 20, 18)}
+                                                                                style={{
+                                                                                    marginTop: 3,
+                                                                                    cursor: 'pointer',
+                                                                                }}
+                                                                                onClick={() => addQty(value.id)}
+                                                                            />
+                                                                        </div>
+                                                                    </Col> 
+                                                                </Row>
+                                                            </Col>
+                                                        </Row>
+                                                    </Col>
+                                                )
+                                            }
                                         </Row>
                                     </Col>
+                                    {
+                                        isStandard && (
+                                            <Col
+                                                span={4}
+                                            >
+                                                <Row
+                                                    justify='space-between'
+                                                    align='middle'
+                                                >
+                                                    <Col
+                                                        className='icon-hover'
+                                                    >
+                                                        <IconCircleMinus 
+                                                            size={28}
+                                                            style={{
+                                                                marginTop: 3,
+                                                                cursor: 'pointer'
+                                                            }}
+                                                            onClick={() => subQty(value.id)}
+                                                        />
+                                                    </Col>
+                                                    <Col
+                                                        className='menu-price-2'
+                                                    >
+                                                        {value.qty ? 'x' + value.qty : '0'}
+                                                    </Col>
+                                                    <Col
+                                                        className='icon-hover-2'
+                                                    >
+                                                        <IconCirclePlusFilled 
+                                                            size={28}
+                                                            style={{
+                                                                marginTop: 3,
+                                                                cursor: 'pointer',
+                                                            }}
+                                                            onClick={() => addQty(value.id)}
+                                                        />
+                                                    </Col>
+                                                </Row>
+                                            </Col>
+                                        )
+                                    }
                                 </Row>
                             </Card>
                         </Col>

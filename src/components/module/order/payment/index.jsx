@@ -5,6 +5,7 @@ import CardTitleStep from '../../../global/title/cardTitleStep';
 import { Col, Row } from 'antd';
 import CardTotal from './cardTotal';
 import CardMethod from './cardMethod';
+import { useAuth } from '../../../../context/AuthContext';
 
 export default function PaymentComp() {
 
@@ -12,8 +13,12 @@ export default function PaymentComp() {
         currStep, setCurrStep
     } = useOrder();
 
+    const {
+        setSize
+    } = useAuth()
+
     useEffect(() => {
-        setCurrStep(1)
+        setCurrStep(2)
     }, []);
     
     return (
@@ -27,7 +32,7 @@ export default function PaymentComp() {
                 >
                     <Row
                         style={{
-                            padding: '30px 80px 10px 80px',
+                            padding: setSize("30px 80px 10px 80px", "30px 50px 10px 50px", "30px 30px 10px 30px"),
                         }}
                     >
                         <Col
@@ -42,18 +47,18 @@ export default function PaymentComp() {
                     </Row>
                     <Row
                         style={{
-                            padding: '10px 90px 30px 90px',
+                            padding: setSize("10px 70px 10px 80px", "10px 40px 10px 50px", "10px 20px 10px 30px"),
                             width: '100%'
                         }}
                         gutter={[12, 12]}
                     >
                         <Col
-                            span={16}
+                            span={setSize(16, 14, 24)}
                         >
                             <CardMethod />
                         </Col>
                         <Col
-                            span={8}
+                            span={setSize(8, 10, 24)}
                         >
                             <CardTotal  />
                         </Col>

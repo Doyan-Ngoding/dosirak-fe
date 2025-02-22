@@ -5,10 +5,15 @@ import {
     Row 
 } from 'antd'
 import { useOrder } from '../../../../context/OrderContext'
+import { useAuth } from '../../../../context/AuthContext'
 
 export default function CardTotal({
     handleClick
 }) {
+
+    const {
+        setSize
+    } = useAuth()
 
     const {
         selectedMenu,
@@ -20,34 +25,25 @@ export default function CardTotal({
     } = useOrder()
 
     useEffect(() => {
-    setSubTotal(
-        selectedMenu.reduce((total, item) => total + item.subTotal, 0)
-    );
-    localStorage.getItem('cart') ? localStorage.removeItem('cart') : localStorage.setItem('cart', JSON.stringify(selectedMenu));
+        setSubTotal(
+            selectedMenu.reduce((total, item) => total + item.subTotal, 0)
+        );
+        localStorage.getItem('cart') ? localStorage.removeItem('cart') : localStorage.setItem('cart', JSON.stringify(selectedMenu));
     }, [selectedMenu]);
-
 
     return (
         <>
             <Row
-                style={{
-                    marginTop: 10,
-                    padding: 20,
-                    borderRadius: 10,
-                    backgroundColor: '#FFFFFF'
-                }}
                 align={"middle"}
-                gutter={[0, 12]}
+                gutter={setSize([0, 20], [0, 18], [0, 14])}
+                className='bg-white lg:p-5 md:p-3.5 p-3 rounded-lg mt-2.5'
             >
-                <Col
-                    span={24}
-                    style={{
-                        color: '#393939',
-                        fontWeight: 600,
-                        fontSize: 20,
-                    }}
-                >
-                    CHECKOUT
+                <Col>
+                    <div
+                        className='text-[#393939] font-bold lg:text-[24px] md:text-[20px] text-[16px]'
+                    >
+                        CHECKOUT
+                    </div>
                 </Col>
                 <Col
                     span={24}
@@ -63,7 +59,7 @@ export default function CardTotal({
                             span={12}
                             style={{
                                 fontWeight: 600,
-                                fontSize: 18,
+                                fontSize: setSize(18, 16, 14),
                             }}
                         >
                             Sub Total
@@ -73,7 +69,7 @@ export default function CardTotal({
                             style={{
                                 paddingRight: 10,
                                 fontWeight: 500,
-                                fontSize: 16,
+                                fontSize: setSize(16, 14, 14),
                                 textAlign: 'end'
                             }}
                         >
@@ -92,7 +88,7 @@ export default function CardTotal({
                             span={12}
                             style={{
                                 fontWeight: 600,
-                                fontSize: 18,
+                                fontSize: setSize(18, 16, 14),
                             }}
                         >
                             Delivery Fee
@@ -100,7 +96,7 @@ export default function CardTotal({
                             <div
                                 style={{
                                     fontWeight: 400,
-                                    fontSize: 14,
+                                    fontSize: setSize(14, 12, 12),
                                     color: 'rgba(0, 0, 0, 0.5)'
                                 }}
                             >
@@ -112,7 +108,7 @@ export default function CardTotal({
                             style={{
                                 paddingRight: 10,
                                 fontWeight: 500,
-                                fontSize: 16,
+                                fontSize: setSize(16, 14, 14),
                                 textAlign: 'end'
                             }}
                         >
@@ -140,7 +136,7 @@ export default function CardTotal({
                             span={12}
                             style={{
                                 fontWeight: 600,
-                                fontSize: 18,
+                                fontSize: setSize(18, 16, 14),
                             }}
                         >
                             Packing Fee
@@ -150,7 +146,7 @@ export default function CardTotal({
                             style={{
                                 paddingRight: 10,
                                 fontWeight: 500,
-                                fontSize: 16,
+                                fontSize: setSize(16, 14, 14),
                                 textAlign: 'end'
                             }}
                         >
@@ -169,7 +165,7 @@ export default function CardTotal({
                             span={12}
                             style={{
                                 fontWeight: 600,
-                                fontSize: 18,
+                                fontSize: setSize(18, 16, 14),
                             }}
                         >
                             Promo
@@ -179,7 +175,7 @@ export default function CardTotal({
                             style={{
                                 paddingRight: 10,
                                 fontWeight: 500,
-                                fontSize: 16,
+                                fontSize: setSize(16, 14, 14),
                                 textAlign: 'end',
                                 color: '#E83600'
                             }}
@@ -202,8 +198,8 @@ export default function CardTotal({
                         <Col
                             span={12}
                             style={{
-                                fontWeight: 600,
-                                fontSize: 18,
+                                fontWeight: 700,
+                                fontSize: setSize(20, 18, 16),
                             }}
                         >
                             Total
@@ -212,8 +208,8 @@ export default function CardTotal({
                             span={12}
                             style={{
                                 paddingRight: 10,
-                                fontWeight: 500,
-                                fontSize: 20,
+                                fontWeight: 700,
+                                fontSize: setSize(24, 22, 20),
                                 textAlign: 'end',
                             }}
                         >
@@ -229,7 +225,7 @@ export default function CardTotal({
                 >
                     <Button
                         type='primary'
-                        size='large'
+                        size={setSize('large', 'medium', 'medium')}
                         style={{
                             width: '100%',
                             borderRadius: 50

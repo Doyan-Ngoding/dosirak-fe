@@ -15,7 +15,8 @@ import { useAuth } from '../../../context/AuthContext'
 export default function OrderComp() {
 
     const {
-        listMenu,
+        listMenuGrouped,
+        tabCategory, 
     } = useMenu();
 
     const {
@@ -23,7 +24,11 @@ export default function OrderComp() {
         subTotal, setSubTotal,
     } = useOrder();
 
-    const [activeTab, setActiveTab] = useState(listMenu[0].key);
+    const {
+        setSize,
+    } = useAuth();
+
+    const [activeTab, setActiveTab] = useState(tabCategory[0] || '');
     const sectionRefs = useRef({});
 
     const addedToCart = (menuItem) => { 
@@ -57,64 +62,53 @@ export default function OrderComp() {
             <LayoutComp>
                 <Row>
                     <Col
-                        span={
-                            selectedMenu.length > 0 ? 18 : 24
-                        }
+                        span={selectedMenu.length > 0 ? setSize(18, 16, 24) : 24}
                     >
                         <div
                             style={{
-                                padding: 80
+                                padding: setSize("50px 80px", "30px 50px", "30px")
                             }}
                         >
                             <HeaderOrder />
                             <CategoryMenu 
-                                category={listMenu}
+                                category={tabCategory}
                                 selectedCategory={activeTab}
                                 setSelctedCategory={setActiveTab}
                                 sectionRef={sectionRefs}
                             />
                             {
-                                listMenu.map((value) => (
+                                listMenuGrouped.map((value) => (
                                     <>
                                         <div
-                                            key={value.key} 
-                                            ref={(el) => (sectionRefs.current[value.key] = el)}
-                                            style={{
-                                                paddingBottom: 50
-                                            }}
+                                            key={value.category} 
+                                            ref={(el) => (sectionRefs.current[value.category] = el)}
+                                            className='pb-20'
                                         >
                                             <div
-                                                style={{
-                                                    fontSize: 42,
-                                                    color: '#6B6B6B',
-                                                    fontWeight: 600
-                                                }}
+                                                className='lg:text-3xl md:text-2xl text-lg text-[#6B6B6B] font-semibold'
                                             >
                                                 {value.category}
                                             </div>
                                             <Row
-                                                style={{
-                                                    paddingTop: 20,
-                                                }}
-                                                gutter={[36, 36]}
+                                                className='pt-5'
+                                                gutter={[28, 28]}
                                             >
                                                 {
                                                     value.menu.map((value, key) => (
                                                         <>
                                                             <Col
                                                                 span={
-                                                                    selectedMenu.length > 0 ? 8 : 6
+                                                                    setSize(selectedMenu.length > 0 ? 8 : 6, selectedMenu.length > 0 ? 12 : 8, 12)
                                                                 }
                                                             >
                                                                 <CardMenu 
                                                                     image={value.image}
-                                                                    restaurant={value.restaurant}
+                                                                    restaurant={value.restaurant_name}
                                                                     title={value.name}
-                                                                    desc={value.desc}
+                                                                    desc={value.description}
                                                                     price={value.price}
-                                                                    stock={value.stock}
+                                                                    stock={value.qty}
                                                                     addToCart={() => addedToCart(value)}
-                                                                
                                                                 />
                                                             </Col>
                                                         </>
@@ -130,7 +124,7 @@ export default function OrderComp() {
                     {
                         selectedMenu.length > 0 && (
                             <Col
-                                span={6}
+                                span={setSize(6, 8, 24)}
                             >
                                 <SiderOrder /> 
                             </Col>

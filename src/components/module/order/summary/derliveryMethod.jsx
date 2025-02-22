@@ -12,6 +12,7 @@ import {
 import { useOrder } from '../../../../context/OrderContext'
 import ModalComp from '../../../global/modal';
 import dayjs from 'dayjs';
+import { useAuth } from '../../../../context/AuthContext';
 
 export default function DerliveryMethod() {
 
@@ -20,49 +21,53 @@ export default function DerliveryMethod() {
         showDatePicker, setShowDatePicker,
         selectedDate, setSelectedDate,
     } = useOrder();
-// sdalkdal
+
+    const {
+        setSize
+    } = useAuth()
+
     return (
         <>
             <Row
-                style={{
-                    padding: 20,
-                    borderRadius: 10,
-                    backgroundColor: '#FFFFFF'
-                }}
                 align={"middle"}
-                gutter={[0, 24]}
+                gutter={setSize([0, 20], [0, 18], [0, 14])}
+                className='bg-white lg:p-5 md:p-3.5 p-3 rounded-lg'
             >
                 <Col
                     span={24}
-                    style={{
-                        color: '#393939',
-                        fontWeight: 600,
-                        fontSize: 20,
-                    }}
                 >
-                    DELIVERY METHOD
+                    <div
+                        className='text-[#393939] font-semibold lg:text-lg md:text-[16px] text-[12px]'
+                    >
+                        DELIVERY METHOD
+                    </div>
                 </Col>
                 <Col
                     span={24}
                 >
                     <Row
                         align={"middle"}
-                        justify={"space-between"}
+                        justify={setSize("space-between", "space-around", "space-around")}
                         gutter={[16, 16]}
                     >
                         <Col
                             span={12}
                         >
                             <Button
-                                size='large'
+                                size={setSize('large', 'medium', 'medium')}
                                 className={orderMethod === "IMMEDIATELY" ? 'order-method-1' : 'order-method-2'}
                                 icon={
                                     <IconMotorbike 
                                         style={{
-                                            marginRight: 5
+                                            marginRight: 5,
+                                            marginTop: 2,
                                         }}
+                                        size={setSize(24, 18, 18)}
                                     />
                                 }
+                                style={{
+                                    fontSize: setSize(16, 12, 11)
+                                }}
                                 onClick={() => {setOrderMethod("IMMEDIATELY"), setSelectedDate()}}
                             >
                                 IMMEDIATELY
@@ -72,16 +77,19 @@ export default function DerliveryMethod() {
                             span={12}
                         >
                             <Button
-                                size='large'
+                                size={setSize('large', 'medium', 'middle')}
                                 className={orderMethod === "SCHEDULED" ? 'order-method-1' : 'order-method-2'}
                                 style={{
-                                    zIndex: 3
+                                    zIndex: 3,
+                                    fontSize: setSize(15, 11, 10)
                                 }}
                                 icon={
                                     <IconCalendarWeek 
                                         style={{
-                                            marginRight: 5
+                                            marginRight: setSize(5, 5, 2),
+                                            marginTop: 2,
                                         }}
+                                        size={setSize(20, 18, 18)}
                                     />
                                 }
                                 onClick={() => {setOrderMethod("SCHEDULED"), setShowDatePicker(!showDatePicker)}}

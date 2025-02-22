@@ -3,6 +3,7 @@ import {
     Button,
     Card 
 } from 'antd'
+import { useAuth } from '../../../context/AuthContext'
 
 export default function CardTotal({
     title,
@@ -10,6 +11,11 @@ export default function CardTotal({
     titleAction,
     action,
 }) {
+
+    const {
+        setSize
+    } = useAuth()
+
     return (
         <>
             <Card
@@ -18,21 +24,12 @@ export default function CardTotal({
                 }}
             >
                 <div
-                    style={{
-                        fontSize: 20,
-                        fontWeight: 600,
-                        color: '#000000'
-                    }}
+                    className='text-black font-semibold lg:text-xl md:text-[16px] text-[16px]'
                 >
                     {title}
                 </div>
                 <div
-                    style={{
-                        fontSize: 32,
-                        fontWeight: 600,
-                        color: '#000000',
-                        paddingTop: 10
-                    }}
+                    className='text-black font-semibold pt-2.5 lg:text-[32px] md:text-[22px] text-[22px]'
                 >
                     Rp. {total ? parseFloat(total).toLocaleString() : '-'}
                 </div>
@@ -42,8 +39,8 @@ export default function CardTotal({
                         width: '100%',
                         margin: '20px 5px 5px 5px',
                         borderRadius: 50,
-                        height: 50,
-                        fontSize: 16,
+                        height: setSize(50, 34, 34),
+                        fontSize: setSize(16, 14, 14),
                         fontWeight: 600
                     }}
                     onClick={action}
