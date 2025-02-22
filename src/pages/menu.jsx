@@ -1,7 +1,13 @@
 import React from 'react'
+import AuthProvider from '../context/AuthContext'
+import MenuComp from '../components/module/menu'
 
 export default function MenuPage() {
     return (
-        <div>MenuPage</div>
+        <>
+            <AuthProvider>
+                <MenuComp />
+            </AuthProvider>
+        </>
     )
 }
