@@ -5,41 +5,38 @@ import {
     Row 
 } from 'antd'
 import { IconTicket } from '@tabler/icons-react'
+import { useAuth } from '../../../../context/AuthContext'
 
 export default function CardVoucher() {
+
+    const {
+        setSize
+    } = useAuth()
+
     return (
         <>
             <Row
-                style={{
-                    marginTop: 10,
-                    padding: 20,
-                    borderRadius: 10,
-                    backgroundColor: '#FFFFFF'
-                }}
                 align={"middle"}
+                justify={"end"}
                 gutter={[0, 12]}
+                className='bg-white lg:p-5 md:p-3.5 p-3 rounded-lg mt-2.5'
             >
                 <Col
                     span={24}
                     style={{
                         display: 'flex',  
+                        alignItems: "center"
                     }}
                 >
                     <IconTicket 
                         fill='#E83600'
-                        color='#000000'
+                        color='#ffffff'
                         size={24}
                         style={{
-                            marginTop: 4
                         }}
                     />
                     <div
-                        style={{
-                            color: '#393939',
-                            fontWeight: 600,
-                            fontSize: 20,
-                            paddingLeft: 10
-                        }}
+                        className='text-[#393939] font-semibold lg:text-lg md:text-[16px] text-[12px] pl-2.5'
                     >
                         VOUCHER
                     </div>

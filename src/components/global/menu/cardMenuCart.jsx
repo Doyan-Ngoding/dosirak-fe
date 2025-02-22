@@ -9,6 +9,7 @@ import {
     Col, 
     Row 
 } from 'antd'
+import { useAuth } from '../../../context/AuthContext'
 
 export default function CardMenuCart({
     image,
@@ -18,58 +19,58 @@ export default function CardMenuCart({
     addQty,
     subQty
 }) {
+    
+    const {
+        setSize
+    } = useAuth()
+
     return (
         <>
             <Card
                 style={{
-                    margin: '10px 0px'
+                    margin: '5px 0px'
                 }}
             >
                 <Row
                     gutter={[12, 12]}
                     align={"middle"}
-                    style={{
-                        paddingBottom: 10,
-                        borderBottom: '1px solid #EBEEF2'
-                    }}
+                    className='pb-2.5 pt-1 border-b border-[#EBEEF2]'
                 >
                     <Col
-                        span={6}
+                        span={setSize(6, 6, 4)}
                     >
+                        {/* ${import.meta.env}/iamges${image} */}
+                        {/* ${import.meta.env}${image} */}
                         <div 
-                            style={{
-                                width: '100%',
-                                aspectRatio: '1 / 1',
-                                borderRadius: 4,
-                                backgroundImage: `url(${image})`,
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center',
-                                backgroundRepeat: 'no-repeat',
-                            }}
+                            className={`bg-[url(${import.meta.env}/iamges${image})] bg-cover bg-center bg-no-repeat w-full aspect-square rounded-sm`}
                         />
                     </Col>
                     <Col
-                        span={18}
-                        className='menu-title'
+                        span={setSize(18, 18, 20)}
                     >
-                        {title}
+                        <div
+                            className='text-[#393939] font-semibold lg:text-2xl md:text-lg text-[16px]'
+                        >
+                            {title}
+                        </div>
                     </Col>
                 </Row>
                 <Row
                     justify='space-between'
                     align='middle'
-                    style={{
-                        paddingTop: 3
-                    }}
+                    className='pt-1'
                 >
                     <Col
-                        span={17}
-                        className='menu-price-2'
+                        span={setSize(15, 14, 17)}
                     >
-                        Rp. {price ? parseFloat(price).toLocaleString() : '-'}
+                        <div
+                            className='text-[#FF815B] lg:text-2xl md:text-lg text-lg font-bold'
+                        >
+                            Rp. {price ? parseFloat(price).toLocaleString() : '-'}
+                        </div>
                     </Col>
                     <Col
-                        span={7}
+                        span={setSize(8, 10, 7)}
                     >
                         <Row
                             justify='space-between'
@@ -79,7 +80,7 @@ export default function CardMenuCart({
                                 className='icon-hover'
                             >
                                 <IconCircleMinus 
-                                    size={28}
+                                    size={setSize(28, 20, 20)}
                                     style={{
                                         marginTop: 3,
                                         cursor: 'pointer'
@@ -87,21 +88,21 @@ export default function CardMenuCart({
                                     onClick={subQty}
                                 />
                             </Col>
-                            <Col
-                                className='menu-price-2'
-                            >
-                                {qty ? 'x' + qty : '0'}
+                            <Col>
+                                <div
+                                    className='text-[#FF815B] lg:text-2xl md:text-lg text-lg font-bold'
+                                >
+                                    {qty ? 'x' + qty : '0'}
+                                </div>
                             </Col>
                             <Col
                                 className='icon-hover-2'
                             >
                                 <IconCirclePlusFilled 
-                                    // color='#FF815B'
-                                    size={28}
+                                    size={setSize(28, 20, 20)}
                                     style={{
                                         marginTop: 3,
                                         cursor: 'pointer',
-                                        // color: '#FF815B'
                                     }}
                                     onClick={addQty}
                                 />

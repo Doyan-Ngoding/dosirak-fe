@@ -8,14 +8,6 @@ const OrderContext = createContext(null)
 
 const Order = ({children }) => {
 
-    const [listNearRestaurant, setListNearRestaurant] = useState([
-        'Xin Xin Corn Dog',
-        'Smile Kimbab',
-        "Paik's Noodle",
-        'Beom Chicken',
-        'Hongkong Banjum,'
-    ]);
-    const [selectedNearReastaurant, setSelectedNearReastaurant] = useState();
     const [menuSearched, setMenuSearched] = useState();
 
     const [selectedMenu, setSelectedMenu] = useState(JSON.parse(localStorage.getItem('cart')) ? JSON.parse(localStorage.getItem('cart')) : []);
@@ -25,7 +17,7 @@ const Order = ({children }) => {
     const [promo, setPromo] = useState(0);
     const [total, setTotal] = useState(0);
 
-    const [currStep, setCurrStep] = useState(0);
+    const [currStep, setCurrStep] = useState(1);
 
     const [orderMethod, setOrderMethod] = useState("IMMEDIATELY");
     const [editAbleAddress, setEditAbleAddress] = useState(false);
@@ -33,9 +25,28 @@ const Order = ({children }) => {
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [selectedDate, setSelectedDate] = useState();
 
+    const addQty = (id) => {
+        setSelectedMenu((prevCart) => 
+            prevCart.map((item) => 
+                item.id === id
+                    ? { ...item, qty: item.qty + 1, subTotal: (item.qty + 1) * item.price }
+                    : item
+            )
+        );
+    };
+
+    const subQty = (id) => {
+        setSelectedMenu((prevCart) => {
+            const updatedCart = prevCart.map((item) =>
+                item.id === id
+                    ? { ...item, qty: item.qty - 1, subTotal: (item.qty - 1) * item.price }
+                    : item
+            ).filter((item) => item.qty > 0); 
+            return updatedCart;
+        });
+    };
+
     const state = {
-        listNearRestaurant, setListNearRestaurant,
-        selectedNearReastaurant, setSelectedNearReastaurant,
         menuSearched, setMenuSearched,
 
         selectedMenu, setSelectedMenu,
@@ -54,6 +65,8 @@ const Order = ({children }) => {
 
         showDatePicker, setShowDatePicker,
         selectedDate, setSelectedDate,
+
+        addQty, subQty
     }
 
     return (
