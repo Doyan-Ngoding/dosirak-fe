@@ -21,90 +21,75 @@ export default function ContentListComp() {
             <div
                 className='lg:pt-[50px] md:pt-[30px] pt-[20px] lg:px-[50px] md:px-[30px] px-[20px]'
             >
-                <ConfigProvider
-                    theme={{
-                        components: {
-                            Anchor: {
-                                fontSize: setSize(18, 12, 10),
-                                linkPaddingBlock: 0,
-                                lineHeight: setSize('50px', '35px', '30px'),
-                                colorText: '#5A5A5A',
-                                colorPrimaryBg: 'green',
-                                lineWidthFocus: setSize('200px', '150px', '100px' ),
-                            }
-                        }
-                    }}
+                <div
+                    className="sticky lg:top-[68px] md:top-[50px] top-[35px] z-10 bg-white w-auto text-[Plus Jakarta Sans]"
                 >
                     <div
-                        className="sticky lg:top-[68px] md:top-[50px] top-[35px] z-10 bg-white w-auto text-[Plus Jakarta Sans]"
+                        className="overflow-x-auto whitespace-nowrap custom-scroll border-b border-gray-500"
                     >
-                        <div
-                            className="overflow-x-auto whitespace-nowrap custom-scroll border-b border-gray-500"
-                        >
-                            <Anchor
-                                direction="horizontal"
-                                className="inline-flex space-x-4"
-                                targetOffset={30}
-                                items={
-                                    tabCategory ? tabCategory.map((value) => ({
-                                        key: value,
-                                        href: '#'+value,
-                                        title: value,
-                                    })) : []
-                                }
-                            />
-                        </div>
+                        <Anchor
+                            direction="horizontal"
+                            className="inline-flex space-x-4"
+                            targetOffset={15}
+                            items={
+                                tabCategory ? tabCategory.map((value) => ({
+                                    key: value,
+                                    href: '#'+value,
+                                    title: value,
+                                })) : []
+                            }
+                        />
                     </div>
-                    <div
-                        className='lg:pt-10 md:pt-7 pt-5'
-                    >
-                        {
-                            listMenuGrouped && listMenuGrouped.map((value, key) => (
-                                <>
+                </div>
+                <div
+                    className='lg:pt-10 md:pt-7 pt-5'
+                >
+                    {
+                        listMenuGrouped && listMenuGrouped.map((value, key) => (
+                            <>
+                                <div
+                                    id={value.category}
+                                >
                                     <div
-                                        id={value.category}
+                                        className='lg:pb-3 md:pb-2 pb-1'
                                     >
-                                        <div
-                                            className='lg:pb-3 md:pb-2 pb-1'
-                                        >
-                                            <SplitTitle 
-                                                no={key+1}
-                                                title={value.category}
-                                            />
-                                        </div>
-                                        <Row
-                                            justify={'start'}
-                                            align={'middle'}
-                                            gutter={[12, 12]}
-                                            style={{
-                                                paddingBottom: setSize(60, 40, 30)
-                                            }}
-                                        >
-                                            {
-                                                value.menu.map((value, key) => (
-                                                    <Col
-                                                        span={setSize(6, 6, 8)}
-                                                    >
-                                                        <CardMenuHome 
-                                                            image={value.image}
-                                                            title={value.name}
-                                                            desc={value.description}
-                                                            price={value.price}
-                                                            stock={value.qty}
-                                                            showResto={false}
-                                                            addToCart={() => navigate('/order')}
-                                                            isMenu={true}
-                                                        />
-                                                    </Col>
-                                                ))
-                                            }
-                                        </Row>
+                                        <SplitTitle 
+                                            no={key+1}
+                                            title={value.category}
+                                        />
                                     </div>
-                                </>
-                            ))
-                        }
-                    </div>
-                </ConfigProvider>
+                                    <Row
+                                        justify={'start'}
+                                        align={'middle'}
+                                        gutter={[12, 12]}
+                                        style={{
+                                            paddingBottom: setSize(60, 40, 30)
+                                        }}
+                                    >
+                                        {
+                                            value.menu.map((value, key) => (
+                                                <Col
+                                                    span={setSize(6, 6, 8)}
+                                                >
+                                                    <CardMenuHome 
+                                                        image={value.image}
+                                                        title={value.name}
+                                                        desc={value.description}
+                                                        price={value.price}
+                                                        stock={value.qty}
+                                                        showResto={false}
+                                                        addToCart={() => navigate('/order')}
+                                                        isMenu={true}
+                                                    />
+                                                </Col>
+                                            ))
+                                        }
+                                    </Row>
+                                </div>
+                            </>
+                        ))
+                    }
+                </div>
                 <style>
                 {`
                     .ant-anchor-link {
