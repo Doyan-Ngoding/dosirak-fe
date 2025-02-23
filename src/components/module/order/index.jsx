@@ -81,7 +81,7 @@ export default function OrderComp() {
                                     <Anchor
                                         direction="horizontal"
                                         className="inline-flex space-x-4"
-                                        targetOffset={30}
+                                        targetOffset={150}
                                         items={
                                             tabCategory ? tabCategory.map((value) => ({
                                                 key: value,

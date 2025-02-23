@@ -30,7 +30,7 @@ export default function ContentListComp() {
                         <Anchor
                             direction="horizontal"
                             className="inline-flex space-x-4"
-                            targetOffset={30}
+                            targetOffset={15}
                             items={
                                 tabCategory ? tabCategory.map((value) => ({
                                     key: value,

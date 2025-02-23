@@ -86,6 +86,10 @@ export default function FullComp(props) {
                             controlHeight: setSize(24, 20, 10),
                             fontSize: setSize(12, 10, 10),
                         },
+                        Tooltip: {
+                            colorBgSpotlight: '#FFFFFF',
+                            colorTextLightSolid: '#000000'
+                        }
                     }
                 }}
             >
@@ -93,6 +97,7 @@ export default function FullComp(props) {
                     hasSider
                 >
                     <Sider
+                        trigger={null}
                         breakpoint="md"
                         collapsedWidth="0"
                         style={siderStyle}
@@ -110,20 +115,23 @@ export default function FullComp(props) {
                             <Menu.Item key={'5'}><Link to={'/cms'}><div className='flex items-center'><IconDashboard size={setSize(18, 14, 12)} /><div className='pl-2'>Dashboard</div></div></Link></Menu.Item>
                             <Menu.Item key={'6'}><Link to={'/menu'}><div className='flex items-center'><IconLayoutGrid size={setSize(18, 14, 12)} /><div className='pl-2'>Products</div></div></Link></Menu.Item>
                             <Menu.Item key={'7'}><Link to={'/order'}><div className='flex items-center'><IconUsers size={setSize(18, 14, 12)} /><div className='pl-2'>Users</div></div></Link></Menu.Item>
-                            <div style={{ position: 'absolute', bottom: 0, borderTop: '1px solid #DCDCDC', width: '100%' }}>
-                                <Menu.Item key={'8'}><Link to={'/cms'}><div className='flex items-center'><IconSettings size={setSize(18, 14, 12)} /><div className='pl-2'>Settings</div></div></Link></Menu.Item>
-                                <Menu.Item key={'9'} danger><Link to={'/cms'}><div className='flex items-center'><IconPower color='red' size={setSize(18, 14, 12)} /><div className='pl-2'>Logout</div></div></Link></Menu.Item>
-                                <div
-                                    className='flex justify-center text-[#4880FF]'
-                                >
-
-                                    <IconChevronLeft 
-                                        color='#6B6B6B'
-                                        size={18}
-                                        onClick={() => setIsCollapseShow(true)}
-                                    />
-                                </div>
-                            </div>
+                           {
+                                !isMobile && (
+                                    <div style={{ position: 'absolute', bottom: 0, borderTop: '1px solid #DCDCDC', width: '100%' }}>
+                                        <Menu.Item key={'8'}><Link to={'/cms'}><div className='flex items-center'><IconSettings size={setSize(18, 14, 12)} /><div className='pl-2'>Settings</div></div></Link></Menu.Item>
+                                        <Menu.Item key={'9'} danger><Link to={'/cms'}><div className='flex items-center'><IconPower color='red' size={setSize(18, 14, 12)} /><div className='pl-2'>Logout</div></div></Link></Menu.Item>
+                                        <div
+                                            className='flex justify-center text-[#4880FF] py-3'
+                                        >
+                                            <IconChevronLeft 
+                                                color='#6B6B6B'
+                                                size={18}
+                                                onClick={() => setIsCollapseShow(true)}
+                                            />
+                                        </div>
+                                    </div>
+                                )
+                           }
                         </Menu>   
                     </Sider>
                     <Layout>

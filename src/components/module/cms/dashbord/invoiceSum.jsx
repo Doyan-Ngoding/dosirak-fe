@@ -17,7 +17,7 @@ export default function InvoiceSumComp() {
             amount: 98700,
             status: 'Scheduled',
             scheduled_time: '2018-07-26 10:30:30',
-            bulk: 'false',
+            bulk: 'Tidak',
             qty: 10,
         },
         {
@@ -27,7 +27,7 @@ export default function InvoiceSumComp() {
             amount: 98700,
             status: 'Immediately',
             scheduled_time: null,
-            bulk: 'false',
+            bulk: 'Tidak',
             qty: 10,
         },
         {
@@ -37,7 +37,7 @@ export default function InvoiceSumComp() {
             amount: 98700,
             status: 'Immediately',
             scheduled_time: null,
-            bulk: 'true',
+            bulk: 'Ya',
             qty: 190,
         },
     ]

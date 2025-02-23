@@ -26,7 +26,7 @@ export default function SalesChartComp() {
                         optionSalesDetail((data && data.length > 0) && data, setSize('large', 'medium', 'small'))
                     }
                     style={{ 
-                        height: "50vh",
+                        height: setSize("50vh", "20vh", "20vh"),
                         width: '100%',
                         padding: setSize('5px 10px', '3px 6px', '2px 4px'),
                     }}

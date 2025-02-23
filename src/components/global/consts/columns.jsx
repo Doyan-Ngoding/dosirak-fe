@@ -1,5 +1,7 @@
 import { IconChevronDown, IconChevronUp, IconFilter, IconSelector } from "@tabler/icons-react";
 import { useAuth } from "../../../context/AuthContext";
+import dayjs from "dayjs";
+import { Tooltip } from "antd";
 
 const iconSort = () => {
     const { setSize } = useAuth();
@@ -83,6 +85,7 @@ export const columnInvoiceList = (data = []) => [
         title: "Date Time",
         key: "date",
         dataIndex: "date",
+        render: (text) => text ? dayjs(text).format('DD.MM.YYYY - hh.mm A') : '',
         sorter: (a, b) => String(a.date || '').localeCompare(String(b.date || '')),
         ...iconSort(),
     },
@@ -90,6 +93,7 @@ export const columnInvoiceList = (data = []) => [
         title: "Amount",
         key: "amount",
         dataIndex: "amount",
+        render: (text) => 'Rp. ' + (text ? parseFloat(text).toLocaleString() : '-'),
         sorter: (a, b) => String(a.amount || '').localeCompare(String(b.amount || '')),
         ...iconSort(),
     },
@@ -97,10 +101,21 @@ export const columnInvoiceList = (data = []) => [
         title: "Status",
         key: "status",
         dataIndex: "status",
+        render: (text, record) => (
+            <>
+                <Tooltip title={text === "Scheduled" ? (record.date ? dayjs(record.date).format('DD.MM.YYYY - hh.mm A') : '') : ''}>
+                    <div
+                        className={`${text === "Scheduled" ? 'bg-amber-100 cursor-pointer' : 'bg-blue-50'} rounded-lg text-center`}
+                    >
+                        {text}
+                    </div>
+                </Tooltip>
+            </>
+        ),
         filters: [
-        ...new Set(data?.map((item) => item.status)),
-        ].map((el) => {
-        return { text: el, value: el };
+            ...new Set(data?.map((item) => item.status)),
+            ].map((el) => {
+            return { text: el, value: el };
         }),
         onFilter: (value, record) => record.status.indexOf(value) === 0,
         filterSearch: true,
@@ -110,10 +125,21 @@ export const columnInvoiceList = (data = []) => [
         title: "Bulk",
         key: "bulk",
         dataIndex: "bulk",
+        render: (text, record) => (
+            <>
+                <Tooltip title={text === "Ya" ? record.qty + ' items' : ''}>
+                    <div
+                        className={`${text === "Ya" ? 'bg-red-100 cursor-pointer' : 'bg-blue-50'} rounded-lg text-center`}
+                    >
+                        {text}
+                    </div>
+                </Tooltip>
+            </>
+        ),
         filters: [
-        ...new Set(data?.map((item) => item.bulk)),
-        ].map((el) => {
-        return { text: el, value: el };
+            ...new Set(data?.map((item) => item.bulk)),
+            ].map((el) => {
+            return { text: el, value: el };
         }),
         onFilter: (value, record) => record.bulk.indexOf(value) === 0,
         filterSearch: true,
