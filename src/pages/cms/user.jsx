@@ -1,6 +1,6 @@
 import React from 'react'
 import AuthProvider from '../../context/AuthContext'
-import UserProvider from '../../context/MenuContext'
+import UserProvider from '../../context/UserContext'
 import CmsUserComp from '../../components/module/cms/user'
 
 export default function CmsUserPage() {

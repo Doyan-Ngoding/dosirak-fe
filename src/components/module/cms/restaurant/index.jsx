@@ -3,23 +3,23 @@ import FullComp from '../../../global/layout/full'
 import { Button, Input, Table } from 'antd'
 import { useAuth } from '../../../../context/AuthContext'
 import { IconSearch } from '@tabler/icons-react'
-import { useMenu } from '../../../../context/MenuContext'
-import { columnProductList } from '../../../global/consts/columns'
+import { columnCategoryList } from '../../../global/consts/columns'
+import { useRestaurant } from '../../../../context/RestaurantContext'
 
-export default function CmsProductComp() {
+export default function CmsRestaurantComp() {
 
     const {
         setSize
     } = useAuth()
 
     const {
-        listMenu
-    } = useMenu()
-    
+        listNearRestaurant
+    } = useRestaurant()
+
     return (
         <>
             <FullComp
-                menu="Products"
+                menu="Restaurants"
             >
                 <div
                     className='bg-white w-full lg:my-0 lg:rounded-2xl lg:py-5 lg:px-5 md:my-0 md:rounded-xl md:py-3 md:px-3 my-0 rounded-xl py-2 px-2'
@@ -47,19 +47,19 @@ export default function CmsProductComp() {
                         <Button
                             type='primary'
                         >
-                            + Add Product
+                            + Add Restaurant
                         </Button>
                     </div>
                     <div
                         className='lg:mt-5 md:mt-3 mt-3'
                     >
                         <Table 
-                            dataSource={listMenu}
-                            columns={columnProductList(listMenu)}
+                            dataSource={listNearRestaurant}
+                            columns={columnCategoryList(listNearRestaurant)}
                             className='lg:pt-5 md:pt-3 pt-2'
                             size={setSize('medium', 'small', 'small')}
                             pagination={{
-                                total: listMenu && listMenu?.length,
+                                total: listNearRestaurant && listNearRestaurant?.length,
                                 showTotal: (total, range) =>
                                   `${range[0]}-${range[1]} of ${
                                     total ? total.toLocaleString() : ""
@@ -70,9 +70,6 @@ export default function CmsProductComp() {
                                 hideOnSinglePage: false,
                                 pageSizeOptions: [10, 20, 50, 100],
                                 size: setSize('large', 'medium', 'small'),
-                            }}
-                            scroll={{
-                                x: setSize(0, 1000, 800),
                             }}
                         />
                     </div>

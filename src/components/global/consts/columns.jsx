@@ -237,3 +237,114 @@ export const columnProductList = (data = []) => {
         },
     ]
 }
+
+export const columnUserList = (data = []) => {
+    const { setSize } = useAuth();
+    return [
+        {
+            title: '#',
+            key: '#',
+            dataIndex: '#',
+            render: (text, record, index) => index + 1
+        },
+        {
+            title: 'Name',
+            key: 'name',
+            dataIndex: 'name',
+            sorter: (a, b) => String(a.name || '').localeCompare(String(b.name || '')),
+            ...iconSort(),
+        },
+        {
+            title: 'Email',
+            key: 'email',
+            dataIndex: 'email',
+            sorter: (a, b) => String(a.email || '').localeCompare(String(b.email || '')),
+            ...iconSort(),
+        },
+        {
+            title: 'Phone',
+            key: 'phone',
+            dataIndex: 'phone',
+            sorter: (a, b) => String(a.phone || '').localeCompare(String(b.phone || '')),
+            ...iconSort(),
+        }, 
+        {
+            title: 'Address',
+            key: 'location',
+            dataIndex: 'location',
+        }, 
+        {
+            title: 'Role',
+            key: 'role',
+            dataIndex: 'role',
+            render: (text) => text ? text.charAt(0).toUpperCase() + text.slice(1) : '',
+            filters: [
+                ...new Set(data?.map((item) => (item.role ? item.role.charAt(0).toUpperCase() + item.role.slice(1) : ''))),
+                ].map((el) => {
+                return { text: el, value: el };
+            }),
+            onFilter: (value, record) => record.role.indexOf(value) === 0,
+            filterSearch: true,
+            ...iconFilter(),
+        },
+        {
+            title: '',
+            width: 80,
+            render: (text, record, index) => (
+                <>
+                    <div
+                        className="flex items-center justify-between w-full"
+                    >
+                        <IconEdit 
+                            size={setSize(16, 14, 12)}
+                            color="#faad14"
+                        />
+                        <IconTrash 
+                            size={setSize(16, 14, 12)}
+                            color="red"
+                        />
+                    </div>
+                </>
+            )
+        },
+    ]
+}
+
+export const columnCategoryList = (data = []) => {
+    const { setSize } = useAuth();
+    return [
+        {
+            title: '#',
+            key: '#',
+            dataIndex: '#',
+            render: (text, record, index) => index + 1
+        },
+        {
+            title: 'Name',
+            key: 'name',
+            dataIndex: 'name',
+            sorter: (a, b) => String(a.name || '').localeCompare(String(b.name || '')),
+            ...iconSort(),
+        },
+        {
+            title: '',
+            width: 80,
+            render: (text, record, index) => (
+                <>
+                    <div
+                        className="flex items-center justify-between w-full"
+                    >
+                        <IconEdit 
+                            size={setSize(16, 14, 12)}
+                            color="#faad14"
+                        />
+                        <IconTrash 
+                            size={setSize(16, 14, 12)}
+                            color="red"
+                        />
+                    </div>
+                </>
+            )
+        },
+    ]
+}

@@ -15,6 +15,8 @@ import CmsPage from '../pages/cms';
 import CmsLoginPage from '../pages/cms/login';
 import CmsProductPage from '../pages/cms/product';
 import CmsUserPage from '../pages/cms/user';
+import CmsCategoryPage from '../pages/cms/category';
+import CmsRestaurantPage from '../pages/cms/restaurant';
 
 function Index() {
     return (
@@ -30,6 +32,8 @@ function Index() {
             <Route path='/cms/login' element={<CmsLoginPage />} />
             <Route path='/cms/product' element={<CmsProductPage />} />
             <Route path='/cms/user' element={<CmsUserPage />} />
+            <Route path='/cms/category' element={<CmsCategoryPage />} />
+            <Route path='/cms/restaurant' element={<CmsRestaurantPage />} />
         </Routes>
     )
 }

@@ -3,7 +3,7 @@ import ConfigComp from './configComp'
 import { Badge, ConfigProvider, Drawer, Layout, Menu } from 'antd'
 import { useAuth } from '../../../context/AuthContext'
 import { Link, useLocation } from 'react-router-dom'
-import { IconBell, IconBellFilled, IconCategory, IconChevronDown, IconChevronLeft, IconDashboard, IconLayoutGrid, IconMenu2, IconPower, IconSettings, IconUserFilled, IconUsers } from '@tabler/icons-react'
+import { IconBell, IconBellFilled, IconBuildingWarehouse, IconCategory, IconCategory2, IconChevronDown, IconChevronLeft, IconDashboard, IconLayoutGrid, IconMenu2, IconPower, IconSettings, IconUserFilled, IconUsers } from '@tabler/icons-react'
 const { Sider, Header, Content, Footer } = Layout
 
 export default function FullComp(props) {
@@ -37,7 +37,7 @@ export default function FullComp(props) {
     const headerStyle = {
         position: 'sticky',
         top: 0,
-        zIndex: 1,
+        zIndex: 10,
         width: '100%',
         display: 'flex',
         alignItems: 'center',
@@ -123,12 +123,14 @@ export default function FullComp(props) {
                         >
                             <Menu.Item key={'5'}><Link to={'/cms'}><div className='flex items-center'><IconDashboard size={setSize(18, 14, 12)} /><div className='pl-2'>Dashboard</div></div></Link></Menu.Item>
                             <Menu.Item key={'7'}><Link to={'/cms/product'}><div className='flex items-center'><IconLayoutGrid size={setSize(18, 14, 12)} /><div className='pl-2'>Products</div></div></Link></Menu.Item>
+                            <Menu.Item key={'9'}><Link to={'/cms/category'}><div className='flex items-center'><IconCategory2 size={setSize(18, 14, 12)} /><div className='pl-2'>Category</div></div></Link></Menu.Item>
+                            <Menu.Item key={'10'}><Link to={'/cms/restaurant'}><div className='flex items-center'><IconBuildingWarehouse size={setSize(18, 14, 12)} /><div className='pl-2'>Restaurant</div></div></Link></Menu.Item>
                             <Menu.Item key={'8'}><Link to={'/cms/user'}><div className='flex items-center'><IconUsers size={setSize(18, 14, 12)} /><div className='pl-2'>Users</div></div></Link></Menu.Item>
                            {
                                 !isMobile && (
                                     <div style={{ position: 'absolute', bottom: 0, borderTop: '1px solid #DCDCDC', width: '100%' }}>
-                                        <Menu.Item key={'8'}><Link to={'/cms'}><div className='flex items-center'><IconSettings size={setSize(18, 14, 12)} /><div className='pl-2'>Settings</div></div></Link></Menu.Item>
-                                        <Menu.Item key={'9'} danger><Link to={'/cms'}><div className='flex items-center'><IconPower color='red' size={setSize(18, 14, 12)} /><div className='pl-2'>Logout</div></div></Link></Menu.Item>
+                                        <Menu.Item key={'11'}><Link to={'/cms'}><div className='flex items-center'><IconSettings size={setSize(18, 14, 12)} /><div className='pl-2'>Settings</div></div></Link></Menu.Item>
+                                        <Menu.Item key={'12'} danger><Link to={'/cms'}><div className='flex items-center'><IconPower color='red' size={setSize(18, 14, 12)} /><div className='pl-2'>Logout</div></div></Link></Menu.Item>
                                         <div
                                             className='flex justify-center text-[#4880FF] py-3 border-t border-[#DCDCDC]'
                                         >
@@ -216,7 +218,7 @@ export default function FullComp(props) {
                             }}
                         >
                             <div
-                                className='font-bold text-[#202224] lg:text-[30px] md:text-[24px] text-[18px]'
+                                className='font-bold text-[#202224] lg:text-[30px] md:text-[24px] text-[18px] pl-2'
                             >
                                 {props.menu}
                             </div>
@@ -264,10 +266,12 @@ export default function FullComp(props) {
                     >
                         <Menu.Item key={'5'}><Link to={'/cms'}><div className='flex items-center'><IconDashboard size={setSize(18, 16, 12)} /><div className='pl-2'>Dashboard</div></div></Link></Menu.Item>
                         <Menu.Item key={'7'}><Link to={'/cms/product'}><div className='flex items-center'><IconLayoutGrid size={setSize(18, 16, 12)} /><div className='pl-2'>Products</div></div></Link></Menu.Item>
+                        <Menu.Item key={'9'}><Link to={'/cms/category'}><div className='flex items-center'><IconCategory2 size={setSize(18, 16, 12)} /><div className='pl-2'>Category</div></div></Link></Menu.Item>
+                        <Menu.Item key={'10'}><Link to={'/cms/restaurant'}><div className='flex items-center'><IconBuildingWarehouse size={setSize(18, 16, 12)} /><div className='pl-2'>Restaurant</div></div></Link></Menu.Item>
                         <Menu.Item key={'8'}><Link to={'/cms/user'}><div className='flex items-center'><IconUsers size={setSize(18, 16, 12)} /><div className='pl-2'>Users</div></div></Link></Menu.Item>
                         <div style={{ position: 'absolute', bottom: 0, borderTop: '1px solid #DCDCDC', width: '70%' }}>
-                            <Menu.Item key={'8'}><Link to={'/cms'}><div className='flex items-center'><IconSettings size={setSize(18, 14, 12)} /><div className='pl-2'>Settings</div></div></Link></Menu.Item>
-                            <Menu.Item key={'9'} danger><Link to={'/cms'}><div className='flex items-center'><IconPower color='red' size={setSize(18, 14, 12)} /><div className='pl-2'>Logout</div></div></Link></Menu.Item>
+                            <Menu.Item key={'11'}><Link to={'/cms'}><div className='flex items-center'><IconSettings size={setSize(18, 14, 12)} /><div className='pl-2'>Settings</div></div></Link></Menu.Item>
+                            <Menu.Item key={'12'} danger><Link to={'/cms'}><div className='flex items-center'><IconPower color='red' size={setSize(18, 14, 12)} /><div className='pl-2'>Logout</div></div></Link></Menu.Item>
                         </div>
                     </Menu>   
                 </Drawer>

@@ -1,10 +1,10 @@
+import axios from 'axios';
 import React, { 
     createContext, 
     useContext,
     useEffect,
     useState,
 } from 'react'
-import { useMediaQuery } from 'react-responsive'
 
 const UserContext = createContext(null)
 
@@ -13,7 +13,7 @@ const User = ({children }) => {
     const [listUser, setListUser] = useState([]);
 
     const getListUser = () => {
-        axios.get(`${import.meta.env.VITE_API_BE}/main-menu`)
+        axios.get(`${import.meta.env.VITE_API_BE}/users`)
         .then(res => {
             setListUser(res.data.results)
         })

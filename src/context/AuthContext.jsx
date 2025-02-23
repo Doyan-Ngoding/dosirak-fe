@@ -27,6 +27,9 @@ const Auth = ({children }) => {
         5: '/cms',
         6: '/cms/login',
         7: '/cms/product',
+        8: '/cms/user',
+        9: '/cms/category',
+        10: '/cms/restaurant',
     }
 
     const [modalLogin, setModalLogin] = useState(false);

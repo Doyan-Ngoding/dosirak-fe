@@ -3,8 +3,8 @@ import FullComp from '../../../global/layout/full'
 import { Button, Input, Table } from 'antd'
 import { useAuth } from '../../../../context/AuthContext'
 import { IconSearch } from '@tabler/icons-react'
-import { useMenu } from '../../../../context/MenuContext'
-import { columnProductList } from '../../../global/consts/columns'
+import { columnUserList } from '../../../global/consts/columns'
+import { useUser } from '../../../../context/UserContext'
 
 export default function CmsUserComp() {
 
@@ -14,7 +14,10 @@ export default function CmsUserComp() {
 
     const {
         listUser
-    } = useMenu()
+    } = useUser()
+
+    console.log(listUser);
+    
 
     return (
         <>
@@ -47,7 +50,7 @@ export default function CmsUserComp() {
                         <Button
                             type='primary'
                         >
-                            + Add Product
+                            + Add User
                         </Button>
                     </div>
                     <div
@@ -55,7 +58,7 @@ export default function CmsUserComp() {
                     >
                         <Table 
                             dataSource={listUser}
-                            columns={columnProductList(listUser)}
+                            columns={columnUserList(listUser)}
                             className='lg:pt-5 md:pt-3 pt-2'
                             size={setSize('medium', 'small', 'small')}
                             pagination={{
@@ -72,7 +75,7 @@ export default function CmsUserComp() {
                                 size: setSize('large', 'medium', 'small'),
                             }}
                             scroll={{
-                                x: setSize(0, 500, 500),
+                                x: setSize(0, 1000, 800),
                             }}
                         />
                     </div>
