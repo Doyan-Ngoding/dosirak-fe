@@ -1,4 +1,4 @@
-import { IconChevronDown, IconChevronUp, IconFilter, IconSelector } from "@tabler/icons-react";
+import { IconChevronDown, IconChevronUp, IconEdit, IconFilter, IconSelector, IconTrash } from "@tabler/icons-react";
 import { useAuth } from "../../../context/AuthContext";
 import dayjs from "dayjs";
 import { Tooltip } from "antd";
@@ -146,3 +146,94 @@ export const columnInvoiceList = (data = []) => [
         ...iconFilter(),
     },
 ]
+
+export const columnProductList = (data = []) => {
+    const { setSize } = useAuth();
+    return [
+        {
+            title: '#',
+            key: '#',
+            dataIndex: '#',
+            render: (text, record, index) => index + 1
+        },
+        {
+            title: 'Product Name',
+            key: 'name',
+            dataIndex: 'name',
+            sorter: (a, b) => String(a.name || '').localeCompare(String(b.name || '')),
+            ...iconSort(),
+        },
+        {
+            title: 'Description',
+            key: 'description',
+            dataIndex: 'description',
+        },
+        {
+            title: 'Qty',
+            key: 'qty',
+            dataIndex: 'qty',
+            sorter: (a, b) => String(a.qty || '').localeCompare(String(b.qty || '')),
+            ...iconSort(),
+        }, 
+        {
+            title: 'Price',
+            key: 'price',
+            dataIndex: 'price',
+            render: (text) => 'Rp. ' + (text ? parseFloat(text).toLocaleString() : '-'),
+            sorter: (a, b) => String(a.price || '').localeCompare(String(b.price || '')),
+            ...iconSort(),
+        },
+        {
+            title: 'Category',
+            key: 'category_name',
+            dataIndex: 'category_name',
+            filters: [
+                ...new Set(data?.map((item) => item.category_name)),
+                ].map((el) => {
+                return { text: el, value: el };
+            }),
+            onFilter: (value, record) => record.category_name.indexOf(value) === 0,
+            filterSearch: true,
+            ...iconFilter(),
+        },
+        {
+            title: 'Restaurant',
+            key: 'restaurant_name',
+            dataIndex: 'restaurant_name',
+            filters: [
+                ...new Set(data?.map((item) => item.restaurant_name)),
+                ].map((el) => {
+                return { text: el, value: el };
+            }),
+            onFilter: (value, record) => record.restaurant_name.indexOf(value) === 0,
+            filterSearch: true,
+            ...iconFilter(),
+        },
+        {
+            title: 'Image',
+            key: 'image',
+            dataIndex: 'image',
+            width: 10
+        },
+        {
+            title: '',
+            width: 80,
+            render: (text, record, index) => (
+                <>
+                    <div
+                        className="flex items-center justify-between w-full"
+                    >
+                        <IconEdit 
+                            size={setSize(16, 14, 12)}
+                            color="#faad14"
+                        />
+                        <IconTrash 
+                            size={setSize(16, 14, 12)}
+                            color="red"
+                        />
+                    </div>
+                </>
+            )
+        },
+    ]
+}

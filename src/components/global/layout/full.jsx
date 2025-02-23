@@ -56,6 +56,7 @@ export default function FullComp(props) {
                 theme={{
                     token: {
                         fontFamily: 'Nunito Sans',
+                        colorPrimary: '#4880FF'
                     },  
                     components: {
                         Layout: {
@@ -89,6 +90,14 @@ export default function FullComp(props) {
                         Tooltip: {
                             colorBgSpotlight: '#FFFFFF',
                             colorTextLightSolid: '#000000'
+                        },
+                        Input: {
+                            controlHeight: setSize(30, 24, 20),
+                            fontSize: setSize(12, 10, 10),
+                        },
+                        Button: {
+                            controlHeight: setSize(30, 24, 20),
+                            fontSize: setSize(12, 10, 10),
                         }
                     }
                 }}
@@ -113,15 +122,15 @@ export default function FullComp(props) {
                             onClick={e => setActiveKey(e)}
                         >
                             <Menu.Item key={'5'}><Link to={'/cms'}><div className='flex items-center'><IconDashboard size={setSize(18, 14, 12)} /><div className='pl-2'>Dashboard</div></div></Link></Menu.Item>
-                            <Menu.Item key={'6'}><Link to={'/menu'}><div className='flex items-center'><IconLayoutGrid size={setSize(18, 14, 12)} /><div className='pl-2'>Products</div></div></Link></Menu.Item>
-                            <Menu.Item key={'7'}><Link to={'/order'}><div className='flex items-center'><IconUsers size={setSize(18, 14, 12)} /><div className='pl-2'>Users</div></div></Link></Menu.Item>
+                            <Menu.Item key={'7'}><Link to={'/cms/product'}><div className='flex items-center'><IconLayoutGrid size={setSize(18, 14, 12)} /><div className='pl-2'>Products</div></div></Link></Menu.Item>
+                            <Menu.Item key={'8'}><Link to={'/cms/user'}><div className='flex items-center'><IconUsers size={setSize(18, 14, 12)} /><div className='pl-2'>Users</div></div></Link></Menu.Item>
                            {
                                 !isMobile && (
                                     <div style={{ position: 'absolute', bottom: 0, borderTop: '1px solid #DCDCDC', width: '100%' }}>
                                         <Menu.Item key={'8'}><Link to={'/cms'}><div className='flex items-center'><IconSettings size={setSize(18, 14, 12)} /><div className='pl-2'>Settings</div></div></Link></Menu.Item>
                                         <Menu.Item key={'9'} danger><Link to={'/cms'}><div className='flex items-center'><IconPower color='red' size={setSize(18, 14, 12)} /><div className='pl-2'>Logout</div></div></Link></Menu.Item>
                                         <div
-                                            className='flex justify-center text-[#4880FF] py-3'
+                                            className='flex justify-center text-[#4880FF] py-3 border-t border-[#DCDCDC]'
                                         >
                                             <IconChevronLeft 
                                                 color='#6B6B6B'
@@ -254,8 +263,8 @@ export default function FullComp(props) {
                         className={`font-semibold text-[16px]`}
                     >
                         <Menu.Item key={'5'}><Link to={'/cms'}><div className='flex items-center'><IconDashboard size={setSize(18, 16, 12)} /><div className='pl-2'>Dashboard</div></div></Link></Menu.Item>
-                        <Menu.Item key={'6'}><Link to={'/menu'}><div className='flex items-center'><IconLayoutGrid size={setSize(18, 16, 12)} /><div className='pl-2'>Products</div></div></Link></Menu.Item>
-                        <Menu.Item key={'7'}><Link to={'/order'}><div className='flex items-center'><IconUsers size={setSize(18, 16, 12)} /><div className='pl-2'>Users</div></div></Link></Menu.Item>
+                        <Menu.Item key={'7'}><Link to={'/cms/product'}><div className='flex items-center'><IconLayoutGrid size={setSize(18, 16, 12)} /><div className='pl-2'>Products</div></div></Link></Menu.Item>
+                        <Menu.Item key={'8'}><Link to={'/cms/user'}><div className='flex items-center'><IconUsers size={setSize(18, 16, 12)} /><div className='pl-2'>Users</div></div></Link></Menu.Item>
                         <div style={{ position: 'absolute', bottom: 0, borderTop: '1px solid #DCDCDC', width: '70%' }}>
                             <Menu.Item key={'8'}><Link to={'/cms'}><div className='flex items-center'><IconSettings size={setSize(18, 14, 12)} /><div className='pl-2'>Settings</div></div></Link></Menu.Item>
                             <Menu.Item key={'9'} danger><Link to={'/cms'}><div className='flex items-center'><IconPower color='red' size={setSize(18, 14, 12)} /><div className='pl-2'>Logout</div></div></Link></Menu.Item>

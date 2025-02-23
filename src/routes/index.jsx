@@ -13,6 +13,8 @@ import PaymentMethodPage from '../pages/paymentMethod';
 import CompletePage from '../pages/complete';
 import CmsPage from '../pages/cms';
 import CmsLoginPage from '../pages/cms/login';
+import CmsProductPage from '../pages/cms/product';
+import CmsUserPage from '../pages/cms/user';
 
 function Index() {
     return (
@@ -26,6 +28,8 @@ function Index() {
             <Route path='/complete' element={<CompletePage />} />
             <Route path='/cms' element={<CmsPage />} />
             <Route path='/cms/login' element={<CmsLoginPage />} />
+            <Route path='/cms/product' element={<CmsProductPage />} />
+            <Route path='/cms/user' element={<CmsUserPage />} />
         </Routes>
     )
 }
