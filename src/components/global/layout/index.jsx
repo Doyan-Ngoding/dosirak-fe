@@ -13,27 +13,24 @@ import { IconMenu2, IconShoppingBag } from '@tabler/icons-react';
 import { useMediaQuery } from 'react-responsive';
 import { useAuth } from '../../../context/AuthContext';
 import ConfigComp from './configComp';
+import DrawerMenu from './drawerMenu';
 
 const {
     Header,
     Content,
     Footer
 } = Layout
-const routes = {
-    1: '/',
-    2: '/menu',
-    3: '/order',
-    4: '/contact'
-}
 
 export default function LayoutComp(props) {
 
-    const { setSize, isStandard, isMobile } = useAuth();
+    const { setSize, isStandard, isMobile, routes } = useAuth();
 
     const [activeKey, setActiveKey] = useState("1");
     const router = useLocation();
     const pathname = router.pathname
 
+    const [isDrawer, setIsDrawer] = useState(false);
+    
     useEffect(() => {
         let route = (pathname === "/order-summary" || pathname === "/payment-method" || pathname === "/complete") ? 3 : Object.keys(routes).find(key => routes[key] === router.pathname);
         setActiveKey(route?.toString());
@@ -47,41 +44,39 @@ export default function LayoutComp(props) {
                         className='flex justify-between items-center border-b border-[#C5C5C5] z-10 sticky top-0'
                     >
                         {
-                            isStandard && (
-                                <div
-                                    className='h-[50%] rounded-sm bg-[#E83600] lg:w-[8%] md:w-[10%] sm:w-[10%] w-[15%]'
-                                >
-                                </div>
+                            !isStandard && (
+                                <Col>
+                                    <IconMenu2 
+                                        color='#6B6B6B'
+                                        onClick={() => setIsDrawer(true)}
+                                    />
+                                </Col>
                             )
                         }
-                        <Menu
-                            theme='light'
-                            mode='horizontal'
-                            selectedKeys={[activeKey]} 
-                            defaultSelectedKeys={['1']} 
-                            onClick={e => setActiveKey(e)}
-                            className={`felx flex-1 ${setSize("justify-center", "justify-start", "justify-start")} min-w-0 relative font-semibold`}
-                            overflowedIndicator={<IconMenu2 />}
-                        >
-                            {
-                                isMobile ? (
-                                    <Menu.SubMenu icon={<IconMenu2 />}>
+                        {
+                            isStandard && (
+                                <>
+                                    <div
+                                        className='h-[50%] rounded-sm bg-[#E83600] lg:w-[8%] md:w-[10%] sm:w-[10%] w-[15%]'
+                                    >
+                                    </div>
+                                    <Menu
+                                        theme='light'
+                                        mode='horizontal'
+                                        selectedKeys={[activeKey]} 
+                                        defaultSelectedKeys={['1']} 
+                                        onClick={e => setActiveKey(e)}
+                                        className={`felx flex-1 ${setSize("justify-center", "justify-start", "justify-start")} min-w-0 relative font-semibold`}
+                                        overflowedIndicator={<IconMenu2 />}
+                                    >
                                         <Menu.Item key={'1'}><Link to={'/'}>Home</Link></Menu.Item>
                                         <Menu.Item key={'2'}><Link to={'/menu'}>Menu</Link></Menu.Item>
                                         <Menu.Item key={'3'}><Link to={'/order'}>Order</Link></Menu.Item>
                                         <Menu.Item key={'4'}><Link to={'/contact'}>Contact</Link></Menu.Item>  
-                                    </Menu.SubMenu>
-                                ) : (
-                                    <>
-                                        <Menu.Item key={'1'}><Link to={'/'}>Home</Link></Menu.Item>
-                                        <Menu.Item key={'2'}><Link to={'/menu'}>Menu</Link></Menu.Item>
-                                        <Menu.Item key={'3'}><Link to={'/order'}>Order</Link></Menu.Item>
-                                        <Menu.Item key={'4'}><Link to={'/contact'}>Contact</Link></Menu.Item>  
-                                    </>
-                                )
-                            }
-                                                         
-                        </Menu>  
+                                    </Menu> 
+                                </>
+                            )
+                        }
                         <div 
                             className='flex items-center'
                         >
@@ -262,6 +257,26 @@ export default function LayoutComp(props) {
                         </Row>
                     </Footer>
                 </Layout>
+                <ConfigProvider
+                    theme={{
+                        components: {
+                            Menu: {
+                                fontFamily: 'Vina Sans',
+                                itemPaddingInline: 20,
+                                fontSize: 30,
+                                colorText: '#A5ABB3',
+                                itemBg: '#FFFFFF',
+                                colorSplit: 'none',
+                            }
+                        }
+                    }}
+                >
+                    <DrawerMenu 
+                        isOpen={isDrawer}
+                        setIsOpen={setIsDrawer}
+                        other={true}
+                    />
+                </ConfigProvider>
             </ConfigComp>
         </>
     )

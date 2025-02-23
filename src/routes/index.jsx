@@ -11,6 +11,7 @@ import ContactPage from '../pages/contact';
 import OrderSummaryPage from '../pages/orderSummary';
 import PaymentMethodPage from '../pages/paymentMethod';
 import CompletePage from '../pages/complete';
+import CmsPage from '../pages/cms';
 
 function Index() {
     return (
@@ -22,6 +23,7 @@ function Index() {
             <Route path='/order-summary' element={<OrderSummaryPage />} />
             <Route path='/payment-method' element={<PaymentMethodPage />} />
             <Route path='/complete' element={<CompletePage />} />
+            <Route path='/cms' element={<CmsPage />} />
         </Routes>
     )
 }

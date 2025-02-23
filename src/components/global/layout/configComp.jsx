@@ -26,11 +26,12 @@ export default function ConfigComp(props) {
                         },
                         Menu: {
                             activeBarHeight: 0,
-                            colorSplit: '#C5C5C5',
+                            colorSplit: 'none',
                             itemPaddingInline: setSize(50, 20, 10),
                             fontSize: setSize(18, 16, 14),
                             colorText: '#6B6B6B',
                             itemBg: '#F9F9F9',
+                            
                         },
                         Button: {
                             controlHeightSM: 26,
@@ -70,7 +71,15 @@ export default function ConfigComp(props) {
                         },
                         Drawer: {
                             fontSizeLG: 14
-                        }
+                        },
+                        Anchor: {
+                            fontSize: setSize(18, 12, 10),
+                            linkPaddingBlock: 0,
+                            lineHeight: setSize('50px', '35px', '30px'),
+                            colorText: '#5A5A5A',
+                            colorPrimaryBg: 'green',
+                            lineWidthFocus: setSize('200px', '150px', '100px' ),
+                        }, 
                     }
                 }}
             >

@@ -1,0 +1,78 @@
+import React from 'react'
+import { Table } from 'antd'
+import { columnInvoiceList } from '../../../global/consts/columns'
+import { useAuth } from '../../../../context/AuthContext';
+
+export default function InvoiceSumComp() {
+
+    const {
+        setSize
+    } = useAuth()
+
+    const data = [
+        {
+            invoice_id: 'INV109012',
+            username: 'Udin',
+            date: '2018-07-25 10:30:30',
+            amount: 98700,
+            status: 'Scheduled',
+            scheduled_time: '2018-07-26 10:30:30',
+            bulk: 'false',
+            qty: 10,
+        },
+        {
+            invoice_id: 'INV109013',
+            username: 'Udin',
+            date: '2018-07-25 10:30:30',
+            amount: 98700,
+            status: 'Immediately',
+            scheduled_time: null,
+            bulk: 'false',
+            qty: 10,
+        },
+        {
+            invoice_id: 'INV109014',
+            username: 'Udin',
+            date: '2018-07-25 10:30:30',
+            amount: 98700,
+            status: 'Immediately',
+            scheduled_time: null,
+            bulk: 'true',
+            qty: 190,
+        },
+    ]
+
+    return (
+        <>
+            <div
+                className='bg-white w-full lg:my-0 lg:rounded-2xl lg:py-5 lg:px-5 md:my-3 md:rounded-xl md:py-3 md:px-3 my-2 rounded-xl py-2 px-2'
+            >
+                <span className='text-[#202224] font-bold lg:text-[24px] md:text-[16px] text-[12px]'>
+                    Invoice List
+                </span>
+                <Table 
+                    dataSource={data}
+                    columns={columnInvoiceList(data)}
+                    className='lg:pt-5 md:pt-3 pt-2'
+                    size={setSize('medium', 'small', 'small')}
+                    pagination={{
+                        total: data && data?.length,
+                        showTotal: (total, range) =>
+                          `${range[0]}-${range[1]} of ${
+                            total ? total.toLocaleString() : ""
+                          } items`,
+                        defaultPageSize: 10,
+                        defaultCurrent: 1,
+                        showSizeChanger: true,
+                        hideOnSinglePage: false,
+                        pageSizeOptions: [10, 20, 50, 100],
+                        size: setSize('large', 'medium', 'small'),
+                    }}
+                    scroll={{
+                        x: setSize(0, 500, 500),
+                    }}
+                />
+            </div>
+        </>
+    )
+}

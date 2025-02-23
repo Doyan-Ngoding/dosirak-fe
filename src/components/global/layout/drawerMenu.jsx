@@ -11,7 +11,8 @@ const routes = {
 
 export default function DrawerMenu({
     isOpen, 
-    setIsOpen
+    setIsOpen,
+    other = false
 }) {
 
     const { setSize } = useAuth();
@@ -52,9 +53,9 @@ export default function DrawerMenu({
                         onClick={e => setActiveKey(e)}
                         className={`font-semibold text-[20px]`}
                     >
-                        <Menu.Item key={'1'} className='pt-1.5'><Link to={'/'}>HOME</Link></Menu.Item>
-                        <Menu.Item key={'2'} className='pt-1.5'><Link to={'/menu'}>MENU</Link></Menu.Item>
-                        <Menu.Item key={'3'} className='pt-1.5'><Link to={'/order'}>ORDER ONLINE</Link></Menu.Item>
+                        <Menu.Item key={'1'} className={`${!other && 'pt-1.5'}`}><Link to={'/'}>HOME</Link></Menu.Item>
+                        <Menu.Item key={'2'} className={`${!other && 'pt-1.5'}`}><Link to={'/menu'}>MENU</Link></Menu.Item>
+                        <Menu.Item key={'3'} className={`${!other && 'pt-1.5'}`}><Link to={'/order'}>ORDER ONLINE</Link></Menu.Item>
                     </Menu>   
                 </Drawer>
             </ConfigProvider>

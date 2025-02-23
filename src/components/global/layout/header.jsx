@@ -7,15 +7,9 @@ import { IconBasket, IconMenu2, IconRosetteFilled, IconShoppingBag } from '@tabl
 import DrawerMenu from './drawerMenu';
 const { Header } = Layout;
 
-const routes = {
-    1: '/',
-    2: '/menu',
-    3: '/order',
-}
-
 export default function HeaderComp() {
 
-    const { setSize, isStandard, isMobile, isTablet } = useAuth()
+    const { setSize, isStandard, isMobile, isTablet, routes } = useAuth()
 
     const [isScrolled, setIsScrolled] = useState(false);
     const [activeKey, setActiveKey] = useState("1");
