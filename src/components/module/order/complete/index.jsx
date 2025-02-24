@@ -8,8 +8,16 @@ import {
 } from 'antd';
 import CardTitleStep from '../../../global/title/cardTitleStep';
 import { IconShoppingBagCheck } from '@tabler/icons-react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../../context/AuthContext';
 
 export default function CompleteComp() {
+
+    const navigate = useNavigate();
+
+    const {
+        token
+    } = useAuth()
 
     const {
         currStep, setCurrStep

@@ -5,13 +5,8 @@ import {
     Row 
 } from 'antd'
 import { IconTicket } from '@tabler/icons-react'
-import { useAuth } from '../../../../context/AuthContext'
 
 export default function CardVoucher() {
-
-    const {
-        setSize
-    } = useAuth()
 
     return (
         <>

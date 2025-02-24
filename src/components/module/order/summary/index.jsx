@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import LayoutComp from '../../../global/layout'
 import { 
     Col, 
@@ -24,12 +24,17 @@ export default function OrderSummaryComp() {
     } = useOrder()
 
     const {
-        setSize
+        setSize,
+        token
     } = useAuth()
 
     const handleSubmit = async () => {
         await navigate("/payment-method")
     }
+
+    useEffect(() => {
+        if (!token) navigate("/order")
+    }, [token]);
 
     return (
         <>

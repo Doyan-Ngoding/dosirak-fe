@@ -3,6 +3,7 @@ import React, {
     useContext,
     useState,
 } from 'react'
+import { useLocalStorage } from 'react-use';
 
 const OrderContext = createContext(null)
 
@@ -10,7 +11,8 @@ const Order = ({children }) => {
 
     const [menuSearched, setMenuSearched] = useState();
 
-    const [selectedMenu, setSelectedMenu] = useState(JSON.parse(localStorage.getItem('cart')) ? JSON.parse(localStorage.getItem('cart')) : []);
+    const [cart, setCart, removeCart] = useLocalStorage("cart", null);
+    const [selectedMenu, setSelectedMenu] = useState(cart ? cart : []);
     const [subTotal, setSubTotal] = useState(0);
     const [deliveryFee, setDeliveryFee] = useState(0);
     const [packingFee, setPackingFee] = useState(0);
@@ -49,6 +51,7 @@ const Order = ({children }) => {
     const state = {
         menuSearched, setMenuSearched,
 
+        cart, setCart, removeCart,
         selectedMenu, setSelectedMenu,
         subTotal, setSubTotal,
         deliveryFee, setDeliveryFee,

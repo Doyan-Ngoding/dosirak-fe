@@ -10,8 +10,11 @@ import { useAuth } from '../../../context/AuthContext'
 export default function LoginStandard({
     isOpen,
     setIsOpen,
-    action
+    action,
+    loading,
 }) {
+
+    const [form] = Form.useForm()
 
     const {
         setSize,
@@ -41,7 +44,15 @@ export default function LoginStandard({
                     style={{
                         marginTop: 20
                     }}
-                    onFinish={action}
+                    form={form}
+                    onFinish={async () => {
+                        try {
+                            await action(form.getFieldsValue())
+                            form.resetFields()
+                        } catch (error) {
+                            console.log(error);
+                        }
+                    }}
                 >
                     <Form.Item
                         label="Email"
@@ -70,7 +81,7 @@ export default function LoginStandard({
                     </Form.Item>
                     <div className="w-full flex justify-end cursor-pointer text-[#E83600] font-semibold hover:text-[#FA5523]" onClick={() => {setModalForgot(true), setIsOpen(false)}}>Forgot Password?</div>
                     <Form.Item label={null}>
-                        <Button type="primary" htmlType="submit" className='w-full mt-5' style={{ height: setSize(45, 35, 0) }}>
+                        <Button type="primary" htmlType="submit" className='w-full mt-5' style={{ height: setSize(45, 35, 0) }} loading={loading}>
                             Log In
                         </Button>
                     </Form.Item>
