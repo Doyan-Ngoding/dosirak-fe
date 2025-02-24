@@ -53,9 +53,7 @@ const Auth = ({children }) => {
         setIsLoding(true);
         axios.post(`${import.meta.env.VITE_API_BE}/login`, rule)
         .then(res => {
-            // localStorage.setItem('token', res.data.results.token);
             setToken(res.data.results.token)
-            // axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.results.token}`;
             setIsLoding(false);
             setModalLogin(false);
             navigate('/order-summary')
@@ -68,19 +66,18 @@ const Auth = ({children }) => {
 
 
     const getUserAuth = (token) => {
-        axios.post(`${import.meta.env.VITE_API_BE}/auth/me`, null, {
+        axios.get(`${import.meta.env.VITE_API_BE}/auth/me`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         })
         .then(res => {
-            setAuthUser(res.data.results)
+            setAuthUser(res.data.user)
         })
         .catch(err => {
             console.log(err)
         })   
     }
-    console.log(authUser)
 
     useEffect(() => {
         if (token) getUserAuth(token)
