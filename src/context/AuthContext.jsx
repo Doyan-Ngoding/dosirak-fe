@@ -6,17 +6,17 @@ import React, {
     useState,
 } from 'react'
 import { useMediaQuery } from 'react-responsive'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useLocalStorage } from "react-use"
 
 const AuthContext = createContext(null)
 
 const Auth = ({children }) => {
 
-    const isLogin = localStorage.getItem('token')
-
     const navigate = useNavigate()
-
+    const location = useLocation()
+    const pathname = location.pathname
+    
     const isStandard = useMediaQuery({ minWidth: 1024 })
     const isMobile = useMediaQuery({ maxWidth: 767 })
     const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1023 })
@@ -38,6 +38,10 @@ const Auth = ({children }) => {
         10: '/cms/restaurant',
     }
 
+    const allowAdmin = ['/cms', '/cms/product', '/cms/user', '/cms/category', '/cms/restaurant'] 
+    const allowUser = ['/order-summary', '/payment-method', '/complete']
+    const allowGeneral = ['/', '/menu', '/order']
+
     const [modalLogin, setModalLogin] = useState(false);
     const [modalSignup, setModalSignup] = useState(false);
     const [modalOtp, setModalOtp] = useState(false);
@@ -49,24 +53,8 @@ const Auth = ({children }) => {
 
     const [isLoding, setIsLoding] = useState(false);
 
-    const handleLogin = (rule) => {
-        setIsLoding(true);
-        axios.post(`${import.meta.env.VITE_API_BE}/login`, rule)
-        .then(res => {
-            setToken(res.data.results.token)
-            setIsLoding(false);
-            setModalLogin(false);
-            navigate('/order-summary')
-        })
-        .catch(err => {
-            console.log(err)
-            setIsLoding(false);
-        })
-    }
-
-
-    const getUserAuth = (token) => {
-        axios.get(`${import.meta.env.VITE_API_BE}/auth/me`, {
+    const getUserAuth = async (token) => {
+        await axios.get(`${import.meta.env.VITE_API_BE}/auth/me`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -79,9 +67,58 @@ const Auth = ({children }) => {
         })   
     }
 
+    const handleLogin = async (rule) => {
+        setIsLoding(true);
+        await axios.post(`${import.meta.env.VITE_API_BE}/login`, rule)
+        .then(res => {
+            const token = res.data.results.token;
+            setToken(token);
+            getUserAuth(token);
+            setIsLoding(false);
+            if (authUser) {
+                if (pathname === '/cms/login') {
+                    if (authUser?.role === 'superadmin') {
+                        navigate('/cms');
+                    } else {
+                        navigate('/cms/login')
+                    }
+                } else if (pathname === '/order') {
+                    if (authUser?.role === 'user') {
+                        setModalLogin(false);
+                        if (localStorage.getItem("cart")) {
+                            navigate('/order-summary');
+                        } else {
+                            navigate('/order');
+                        }
+                    } else {
+                        navigate('/')
+                    }
+                } 
+            }
+        })
+        .catch(err => {
+            console.log(err)
+            setIsLoding(false);
+        })
+    }
+
     useEffect(() => {
         if (token) getUserAuth(token)
     }, [token]);
+
+    useEffect(() => {
+        if (token) {
+            if (!allowUser.includes(pathname) && authUser?.role === "user") {
+                navigate("/")
+            } else if (!allowAdmin.includes(pathname) && authUser?.role === "superadmin") {
+                navigate("/cms")
+            }
+        } else {
+            if (!allowGeneral.includes(pathname)) {
+                navigate("/")
+            }
+        }
+    }, [pathname, token]);
     
     const state = {
         modalLogin, setModalLogin,

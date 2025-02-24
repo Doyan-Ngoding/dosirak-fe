@@ -13,7 +13,8 @@ export default function PaymentComp() {
     const navigate = useNavigate();
 
     const {
-        currStep, setCurrStep
+        currStep, setCurrStep,
+        cart
     } = useOrder();
 
     const {
@@ -25,6 +26,10 @@ export default function PaymentComp() {
         setCurrStep(2)
     }, []);
     
+    useEffect(() => {
+        if (!token && !cart) navigate("/order")
+    }, [token]);
+
     return (
         <>
             <LayoutComp>

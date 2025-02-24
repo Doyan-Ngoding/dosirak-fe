@@ -4,8 +4,12 @@ import { useAuth } from '../../../../context/AuthContext'
 
 export default function CmsLoginComp() {
 
+    const [form] = Form.useForm()
+
     const {
-        setSize
+        setSize,
+        isLoading,
+        handleLogin
     } = useAuth()
 
     return (
@@ -34,6 +38,17 @@ export default function CmsLoginComp() {
                     >
                         <Form
                             layout="vertical"
+                            form={form}
+                            onFinish={
+                                async () => {
+                                    try {
+                                        await handleLogin(form.getFieldsValue())
+                                        form.resetFields()
+                                    } catch (error) {
+                                        console.log(error);
+                                    }
+                                }
+                            }
                         >
                             <div
                                 className='font-semibold lg:text-[24px] md:text-[16px] text-[14px] md:pb-2 pb-2'
@@ -67,7 +82,7 @@ export default function CmsLoginComp() {
                             </Form.Item>
                             <div className="w-full flex justify-end cursor-pointer underline text-[#155DFF] hover:text-[#FA5523] lg:text-[16px] md:text-[12px] text-[10px]">Forgot Password?</div>
                             <Form.Item label={null}>
-                                <Button type="primary" htmlType="submit" className='w-full lg:mt-5 md:mt-4 mt-3' style={{ height: setSize(45, 30, 28), fontSize: setSize(18, 10, 10) }}>
+                                <Button loading={isLoading} type="primary" htmlType="submit" className='w-full lg:mt-5 md:mt-4 mt-3' style={{ height: setSize(45, 30, 28), fontSize: setSize(18, 10, 10) }}>
                                     Log In
                                 </Button>
                             </Form.Item>

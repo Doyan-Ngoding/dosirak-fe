@@ -32,7 +32,6 @@ export default function SiderOrder() {
     } = useOrder();
 
     const {
-        isLogin,
         modalLogin, setModalLogin,
         modalSignup, setModalSignup,
         modalOtp, setModalOtp,
@@ -42,10 +41,12 @@ export default function SiderOrder() {
         isMobile,
         handleLogin,
         authUser,
+        isLoading,
+        token
     } = useAuth();
 
     const onCheckout = () => {
-        isLogin ? console.log('yes') : setModalLogin(true)
+        token ? navigate("/order-summary") : setModalLogin(true)
     }
 
     const handleSubmitEmail = async () => {
@@ -101,6 +102,7 @@ export default function SiderOrder() {
                             isOpen={modalLogin}
                             setIsOpen={setModalLogin}
                             action={handleLogin}
+                            loading={isLoading}
                         />
                         <ForgotStandard 
                             isOpen={modalForgot}

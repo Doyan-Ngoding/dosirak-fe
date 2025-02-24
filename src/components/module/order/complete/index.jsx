@@ -27,6 +27,10 @@ export default function CompleteComp() {
         setCurrStep(1)
     }, []);
 
+    useEffect(() => {
+        if (!token) navigate("/order")
+    }, [token]);
+
     return (
         <>
             <LayoutComp>
