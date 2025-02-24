@@ -38,9 +38,9 @@ export default function SignupMobile({
                         borderBottom: '1px solid transparent'
                     },
                     content: {
-                      borderRadius: "16px 16px 0 0",
-                      overflow: "hidden",
-                      fontSize: 14
+                        borderRadius: "16px 16px 0 0",
+                        overflow: "hidden",
+                        fontSize: 14
                     },
                 }}
                 style={{
@@ -111,6 +111,27 @@ export default function SignupMobile({
                                     <span className='text-xs'>Please input your email!</span>
                                 ),
                                 type: 'email'
+                            },
+                        ]}
+                        style={{ marginBottom: "8px" }}
+                    >
+                        <Input 
+                            style={{
+                                padding: '5px 10px'
+                            }}
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        label={<span className='text-xs size-0'><span className='text-red-600'>*</span>Address</span>}
+                        required={false}
+                        name="location"
+                        rules={[
+                            {
+                                required: true,
+                                message: (
+                                    <span className='text-xs'>Please input your address!</span>
+                                ),
+                                type: 'location'
                             },
                         ]}
                         style={{ marginBottom: "8px" }}
