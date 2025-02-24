@@ -6,15 +6,19 @@ import { Col, Row } from 'antd';
 import CardTotal from './cardTotal';
 import CardMethod from './cardMethod';
 import { useAuth } from '../../../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function PaymentComp() {
+
+    const navigate = useNavigate();
 
     const {
         currStep, setCurrStep
     } = useOrder();
 
     const {
-        setSize
+        setSize,
+        token
     } = useAuth()
 
     useEffect(() => {

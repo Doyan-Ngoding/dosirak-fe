@@ -24,6 +24,7 @@ export default function OrderComp() {
     const {
         selectedMenu, setSelectedMenu,
         subTotal, setSubTotal,
+        cart, setCart, removeCart
     } = useOrder();
 
     const {
@@ -56,7 +57,7 @@ export default function OrderComp() {
         setSubTotal(
             selectedMenu.reduce((total, item) => total + item.subTotal, 0)
         );
-        localStorage.getItem('cart') ? localStorage.removeItem('cart') : localStorage.setItem('cart', JSON.stringify(selectedMenu));
+        setCart(selectedMenu)
     }, [selectedMenu]);
     
     return (

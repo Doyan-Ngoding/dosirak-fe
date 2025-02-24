@@ -28,6 +28,7 @@ export default function SiderOrder() {
         selectedMenu, setSelectedMenu,
         subTotal, setSubTotal,
         addQty, subQty,
+        cart, setCart, removeCart
     } = useOrder();
 
     const {
@@ -38,7 +39,9 @@ export default function SiderOrder() {
         modalReset, setModalReset,
         modalForgot, setModalForgot,
         setSize,
-        isMobile
+        isMobile,
+        handleLogin,
+        authUser,
     } = useAuth();
 
     const onCheckout = () => {
@@ -59,7 +62,7 @@ export default function SiderOrder() {
         setSubTotal(
             selectedMenu.reduce((total, item) => total + item.subTotal, 0)
         );
-        localStorage.getItem('cart') ? localStorage.removeItem('cart') : localStorage.setItem('cart', JSON.stringify(selectedMenu));
+        setCart(selectedMenu)
     }, [selectedMenu]);
 
     return (
@@ -97,7 +100,7 @@ export default function SiderOrder() {
                         <LoginStandard 
                             isOpen={modalLogin}
                             setIsOpen={setModalLogin}
-                            action={handleSubmitAuth}
+                            action={handleLogin}
                         />
                         <ForgotStandard 
                             isOpen={modalForgot}
