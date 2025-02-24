@@ -21,6 +21,7 @@ export default function OrderSummaryComp() {
 
     const {
         currStep, 
+        cart,
     } = useOrder()
 
     const {
@@ -33,7 +34,7 @@ export default function OrderSummaryComp() {
     }
 
     useEffect(() => {
-        if (!token) navigate("/order")
+        if (!token && !cart) navigate("/order")
     }, [token]);
 
     return (
