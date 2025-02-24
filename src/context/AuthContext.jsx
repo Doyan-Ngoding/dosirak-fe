@@ -19,6 +19,19 @@ const Auth = ({children }) => {
         return isStandard ? standard : ( isTablet ? tablet : mobile )   
     }
 
+    const routes = {
+        1: '/',
+        2: '/menu',
+        3: '/order',
+        4: '/contact',
+        5: '/cms',
+        6: '/cms/login',
+        7: '/cms/product',
+        8: '/cms/user',
+        9: '/cms/category',
+        10: '/cms/restaurant',
+    }
+
     const [modalLogin, setModalLogin] = useState(false);
     const [modalSignup, setModalSignup] = useState(false);
     const [modalOtp, setModalOtp] = useState(false);
@@ -33,7 +46,9 @@ const Auth = ({children }) => {
         modalForgot, setModalForgot,
 
         setSize,
-        isStandard, isTablet, isMobile
+        isStandard, isTablet, isMobile,
+
+        routes
     }
 
     return (

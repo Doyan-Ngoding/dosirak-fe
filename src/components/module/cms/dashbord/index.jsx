@@ -1,34 +1,35 @@
 import React from 'react'
-import ConfigComp from '../../global/layout/configComp'
-import HeaderComp from '../../global/layout/header'
+import FullComp from '../../../global/layout/full'
 import { Col, Row } from 'antd'
-import SliderComp from './slider'
-import HeadListComp from './headList'
-import ContentListComp from './contentList'
+import CardSummaryComp from './cardSummary'
+import SalesChartComp from './salesChart'
+import InvoiceSumComp from './invoiceSum'
 
-export default function MenuComp() {
+export default function CmsComp() {
+
     return (
         <>
-            <ConfigComp>
-                <HeaderComp />
+            <FullComp
+                menu={"Dashboard"}
+            >
                 <Row>
                     <Col
                         span={24}
                     >
-                        <SliderComp />
+                        <CardSummaryComp />
                     </Col>
                     <Col
                         span={24}
                     >
-                        <HeadListComp />
+                        <SalesChartComp />
                     </Col>
                     <Col
                         span={24}
                     >
-                        <ContentListComp />
+                        <InvoiceSumComp />
                     </Col>
                 </Row>
-            </ConfigComp>
+            </FullComp>
         </>
     )
 }

@@ -5,12 +5,14 @@ import CategoryMenu from '../../global/menu/categoryMenu'
 import { useMenu } from '../../../context/MenuContext'
 import CardMenu from '../../global/menu/cardMenu'
 import { 
+    Anchor,
     Col,
     Row, 
 } from 'antd'
 import SiderOrder from './sider'
 import { useOrder } from '../../../context/OrderContext'
 import { useAuth } from '../../../context/AuthContext'
+import ContentListComp from '../menu/contentList'
 
 export default function OrderComp() {
 
@@ -70,18 +72,31 @@ export default function OrderComp() {
                             }}
                         >
                             <HeaderOrder />
-                            <CategoryMenu 
-                                category={tabCategory}
-                                selectedCategory={activeTab}
-                                setSelctedCategory={setActiveTab}
-                                sectionRef={sectionRefs}
-                            />
+                            <div
+                                className="sticky lg:top-[75px] md:top-[65px] top-[55px] z-10 bg-white w-auto text-[Plus Jakarta Sans]"
+                            >
+                                <div
+                                    className="overflow-x-auto whitespace-nowrap custom-scroll border-b border-gray-500"
+                                >
+                                    <Anchor
+                                        direction="horizontal"
+                                        className="inline-flex space-x-4"
+                                        targetOffset={150}
+                                        items={
+                                            tabCategory ? tabCategory.map((value) => ({
+                                                key: value,
+                                                href: '#'+value,
+                                                title: value,
+                                            })) : []
+                                        }
+                                    />
+                                </div>
+                            </div>
                             {
                                 listMenuGrouped.map((value) => (
                                     <>
                                         <div
-                                            key={value.category} 
-                                            ref={(el) => (sectionRefs.current[value.category] = el)}
+                                            id={value.category} 
                                             className='pb-20'
                                         >
                                             <div
@@ -131,6 +146,27 @@ export default function OrderComp() {
                         )
                     }
                 </Row>
+                <style>
+                {`
+                    .ant-anchor-link {
+                        width: ${setSize('200px', '150px', '100px')};
+                        text-align: center;
+                        display: inline-block;
+                        transition: all 0.3s ease;
+                        white-space: nowrap;
+                    }
+
+                    .ant-anchor-link-active > a {
+                        background-color: rgba(255, 69, 0, 0.1);
+                        color: #ff4500; 
+                        width: ${setSize('200px', '150px', '100px')};
+                        border-radius: 0px;
+                        display: inline-block;
+                        text-align: center;
+                        font-weight: 700;
+                    }
+                `}
+                </style>
             </LayoutComp>
         </>
     )

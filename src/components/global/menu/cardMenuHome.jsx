@@ -11,7 +11,8 @@ export default function CardMenuHome({
     price,
     stock,
     addToCart,
-    showResto = true
+    showResto = true,
+    isMenu = false
 }) {
 
     const {
@@ -26,7 +27,7 @@ export default function CardMenuHome({
                 {/* ${import.meta.env}/iamges${image} */}
                 {/* ${import.meta.env}${image} */}
                 <div
-                    className={`bg-[url(./assets/menu/gyoza.jpg)] bg-cover bg-center bg-no-repeat rounded-t-xl flex items-end lg:h-[130px] md:h-[80px] h-[70px]`}
+                    className={`bg-[url(./assets/menu/gyoza.jpg)] bg-cover bg-center bg-no-repeat rounded-t-xl flex items-end ${isMenu ? 'lg:h-[180px] md:h-[100px] h-[80px]' : 'lg:h-[130px] md:h-[80px] h-[70px]'}`}
                 />
                 <div
                     className='text-[#393939] font-semibold lg:text-[18px] md:text-[12px] text-[10px] lg:px-2 md:px-2 px-1 pt-1'
@@ -47,7 +48,7 @@ export default function CardMenuHome({
                         overflow: "hidden",
                     }}
                 >
-                    {desc}dd sldjald sdjalkd dsj alkjdlsj  dl sdjs ldkd sdkjkdjasdd sda sdhjfhjf onbdh dad  sdad sjkmnbhs lakjdshjbaljasoe 2nbgahdkawoequ iewpupue9kdjaldj dhadjak
+                    {desc}
                 </div>
                 <Row
                     justify={"space-between"}
