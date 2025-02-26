@@ -18,7 +18,10 @@ export default function CardMenu({
         setSize
     } = useAuth()
 
+
+    const imageUrl = `${import.meta.env.VITE_URL_BE}/${image.replace(/\\/g, '/')}`;
     return (
+        
         <>
             <div
                 className='bg-white border-[1.5px] border-[#D5D5D5] rounded-xl'
@@ -26,7 +29,8 @@ export default function CardMenu({
                 {/* ${import.meta.env}/iamges${image} */}
                 {/* ${import.meta.env}${image} */}
                 <div
-                    className={`bg-[url(./assets/menu/gyoza.jpg)] bg-cover bg-center bg-no-repeat rounded-t-xl flex items-end lg:h-[180px] md:h-[120px] h-[100px]`}
+                    className="bg-cover bg-center bg-no-repeat rounded-t-xl flex items-end lg:h-[180px] md:h-[120px] h-[100px]"
+                    style={{ backgroundImage: `url(${imageUrl})` }}
                 >
                     {
                         showResto && (
@@ -118,9 +122,10 @@ export default function CardMenu({
                                     color: '#FFFFFF',
                                     borderRadius: 50,
                                     padding: setSize(10, 5, 5),
-                                    cursor: stock && parseInt(stock) > 0 ? 'pointer' : 'not-allowed'
+                                    // cursor: stock && parseInt(stock) > 0 ? 'pointer' : 'not-allowed'
                                 }}
-                                onClick={(stock && parseInt(stock) > 0) && addToCart}
+                                // onClick={(stock && parseInt(stock) > 0) && addToCart}
+                                onClick={addToCart}
                                 className='icon-hover-3'
                             />
                         </div>
