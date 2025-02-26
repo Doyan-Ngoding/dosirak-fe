@@ -25,7 +25,8 @@ const Category = ({children }) => {
             setListCategory(res.data.results)
         })
         .catch(err => {
-            setResMessage(['error', err.response?.data?.message || "Failed Get Category!"])
+            // setResMessage(['error', err.response?.data?.message || "Failed Get Category!"])
+            console.log(err)    
         }) 
     }
 

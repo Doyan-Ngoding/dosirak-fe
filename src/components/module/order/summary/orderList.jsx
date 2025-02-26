@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { 
     Card,
     Col,
@@ -12,7 +12,8 @@ export default function OrderListComp() {
 
     const {
         selectedMenu, setSelectedMenu,
-        addQty, subQty
+        addQty, subQty,
+        setCart,
     } = useOrder()
 
     const {
@@ -54,7 +55,8 @@ export default function OrderListComp() {
                                         }}
                                     >
                                         <div 
-                                            className={`bg-[url(/assets/menu/gyoza.jpg)] bg-cover bg-center bg-no-repeat rounded-sm h-[100%] w-[100%] aspect-square`}
+                                            className={`bg-cover bg-center bg-no-repeat rounded-sm h-[100%] w-[100%] aspect-square`}
+                                            style={{ backgroundImage: `url('${import.meta.env.VITE_URL_BE}/${value.image}')` }}
                                         />
                                     </Col>
                                     <Col

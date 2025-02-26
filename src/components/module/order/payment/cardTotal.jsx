@@ -7,6 +7,7 @@ import {
 } from 'antd'
 import { IconShieldCheck, IconShieldCheckFilled, IconTicket } from '@tabler/icons-react'
 import { useAuth } from '../../../../context/AuthContext'
+import { useOrder } from '../../../../context/OrderContext'
 
 export default function CardTotal({
     handleClick
@@ -15,6 +16,11 @@ export default function CardTotal({
     const {
         setSize
     } = useAuth()
+
+    const {
+        total,
+        orderTemp
+    } = useOrder()
 
     return (
         <>
@@ -40,7 +46,7 @@ export default function CardTotal({
                         fontSize: 20,
                     }}
                 >
-                    Rp. 157,000
+                    Rp. {(orderTemp && orderTemp.amount) ? parseFloat(orderTemp.amount).toLocaleString() : ''}
                 </Col>
                 <Col
                     span={24}

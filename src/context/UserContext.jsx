@@ -25,7 +25,8 @@ const User = ({children }) => {
             setListUser(res.data.results)
         })
         .catch(err => {
-            setResMessage(['error', err.response?.data?.message || "Failed Get Users!"])
+            // setResMessage(['error', err.response?.data?.message || "Failed Get Users!"])
+            console.log(err)
         })
     }
 

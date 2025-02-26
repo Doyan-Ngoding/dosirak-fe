@@ -30,7 +30,8 @@ const Restaurant = ({children }) => {
             setSelectedNearReastaurant(res.data.results?.[0].name)
         })
         .catch(err => {
-            setResMessage(['error', err.response?.data?.message || "Failed Get Restaurants!"])
+            // setResMessage(['error', err.response?.data?.message || "Failed Get Restaurants!"])
+            console.log(err)
         })
     }
 

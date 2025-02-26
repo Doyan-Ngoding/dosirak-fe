@@ -28,7 +28,7 @@ export default function SiderOrder() {
         selectedMenu, setSelectedMenu,
         subTotal, setSubTotal,
         addQty, subQty,
-        cart, setCart, removeCart
+        cart, setCart
     } = useOrder();
 
     const {

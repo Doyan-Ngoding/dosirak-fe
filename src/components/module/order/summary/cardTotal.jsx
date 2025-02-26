@@ -22,14 +22,29 @@ export default function CardTotal({
         packingFee, setPackingFee,
         promo, setPromo,
         total, setTotal,
+        setCart,
+        formatAmount, setFormatAmount
     } = useOrder()
 
     useEffect(() => {
-        setSubTotal(
-            selectedMenu.reduce((total, item) => total + item.subTotal, 0)
-        );
-        localStorage.getItem('cart') ? localStorage.removeItem('cart') : localStorage.setItem('cart', JSON.stringify(selectedMenu));
+        if (selectedMenu) {
+            setSubTotal(
+                selectedMenu.reduce((total, item) => total + item.subTotal, 0)
+            );
+            setCart(selectedMenu)
+        }
     }, [selectedMenu]);
+
+    useEffect(() => {
+        setTotal(
+            subTotal + deliveryFee + promo
+        )
+        setFormatAmount({
+            vat: 0,
+            discount: promo,
+            shipping: deliveryFee
+        })
+    }, [subTotal, deliveryFee, promo]);
 
     return (
         <>
@@ -232,7 +247,7 @@ export default function CardTotal({
                         }}
                         onClick={handleClick}
                     >
-                        {`Select Payment >`}
+                        {`Order Now!`}
                     </Button>
                 </Col>
             </Row>

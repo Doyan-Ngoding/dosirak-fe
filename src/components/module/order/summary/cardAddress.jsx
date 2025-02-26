@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { 
     Col,
     ConfigProvider,
@@ -21,8 +21,15 @@ export default function CardAddress() {
     } = useOrder()
 
     const {
-        setSize
+        setSize,
+        authUser
     } = useAuth()
+
+    useEffect(() => {
+        if (authUser && authUser?.location) {
+            setAddressUser(authUser.location);
+        }
+    }, [authUser]);
 
     return (
         <>

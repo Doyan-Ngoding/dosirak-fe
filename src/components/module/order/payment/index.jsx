@@ -14,13 +14,16 @@ export default function PaymentComp() {
 
     const {
         currStep, setCurrStep,
-        cart
+        cart,
+        orderTemp,
+        handleAddPayment,
     } = useOrder();
 
     const {
         setSize,
         token,
         authUser,
+        setResMessage,
     } = useAuth()
 
     useEffect(() => {
@@ -33,13 +36,8 @@ export default function PaymentComp() {
             setTimeout(() => {
                 navigate('/order')
             }, 2000)
-        } else if (!cart) {
-            setResMessage(['error', 'Select The Menu First!'])
-            setTimeout(() => {
-                navigate('/order')
-            }, 2000)
-        }
-    }, [token, authUser, cart]);
+        } 
+    }, [token, authUser]);
 
     return (
         <>
@@ -80,7 +78,9 @@ export default function PaymentComp() {
                         <Col
                             span={setSize(8, 10, 24)}
                         >
-                            <CardTotal  />
+                            <CardTotal  
+                                // handleClick={handleAddPayment}
+                            />
                         </Col>
                     </Row>
                 </div>

@@ -15,6 +15,7 @@ import CardVoucher from './cardVoucher'
 import CardTotal from './cardTotal'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../../../context/AuthContext'
+import dayjs from 'dayjs'
 
 export default function OrderSummaryComp() {
 
@@ -23,6 +24,11 @@ export default function OrderSummaryComp() {
     const {
         currStep, 
         cart,
+        selectedMenu,
+        selectedDate, setSelectedDate,
+        handleAddOrder,
+        handleAddPayment,
+        resMessageOrder, setResMessageOrder
     } = useOrder()
 
     const {
@@ -47,13 +53,25 @@ export default function OrderSummaryComp() {
     }, [resMessage]);
 
     useEffect(() => {
+        if ((resMessageOrder && resMessageOrder.length === 2)) {
+            const [type, content] = resMessageOrder;
+            messageApi[type](content)
+        }
+    }, [resMessageOrder]);
+
+    useEffect(() => {
         if (!token && !authUser) {
             setResMessage(['error', 'Log In First!'])
             setTimeout(() => {
                 navigate('/order')
             }, 2000)
-        } else if (!cart) {
+        } else if (!selectedMenu) {
             setResMessage(['error', 'Select The Menu First!'])
+            setTimeout(() => {
+                navigate('/order')
+            }, 2000)
+        } else if (authUser && authUser.role !== 'user') {
+            setResMessage(["error", "You Can't Access this Page!"])
             setTimeout(() => {
                 navigate('/order')
             }, 2000)
@@ -104,7 +122,7 @@ export default function OrderSummaryComp() {
                             <CardAddress />
                             <CardVoucher />
                             <CardTotal 
-                                handleClick={handleSubmit}
+                                handleClick={handleAddOrder}
                             />
                         </Col>
                     </Row>
