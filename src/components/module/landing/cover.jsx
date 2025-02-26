@@ -1,10 +1,12 @@
 import React from 'react'
 import { Button, ConfigProvider } from 'antd'
 import { useAuth } from '../../../context/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 export default function CoverComp() {
 
     const { setSize } = useAuth()
+    const navigate = useNavigate()
 
     return (
         <>
@@ -45,6 +47,7 @@ export default function CoverComp() {
                                         borderRadius: 50,
                                         color: '#E83600'
                                     }}
+                                    onClick={() => navigate('/order')}
                                 >
                                     SET SCHEDULE ORDER →
                                 </Button>
@@ -54,6 +57,7 @@ export default function CoverComp() {
                                     style={{
                                         borderRadius: 50
                                     }}
+                                    onClick={() => navigate('/menu')}
                                 >
                                     EXPLORE MENU →
                                 </Button>

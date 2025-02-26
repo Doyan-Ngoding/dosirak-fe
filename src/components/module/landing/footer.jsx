@@ -1,12 +1,15 @@
 import React from 'react'
 import { Button, ConfigProvider } from 'antd'
 import { useAuth } from '../../../context/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 export default function FooterComp() {
 
     const {
         setSize,
     } = useAuth()
+
+    const navigate = useNavigate()
 
     return (
         <>
@@ -49,6 +52,7 @@ export default function FooterComp() {
                                 color: '#FFFFFF',
                                 backgroundColor: 'transparent'
                             }}
+                            onClick={() => navigate('/order')}
                         >
                             ORDER ONLINE
                         </Button>

@@ -19,7 +19,8 @@ export default function PaymentComp() {
 
     const {
         setSize,
-        token
+        token,
+        authUser,
     } = useAuth()
 
     useEffect(() => {
@@ -27,8 +28,18 @@ export default function PaymentComp() {
     }, []);
     
     useEffect(() => {
-        if (!token && !cart) navigate("/order")
-    }, [token]);
+        if (!token && !authUser) {
+            setResMessage(['error', 'Log In First!'])
+            setTimeout(() => {
+                navigate('/order')
+            }, 2000)
+        } else if (!cart) {
+            setResMessage(['error', 'Select The Menu First!'])
+            setTimeout(() => {
+                navigate('/order')
+            }, 2000)
+        }
+    }, [token, authUser, cart]);
 
     return (
         <>

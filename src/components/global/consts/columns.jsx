@@ -1,7 +1,7 @@
 import { IconChevronDown, IconChevronUp, IconEdit, IconFilter, IconSelector, IconTrash } from "@tabler/icons-react";
 import { useAuth } from "../../../context/AuthContext";
 import dayjs from "dayjs";
-import { Tooltip } from "antd";
+import { Modal, Popconfirm, Tooltip } from "antd";
 
 const iconSort = () => {
     const { setSize } = useAuth();
@@ -238,7 +238,7 @@ export const columnProductList = (data = []) => {
     ]
 }
 
-export const columnUserList = (data = []) => {
+export const columnUserList = (data = [], getDetail, modalEdit, handleDelete) => {
     const { setSize } = useAuth();
     return [
         {
@@ -283,7 +283,7 @@ export const columnUserList = (data = []) => {
                 ].map((el) => {
                 return { text: el, value: el };
             }),
-            onFilter: (value, record) => record.role.indexOf(value) === 0,
+            onFilter: (value, record) => (record.role ? record.role.charAt(0).toUpperCase() + record.role.slice(1) : '').indexOf(value) === 0,
             filterSearch: true,
             ...iconFilter(),
         },
@@ -295,14 +295,25 @@ export const columnUserList = (data = []) => {
                     <div
                         className="flex items-center justify-between w-full"
                     >
-                        <IconEdit 
+                         <IconEdit 
                             size={setSize(16, 14, 12)}
                             color="#faad14"
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => {getDetail(record.id), modalEdit(true)}}
                         />
-                        <IconTrash 
-                            size={setSize(16, 14, 12)}
-                            color="red"
-                        />
+                        <Popconfirm
+                            title={`Delete the user`}
+                            description={<span>Are you sure to delete this user: <b>{record.name}</b>?</span>}
+                            onConfirm={() => handleDelete(record.id)}
+                            okText="Yes"
+                            cancelText="No"
+                        >
+                            <IconTrash 
+                                size={setSize(16, 14, 12)}
+                                color="red"
+                                style={{ cursor: 'pointer' }}
+                            />
+                        </Popconfirm>
                     </div>
                 </>
             )
@@ -310,7 +321,7 @@ export const columnUserList = (data = []) => {
     ]
 }
 
-export const columnCategoryList = (data = []) => {
+export const columnCategoryList = (data = [], getDetail, modalEdit, handleDelete, category) => {
     const { setSize } = useAuth();
     return [
         {
@@ -320,7 +331,7 @@ export const columnCategoryList = (data = []) => {
             render: (text, record, index) => index + 1
         },
         {
-            title: 'Name',
+            title: category + ' Name',
             key: 'name',
             dataIndex: 'name',
             sorter: (a, b) => String(a.name || '').localeCompare(String(b.name || '')),
@@ -337,11 +348,22 @@ export const columnCategoryList = (data = []) => {
                         <IconEdit 
                             size={setSize(16, 14, 12)}
                             color="#faad14"
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => {getDetail(record.id), modalEdit(true)}}
                         />
-                        <IconTrash 
-                            size={setSize(16, 14, 12)}
-                            color="red"
-                        />
+                        <Popconfirm
+                            title={`Delete the ${category.toLowerCase()}`}
+                            description={<span>Are you sure to delete this {category.toLowerCase()}: <b>{record.name}</b>?</span>}
+                            onConfirm={() => handleDelete(record.id)}
+                            okText="Yes"
+                            cancelText="No"
+                        >
+                            <IconTrash 
+                                size={setSize(16, 14, 12)}
+                                color="red"
+                                style={{ cursor: 'pointer' }}
+                            />
+                        </Popconfirm>
                     </div>
                 </>
             )

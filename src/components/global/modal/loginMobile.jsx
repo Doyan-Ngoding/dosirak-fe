@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { 
     Button,
     Drawer, 
     Form,
-    Input
+    Input,
+    message
 } from 'antd'
 import { IconX } from '@tabler/icons-react'
 import { useAuth } from '../../../context/AuthContext'
@@ -14,14 +15,28 @@ export default function LoginMobile({
     action
 }) {
 
+    const [form] = Form.useForm()
+    
     const {
         setSize,
         setModalForgot, 
-        setModalSignup
+        setModalSignup,
+        resMessage
     } = useAuth()
+
+    const [messageApi, contextHolder] = message.useMessage();
+
+    useEffect(() => {
+        if ((resMessage && resMessage.length === 2)) {
+            const [type, content] = resMessage;
+            messageApi[type](content)
+        }
+    }, [resMessage]);
+
 
     return (
         <>
+            {contextHolder}
             <Drawer
                 title={<span className='text-[14px]'>Log In to Countinue Ordering</span>}
                 placement={"bottom"}
@@ -60,7 +75,15 @@ export default function LoginMobile({
                     wrapperCol={{
                         span: 1
                     }}
-                    onFinish={action}
+                    form={form}
+                    onFinish={async () => {
+                        try {
+                            await action(form.getFieldsValue())
+                            form.resetFields()
+                        } catch (error) {
+                            messageApi.error(error.message)
+                        }
+                    }}
                 >
                     <Form.Item
                         label={<span className='text-xs'><span className='text-red-600'>*</span>Email</span>}

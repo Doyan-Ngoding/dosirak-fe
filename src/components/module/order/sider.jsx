@@ -40,6 +40,7 @@ export default function SiderOrder() {
         setSize,
         isMobile,
         handleLogin,
+        handleRegister,
         authUser,
         isLoading,
         token
@@ -126,7 +127,8 @@ export default function SiderOrder() {
                         <LoginMobile 
                             isOpen={modalLogin}
                             setIsOpen={setModalLogin}
-                            action={handleSubmitAuth}
+                            action={handleLogin}
+                            loading={isLoading}
                         />
                         <ForgotMobile 
                             isOpen={modalForgot}

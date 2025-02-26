@@ -1,3 +1,4 @@
+import { message } from 'antd'
 import axios from 'axios'
 import React, { 
     createContext, 
@@ -21,8 +22,8 @@ const Auth = ({children }) => {
     const isMobile = useMediaQuery({ maxWidth: 767 })
     const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1023 })
 
-    const setSize = (standard, tablet, mobile) => {
-        return isStandard ? standard : ( isTablet ? tablet : mobile )   
+    const setSize = (standard = '', tablet = '', mobile = '') => {
+        return isStandard ? standard : ( isTablet ? tablet : (isMobile ? mobile : '') )   
     }
 
     const routes = {
@@ -40,7 +41,7 @@ const Auth = ({children }) => {
 
     const allowAdmin = ['/cms', '/cms/product', '/cms/user', '/cms/category', '/cms/restaurant'] 
     const allowUser = ['/order-summary', '/payment-method', '/complete']
-    const allowGeneral = ['/', '/menu', '/order']
+    const allowGeneral = ['/', '/menu', '/order', '/cms/login']
 
     const [modalLogin, setModalLogin] = useState(false);
     const [modalSignup, setModalSignup] = useState(false);
@@ -48,10 +49,11 @@ const Auth = ({children }) => {
     const [modalForgot, setModalForgot] = useState(false);
     const [modalReset, setModalReset] = useState(false);
 
-    const [token, setToken, removeToken] = useLocalStorage("token", null);
+    const [token, setToken] = useLocalStorage("token");
     const [authUser, setAuthUser] = useState();
 
     const [isLoding, setIsLoding] = useState(false);
+    const [resMessage, setResMessage] = useState();
 
     const getUserAuth = async (token) => {
         await axios.get(`${import.meta.env.VITE_API_BE}/auth/me`, {
@@ -63,7 +65,7 @@ const Auth = ({children }) => {
             setAuthUser(res.data.user)
         })
         .catch(err => {
-            console.log(err)
+            setResMessage(['error', err.response?.data?.message || "Unauthorized!"])
         })   
     }
 
@@ -71,54 +73,143 @@ const Auth = ({children }) => {
         setIsLoding(true);
         await axios.post(`${import.meta.env.VITE_API_BE}/login`, rule)
         .then(res => {
-            const token = res.data.results.token;
-            setToken(token);
-            getUserAuth(token);
+            setToken(res.data.results.token);
+            getUserAuth(res.data.results.token);
             setIsLoding(false);
-            if (authUser) {
-                if (pathname === '/cms/login') {
-                    if (authUser?.role === 'superadmin') {
-                        navigate('/cms');
-                    } else {
-                        navigate('/cms/login')
-                    }
-                } else if (pathname === '/order') {
-                    if (authUser?.role === 'user') {
-                        setModalLogin(false);
-                        if (localStorage.getItem("cart")) {
-                            navigate('/order-summary');
+            axios.get(`${import.meta.env.VITE_API_BE}/auth/me`, {
+                headers: {
+                    Authorization: `Bearer ${res.data.results.token}`,
+                },
+            })
+            .then(res => {
+                setAuthUser(res.data.user)
+                if (res.data.user) {
+                    if (pathname === '/cms/login') {
+                        if (res.data.user?.role === 'superadmin') {
+                            setResMessage(['success', 'Log In Success!'])
+                            setTimeout(() => {
+                                navigate('/cms');
+                            }, 2000)
                         } else {
-                            navigate('/order');
+                            setResMessage(['error', 'Log In Failed! Your Not an Admin!'])
+                            setTimeout(() => {
+                                navigate('/cms/login')  
+                            }, 2000)
                         }
-                    } else {
-                        navigate('/')
-                    }
+                    } else if (pathname === '/order') {
+                        if (res.data.user?.role === 'user') {
+                            setModalLogin(false);
+                            if (localStorage.getItem("cart")) {
+                                setResMessage(['success', 'Log In Success!'])
+                                setTimeout(() => {
+                                    navigate('/order-summary');
+                                }, 2000)
+                            } else {
+                                setResMessage(['success', 'Log In Success!'])
+                                setTimeout(() => {
+                                    navigate('/order');
+                                }, 2000)
+                            }
+                        } else {
+                            setResMessage(['error', 'Log In Failed! Your No a User!'])
+                            setTimeout(() => {
+                                navigate('/')
+                            }, 2000)
+                        }
+                    } 
                 } 
-            }
+            })
+            .catch(err => {
+                setIsLoding(false);
+                setResMessage(['error', err.response?.data?.message || "Login failed!"])
+            })   
         })
         .catch(err => {
-            console.log(err)
             setIsLoding(false);
+            setResMessage(['error', err.response?.data?.message || "Login failed!"])
+        })
+    }
+
+    const handleRegister = async (rule) => {
+        setIsLoding(true);
+        await axios.post(`${import.meta.env.VITE_API_BE}/register/users`, rule)
+        .then(res => {
+            setToken(res.data.results.token);
+            setAuthUser(res.data.results.user)
+            setIsLoding(false);
+            setModalSignup(false);
+            if (pathname === '/order') {
+                if (localStorage.getItem("cart")) {
+                    setResMessage(['success', 'Sign Up Success!'])
+                    setTimeout(() => {
+                        navigate('/order-summary');
+                    }, 2000)
+                } else {
+                    setResMessage(['success', 'Sign Up Success!'])
+                    setTimeout(() => {
+                        navigate('/order');
+                    }, 2000)
+                }
+            } 
+        })
+        .catch(err => {
+            setIsLoding(false);
+            setResMessage(['error', err.response?.data?.message || "Login failed!"])
         })
     }
 
     useEffect(() => {
-        if (token) getUserAuth(token)
-    }, [token]);
-
-    useEffect(() => {
         if (token) {
-            if (!allowUser.includes(pathname) && authUser?.role === "user") {
-                navigate("/")
-            } else if (!allowAdmin.includes(pathname) && authUser?.role === "superadmin") {
-                navigate("/cms")
-            }
+            axios.get(`${import.meta.env.VITE_API_BE}/auth/me`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then(res => {
+                setAuthUser(res.data.user)
+                if (res.data.user) {
+                    if (allowUser.includes(pathname) && !res.data.user?.role === "user") {
+                        setResMessage(['error', "You Can't Access this Page"])
+                        setTimeout(() => {
+                            navigate("/")
+                        }, 2000)
+                    } else if (allowAdmin.includes(pathname) && !res.data.user?.role === "superadmin") {
+                        setResMessage(['error', "You Can't Access this Page"])
+                        setTimeout(() => {
+                            navigate("/cms/login")
+                        }, 2000)
+                    }
+                } else {
+                    if (!allowGeneral.includes(pathname)) {
+                        setResMessage(['error', 'Log In First!'])
+                        localStorage.removeItem("token")
+                        setTimeout(() => {
+                            navigate("/")
+                        }, 2000)
+                    } 
+                }
+            })
+            .catch(err => {
+                if (err.response?.data?.message === 'jwt expired') {
+                    setResMessage(['error', err.response?.data?.message || "Unauthorized!"])
+                    localStorage.removeItem("token")
+                    setTimeout(() => {
+                        navigate("/")
+                    }, 2000)
+                } else {
+                    setResMessage(['error', err.response?.data?.message || "Unauthorized!"])
+                }
+            }) 
         } else {
             if (!allowGeneral.includes(pathname)) {
-                navigate("/")
+                setResMessage(['error', 'Log In First!'])
+                localStorage.removeItem("token")
+                setTimeout(() => {
+                    navigate("/")
+                }, 2000)
             }
         }
-    }, [pathname, token]);
+    }, [token, pathname]);
     
     const state = {
         modalLogin, setModalLogin,
@@ -133,9 +224,14 @@ const Auth = ({children }) => {
         routes,
 
         handleLogin,
+        handleRegister,
         isLoding, setIsLoding,
-        token, setToken, removeToken,
-        authUser, setAuthUser
+        token, setToken,
+        getUserAuth,
+        authUser, setAuthUser,
+        allowAdmin,
+
+        resMessage, setResMessage,
     }
 
     return (

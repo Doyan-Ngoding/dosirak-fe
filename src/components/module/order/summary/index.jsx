@@ -3,6 +3,7 @@ import LayoutComp from '../../../global/layout'
 import { 
     Col, 
     ConfigProvider, 
+    message, 
     Row 
 } from 'antd'
 import CardTitleStep from '../../../global/title/cardTitleStep'
@@ -26,20 +27,43 @@ export default function OrderSummaryComp() {
 
     const {
         setSize,
-        token
+        token,
+        resMessage,
+        authUser,
+        setResMessage
     } = useAuth()
 
     const handleSubmit = async () => {
         await navigate("/payment-method")
     }
 
+    const [messageApi, contextHolder] = message.useMessage();
+
     useEffect(() => {
-        if (!token && !cart) navigate("/order")
-    }, [token]);
+        if ((resMessage && resMessage.length === 2)) {
+            const [type, content] = resMessage;
+            messageApi[type](content)
+        }
+    }, [resMessage]);
+
+    useEffect(() => {
+        if (!token && !authUser) {
+            setResMessage(['error', 'Log In First!'])
+            setTimeout(() => {
+                navigate('/order')
+            }, 2000)
+        } else if (!cart) {
+            setResMessage(['error', 'Select The Menu First!'])
+            setTimeout(() => {
+                navigate('/order')
+            }, 2000)
+        }
+    }, [token, authUser, cart]);
 
     return (
         <>
             <LayoutComp>
+                {contextHolder}
                 <div
                     style={{
                         backgroundColor: '#F4F6F9',

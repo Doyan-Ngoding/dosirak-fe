@@ -23,10 +23,9 @@ export default function CardMenu({
             <div
                 className='bg-white border-[1.5px] border-[#D5D5D5] rounded-xl'
             >
-                {/* ${import.meta.env}/iamges${image} */}
-                {/* ${import.meta.env}${image} */}
                 <div
-                    className={`bg-[url(./assets/menu/gyoza.jpg)] bg-cover bg-center bg-no-repeat rounded-t-xl flex items-end lg:h-[180px] md:h-[120px] h-[100px]`}
+                    className={`bg-cover bg-center bg-no-repeat rounded-t-xl flex items-end lg:h-[180px] md:h-[120px] h-[100px]`}
+                    style={{ backgroundImage: `url('${import.meta.env.VITE_URL_BE}/${image}')` }}
                 >
                     {
                         showResto && (
@@ -118,9 +117,9 @@ export default function CardMenu({
                                     color: '#FFFFFF',
                                     borderRadius: 50,
                                     padding: setSize(10, 5, 5),
-                                    cursor: stock && parseInt(stock) > 0 ? 'pointer' : 'not-allowed'
+                                    cursor:  'pointer'
                                 }}
-                                onClick={(stock && parseInt(stock) > 0) && addToCart}
+                                onClick={addToCart}
                                 className='icon-hover-3'
                             />
                         </div>

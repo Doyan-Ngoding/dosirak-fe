@@ -1,27 +1,86 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { 
     Button,
     Checkbox,
     Drawer, 
     Form,
-    Input
+    Input,
+    message
 } from 'antd'
 import { IconX } from '@tabler/icons-react'
 import { useAuth } from '../../../context/AuthContext'
+import axios from 'axios'
+import authConfig from '../../../config/auth';
+import { useLocation, useNavigate } from 'react-router-dom'
 
 export default function SignupMobile({
     isOpen,
-    setIsOpen
+    setIsOpen,
 }) {
 
+    const [form] = Form.useForm()
+    
     const {
         setSize,
         setModalLogin,
-        setModalOtp
+        setModalOtp,
+        setToken,
+        setAuthUser,
+        resMessage,
+        setResMessage,
     } = useAuth()
+
+    const navigate = useNavigate()
+    const location = useLocation()
+    const pathname = location.pathname
+    const [loading, setLoading] = useState(false);
+    const [messageApi, contextHolder] = message.useMessage();
+
+    const handleSubmit = async (values) => {
+        setLoading(true);
+        try {
+            const response = await axios.post(authConfig.registerEndPoint, {
+                name: values.name,
+                phone: values.phone,
+                email: values.email,
+                password: values.password,
+                location: values.location,
+                confirmPassword: values.confirmPassword,
+            });
+            setToken(response.data.results.token);
+            setAuthUser(response.data.results.user)
+            setModalOtp(false);
+            setIsOpen(false);
+            if (pathname === '/order') {
+                if (localStorage.getItem("cart")) {
+                    setResMessage(['success', 'Registration Success!'])
+                    setTimeout(() => {
+                        navigate('/order-summary');
+                    }, 3000)
+                } else {
+                    setResMessage(['success', 'Registration Success!'])
+                    setTimeout(() => {
+                        navigate('/order');
+                    }, 3000)
+                }
+            }
+        } catch (error) {
+            messageApi.error(error.response?.data?.message || "Registration failed!");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        if ((resMessage && resMessage.length === 2)) {
+            const [type, content] = resMessage;
+            messageApi[type](content)
+        }
+    }, [resMessage]);
 
     return (
         <>
+            {contextHolder}
             <Drawer
                 title={<span className='text-[14px]'>Sign Up!</span>}
                 placement={"bottom"}
@@ -59,6 +118,8 @@ export default function SignupMobile({
                     wrapperCol={{
                         span: 24
                     }}
+                    form={form}
+                    onFinish={handleSubmit}
                 >
                     <Form.Item
                         label={<span className='text-xs size-0'><span className='text-red-600'>*</span>Name</span>}
@@ -95,6 +156,7 @@ export default function SignupMobile({
                         style={{ marginBottom: "8px" }}
                     >
                         <Input 
+                            type='number'
                             style={{
                                 padding: '5px 10px'
                             }}
@@ -166,17 +228,21 @@ export default function SignupMobile({
                         label={<span className='w-full text-xs size-0'><span className='text-red-600'>*</span>Confrim Password</span>}
                         required={false}
                         name="confrimPassword"
+                        dependencies={['password']}
                         rules={[
-                            {
-                                required: true,
-                                message: (
-                                    <span className='text-xs'>Please input your confirm password!</span>
-                                ),
-                            },
+                            { required: true, message: 'Please input your confirm password!' },
+                            ({ getFieldValue }) => ({
+                                validator(_, value) {
+                                    if (!value || getFieldValue('password') === value) {
+                                        return Promise.resolve();
+                                    }
+                                    return Promise.reject(new Error('Passwords do not match!'));
+                                },
+                            }),
                         ]}
                         style={{ marginBottom: "8px" }}
                     >
-                        <Input 
+                        <Input.Password 
                             style={{
                                 padding: '5px 10px'
                             }}
@@ -184,7 +250,7 @@ export default function SignupMobile({
                     </Form.Item>
                     <Form.Item
                         label={null}
-                        name="term"
+                        valuePropName="checked"
                         rules={[
                             {
                                 required: true,
@@ -197,7 +263,7 @@ export default function SignupMobile({
                         <Checkbox style={{ fontSize: 12 }}>By clicking sign up, you are agree to out <soan className='cursor-pointer text-[#E83600] font-semibold underline'>Privacy & Policy</soan></Checkbox>
                     </Form.Item>
                     <Form.Item label={null}>
-                        <Button type="primary" htmlType="submit" className='w-full' style={{ height: setSize(45, 35, 30) }} onClick={() => {setModalOtp(true), setIsOpen(false)}}>
+                        <Button type="primary" htmlType="submit" className='w-full' style={{ height: setSize(45, 35, 30) }} loading={loading}>
                             Sign Up
                         </Button>
                     </Form.Item>

@@ -26,10 +26,6 @@ export default function MenuComp() {
 
     const navigate = useNavigate()
 
-    useEffect(() => {
-        setSelectedNearReastaurant('JK Resto')
-    }, []);
-
     return (
         <>
             <div
