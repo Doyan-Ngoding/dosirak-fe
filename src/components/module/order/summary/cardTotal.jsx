@@ -52,8 +52,8 @@ export default function CardTotal({
                     }}
                 >
                     <Row
-                       align={"middle"}
-                       justify={"space-between"} 
+                        align={"middle"}
+                        justify={"space-between"} 
                     >
                         <Col
                             span={12}
@@ -81,8 +81,8 @@ export default function CardTotal({
                     span={24}
                 >
                     <Row
-                       align={"middle"}
-                       justify={"space-between"} 
+                        align={"middle"}
+                        justify={"space-between"} 
                     >
                         <Col
                             span={12}
@@ -129,8 +129,8 @@ export default function CardTotal({
                     span={24}
                 >
                     <Row
-                       align={"middle"}
-                       justify={"space-between"} 
+                        align={"middle"}
+                        justify={"space-between"} 
                     >
                         <Col
                             span={12}
@@ -158,8 +158,8 @@ export default function CardTotal({
                     span={24}
                 >
                     <Row
-                       align={"middle"}
-                       justify={"space-between"} 
+                        align={"middle"}
+                        justify={"space-between"} 
                     >
                         <Col
                             span={12}
@@ -192,8 +192,8 @@ export default function CardTotal({
                     }}
                 >
                     <Row
-                       align={"middle"}
-                       justify={"space-between"} 
+                        align={"middle"}
+                        justify={"space-between"} 
                     >
                         <Col
                             span={12}

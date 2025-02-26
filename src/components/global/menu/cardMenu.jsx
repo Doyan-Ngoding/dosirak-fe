@@ -18,14 +18,17 @@ export default function CardMenu({
         setSize
     } = useAuth()
 
+
+    const imageUrl = `${import.meta.env.VITE_URL_BE}/${image.replace(/\\/g, '/')}`;
     return (
+        
         <>
             <div
                 className='bg-white border-[1.5px] border-[#D5D5D5] rounded-xl'
             >
                 <div
-                    className={`bg-cover bg-center bg-no-repeat rounded-t-xl flex items-end lg:h-[180px] md:h-[120px] h-[100px]`}
-                    style={{ backgroundImage: `url('${import.meta.env.VITE_URL_BE}/${image}')` }}
+                    className="bg-cover bg-center bg-no-repeat rounded-t-xl flex items-end lg:h-[180px] md:h-[120px] h-[100px]"
+                    style={{ backgroundImage: `url(${imageUrl})` }}
                 >
                     {
                         showResto && (
