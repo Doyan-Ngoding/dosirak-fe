@@ -24,10 +24,9 @@ export default function CardMenuHome({
             <div
                 className='bg-white border-[1.5px] border-[#EBEEF2] rounded-xl'
             >
-                {/* ${import.meta.env}/iamges${image} */}
-                {/* ${import.meta.env}${image} */}
                 <div
-                    className={`bg-[url(./assets/menu/gyoza.jpg)] bg-cover bg-center bg-no-repeat rounded-t-xl flex items-end ${isMenu ? 'lg:h-[180px] md:h-[100px] h-[80px]' : 'lg:h-[130px] md:h-[80px] h-[70px]'}`}
+                    className={`bg-cover bg-center bg-no-repeat rounded-t-xl flex items-end ${isMenu ? 'lg:h-[180px] md:h-[100px] h-[80px]' : 'lg:h-[130px] md:h-[80px] h-[70px]'}`}
+                    style={{ backgroundImage: `url('${import.meta.env.VITE_URL_BE}/${image}')` }}
                 />
                 <div
                     className='text-[#393939] font-semibold lg:text-[18px] md:text-[12px] text-[10px] lg:px-2 md:px-2 px-1 pt-1'
@@ -75,9 +74,9 @@ export default function CardMenuHome({
                                     color: '#FFFFFF',
                                     borderRadius: 50,
                                     padding: setSize(5, 3, 2),
-                                    cursor: stock && parseInt(stock) > 0 ? 'pointer' : 'not-allowed'
+                                    cursor:  'pointer'
                                 }}
-                                onClick={(stock && parseInt(stock) > 0) && addToCart}
+                                onClick={addToCart}
                                 className='icon-hover-3'
                             />
                         </div>

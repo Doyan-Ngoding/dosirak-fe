@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { 
     Button,
     Form,
     Input,
+    message,
     Modal 
 } from 'antd'
 import { useAuth } from '../../../context/AuthContext'
@@ -20,10 +21,21 @@ export default function LoginStandard({
         setSize,
         setModalForgot,
         setModalSignup,
+        resMessage
     } = useAuth()
+
+    const [messageApi, contextHolder] = message.useMessage();
+
+    useEffect(() => {
+        if ((resMessage && resMessage.length === 2)) {
+            const [type, content] = resMessage;
+            messageApi[type](content)
+        }
+    }, [resMessage]);
 
     return (
         <>
+            {contextHolder}
             <Modal
                 open={isOpen}
                 footer={null} 
@@ -50,7 +62,7 @@ export default function LoginStandard({
                             await action(form.getFieldsValue())
                             form.resetFields()
                         } catch (error) {
-                            console.log(error);
+                            messageApi.error(error.message)
                         }
                     }}
                 >

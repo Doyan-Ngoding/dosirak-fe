@@ -19,6 +19,9 @@ const Menu = ({children }) => {
     const [listMenu, setListMenu] = useState([]);
     const [listMenuGrouped, setListMenuGrouped] = useState([]);
 
+    const [modalAddMenu, setModalAddMenu] = useState(false);
+    const [isLoding, setIsLoding] = useState(false);
+
     const getListCategory = () => {
         axios.get(`${import.meta.env.VITE_API_BE}/categories`)
         .then(res => {
@@ -87,6 +90,9 @@ const Menu = ({children }) => {
 
         listMenu, setListMenu,
         listMenuGrouped, setListMenuGrouped,
+
+        modalAddMenu, setModalAddMenu,
+        isLoding, setIsLoding,
     }
 
     return (

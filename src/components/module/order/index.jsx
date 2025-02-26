@@ -28,7 +28,7 @@ export default function OrderComp() {
     } = useOrder();
 
     const {
-        setSize,
+        setSize = () => {} 
     } = useAuth();
 
     const [activeTab, setActiveTab] = useState(tabCategory[0] || '');

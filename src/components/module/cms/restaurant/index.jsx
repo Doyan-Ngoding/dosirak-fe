@@ -5,6 +5,7 @@ import { useAuth } from '../../../../context/AuthContext'
 import { IconSearch } from '@tabler/icons-react'
 import { columnCategoryList } from '../../../global/consts/columns'
 import { useRestaurant } from '../../../../context/RestaurantContext'
+import Action from '../../../global/modal/action'
 
 export default function CmsRestaurantComp() {
 
@@ -13,8 +14,27 @@ export default function CmsRestaurantComp() {
     } = useAuth()
 
     const {
-        listNearRestaurant
+        listNearRestaurant,
+        listRestaurant,
+        detailRestaurant,
+        modalAddRestaurant, setModalAddRestaurant,
+        modalEditRestaurant, setModalEditRestaurant,
+        isLoading, setIsLoading,
+        resMessage, setResMessage,
+        handleAddRestaurant,
+        getDetailRestaurant,
+        handleEditRestaurant,
+        handleDeleteRestaurant,
     } = useRestaurant()
+
+    const formAdd = [
+        {
+            name: "name",
+            label: "Restaurant Name",
+            required: true,
+            type: "input"
+        }
+    ]
 
     return (
         <>
@@ -46,6 +66,7 @@ export default function CmsRestaurantComp() {
                         />
                         <Button
                             type='primary'
+                            onClick={() => setModalAddRestaurant(true)}
                         >
                             + Add Restaurant
                         </Button>
@@ -54,12 +75,12 @@ export default function CmsRestaurantComp() {
                         className='lg:mt-5 md:mt-3 mt-3'
                     >
                         <Table 
-                            dataSource={listNearRestaurant}
-                            columns={columnCategoryList(listNearRestaurant)}
+                            dataSource={listRestaurant}
+                            columns={columnCategoryList(listRestaurant, getDetailRestaurant, setModalEditRestaurant, handleDeleteRestaurant, 'Restaurant')}
                             className='lg:pt-5 md:pt-3 pt-2'
                             size={setSize('medium', 'small', 'small')}
                             pagination={{
-                                total: listNearRestaurant && listNearRestaurant?.length,
+                                total: listRestaurant && listRestaurant?.length,
                                 showTotal: (total, range) =>
                                   `${range[0]}-${range[1]} of ${
                                     total ? total.toLocaleString() : ""
@@ -75,6 +96,29 @@ export default function CmsRestaurantComp() {
                     </div>
                 </div>
             </FullComp>
+            <Action 
+                isOpen={modalAddRestaurant}
+                setIsopen={setModalAddRestaurant}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
+                title={"Add Restaurant"}
+                item={formAdd}
+                action={handleAddRestaurant}
+                resMessage={resMessage}
+                setResMessage={setResMessage}
+            />
+                <Action 
+                isOpen={modalEditRestaurant}
+                setIsopen={setModalEditRestaurant}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
+                title={"Edit Restaurant"}
+                item={formAdd}
+                data={detailRestaurant}
+                action={handleEditRestaurant}
+                resMessage={resMessage}
+                setResMessage={setResMessage}
+            />
         </>
     )
 }

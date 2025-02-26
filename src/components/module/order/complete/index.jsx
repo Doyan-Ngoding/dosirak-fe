@@ -28,8 +28,13 @@ export default function CompleteComp() {
     }, []);
 
     useEffect(() => {
-        if (!token) navigate("/order")
-    }, [token]);
+        if (!token && !authUser) {
+            setResMessage(['error', 'Log In First!'])
+            setTimeout(() => {
+                navigate('/order')
+            }, 2000)
+        }
+    }, [token, authUser]);
 
     return (
         <>

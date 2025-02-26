@@ -24,13 +24,13 @@ export default function LandingComp() {
                     >
                         <CoverComp />                    
                     </Col>
-                    <Col
+                    {/* <Col
                         span={24}
                     >
                         <SplitComp 
                             img={"./assets/cover/split.png"}
                         />                    
-                    </Col>
+                    </Col> */}
                     <Col
                         span={24}
                     >
@@ -49,7 +49,7 @@ export default function LandingComp() {
                     >
                         <MenuComp />
                     </Col>
-                    <Col
+                    {/* <Col
                         span={24}
                         className='lg:py-[100px] md:py-[50px] py-[30px] px-[1px]'
                     >
@@ -57,7 +57,7 @@ export default function LandingComp() {
                             img={"./assets/cover/split.png"}
                             isRotate={true}
                         />                    
-                    </Col>
+                    </Col> */}
                     <Col
                         span={24}
                     >
@@ -73,13 +73,13 @@ export default function LandingComp() {
                     >
                         <LocationComp />
                     </Col>
-                    <Col
+                    {/* <Col
                         span={24}
                     >
                         <SplitComp 
                             img={"./assets/cover/split.png"}
                         />                    
-                    </Col>
+                    </Col> */}
                     <Col
                         span={24}
                     >

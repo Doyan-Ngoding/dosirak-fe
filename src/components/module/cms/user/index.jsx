@@ -5,6 +5,7 @@ import { useAuth } from '../../../../context/AuthContext'
 import { IconSearch } from '@tabler/icons-react'
 import { columnUserList } from '../../../global/consts/columns'
 import { useUser } from '../../../../context/UserContext'
+import Action from '../../../global/modal/action'
 
 export default function CmsUserComp() {
 
@@ -13,11 +14,61 @@ export default function CmsUserComp() {
     } = useAuth()
 
     const {
-        listUser
+        listUser,
+        detailUser,
+        modalAddUser, setModalAddUser,
+        modalEditUser, setModalEditUser,
+        isLoading, setIsLoading, 
+        resMessage, setResMessage, 
+        handleAddUser,
+        getDetailUser,
+        handleEditUser,
+        handleDeleteUser,
     } = useUser()
 
-    console.log(listUser);
-    
+    const formAdd = [
+        {
+            name: "name",
+            label: "Name",
+            required: true,
+            type: "input"
+        },
+        {
+            name: "email",
+            label: "Email",
+            required: true,
+            type: "input"
+        },
+        {
+            name: "phone",
+            label: "Phone",
+            required: true,
+            type: "input"
+        },
+        {
+            name: "password",
+            label: "Password",
+            required: true,
+            type: "input"
+        },
+        {
+            name: "location",
+            label: "Location",
+            required: true,
+            type: "textarea"
+        },
+        {
+            name: "role",
+            label: "Role",
+            required: true,
+            type: "select",
+            option: [
+                { value: 'superadmin', label: 'Superadmin' },
+                { value: 'employee', label: 'Employee' },
+                { value: 'user', label: 'User' },
+            ]
+        },
+    ]
 
     return (
         <>
@@ -49,6 +100,7 @@ export default function CmsUserComp() {
                         />
                         <Button
                             type='primary'
+                            onClick={() => setModalAddUser(true)}
                         >
                             + Add User
                         </Button>
@@ -58,7 +110,7 @@ export default function CmsUserComp() {
                     >
                         <Table 
                             dataSource={listUser}
-                            columns={columnUserList(listUser)}
+                            columns={columnUserList(listUser, getDetailUser, setModalEditUser, handleDeleteUser)}
                             className='lg:pt-5 md:pt-3 pt-2'
                             size={setSize('medium', 'small', 'small')}
                             pagination={{
@@ -81,6 +133,30 @@ export default function CmsUserComp() {
                     </div>
                 </div>
             </FullComp>
+            <Action 
+                isOpen={modalAddUser}
+                setIsopen={setModalAddUser}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
+                title={"Add User"}
+                item={formAdd}
+                action={handleAddUser}
+                resMessage={resMessage}
+                setResMessage={setResMessage}
+            />
+            <Action 
+                isOpen={modalEditUser}
+                setIsopen={setModalEditUser}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
+                title={"Edit User"}
+                item={formAdd}
+                data={detailUser}
+                action={handleEditUser}
+                resMessage={resMessage}
+                setResMessage={setResMessage}
+                isReq={false}
+            />
         </>
     )
 }

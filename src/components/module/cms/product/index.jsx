@@ -5,15 +5,19 @@ import { useAuth } from '../../../../context/AuthContext'
 import { IconSearch } from '@tabler/icons-react'
 import { useMenu } from '../../../../context/MenuContext'
 import { columnProductList } from '../../../global/consts/columns'
+import Action from '../../../global/modal/action'
 
 export default function CmsProductComp() {
 
     const {
-        setSize
+        setSize,
+        isMobile
     } = useAuth()
 
     const {
-        listMenu
+        listMenu,
+        isLoading, setIsLoading,
+        modalAddMenu, setModalAddMenu
     } = useMenu()
     
     return (
@@ -78,6 +82,13 @@ export default function CmsProductComp() {
                     </div>
                 </div>
             </FullComp>
+            <Action 
+                isOpen={modalAddMenu}
+                setIsopen={setModalAddMenu}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
+                title="Add Product"
+            />
         </>
     )
 }

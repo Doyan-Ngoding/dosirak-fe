@@ -1,5 +1,5 @@
-import React from 'react'
-import { Button, ConfigProvider, Form, Input } from 'antd'
+import React, { useEffect } from 'react'
+import { Button, ConfigProvider, Form, Input, message } from 'antd'
 import { useAuth } from '../../../../context/AuthContext'
 
 export default function CmsLoginComp() {
@@ -9,11 +9,22 @@ export default function CmsLoginComp() {
     const {
         setSize,
         isLoading,
-        handleLogin
+        handleLogin,
+        resMessage
     } = useAuth()
+
+    const [messageApi, contextHolder] = message.useMessage();
+
+    useEffect(() => {
+        if ((resMessage && resMessage.length === 2)) {
+            const [type, content] = resMessage;
+            messageApi[type](content)
+        }
+    }, [resMessage]);
 
     return (
         <>
+            {contextHolder}
             <div
                 className='bg-[#f2f2f2] h-[100vh] w-[100vw] flex items-center justify-center font-[Nunito Sans]'
             >

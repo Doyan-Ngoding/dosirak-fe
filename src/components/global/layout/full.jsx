@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import ConfigComp from './configComp'
-import { Badge, ConfigProvider, Drawer, Layout, Menu } from 'antd'
+import { Badge, ConfigProvider, Drawer, Layout, Menu, message } from 'antd'
 import { useAuth } from '../../../context/AuthContext'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { IconBell, IconBellFilled, IconBuildingWarehouse, IconCategory, IconCategory2, IconChevronDown, IconChevronLeft, IconDashboard, IconLayoutGrid, IconMenu2, IconPower, IconSettings, IconUserFilled, IconUsers } from '@tabler/icons-react'
 const { Sider, Header, Content, Footer } = Layout
 
@@ -11,12 +11,21 @@ export default function FullComp(props) {
     const {
         routes,
         setSize,
-        isMobile
+        isMobile,
+        authUser,
+        allowAdmin, 
+        setResMessage,
+        token,
+        getUserAuth,
+        resMessage
     } = useAuth()
 
     const [activeKey, setActiveKey] = useState("5");
     const router = useLocation();
     const pathname = router.pathname;
+    const navigate = useNavigate();
+
+    const [messageApi, contextHolder] = message.useMessage();
 
     const [isCollapse, setIsCollapse] = useState(false);
     const [isCollapseShow, setIsCollapseShow] = useState(false);
@@ -46,12 +55,48 @@ export default function FullComp(props) {
     }    
 
     useEffect(() => {
+        if (token) {
+            getUserAuth(token)
+        }
+    }, []);
+
+    useEffect(() => {
         let route = Object.keys(routes).find(key => routes[key] === router.pathname);
         setActiveKey(route?.toString());
     }, [pathname]);
 
+    useEffect(() => {
+        if (!token && !authUser) {
+            setResMessage(['error', 'Log In First!'])
+            setTimeout(() => {
+                navigate('/cms/login')
+            }, 2000)
+        }  else {
+            if (token) {
+                if (authUser) {
+                    if (allowAdmin.includes(pathname) && !authUser?.role === "superadmin") {
+                        setResMessage(['error', "You Can't Access this Page"])
+                        setTimeout(() => {
+                            navigate("/cms/login")
+                        }, 2000)
+                    }
+                } else {
+                    getUserAuth(token)
+                }
+            }
+        }
+    }, [token, authUser]);
+
+    useEffect(() => {
+        if ((resMessage && resMessage.length === 2)) {
+            const [type, content] = resMessage;
+            messageApi[type](content)
+        }
+    }, [resMessage]);
+
     return (
         <>
+            {contextHolder}
             <ConfigProvider
                 theme={{
                     token: {
@@ -196,8 +241,8 @@ export default function FullComp(props) {
                                     />
                                 </div>
                                 <div>
-                                    <div className='lg:leading-4 md:leading-4 leading-3 !font-extrabold text-[#404040] lg:text-[14px] md:text-[12px] text-[10px]'>Moni Roy</div>
-                                    <div className='lg:leading-4 md:leading-4 leading-3 text-[#565656] lg:text-[14px] md:text-[12px] text-[10px]'>Admin</div>
+                                    <div className='lg:leading-4 md:leading-4 leading-3 !font-extrabold text-[#404040] lg:text-[14px] md:text-[12px] text-[10px]'>{authUser ? authUser.name : ""}</div>
+                                    <div className='lg:leading-4 md:leading-4 leading-3 text-[#565656] lg:text-[14px] md:text-[12px] text-[10px]'>{authUser ? authUser.role : ""}</div>
                                 </div>
                                 <IconChevronDown 
                                     color='#565656'

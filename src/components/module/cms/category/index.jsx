@@ -1,10 +1,11 @@
 import React from 'react'
 import FullComp from '../../../global/layout/full'
-import { Button, Input, Table } from 'antd'
+import { Button, Input, message, Table } from 'antd'
 import { useAuth } from '../../../../context/AuthContext'
 import { IconSearch } from '@tabler/icons-react'
 import { columnCategoryList } from '../../../global/consts/columns'
 import { useCategory } from '../../../../context/CategoryContext'
+import Action from '../../../global/modal/action'
 
 export default function CmsCategoryComp() {
 
@@ -13,8 +14,27 @@ export default function CmsCategoryComp() {
     } = useAuth()
 
     const {
-        listCategory
+        listCategory,
+        detailCategory,
+        modalAddCategory, setModalAddCategory,
+        modalEditCategory, setModalEditCategory,
+        isLoading, setIsLoading, 
+        resMessage, setResMessage,
+        handleAddCategory,
+        getDetailCategory,
+        handleEditCategory,
+        handleDeleteCategory,
     } = useCategory()
+
+    
+    const formAdd = [
+        {
+            name: "name",
+            label: "Category Name",
+            required: true,
+            type: "input"
+        }
+    ]
 
     return (
         <>
@@ -46,6 +66,7 @@ export default function CmsCategoryComp() {
                         />
                         <Button
                             type='primary'
+                            onClick={() => setModalAddCategory(true)}
                         >
                             + Add Category
                         </Button>
@@ -55,7 +76,7 @@ export default function CmsCategoryComp() {
                     >
                         <Table 
                             dataSource={listCategory}
-                            columns={columnCategoryList(listCategory)}
+                            columns={columnCategoryList(listCategory, getDetailCategory, setModalEditCategory, handleDeleteCategory, 'Category')}
                             className='lg:pt-5 md:pt-3 pt-2'
                             size={setSize('medium', 'small', 'small')}
                             pagination={{
@@ -75,6 +96,29 @@ export default function CmsCategoryComp() {
                     </div>
                 </div>
             </FullComp>
+            <Action 
+                isOpen={modalAddCategory}
+                setIsopen={setModalAddCategory}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
+                title={"Add Category"}
+                item={formAdd}
+                action={handleAddCategory}
+                resMessage={resMessage}
+                setResMessage={setResMessage}
+            />
+            <Action 
+                isOpen={modalEditCategory}
+                setIsopen={setModalEditCategory}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
+                title={"Edit Category"}
+                item={formAdd}
+                data={detailCategory}
+                action={handleEditCategory}
+                resMessage={resMessage}
+                setResMessage={setResMessage}
+            />
         </>
     )
 }
