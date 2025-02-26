@@ -16,7 +16,8 @@ export default function CompleteComp() {
     const navigate = useNavigate();
 
     const {
-        token
+        token,
+        authUser
     } = useAuth()
 
     const {
@@ -106,9 +107,9 @@ export default function CompleteComp() {
                             >
                                 Chef start cooking for you!
                             </div>
-                            <div>
+                            {/* <div>
                                 <span style={{ color: '#838383' }}>Estimated delivery time <span style={{ backgroundColor: 'rgba(232, 54, 0, 0.1)', color: '#E83600', textDecoration: 'underline', padding: 4 }}>00:59:00</span></span>
-                            </div>
+                            </div> */}
                             <div>
                                 <img src='/assets/img-complete.jpg' style={{ width: '50%'}} />
                             </div>
@@ -120,6 +121,7 @@ export default function CompleteComp() {
                                    borderRadius: 50,
                                    width: '80%'
                                 }}
+                                onClick={() => navigate("/")}
                             >
                                 Back To Home
                             </Button>

@@ -26,6 +26,10 @@ export default function DerliveryMethod() {
         setSize
     } = useAuth()
 
+    const disabledDate = (current) => {
+        return current && current < dayjs().add(1, 'day').endOf('day');
+    };
+
     return (
         <>
             <Row
@@ -94,7 +98,7 @@ export default function DerliveryMethod() {
                                 }
                                 onClick={() => {setOrderMethod("SCHEDULED"), setShowDatePicker(!showDatePicker)}}
                             >
-                                {selectedDate ? dayjs(selectedDate).format("dddd, DD MMM YYYY") : "SCHEDULED DELIVERY"}
+                                {selectedDate ? dayjs(selectedDate).format("dddd, DD MMM YYYY HH:mm:ss") : "SCHEDULED DELIVERY"}
                             </Button>
                             {showDatePicker && (
                                 <div 
@@ -104,7 +108,7 @@ export default function DerliveryMethod() {
                                         margin: 'auto'
                                     }}
                                 >
-                                    <DatePicker open={true} onOpenChange={setShowDatePicker} value={selectedDate} onChange={(date) => setSelectedDate(date)} />
+                                    <DatePicker showTime open={true} onOpenChange={setShowDatePicker} value={selectedDate} onChange={(date) => setSelectedDate(date)} disabledDate={disabledDate} />
                                 </div>
                             )}
                         </Col>

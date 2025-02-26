@@ -7,8 +7,9 @@ import {
     Radio, 
     Row 
 } from 'antd';
-import { IconCreditCard } from '@tabler/icons-react';
+import { IconChevronDown, IconCreditCard } from '@tabler/icons-react';
 import { useAuth } from '../../../../context/AuthContext';
+import { useOrder } from '../../../../context/OrderContext';
 
 const { Panel } = Collapse;
 
@@ -19,16 +20,23 @@ export default function CardMethod() {
         setSize
     } = useAuth()
 
-    const [selectedPayment, setSelectedPayment] = useState(null);
+    const {
+        selectedPayment, setSelectedPayment,
+        activeKey, setActiveKey,
+    } = useOrder()
 
     const paymentOptions = [
-        { key: "ovo", label: "OVO", input: true, icon: "🟣" },
-        { key: "shopeepay", label: "SHOPEEPAY", input: true, icon: "🛍️" },
-        { key: "gopay", label: "GOPAY", input: true, icon: "💳" },
-        { key: "qris", label: "QRIS", input: true, icon: "📸" },
-        { key: "bank_va", label: "BANK VIRTUAL ACCOUNT", input: true, icon: "🏦" },
+        { key: "ovo", label: "OVO", input: true, icon: './assets/payment/ovo.png' },
+        { key: "shopeepay", label: "ShopeePay", input: true, icon: './assets/payment/spay.png' },
+        { key: "gopay", label: "GoPay", input: true, icon: './assets/payment/gopay.png' },
+        { key: "qris", label: "QRIS", input: false, icon: './assets/payment/qris.png' },
     ];
 
+    const vaOptions = [
+        { key: "bca_va", label: "Virtua Account BCA", input: false, icon: './assets/payment/bca.png' },
+        { key: "bni_va", label: "Virtua Account BNI", input: false, icon: './assets/payment/bni.png' },
+        { key: "bri_va", label: "Virtua Account BRI", input: false, icon: './assets/payment/bri.png' },
+    ]
 
     return (
         <>
@@ -56,7 +64,6 @@ export default function CardMethod() {
                         theme={{
                             components: {
                                 Collapse: {
-                                    // contentBg: '#FFFFFF',
                                     colorBorder: '#FFFFFF',
                                     borderRadius: 0,
                                 },
@@ -68,7 +75,7 @@ export default function CardMethod() {
                     >
                         <Collapse
                             accordion
-                            activeKey={selectedPayment}
+                            activeKey={null}
                             onChange={(key) => setSelectedPayment(key[0])}
                             style={{
                                 backgroundColor: '#FFFFFF',
@@ -90,12 +97,17 @@ export default function CardMethod() {
                                                 <div
                                                     style={{
                                                         display: 'flex',
+                                                        alignItems: 'center'
                                                     }}
                                                 >
-                                                    <span>{option.icon}</span>
-                                                    <span>{option.label}</span>
+                                                    {
+                                                        option.icon && (
+                                                            <div className='mr-3'><img src={option.icon} width={option.key === 'ovo' ? 20 : 40} /></div>
+                                                        )
+                                                    }
+                                                    <div>{option.label}</div>
                                                 </div>
-                                                <Radio checked={JSON.stringify(selectedPayment) === JSON.stringify(option.key)} />
+                                                <Radio checked={selectedPayment === option.key} onChange={() => setSelectedPayment(option.key)} />
                                             </div>
                                         }
                                         style={{
@@ -110,18 +122,85 @@ export default function CardMethod() {
                                             }
                                         }}
                                     >
-                                        {
-                                            option.input && (
-                                                <Input
-                                                    placeholder="Phone Number"
-                                                    prefix={<IconCreditCard style={{ marginRight: 10 }} />}
-                                                    type='number'   
-                                                />
-                                            )
-                                        }
                                     </Panel>
                                 ))
                             }
+                        </Collapse>
+                        <Collapse
+                            accordion
+                            activeKey={activeKey}
+                            onChange={(e) => setActiveKey(e[0])}
+                            style={{
+                                backgroundColor: '#FFFFFF',
+                            }}
+                            expandIconPosition='end'
+                            
+                        >
+                            <Panel
+                                showArrow={true}
+                                key={1}
+                                header="Virtual Account Bank"
+                                style={{
+                                    backgroundColor: "#fff",
+                                    borderRadius: "6px",
+                                    marginBottom: "8px",
+                                    border: "1px solid #d9d9d9",
+                                }}
+                            >
+                                <Collapse
+                                    accordion
+                                    activeKey={null}
+                                    onChange={(key) => setSelectedPayment(key[0])}
+                                    style={{
+                                        backgroundColor: '#FFFFFF',
+                                    }}
+                                    
+                                >
+                                    {
+                                        vaOptions.map(option => (
+                                            <Panel
+                                                showArrow={false}
+                                                key={option.key}
+                                                header={
+                                                    <div
+                                                        style={{
+                                                            display: 'flex',
+                                                            justifyContent: 'space-between'
+                                                        }}
+                                                    >
+                                                        <div
+                                                            style={{
+                                                                display: 'flex',
+                                                                alignItems: 'center'
+                                                            }}
+                                                        >
+                                                            {
+                                                                option.icon && (
+                                                                    <div className='mr-3'><img src={option.icon} width={option.key === 'ovo' ? 20 : 40} /></div>
+                                                                )
+                                                            }
+                                                            <div>{option.label}</div>
+                                                        </div>
+                                                        <Radio checked={selectedPayment === option.key} onChange={() => setSelectedPayment(option.key)} />
+                                                    </div>
+                                                }
+                                                style={{
+                                                    backgroundColor: selectedPayment === option.key ? "#e6f7e6" : "#fff",
+                                                    borderRadius: "6px",
+                                                    marginBottom: "8px",
+                                                    border: selectedPayment === option.key ?  "1px solid #287D3C" :  "1px solid #d9d9d9",
+                                                }}
+                                                styles={{
+                                                    body: {
+                                                        backgroundColor: '#e6f7e6',
+                                                    }
+                                                }}
+                                            >
+                                            </Panel>
+                                        ))
+                                    }
+                                </Collapse>
+                            </Panel>
                         </Collapse>
                     </ConfigProvider>
                 </Col>

@@ -24,7 +24,7 @@ export default function OrderComp() {
     const {
         selectedMenu, setSelectedMenu,
         subTotal, setSubTotal,
-        cart, setCart, removeCart
+        cart, setCart
     } = useOrder();
 
     const {
