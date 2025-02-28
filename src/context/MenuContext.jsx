@@ -5,10 +5,15 @@ import React, {
     useEffect,
     useState,
 } from 'react'
+import { useAuth } from './AuthContext';
 
 const MenuContext = createContext(null)
 
 const Menu = ({children }) => {
+
+    const {
+        authUser
+    } = useAuth()
 
     const [menuSearched, setMenuSearched] = useState();
 
@@ -24,7 +29,9 @@ const Menu = ({children }) => {
     const [modalAddMenu, setModalAddMenu] = useState(false);
     const [modalEditMenu, setModalEditMenu] = useState(false);
     
-    const [isLoding, setIsLoding] = useState(false);
+    const [detailMenu, setDetailMenu] = useState();
+
+    const [isLoading, setIsLoading] = useState(false);
     const [resMessage, setResMessage] = useState();
 
     const getListCategory = () => {
@@ -87,6 +94,97 @@ const Menu = ({children }) => {
         })
     }
 
+    const handleAddMenu = (rules) => {
+        setIsLoading(true)
+        const formData = new FormData();
+        formData.append("category_name", rules.category_name);
+        formData.append("restaurant_name", rules.restaurant_name);
+        formData.append("name", rules.name);
+        formData.append("description", rules.description);
+        formData.append("price", rules.price);
+        formData.append("created_by", authUser?.name);
+        formData.append("image", rules.image);
+        axios.post(`${import.meta.env.VITE_API_BE}/main-menu`, formData)
+        .then(res => {
+            setTimeout(() => {
+                setIsLoading(false)
+                setModalAddMenu(false)
+                getListMenuGrouped()
+            }, 1000)
+            setTimeout(() => {
+                setResMessage(['success', 'Successfully Added Product'])
+            }, 2000)
+        })
+        .catch(err => {
+            setIsLoading(false)
+            setResMessage(['error', err.response?.data?.message || "Failed to Add Product!"])
+        }) 
+        .finally(() => {
+            setResMessage()
+        })
+    }
+
+    const getDetailMenu = (id) => {
+        axios.get(`${import.meta.env.VITE_API_BE}/main-menu/${id}`)
+        .then(res => {
+            setDetailMenu(res.data.results)
+        })
+        .catch(err => {
+            setResMessage(['error', err.response?.data?.message || "Failed Get Menu!"])
+        }) 
+    }
+
+    const handleEditMenu = (rules) => {
+        setIsLoading(true)
+        const formData = new FormData();
+        formData.append("category_name", rules.category_name);
+        formData.append("restaurant_name", rules.restaurant_name);
+        formData.append("name", rules.name);
+        formData.append("description", rules.description);
+        formData.append("price", rules.price);
+        formData.append("created_by", authUser?.id);
+        formData.append("image", rules.image?.originFileObj);
+        axios.patch(`${import.meta.env.VITE_API_BE}/main-menu/${detailMenu.id}`, formData)
+        .then(res => {
+            setTimeout(() => {
+                setIsLoading(false)
+                setModalEditMenu(false)
+                getListMenuGrouped()
+            }, 1000)
+            setTimeout(() => {
+                setResMessage(['success', 'Successfully Edit Product'])
+            }, 2000)
+        })
+        .catch(err => {
+            setIsLoading(false)
+            setResMessage(['error', err.response?.data?.message || "Failed to Add Product!"])
+        }) 
+        .finally(() => {
+            setResMessage()
+        })
+    }
+
+    const handleDeleteMenu = async (id) => {
+        setIsLoading(true)
+        await axios.delete(`${import.meta.env.VITE_API_BE}/main-menu/${id}`)
+        .then(res => {
+            setTimeout(() => {
+                setIsLoading(false)
+                getListMenuGrouped()
+            }, 1000)
+            setTimeout(() => {
+                setResMessage(['success', 'Successfully Deleted Product'])
+            }, 2000)
+        })
+        .catch(err => {
+            setIsLoading(false)
+            setResMessage(['error', err.response?.data?.message || "Failed to Delete Product!"])
+        }) 
+        .finally(() => {
+            setResMessage()
+        })
+    }
+
     useEffect(() => {
         getListCategory();
         getListMenuGrouped();
@@ -112,8 +210,15 @@ const Menu = ({children }) => {
         modalAddMenu, setModalAddMenu,
         modalEditMenu, setModalEditMenu,
         
-        isLoding, setIsLoding,
+        detailMenu, setDetailMenu,
+
+        isLoading, setIsLoading,
         resMessage, setResMessage,
+
+        handleAddMenu,
+        getDetailMenu,
+        handleEditMenu,
+        handleDeleteMenu,
     }
 
     return (

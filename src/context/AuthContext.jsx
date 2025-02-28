@@ -52,7 +52,7 @@ const Auth = ({children }) => {
     const [token, setToken] = useLocalStorage("token");
     const [authUser, setAuthUser] = useState();
 
-    const [isLoding, setIsLoding] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [resMessage, setResMessage] = useState();
 
     const getUserAuth = async (token) => {
@@ -70,12 +70,12 @@ const Auth = ({children }) => {
     }
 
     const handleLogin = async (rule) => {
-        setIsLoding(true);
+        setIsLoading(true);
         await axios.post(`${import.meta.env.VITE_API_BE}/login`, rule)
         .then(res => {
             setToken(res.data.results.token);
             getUserAuth(res.data.results.token);
-            setIsLoding(false);
+            setIsLoading(false);
             axios.get(`${import.meta.env.VITE_API_BE}/auth/me`, {
                 headers: {
                     Authorization: `Bearer ${res.data.results.token}`,
@@ -120,23 +120,23 @@ const Auth = ({children }) => {
                 } 
             })
             .catch(err => {
-                setIsLoding(false);
+                setIsLoading(false);
                 setResMessage(['error', err.response?.data?.message || "Login failed!"])
             })   
         })
         .catch(err => {
-            setIsLoding(false);
+            setIsLoading(false);
             setResMessage(['error', err.response?.data?.message || "Login failed!"])
         })
     }
 
     const handleRegister = async (rule) => {
-        setIsLoding(true);
+        setIsLoading(true);
         await axios.post(`${import.meta.env.VITE_API_BE}/register/users`, rule)
         .then(res => {
             setToken(res.data.results.token);
             setAuthUser(res.data.results.user)
-            setIsLoding(false);
+            setIsLoading(false);
             setModalSignup(false);
             if (pathname === '/order') {
                 if (localStorage.getItem("cart")) {
@@ -153,7 +153,7 @@ const Auth = ({children }) => {
             } 
         })
         .catch(err => {
-            setIsLoding(false);
+            setIsLoading(false);
             setResMessage(['error', err.response?.data?.message || "Login failed!"])
         })
     }
@@ -225,7 +225,7 @@ const Auth = ({children }) => {
 
         handleLogin,
         handleRegister,
-        isLoding, setIsLoding,
+        isLoading, setIsLoading,
         token, setToken,
         getUserAuth,
         authUser, setAuthUser,

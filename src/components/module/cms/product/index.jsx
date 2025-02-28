@@ -22,6 +22,11 @@ export default function CmsProductComp() {
         modalAddMenu, setModalAddMenu,
         modalEditMenu, setModalEditMenu,
         resMessage, setResMessage,
+        handleAddMenu,
+        getDetailMenu,
+        detailMenu, 
+        handleEditMenu,
+        handleDeleteMenu,
     } = useMenu()
 
     const formAdd = [
@@ -40,33 +45,33 @@ export default function CmsProductComp() {
         {
             name: "price",
             label: "Price",
-            required: true,
+            required: false,
             type: "input"
         },
         {
-            name: "category",
+            name: "category_name",
             label: "Category",
             required: true,
             type: "select",
             option: listCategory.map(val => ({
                 label: val.name, 
-                value: val.id
+                value: val.name
             }))
         },
         {
-            name: "restaurant",
+            name: "restaurant_name",
             label: "Restaurant",
             required: true,
             type: "select",
             option: listRestaurant.map(val => ({
                 label: val.name, 
-                value: val.id
+                value: val.name
             }))
         },
         {
             name: "image",
             label: "Product Image",
-            required: true,
+            required: false,
             type: "upload"
         },
     ]    
@@ -111,7 +116,7 @@ export default function CmsProductComp() {
                     >
                         <Table 
                             dataSource={listMenu}
-                            columns={columnProductList(listMenu)}
+                            columns={columnProductList(listMenu, getDetailMenu, setModalEditMenu, handleDeleteMenu)}
                             className='lg:pt-5 md:pt-3 pt-2'
                             size={setSize('medium', 'small', 'small')}
                             pagination={{
@@ -141,9 +146,23 @@ export default function CmsProductComp() {
                 setIsLoading={setIsLoading}
                 title="Add Product"
                 item={formAdd}
-                // action={handleAddCategory}
+                action={handleAddMenu}
                 resMessage={resMessage}
                 setResMessage={setResMessage}
+                // isReq={false}
+            />
+             <Action 
+                isOpen={modalEditMenu}
+                setIsopen={setModalEditMenu}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
+                title="Edit Product"
+                item={formAdd}
+                data={detailMenu}
+                action={handleEditMenu}
+                resMessage={resMessage}
+                setResMessage={setResMessage}
+                // isReq={false}
             />
         </>
     )
