@@ -79,6 +79,8 @@ const Order = ({children }) => {
         })
         .then(res => {
             setOrderTemp(res.data.order)
+            console.log(res.data.order);
+            
             axios.post(`${import.meta.env.VITE_API_BE}/create-payment`, {
                 customer_details: {
                     id: authUser.id,
@@ -93,7 +95,8 @@ const Order = ({children }) => {
                 amount: formatAmount,
                 payment_type: "payment_link",
                 due_days: 1,
-                notes: 'tesnote'
+                notes: 'tesnote',
+                orders_id: res.data.order?.id
             })
             .then(res => {
                 setIsLoading(false)
