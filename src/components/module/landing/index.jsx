@@ -58,11 +58,11 @@ export default function LandingComp() {
                             isRotate={true}
                         />                    
                     </Col> */}
-                    <Col
+                    {/* <Col
                         span={24}
                     >
                         <TestimoniComp />
-                    </Col>
+                    </Col> */}
                     <Col
                         span={24}
                     >

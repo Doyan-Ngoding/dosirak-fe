@@ -53,12 +53,12 @@ export default function HeaderComp() {
                             },
                             Menu: {
                                 itemHeight: '80%',
-                                fontFamily: 'Thunder',
-                                itemPaddingInline: 20,
-                                fontSize: 30,
+                                fontFamily: 'Plus Jakarta Sans',
+                                itemPaddingInline: 50,
+                                fontSize: 20,
                                 colorText: '#A5ABB3',
                                 itemBg: '#FFFFFF',
-                                colorSplit: 'none'
+                                colorSplit: 'none',
                             },
                             Button: {
                                 fontFamily: 'Plus Jakarta Sans',
@@ -91,7 +91,7 @@ export default function HeaderComp() {
                                     style={{ margin: !isStandard ? '0 auto' : ''}}
                                 >
                                     <div className='flex justify-center'>   
-                                        <img src='/assets/logo.png' alt='Logo Dosirak' width={setSize("85%", "70%", "50%")}/>
+                                        <img src='/assets/logo.png' alt='Logo Dosirak' width={setSize("70%", "75%", "60%")} style={{ paddingLeft: setSize(0, 100, 0), paddingRight: setSize(0, 0, 40) }}/>
                                     </div>
                                 </Col>
                                 {
@@ -105,12 +105,13 @@ export default function HeaderComp() {
                                                 selectedKeys={[activeKey]} 
                                                 defaultSelectedKeys={['1']} 
                                                 onClick={e => setActiveKey(e)}
-                                                className={`felx flex-1 ${setSize("justify-center", "justify-start", "justify-start")} min-w-0 relative font-bold`}
+                                                className={`flex flex-1 ${setSize("justify-center", "justify-start", "justify-start")} min-w-0 relative font-semibold`}
                                                 overflowedIndicator={<IconMenu2 />}
+                                                disabledOverflow={true}
                                             >
-                                                <Menu.Item key={'1'} className={`${activeKey === '1' ? 'underline decoration-2' : ''}`}><Link to={'/'}>HOME</Link></Menu.Item>
-                                                <Menu.Item key={'2'} className={`${activeKey === '2' ? 'underline decoration-2' : ''}`}><Link to={'/menu'}>MENU</Link></Menu.Item>
-                                                <Menu.Item key={'3'} className={`${activeKey === '3' ? 'underline decoration-2' : ''}`}><Link to={'/order'}>ORDER ONLINE</Link></Menu.Item>
+                                                <Menu.Item key={'1'}><Link to={'/'}>Home</Link></Menu.Item>
+                                                <Menu.Item key={'2'}><Link to={'/menu'}>Menu</Link></Menu.Item>
+                                                <Menu.Item key={'3'}><Link to={'/contact'}>Contact</Link></Menu.Item>
                                             </Menu>  
                                         </Col>
                                     )   

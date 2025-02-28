@@ -20,10 +20,10 @@ export default function CoverComp() {
                         className='absolute lg:bottom-20 md:bottom-10 bottom-10 left-1/2 transform -translate-x-1/2 w-full text-center'  
                     >
                         <div
-                            className='font-[Thunder] font-extrabold lg:text-[90px] md:text-[50px] text-[30px]'
+                            className='bebas-neue-regular font-medium lg:text-[85px] md:text-[60px] text-[30px]'
                         >
                             <div>
-                                <div className='leading-[10px] text-white'>AUTHENTIC KOREAN LUNCH BOXES,</div>
+                            <div className='lg:leading-[30px] md:leading-[15px] leading-[10px] text-white'>AUTHENTIC KOREAN LUNCH BOXES,</div>
                                 <div className='text-[#FFF948]'>DELIVERED FRESH & HEALTHY!</div>
                             </div>
                         </div>
@@ -45,7 +45,8 @@ export default function CoverComp() {
                                     size={setSize('large', 'medium', 'small')}
                                     style={{
                                         borderRadius: 50,
-                                        color: '#E83600'
+                                        color: '#E83600',
+                                        fontWeight: 600
                                     }}
                                     onClick={() => navigate('/order')}
                                 >
@@ -55,7 +56,8 @@ export default function CoverComp() {
                                     size={setSize('large', 'medium', 'small')}
                                     type='primary'
                                     style={{
-                                        borderRadius: 50
+                                        borderRadius: 50,
+                                        fontWeight: 600
                                     }}
                                     onClick={() => navigate('/menu')}
                                 >

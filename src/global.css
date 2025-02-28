@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Vina+Sans&family=Source+Sans+Pro&family=Plus+Jakarta+Sans&family=Nunito+Sans:wght@400;600;700;800');
+@import url('https://fonts.googleapis.com/css2?family=Vina+Sans&family=Source+Sans+Pro&family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Nunito+Sans:wght@400;600;700;800&family=Bebas+Neue:wght@400;600;700;800');
 
 @import 'tailwindcss';
 
@@ -20,6 +20,15 @@
 @font-face {
   font-family: 'Thunder';
   src: url('./assets/font/Thunder-VF.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Bebas Neue';
+  src: url('./assets/font/BebasNeue-Reguler.ttf') format('truetype');
+}
+
+.bebas-neue-regular {
+  font-family: "Bebas Neue", sans-serif;
 }
 
 body {

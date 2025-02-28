@@ -16,7 +16,7 @@ export default function HeadListComp() {
                 className='lg:pt-[100px] md:pt-[80px] pt-[50px] lg:px-[50px] md:px-[30px] px-[20px]'
             >
                 <div
-                    className='text-[#A5ABB3] font-[Plus Jakarta Sans] lg:text-[18px] md:text-[14px] text-[8px]'
+                className='text-[#A5ABB3] font-[Plus Jakarta Sans] font-semibold lg:text-[20px] md:text-[14px] text-[10px]'
                 >
                     WHAT WE SERVE
                 </div>
@@ -48,7 +48,7 @@ export default function HeadListComp() {
                             className='flex items-center'
                         >
                             <div 
-                                className='text-[#E83600] font-[Thunder] font-bold lg:text-[60px] md:text-[30px] text-[24px] lg:pr-5 md:pr-3 pr-2'
+                                className='text-[#E83600] bebas-neue-regular font-bold lg:text-[60px] md:text-[40px] text-[24px] lg:pr-5 md:pr-3 pr-2'
                             >
                                 OUR MENU
                             </div>
