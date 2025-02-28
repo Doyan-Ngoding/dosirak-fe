@@ -1,7 +1,7 @@
 import { IconChevronDown, IconChevronUp, IconEdit, IconFilter, IconSelector, IconTrash } from "@tabler/icons-react";
 import { useAuth } from "../../../context/AuthContext";
 import dayjs from "dayjs";
-import { Modal, Popconfirm, Tooltip } from "antd";
+import { Image, Modal, Popconfirm, Tooltip } from "antd";
 
 const iconSort = () => {
     const { setSize } = useAuth();
@@ -168,13 +168,13 @@ export const columnProductList = (data = []) => {
             key: 'description',
             dataIndex: 'description',
         },
-        {
-            title: 'Qty',
-            key: 'qty',
-            dataIndex: 'qty',
-            sorter: (a, b) => String(a.qty || '').localeCompare(String(b.qty || '')),
-            ...iconSort(),
-        }, 
+        // {
+        //     title: 'Qty',
+        //     key: 'qty',
+        //     dataIndex: 'qty',
+        //     sorter: (a, b) => String(a.qty || '').localeCompare(String(b.qty || '')),
+        //     ...iconSort(),
+        // }, 
         {
             title: 'Price',
             key: 'price',
@@ -213,7 +213,12 @@ export const columnProductList = (data = []) => {
             title: 'Image',
             key: 'image',
             dataIndex: 'image',
-            width: 10
+            render: (text) => (
+                <Image 
+                    width={70}
+                    src={`${import.meta.env.VITE_URL_BE}/${text}`}
+                />
+            )
         },
         {
             title: '',

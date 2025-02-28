@@ -44,7 +44,9 @@ const Order = ({children }) => {
     const [selectedPayment, setSelectedPayment] = useState(null);
     const [activeKey, setActiveKey] = useState(0);
 
-    const [resPayment, setResPayment] = useState();
+    const [resPayment, setResPayment] = useLocalStorage("resPayment");
+
+    const [linkPayment, setLinkPayment] = useLocalStorage("linkPayment");
 
     const addQty = (id) => {
         setSelectedMenu((prevCart) => 
@@ -95,9 +97,8 @@ const Order = ({children }) => {
             })
             .then(res => {
                 setIsLoading(false)
-                setResPayment(res.data)
-                console.log(res.data);
-                
+                setResPayment(res.data.data)
+                setLinkPayment(res.data?.data.payment_link_url)
                 setTimeout(() => {
                     setSelectedMenu()
                     setSelectedDate()
@@ -107,7 +108,8 @@ const Order = ({children }) => {
                     localStorage.removeItem("cart")
                     localStorage.removeItem("orderTemp")
                     localStorage.removeItem("formatAmount")
-                    navigate('/complete')
+                    navigate('/payment')
+                    localStorage.removeItem("formatAmount")
                 }, 2000)
             })
             .catch(err => {
@@ -152,6 +154,7 @@ const Order = ({children }) => {
                 localStorage.removeItem("orderTemp")
                 localStorage.removeItem("formatAmount")
                 navigate('/complete')
+                localStorage.removeItem("formatAmount")
             }, 2000)
         })
         .catch(err => {
@@ -195,6 +198,8 @@ const Order = ({children }) => {
 
         resPayment, setResPayment,
         handleAddPayment,
+
+        linkPayment, setLinkPayment,
     }
 
     return (

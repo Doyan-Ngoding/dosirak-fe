@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
-import { Button, ConfigProvider, Form, Input, message, Modal, Select } from 'antd'
+import { Button, ConfigProvider, Form, Input, message, Modal, Select, Upload } from 'antd'
 import { useAuth } from '../../../context/AuthContext'
+import { IconUpload } from '@tabler/icons-react';
 
 export default function Action({
     isOpen,
@@ -113,7 +114,7 @@ export default function Action({
                                                         val.name === "password" ? (
                                                             <Input.Password />
                                                         ) : (
-                                                            <Input type={val.name === "phone" ? "number" : undefined} />
+                                                            <Input type={(val.name === "phone" || val.name === "price") ? "number" : undefined} />
                                                         )
                                                     )
                                                 ) : (
@@ -123,7 +124,30 @@ export default function Action({
                                                         val.type === "select" ? (
                                                             <Select options={val.option} />
                                                         ) : (
-                                                            <></>
+                                                            val.type === "upload" ? (
+                                                                <>
+                                                                    <Upload
+                                                                        accept=".png, .jpg, .jpeg"
+                                                                    >
+                                                                        <Button
+                                                                            icon={
+                                                                                <IconUpload 
+                                                                                    size={setSize(16, 14, 12)}
+                                                                                />
+                                                                            }
+                                                                        >
+                                                                            Upload Image
+                                                                        </Button>
+                                                                    </Upload>
+                                                                    <small
+                                                                        className='text-red-500'
+                                                                    >
+                                                                        Max. 1MB (.jpg, .jpg, .jpeg)
+                                                                    </small>
+                                                                </>
+                                                            ) : (   
+                                                                <></>
+                                                            )
                                                         )
                                                     )
                                                 )
