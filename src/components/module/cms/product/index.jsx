@@ -16,10 +16,61 @@ export default function CmsProductComp() {
 
     const {
         listMenu,
+        listCategory,
+        listRestaurant,
         isLoading, setIsLoading,
-        modalAddMenu, setModalAddMenu
+        modalAddMenu, setModalAddMenu,
+        modalEditMenu, setModalEditMenu,
+        resMessage, setResMessage,
     } = useMenu()
-    
+
+    const formAdd = [
+        {
+            name: "name",
+            label: "Product Name",
+            required: true,
+            type: "input"
+        },
+        {
+            name: "description",
+            label: "Description",
+            required: true,
+            type: "textarea"
+        },
+        {
+            name: "price",
+            label: "Price",
+            required: true,
+            type: "input"
+        },
+        {
+            name: "category",
+            label: "Category",
+            required: true,
+            type: "select",
+            option: listCategory.map(val => ({
+                label: val.name, 
+                value: val.id
+            }))
+        },
+        {
+            name: "restaurant",
+            label: "Restaurant",
+            required: true,
+            type: "select",
+            option: listRestaurant.map(val => ({
+                label: val.name, 
+                value: val.id
+            }))
+        },
+        {
+            name: "image",
+            label: "Product Image",
+            required: true,
+            type: "upload"
+        },
+    ]    
+
     return (
         <>
             <FullComp
@@ -50,6 +101,7 @@ export default function CmsProductComp() {
                         />
                         <Button
                             type='primary'
+                            onClick={() => setModalAddMenu(true)}
                         >
                             + Add Product
                         </Button>
@@ -88,6 +140,10 @@ export default function CmsProductComp() {
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
                 title="Add Product"
+                item={formAdd}
+                // action={handleAddCategory}
+                resMessage={resMessage}
+                setResMessage={setResMessage}
             />
         </>
     )

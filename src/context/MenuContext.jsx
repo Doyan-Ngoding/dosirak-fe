@@ -16,11 +16,16 @@ const Menu = ({children }) => {
     const [selectedCategory, setSelectedCategory] = useState('Best Seller');
     const [tabCategory, setTabCategory] = useState([]);
 
+    const [listRestaurant, setListRestaurant] = useState([]);
+    
     const [listMenu, setListMenu] = useState([]);
     const [listMenuGrouped, setListMenuGrouped] = useState([]);
 
     const [modalAddMenu, setModalAddMenu] = useState(false);
+    const [modalEditMenu, setModalEditMenu] = useState(false);
+    
     const [isLoding, setIsLoding] = useState(false);
+    const [resMessage, setResMessage] = useState();
 
     const getListCategory = () => {
         axios.get(`${import.meta.env.VITE_API_BE}/categories`)
@@ -72,9 +77,20 @@ const Menu = ({children }) => {
         setListMenuGrouped([...groupedMenus, ...additionalCategories])
     }
 
+    const getListRestauran = () => {
+        axios.get(`${import.meta.env.VITE_API_BE}/restaurants`)
+        .then(res => {
+            setListRestaurant(res.data.results)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
     useEffect(() => {
         getListCategory();
         getListMenuGrouped();
+        getListRestauran()
     }, []);
 
     useEffect(() => {
@@ -88,11 +104,16 @@ const Menu = ({children }) => {
         selectedCategory, setSelectedCategory,
         tabCategory, setTabCategory,
 
+        listRestaurant, setListRestaurant,
+
         listMenu, setListMenu,
         listMenuGrouped, setListMenuGrouped,
 
         modalAddMenu, setModalAddMenu,
+        modalEditMenu, setModalEditMenu,
+        
         isLoding, setIsLoding,
+        resMessage, setResMessage,
     }
 
     return (
