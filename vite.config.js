@@ -10,6 +10,9 @@ export default defineConfig({
     tailwindcss(),
   ],
   base: '/',
+  optimizeDeps: {
+    exclude: ['problematic-package']
+  },
   build: {
     outDir: 'dist',
     rollupOptions: {
