@@ -32,19 +32,19 @@ export default function MenuComp() {
                 className='lg:py-[100px] md:py-[80px] py-[50px] lg:px-[50px] md:px-[30px] px-[20px]'
             >
                 <div
-                    className='text-[#A5ABB3] font-[Plus Jakarta Sans] lg:text-[18px] md:text-[14px] text-[8px]'
+                    className='text-[#A5ABB3] leading-1 font-[Plus Jakarta Sans] font-semibold lg:text-[20px] md:text-[14px] text-[10px]'
                 >
                     OUR MENU
                 </div>
                 <div 
-                    className='text-[#E83600] font-[Thunder] font-bold lg:text-[60px] md:text-[30px] text-[18px]'
+                    className='text-[#E83600] bebas-neue-regular font-bold lg:text-[60px] md:text-[40px] text-[24px]'
                 >
-                    MENU THAT ALWAYS MAKE
+                    EXPERIENCE THE TASTE OF
                 </div>
                 <div 
-                    className='text-[#E83600] leading-[10px] font-[Thunder] font-bold lg:text-[60px] md:text-[30px] text-[18px]'
+                    className='text-[#E83600] leading-3 bebas-neue-regular font-bold lg:text-[60px] md:text-[40px] text-[24px]'
                 >
-                    YOU FALL IN LOVE
+                    KOREA IN EVERY BITE
                 </div>
                 <div 
                     className='border-b border-[#A5ABB3] lg:my-10 md:my-8 my-5'
@@ -53,7 +53,7 @@ export default function MenuComp() {
                     className='flex justify-between'
                 >
                     <div
-                        className='text-[#858C94] font-[Thunder] font-bold lg:text-[40px] md:text-[20px] text-[14px]'
+                        className='text-[#858C94] bebas-neue-regular lg:text-[40px] md:text-[20px] text-[14px]'
                     >
                         BEST SELLER
                     </div>

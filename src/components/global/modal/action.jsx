@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, ConfigProvider, Form, Input, message, Modal, Select, Upload } from 'antd'
 import { useAuth } from '../../../context/AuthContext'
 import { IconUpload } from '@tabler/icons-react';
@@ -24,6 +24,7 @@ export default function Action({
     } = useAuth();
 
     const [messageApi, contextHolder] = message.useMessage();
+    const [fileList, setFileList] = useState([])
 
     useEffect(() => {
         if ((resMessage && resMessage.length === 2)) {
@@ -46,6 +47,49 @@ export default function Action({
             ) 
         }
     }, [data]);
+
+    const dummyRequest = ({ file, onSuccess }) => {
+        setTimeout(() => {
+            onSuccess("ok");
+        }, 0);
+    };
+
+    const props = {
+        name: 'file',
+        onChange(info) {
+          setFileList(info.fileList)
+            if (info.file.status === 'done') {
+                message.success(`Uploaded successfully`);
+                form.setFieldValue("image", info.file.originFileObj)
+            } else if (info.file.status === 'error') {
+                message.error(`Upload failed`);
+            }
+        },
+        beforeUpload: file => {
+          const isSize = file.size / 1024 / 1024 < 1;
+            if (!isSize) {
+                message.error('Image must smaller than 1MB!');
+                form.setFieldValue("image", "")
+            }
+            return isSize;
+        }
+    }
+
+    const propsImg = {
+        defaultFileList: [
+            {
+                uid: data && data.id,
+                name: data && data.image,
+                status: 'done',
+                response: 'done',
+                url: `${import.meta.env.VITE_URL_BE}/${data && data.image}`
+            }
+        ],
+        onChange(info) {
+            form.setFieldValue("image", info.file)
+        }
+    };
+console.log(form.getFieldsValue());
 
     return (
         <>
@@ -71,7 +115,7 @@ export default function Action({
             >
                 <Modal
                     open={isOpen}
-                    onCancel={() => {setIsopen(false), form.resetFields()}}    
+                    onCancel={() => {setIsopen(false), form.resetFields(), setFileList()}}    
                     footer={null} 
                     title={title}
                     width={setSize("40%", "50%", "60%")}
@@ -100,13 +144,13 @@ export default function Action({
                                         <Form.Item
                                             label={val.label}
                                             name={val.name}
-                                            rules={[
+                                            rules={val.name !== 'image' ? [
                                                 {
-                                                    required: val.name === "password" ? (isReq ? true : false) : val.required,
+                                                    required: (val.name === "password") ? (isReq ? true : false) : val.required,
                                                     message: `Please input your ${val.label.toLowerCase()}!`,
                                                     type: val.name === "email" && "email"
                                                 },
-                                            ]}
+                                            ] : []}
                                         >
                                             {
                                                 val.type === "input" ? (
@@ -124,10 +168,14 @@ export default function Action({
                                                         val.type === "select" ? (
                                                             <Select options={val.option} />
                                                         ) : (
-                                                            val.type === "upload" ? (
+                                                            (val.type === "upload" && title === "Add Product") ? (
                                                                 <>
                                                                     <Upload
+                                                                        {...props}
+                                                                        fileList={fileList}
+                                                                        customRequest={dummyRequest}
                                                                         accept=".png, .jpg, .jpeg"
+                                                                        listType="picture"
                                                                     >
                                                                         <Button
                                                                             icon={
@@ -146,7 +194,34 @@ export default function Action({
                                                                     </small>
                                                                 </>
                                                             ) : (   
-                                                                <></>
+                                                                (val.type === "upload" && title === "Edit Product") ? (
+                                                                    <>
+                                                                        <Upload
+                                                                            {...propsImg}
+                                                                            valuePropName='fileList'
+                                                                            customRequest={dummyRequest}
+                                                                            accept=".png, .jpg, .jpeg"
+                                                                            listType="picture"
+                                                                        >
+                                                                            <Button
+                                                                                icon={
+                                                                                    <IconUpload 
+                                                                                        size={setSize(16, 14, 12)}
+                                                                                    />
+                                                                                }
+                                                                            >
+                                                                                Upload Image
+                                                                            </Button>
+                                                                        </Upload>
+                                                                        <small
+                                                                            className='text-red-500'
+                                                                        >
+                                                                            Max. 1MB (.jpg, .jpg, .jpeg)
+                                                                        </small>
+                                                                    </>
+                                                                ) : (
+                                                                    <></>
+                                                                )
                                                             )
                                                         )
                                                     )

@@ -147,7 +147,7 @@ export const columnInvoiceList = (data = []) => [
     },
 ]
 
-export const columnProductList = (data = []) => {
+export const columnProductList = (data = [], getDetail, modalEdit, handleDelete) => {
     const { setSize } = useAuth();
     return [
         {
@@ -231,11 +231,22 @@ export const columnProductList = (data = []) => {
                         <IconEdit 
                             size={setSize(16, 14, 12)}
                             color="#faad14"
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => {getDetail(record.id), modalEdit(true)}}
                         />
-                        <IconTrash 
-                            size={setSize(16, 14, 12)}
-                            color="red"
-                        />
+                        <Popconfirm
+                            title={`Delete the user`}
+                            description={<span>Are you sure to delete this user: <b>{record.name}</b>?</span>}
+                            onConfirm={() => handleDelete(record.id)}
+                            okText="Yes"
+                            cancelText="No"
+                        >
+                            <IconTrash 
+                                size={setSize(16, 14, 12)}
+                                color="red"
+                                style={{ cursor: 'pointer' }}
+                            />
+                        </Popconfirm>
                     </div>
                 </>
             )
@@ -300,7 +311,7 @@ export const columnUserList = (data = [], getDetail, modalEdit, handleDelete) =>
                     <div
                         className="flex items-center justify-between w-full"
                     >
-                         <IconEdit 
+                        <IconEdit 
                             size={setSize(16, 14, 12)}
                             color="#faad14"
                             style={{ cursor: 'pointer' }}

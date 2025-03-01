@@ -8,12 +8,12 @@ export default function ServeComp() {
                 className='lg:py-[100px] md:py-[80px] py-[50px] text-center'
             >
                 <div
-                    className='text-[#A5ABB3] font-[Plus Jakarta Sans] lg:text-[18px] md:text-[14px] text-[8px]'
+                    className='text-[#A5ABB3] leading-1 font-[Plus Jakarta Sans] font-semibold lg:text-[20px] md:text-[14px] text-[10px]'
                 >
                     WHAT WE SERVE
                 </div>
                 <div 
-                    className='text-[#E83600] font-[Thunder] font-bold lg:text-[60px] md:text-[30px] text-[18px]'
+                    className='text-[#E83600] bebas-neue-regular font-bold lg:text-[60px] md:text-[40px] text-[24px]'
                 >
                     YOUR REALIABLE KOREAN FOOD DELIVERY
                 </div>
