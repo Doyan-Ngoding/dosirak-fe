@@ -64,7 +64,7 @@ export default function SliderComp() {
                             </Button>
                         </div>
                         <div
-                            className='font-[Thunder] font-extrabold lg:text-[90px] md:text-[50px] text-[30px]'
+                            className='bebas-neue-regular font-medium lg:text-[80px] md:text-[42px] text-[30px]'
                         >
                             <div>
                                 <div className='text-white flex items-center'><div>{text1}</div><img src='/assets/icon/fire.png' style={{ width: setSize('8%', '5%', '6%'), height: '2%', paddingBottom: setSize('15px', '10px', '8px') }}/></div>
@@ -72,10 +72,10 @@ export default function SliderComp() {
                             </div>
                         </div>
                         <div
-                            className='font-[Plus Jakarta Sans] lg:my-7 md:my-5 my-2 lg:w-[70%] md:w-[60%] w-[50%]'
+                            className='font-[Plus Jakarta Sans] lg:my-10 md:my-5 my-2 lg:w-[70%] md:w-[60%] w-[50%]'
                         >
                             <div 
-                                className='text-[#FFFFFF66] md:leading-4 leading-3 lg:text-[14px] md:text-[12px] text-[10px]'
+                                className='text-[#FFFFFF] md:leading-4 leading-3 lg:text-[14px] md:text-[12px] text-[10px]'
                             >
                                 Enjoy authentic Korean meals with Dosirak! 🍱✨ Get 10% OFF your first order and experience fresh, high-quality flavors delivered to your door.
                             </div>

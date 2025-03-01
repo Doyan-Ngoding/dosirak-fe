@@ -35,8 +35,8 @@ export default function HeadListComp() {
                                 optionSelectedBg: '#FFFFFF'
                             },
                             Input: {
-                                controlHeight: setSize(42, 24, 18),
-                                
+                                controlHeight: setSize(42, 28, 22),
+                                fontSize: setSize(14, 12, 10),
                             }
                         }
                     }}
@@ -52,7 +52,7 @@ export default function HeadListComp() {
                             >
                                 OUR MENU
                             </div>
-                            {
+                            {/* {
                                 !isMobile && (
                                     <Select 
                                         style={{
@@ -67,32 +67,41 @@ export default function HeadListComp() {
                                         value={'sssdaldjald'}
                                     />
                                 )
-                            }
+                            } */}
                         </div>
                         {
-                            !isMobile && (
+                            (
                                 <div>
                                     <Input 
-                                        placeholder='Search your menu here'
-                                        style={{ borderRadius: 50, width: setSize(350, 250, 120) }}
+                                        placeholder='Search restaurant here'
+                                        style={{ borderRadius: 50, width: setSize(350, 250, 200) }}
                                         // value={menuSearched}
                                         // onChange={(e) => setMenuSearched(e.target.value)}
                                         suffix={
                                             <div
-                                                className='bg-[#FA5523] rounded-full lg:py-1.5 md:py-1 md:px-1 px-1.5 py-[5px]'
+                                                className='bg-[#FA5523] rounded-full lg:py-1 md:py-1 md:px-1 px-1 py-1'
                                             >
                                                 <IconSearch 
                                                     color='#FFFFFF'
-                                                    size={setSize(16, 10, 14)}
+                                                    size={setSize(16, 10, 8)}
                                                 />
                                             </div>  
+                                        }
+                                        prefix={
+                                            <IconBuildingStore 
+                                                color='#FA5523'
+                                                size={setSize(22, 14, 12)}
+                                                style={{
+                                                    marginRight: 5
+                                                }}
+                                            />
                                         }
                                     />
                                 </div>
                             )
                         }
                     </div>
-                    {
+                    {/* {
                         isMobile && (
                             <Row
                                 justify={'space-between'}
@@ -105,6 +114,7 @@ export default function HeadListComp() {
                                     <Select 
                                         style={{
                                             width: "100%",
+                                            marginTop: 3
                                         }} 
                                         prefix={
                                             <IconBuildingStore 
@@ -119,8 +129,8 @@ export default function HeadListComp() {
                                     span={12}
                                 >
                                     <Input 
-                                        placeholder='Search your menu here'
-                                        style={{ borderRadius: 50, width: "100%" }}
+                                        placeholder='Search  here'
+                                        style={{ borderRadius: 50, width: "100%", }}
                                         // value={menuSearched}
                                         // onChange={(e) => setMenuSearched(e.target.value)}
                                         suffix={
@@ -137,7 +147,7 @@ export default function HeadListComp() {
                                 </Col>
                             </Row>
                         )
-                    }
+                    } */}
                 </ConfigProvider>
             </div>
         </>

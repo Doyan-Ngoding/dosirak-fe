@@ -5,6 +5,7 @@ import { Col, Row } from 'antd'
 import SliderComp from './slider'
 import HeadListComp from './headList'
 import ContentListComp from './contentList'
+import FooterComp from '../landing/footer'
 
 export default function MenuComp() {
     return (
@@ -26,6 +27,11 @@ export default function MenuComp() {
                         span={24}
                     >
                         <ContentListComp />
+                    </Col>
+                    <Col
+                        span={24}
+                    >
+                        <FooterComp />
                     </Col>
                 </Row>
             </ConfigComp>
