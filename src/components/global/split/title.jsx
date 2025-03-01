@@ -14,7 +14,7 @@ export default function SplitTitle({
     return (
         <>
             <div
-                className={`bg-[url(./assets/cover/split-2.png)] bg-cover bg-right bg-no-repeat lg:h-[60px] md:h-[40px] h-[30px] w-full rounded-lg border border-[#E83600]`}
+                className={`bg-[#E83600] lg:h-[60px] md:h-[40px] h-[30px] w-full rounded-lg border border-[#E83600]`}
             >
                 <div
                     className='lg:px-5 md:px-5 px-4 h-full flex justify-start items-center'

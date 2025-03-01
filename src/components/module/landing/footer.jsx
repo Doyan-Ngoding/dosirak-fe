@@ -17,22 +17,17 @@ export default function FooterComp() {
                 className='bg-[#E83600] lg:pt-[150px] md:pt-[100px] pt-[70px] text-center'
             >
                 <div
-                    className='text-[#FFFFFF] font-[Plus Jakarta Sans] lg:text-[20px] md:text-[14px] text-[10px]'
+                    className='text-[#FFFFFF] font-[Plus Jakarta Sans] font-semibold lg:text-[20px] md:text-[14px] text-[10px]'
                 >
-                    REALY HUNGRY? RUN TO
+                    CARVING KOREAN FLAVORS?
                 </div>
                 <div 
-                    className='text-[#FFFFFF] font-[Thunder] font-bold lg:text-[120px] md:text-[70px] text-[50px]'
+                    className='text-[#FFFFFF] bebas-neue-regular font-bold lg:text-[120px] md:text-[70px] text-[50px]'
                 >
-                    DOSIRAK KOREAN 
-                </div>
-                <div 
-                    className='lg:leading-10 md:leading-8 leading-5 text-[#FFFFFF] font-[Thunder] font-bold lg:text-[120px] md:text-[70px] text-[50px]'
-                >
-                    FRIED CHICKEN
+                    ORDER NOW
                 </div>
                 <div
-                    className='font-[Plus Jakarta Sans] flex justify-center gap-3 lg:mt-10 md:mt-8 mt-5'
+                    className='font-[Plus Jakarta Sans] flex justify-center gap-3'
                 >
                     <ConfigProvider
                         theme={{

@@ -1,5 +1,5 @@
 import React from 'react'
-import { IconAlarm, IconPaperBag } from '@tabler/icons-react'
+import { IconAlarm, IconPaperBag, IconTruckDelivery } from '@tabler/icons-react'
 import { useAuth } from '../../../context/AuthContext'
 
 export default function OperationalComp() {
@@ -14,14 +14,19 @@ export default function OperationalComp() {
                 className='bg-[#E836001A] lg:py-[100px] md:py-[80px] py-[50px] lg:px-[50px] md:px-[30px] px-[20px] max-w-full w-full text-center'
             >
                 <div
-                    className='text-[#A5ABB3] font-[Plus Jakarta Sans] lg:text-[18px] md:text-[14px] text-[8px]'
+                    className='text-[#A5ABB3] leading-1 font-[Plus Jakarta Sans] font-semibold lg:text-[18px] md:text-[14px] text-[8px]'
                 >
                     OPERATIONAL HOUR
                 </div>
                 <div 
-                    className='text-[#E83600] font-[Thunder] font-bold lg:text-[60px] md:text-[30px] text-[18px]'
+                    className='text-[#E83600] bebas-neue-regular font-bold lg:text-[60px] md:text-[40px] text-[24px]'
                 >
-                    COME & VISIT US
+                    AVAILABLE TO CATER TO YOUR NEEDS
+                </div>
+                <div
+                    className='bg-[#FFD39A] font-[Plus Jakarta Sans] flex justify-center items-center w-fit m-auto lg:text-[16px] lg:py-2 lg:px-10 md:text-[12px] md:py-1.5 md:px-8 text-[10px] py-1 px-3 lg:rounded-[8px] md:rounded-[8px] rounded-[4px]' 
+                >
+                    <IconPaperBag size={setSize(22, 18, 14)} style={{ marginRight: setSize(10, 8, 5) }} /> For your convenience, please ensure your order comprises at least 15 meals.
                 </div>
                 <div
                     className='flex justify-center lg:pt-10 md:pt-8 pt-5 text-left'
@@ -29,7 +34,7 @@ export default function OperationalComp() {
                     <div
                         className='bg-white lg:w-[300px] md:w-[200px] w-[150px] lg:p-10 md:p-5 p-3 lg:h-[600px] md:h-[400px] h-[300px] rounded-xl font-[Plus Jakarta Sans]'
                     >
-                        <IconPaperBag 
+                        <IconTruckDelivery 
                             color='#6B6B6B'
                             size={setSize(60, 50, 30)}
                         />

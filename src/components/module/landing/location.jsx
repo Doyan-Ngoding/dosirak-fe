@@ -27,14 +27,19 @@ export default function LocationComp() {
                     }}
                 >
                     <div
-                        className='text-[#A5ABB3] font-[Plus Jakarta Sans] lg:text-[18px] md:text-[14px] text-[8px]'
+                        className='text-[#A5ABB3] font-[Plus Jakarta Sans] leading-1 font-semibold lg:text-[20px] md:text-[14px] text-[10px]'
                     >
                         SEE US ON MAPS
                     </div>
                     <div 
-                        className='text-[#E83600] font-[Thunder] font-bold lg:text-[60px] md:text-[30px] text-[18px]'
+                        className='text-[#E83600] bebas-neue-regular font-bold lg:text-[60px] md:text-[40px] text-[24px]'
                     >
-                        FIND DIRECT LOCATION
+                        EXPLORE OUR PARTNER
+                    </div>
+                    <div 
+                        className='text-[#E83600] leading-3 bebas-neue-regular font-bold lg:text-[60px] md:text-[40px] text-[24px]'
+                    >
+                        IN YOUR AREA
                     </div>
                 </Col>
                 <Col
