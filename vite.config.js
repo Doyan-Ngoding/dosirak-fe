@@ -9,11 +9,11 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
-  base: './',
+  base: '/',
   build: {
     outDir: 'dist',
-    sourcemap: false,
-    minify: 'esbuild',
+    // sourcemap: false,
+    // minify: 'esbuild',
   },
   server: {
     port: 8080,
