@@ -142,7 +142,7 @@ export default function MenuComp() {
                         gutter={[12, 12]}
                     >
                         {
-                            listMenu.slice(0, 4).map((value) => (
+                            listMenu && listMenu.slice(0, 4).map((value) => (
                                 <Col
                                     span={setSize(5, 5, 8)}
                                 >
