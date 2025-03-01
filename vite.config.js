@@ -18,7 +18,7 @@ export default defineConfig({
   server: {
     port: 8080,
     host: true, 
-    // allowedHosts: ["dosirak-apps-znqid.ondigitalocean.app"]
+    allowedHosts: ["dosirak-apps-znqid.ondigitalocean.app"]
   },
   resolve: {
     alias: [{ find: "@", replacement: path.resolve(__dirname, "src") }],
