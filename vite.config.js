@@ -12,13 +12,11 @@ export default defineConfig({
   base: '/',
   build: {
     outDir: 'dist',
-    // sourcemap: false,
-    // minify: 'esbuild',
   },
   server: {
     port: 8080,
     host: true, 
-    allowedHosts: ["dosirak-apps-znqid.ondigitalocean.app"]
+    allowedHosts: ["dosirak-apps-jir7x.ondigitalocean.app"]
   },
   resolve: {
     alias: [{ find: "@", replacement: path.resolve(__dirname, "src") }],
