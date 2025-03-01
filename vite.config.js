@@ -12,6 +12,8 @@ export default defineConfig({
   base: '/',
   build: {
     outDir: 'dist',
+    target: "esnext",
+    chunkSizeWarningLimit: 1000,
   },
   server: {
     port: 8080,
