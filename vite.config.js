@@ -18,7 +18,12 @@ export default defineConfig({
   server: {
     port: 8080,
     host: true, 
-    allowedHosts: ["dosirak-apps-ltsly.ondigitalocean.app"]
+    allowedHosts: ["dosirak-apps-ltsly.ondigitalocean.app"],
+    hmr: {
+      protocol: "wss",
+      host: "dosirak-apps-ltsly.ondigitalocean.app", 
+      port: 8080, 
+    },
   },
   resolve: {
     alias: [{ find: "@", replacement: path.resolve(__dirname, "src") }],
