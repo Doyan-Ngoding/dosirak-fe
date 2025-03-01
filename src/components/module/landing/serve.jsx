@@ -20,7 +20,7 @@ export default function ServeComp() {
                 <div 
                     className='flex justify-center items-center lg:pt-10 md:pt-8 pt-3'
                 >
-                    <img src="./assets/cover/serve.png" width={"70%"} alt="serve" />
+                    <img src="/assets/cover/serve.png" width={"70%"} alt="serve" />
                 </div>
             </div>
         </>

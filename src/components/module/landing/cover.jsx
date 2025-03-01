@@ -14,7 +14,7 @@ export default function CoverComp() {
                 className='!w-[100%]'
             >
                 <div
-                    className={`bg-[url(./assets/cover/menu.png)] bg-cover bg-center bg-no-repeat lg:h-[100vh] md:h-[500px] h-[300px] w-full max-w-full xl:w-[100%]`}
+                    className={`bg-[url(/assets/cover/menu.png)] bg-cover bg-center bg-no-repeat lg:h-[100vh] md:h-[500px] h-[300px] w-full max-w-full xl:w-[100%]`}
                 >
                     <div
                         className='absolute lg:bottom-20 md:bottom-10 bottom-10 left-1/2 transform -translate-x-1/2 w-full text-center'  

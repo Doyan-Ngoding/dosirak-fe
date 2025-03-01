@@ -19,12 +19,12 @@
 
 @font-face {
   font-family: 'Thunder';
-  src: url('./assets/font/Thunder-VF.ttf') format('truetype');
+  src: url('/assets/font/Thunder-VF.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Bebas Neue';
-  src: url('./assets/font/BebasNeue-Reguler.ttf') format('truetype');
+  src: url('/assets/font/BebasNeue-Regular.ttf') format('truetype');
 }
 
 .bebas-neue-regular {

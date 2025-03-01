@@ -16,7 +16,7 @@ export default function CardSummary({
                 <div
                     className='bg-[#FEC53D4D] lg:p-3 lg:rounded-[16px] md:p-2 md:rounded-[10px] p-1 rounded-[6px]' 
                 >
-                    <img src='./assets/icon/sum-1.png' width={setSize(22, 12, 10)} />
+                    <img src='/assets/icon/sum-1.png' width={setSize(22, 12, 10)} />
                 </div>
             </>
         ),
@@ -25,7 +25,7 @@ export default function CardSummary({
                 <div
                     className='bg-[#4AD9914D] lg:p-3.5 lg:rounded-[16px] md:p-2 md:rounded-[10px] p-1 rounded-[6px]'
                 >
-                    <img src='./assets/icon/sum-2.png' width={setSize(18, 10, 8)} />
+                    <img src='/assets/icon/sum-2.png' width={setSize(18, 10, 8)} />
                 </div>
             </>
         ),
@@ -34,7 +34,7 @@ export default function CardSummary({
                 <div
                     className='bg-[#FF90664D] lg:py-3.5 lg:px-4 lg:rounded-[14px] md:py-2 md:px-2.5 md:rounded-[10px] p-1 rounded-[6px]'
                 >
-                    <img src='./assets/icon/sum-3.png' width={setSize(18, 10, 8)} />
+                    <img src='/assets/icon/sum-3.png' width={setSize(18, 10, 8)} />
                 </div>
             </>
         ),
@@ -43,7 +43,7 @@ export default function CardSummary({
                 <div
                     className='bg-[#8280FF4D] lg:py-4 lg:px-3.5 lg:rounded-[14px] md:py-2.5 md:px-2 md:rounded-[10px] py-1.5 px-1 rounded-[6px]'
                 >
-                    <img src='./assets/icon/sum-4.png' width={setSize(22, 12, 10)} />
+                    <img src='/assets/icon/sum-4.png' width={setSize(22, 12, 10)} />
                 </div>
             </>
         )

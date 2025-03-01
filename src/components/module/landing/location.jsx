@@ -54,7 +54,7 @@ export default function LocationComp() {
                 >
                     <div className='relative w-full h-full'>
                         <div className='absolute inset-0 flex justify-center'>
-                            <img src='./assets/cover/maps.png' className='rounded-2xl lg:h-[300px] md:h-[180px] lg:w-[80%] md:w-[80%] object-cover' />
+                            <img src='/assets/cover/maps.png' className='rounded-2xl lg:h-[300px] md:h-[180px] lg:w-[80%] md:w-[80%] object-cover' />
                         </div>
                         <div className='absolute inset-0 flex justify-center items-center'>
                             <Button

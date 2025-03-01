@@ -26,16 +26,16 @@ export default function CardMethod() {
     } = useOrder()
 
     const paymentOptions = [
-        { key: "ovo", label: "OVO", input: true, icon: './assets/payment/ovo.png' },
-        { key: "shopeepay", label: "ShopeePay", input: true, icon: './assets/payment/spay.png' },
-        { key: "gopay", label: "GoPay", input: true, icon: './assets/payment/gopay.png' },
-        { key: "qris", label: "QRIS", input: false, icon: './assets/payment/qris.png' },
+        { key: "ovo", label: "OVO", input: true, icon: '/assets/payment/ovo.png' },
+        { key: "shopeepay", label: "ShopeePay", input: true, icon: '/assets/payment/spay.png' },
+        { key: "gopay", label: "GoPay", input: true, icon: '/assets/payment/gopay.png' },
+        { key: "qris", label: "QRIS", input: false, icon: '/assets/payment/qris.png' },
     ];
 
     const vaOptions = [
-        { key: "bca_va", label: "Virtua Account BCA", input: false, icon: './assets/payment/bca.png' },
-        { key: "bni_va", label: "Virtua Account BNI", input: false, icon: './assets/payment/bni.png' },
-        { key: "bri_va", label: "Virtua Account BRI", input: false, icon: './assets/payment/bri.png' },
+        { key: "bca_va", label: "Virtua Account BCA", input: false, icon: '/assets/payment/bca.png' },
+        { key: "bni_va", label: "Virtua Account BNI", input: false, icon: '/assets/payment/bni.png' },
+        { key: "bri_va", label: "Virtua Account BRI", input: false, icon: '/assets/payment/bri.png' },
     ]
 
     return (
