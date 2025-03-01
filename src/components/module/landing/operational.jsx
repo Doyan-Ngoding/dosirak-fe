@@ -24,7 +24,7 @@ export default function OperationalComp() {
                     AVAILABLE TO CATER TO YOUR NEEDS
                 </div>
                 <div
-                    className='bg-[#FFD39A] font-[Plus Jakarta Sans] flex justify-center items-center w-fit m-auto lg:text-[16px] lg:py-2 lg:px-10 md:text-[12px] md:py-1.5 md:px-8 text-[10px] py-1 px-3 lg:rounded-[8px] md:rounded-[8px] rounded-[4px]' 
+                    className='bg-[#FFD39A] font-[Plus Jakarta Sans] flex justify-center items-center w-fit m-auto lg:text-[16px] lg:py-2 lg:px-10 md:text-[12px] md:py-1.5 md:px-8 text-[9px] py-1 px-3 lg:rounded-[8px] md:rounded-[8px] rounded-[4px]' 
                 >
                     <IconPaperBag size={setSize(22, 18, 14)} style={{ marginRight: setSize(10, 8, 5) }} /> For your convenience, please ensure your order comprises at least 15 meals.
                 </div>
