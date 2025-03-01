@@ -12,18 +12,11 @@ export default defineConfig({
   base: '/',
   build: {
     outDir: 'dist',
-    target: "esnext",
-    chunkSizeWarningLimit: 1000,
   },
   server: {
     port: 8080,
-    host: '0.0.0.0', 
+    host: true, 
     allowedHosts: ["dosirak-apps-ltsly.ondigitalocean.app"],
-    hmr: {
-      protocol: "wss",
-      host: "dosirak-apps-ltsly.ondigitalocean.app", 
-      port: 8080, 
-    },
   },
   resolve: {
     alias: [{ find: "@", replacement: path.resolve(__dirname, "src") }],
