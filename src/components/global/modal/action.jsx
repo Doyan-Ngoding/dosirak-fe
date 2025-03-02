@@ -89,7 +89,6 @@ export default function Action({
             form.setFieldValue("image", info.file)
         }
     };
-console.log(form.getFieldsValue());
 
     return (
         <>
@@ -127,11 +126,11 @@ console.log(form.getFieldsValue());
                                 form={form}
                                 onFinish={async () => {
                                     try {
-                                        // console.log(form.getFieldsValue())
                                         await action(form.getFieldsValue())
                                         setTimeout(() => {
                                             setIsLoading(false)
                                             form.resetFields()
+                                            setFileList()
                                         }, 1000)
                                     } catch (error) {
                                         setIsLoading(false)

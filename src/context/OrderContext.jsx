@@ -45,8 +45,9 @@ const Order = ({children }) => {
     const [activeKey, setActiveKey] = useState(0);
 
     const [resPayment, setResPayment] = useLocalStorage("resPayment");
-
     const [linkPayment, setLinkPayment] = useLocalStorage("linkPayment");
+    const [newResPayment, setNewResPayment] = useLocalStorage("newResPayment");
+    const [resCallback, setResCallback] = useLocalStorage("resCallback");
 
     const addQty = (id) => {
         setSelectedMenu((prevCart) => 
@@ -90,7 +91,6 @@ const Order = ({children }) => {
                     description: item.name,
                     quantity: item.qty, 
                     price: item.price,
-                    // item_id: item.id
                 })),
                 amount: formatAmount,
                 payment_type: "payment_link",
@@ -98,10 +98,10 @@ const Order = ({children }) => {
                 notes: 'tesnote',
                 orders_id: res.data.order?.id
             })
-            .then(res => {
+            .then(response => {
                 setIsLoading(false)
-                setResPayment(res.data.data)
-                setLinkPayment(res.data?.data.payment_link_url)
+                setResPayment(response.data.data)
+                setLinkPayment(response.data?.data.payment_link_url)
                 setTimeout(() => {
                     setSelectedMenu()
                     setSelectedDate()
@@ -115,9 +115,9 @@ const Order = ({children }) => {
                     localStorage.removeItem("formatAmount")
                 }, 2000)
             })
-            .catch(err => {
+            .catch(error => {
                 setIsLoading(false)
-                setResMessageOrder(['error', err.response?.data?.message || "Failed to Make a Order!"])
+                setResMessageOrder(['error', error.response?.data?.message || "Failed to Make a Order!"])
             }) 
         })
         .catch(err => {
@@ -142,7 +142,7 @@ const Order = ({children }) => {
             amount: formatAmount,
             payment_type: "payment_link",
             due_days: 1,
-            notes: 'tesnote'
+            notes: 'tesnote',
         })
         .then(res => {
             setIsLoading(false)
@@ -163,6 +163,32 @@ const Order = ({children }) => {
         .catch(err => {
             setIsLoading(false)
             setResMessageOrder(['error', err.response?.data?.message || "Failed to Make a Order!"])
+        }) 
+    }
+
+    const handleGetInvoice = async (id) => {
+        setIsLoading(true)
+        await axios.get(`${import.meta.env.VITE_API_BE}/invoices/${id}`)
+        .then(res => {
+            setIsLoading(false)
+            setNewResPayment(res.data.data)
+            axios.post(`${import.meta.env.VITE_URL_BE}/callback`, {
+                order_id: res.data.data?.order_id,
+                transaction_status: res.data.data?.status,
+                fraud_status: "accept"
+            })
+            .then(res => {
+                setIsLoading(false)
+                setResCallback(res.data.success);
+            })
+            .catch(err => {
+                setIsLoading(false)
+                setResMessageOrder(['error', err.response?.data?.message || "Failed to callback!"])
+            }) 
+        })
+        .catch(err => {
+            setIsLoading(false)
+            setResMessageOrder(['error', err.response?.data?.message || "Failed to get a Invoice!"])
         }) 
     }
 
@@ -200,9 +226,12 @@ const Order = ({children }) => {
         activeKey, setActiveKey,
 
         resPayment, setResPayment,
-        handleAddPayment,
-
         linkPayment, setLinkPayment,
+        newResPayment, setNewResPayment,
+        resCallback, setResCallback,
+
+        handleAddPayment,
+        handleGetInvoice,
     }
 
     return (
