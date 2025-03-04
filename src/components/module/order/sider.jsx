@@ -32,32 +32,13 @@ export default function SiderOrder() {
     } = useOrder();
 
     const {
-        modalLogin, setModalLogin,
-        modalSignup, setModalSignup,
-        modalOtp, setModalOtp,
-        modalReset, setModalReset,
-        modalForgot, setModalForgot,
-        setSize,
-        isMobile,
-        handleLogin,
-        handleRegister,
-        authUser,
-        isLoading,
+        setModalLogin,
+        setModalOtp,
         token
     } = useAuth();
 
     const onCheckout = () => {
         token ? navigate("/order-summary") : setModalLogin(true)
-    }
-
-    const handleSubmitEmail = async () => {
-        setModalOtp(true);
-        await setModalLogin(false);
-    }
-
-    const handleSubmitAuth = async () => {
-        setModalLogin(false)
-        await navigate("/order-summary"); 
     }
 
     useEffect(() => {
@@ -96,7 +77,7 @@ export default function SiderOrder() {
                     action={onCheckout}
                 />
             </div>
-            {
+            {/* {
                 !isMobile ? (
                     <>
                         <LoginStandard 
@@ -148,7 +129,7 @@ export default function SiderOrder() {
                         />
                     </>
                 )
-            }
+            } */}
         </>
     )
 }

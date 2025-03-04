@@ -13,6 +13,16 @@ import SiderOrder from './sider'
 import { useOrder } from '../../../context/OrderContext'
 import { useAuth } from '../../../context/AuthContext'
 import ContentListComp from '../menu/contentList'
+import LoginStandard from '../../global/modal/loginStandard'
+import ForgotStandard from '../../global/modal/forgotStandard'
+import VerifyStandard from '../../global/modal/verifyStandard'
+import ResetStandard from '../../global/modal/resetStandard'
+import SignupStandard from '../../global/modal/signupStandard'
+import LoginMobile from '../../global/modal/loginMobile'
+import ForgotMobile from '../../global/modal/forgotMobile'
+import VerifyMobile from '../../global/modal/verifyMobile'
+import ResetMobile from '../../global/modal/resetMobile'
+import SignupMobile from '../../global/modal/signupMobile'
 
 export default function OrderComp() {
 
@@ -28,11 +38,19 @@ export default function OrderComp() {
     } = useOrder();
 
     const {
-        setSize = () => {} 
+        modalLogin, setModalLogin,
+        modalSignup, setModalSignup,
+        modalOtp, setModalOtp,
+        modalReset, setModalReset,
+        modalForgot, setModalForgot,
+        setSize,
+        isMobile,
+        handleLogin,
+        handleRegister,
+        authUser,
+        isLoading,
+        token
     } = useAuth();
-
-    const [activeTab, setActiveTab] = useState(tabCategory[0] || '');
-    const sectionRefs = useRef({});
 
     const addedToCart = (menuItem) => { 
         setSelectedMenu(
@@ -168,6 +186,59 @@ export default function OrderComp() {
                     }
                 `}
                 </style>
+                {
+                    !isMobile ? (
+                        <>
+                            <LoginStandard 
+                                isOpen={modalLogin}
+                                setIsOpen={setModalLogin}
+                                action={handleLogin}
+                                loading={isLoading}
+                            />
+                            <ForgotStandard 
+                                isOpen={modalForgot}
+                                setIsOpen={setModalForgot}
+                            />
+                            <VerifyStandard 
+                                isOpen={modalOtp}
+                                setIsOpen={setModalOtp}
+                            />
+                            <ResetStandard 
+                                isOpen={modalReset}
+                                setIsOpen={setModalReset}
+                            />
+                            <SignupStandard 
+                                isOpen={modalSignup}
+                                setIsOpen={setModalSignup}
+                            />
+                        </>
+                    ) : (
+                        <>
+                            <LoginMobile 
+                                isOpen={modalLogin}
+                                setIsOpen={setModalLogin}
+                                action={handleLogin}
+                                loading={isLoading}
+                            />
+                            <ForgotMobile 
+                                isOpen={modalForgot}
+                                setIsOpen={setModalForgot}
+                            />
+                            <VerifyMobile 
+                                isOpen={modalOtp}
+                                setIsOpen={setModalOtp}
+                            />
+                            <ResetMobile 
+                                isOpen={modalReset}
+                                setIsOpen={setModalReset}
+                            />
+                            <SignupMobile 
+                                isOpen={modalSignup}
+                                setIsOpen={setModalSignup}
+                            />
+                        </>
+                    )
+                }
             </LayoutComp>
         </>
     )

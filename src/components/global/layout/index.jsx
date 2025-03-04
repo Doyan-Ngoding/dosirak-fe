@@ -9,7 +9,7 @@ import {
     Row
 } from 'antd'
 import { Link, useLocation } from 'react-router-dom';
-import { IconMenu2, IconShoppingBag } from '@tabler/icons-react';
+import { IconBasket, IconMenu2, IconRosetteFilled, IconShoppingBag } from '@tabler/icons-react';
 import { useMediaQuery } from 'react-responsive';
 import { useAuth } from '../../../context/AuthContext';
 import ConfigComp from './configComp';
@@ -23,7 +23,7 @@ const {
 
 export default function LayoutComp(props) {
 
-    const { setSize, isStandard, isMobile, routes } = useAuth();
+    const { setSize, isStandard, isMobile, routes, setModalSignup, authUser } = useAuth();
 
     const [activeKey, setActiveKey] = useState("1");
     const router = useLocation();
@@ -56,9 +56,8 @@ export default function LayoutComp(props) {
                         {
                             isStandard && (
                                 <>
-                                    <div
-                                        className='h-[50%] rounded-sm bg-[#E83600] lg:w-[8%] md:w-[10%] sm:w-[10%] w-[15%]'
-                                    >
+                                    <div>   
+                                        <img src='/assets/logo.png' alt='Logo Dosirak' width={setSize("70%", "75%", "60%")} />
                                     </div>
                                     <Menu
                                         theme='light'
@@ -80,15 +79,30 @@ export default function LayoutComp(props) {
                         <div 
                             className='flex items-center'
                         >
-                            <IconShoppingBag 
-                                color='#6B6B6B'
-                                className='mr-5'
-                            />
-                            <Button
-                                type='primary'
+                            <div
+                                className='relative lg:w-10 md:w-10 w-10 lg:h-10 md:h-8 h-10 mr-3'
                             >
-                                Order Now!
-                            </Button>
+                                <IconRosetteFilled 
+                                    color='#E83600'
+                                    size={setSize(40, 35, 40)}
+                                    className='absolute'
+                                />
+                                <IconBasket 
+                                    color='#FFFFFF'
+                                    size={setSize(20, 20, 20)}
+                                    className='absolute lg:top-2.5 lg:left-2.5 md:top-2 md:left-2'
+                                />
+                            </div>
+                            {
+                                (pathname === '/order' && !authUser) && (
+                                    <Button
+                                        type='primary'
+                                        onClick={() => setModalSignup(true)}
+                                    >
+                                        Sign In
+                                    </Button>
+                                )
+                            }
                         </div>
                     </Header>
                     <Content>

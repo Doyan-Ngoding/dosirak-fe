@@ -4,6 +4,7 @@ import AuthProvider from '../context/AuthContext'
 import HeaderComp from '../components/global/layout/header'
 import RestaurantProvider from '../context/RestaurantContext'
 import MenuProvider from '../context/MenuContext'
+import OrderProvider from '../context/OrderContext'
 
 export default function LandingPage() {
   return (
@@ -11,7 +12,9 @@ export default function LandingPage() {
       <AuthProvider>
         <RestaurantProvider>
           <MenuProvider>
-            <LandingComp />
+            <OrderProvider>
+              <LandingComp />
+            </OrderProvider>
           </MenuProvider>
         </RestaurantProvider>
       </AuthProvider>

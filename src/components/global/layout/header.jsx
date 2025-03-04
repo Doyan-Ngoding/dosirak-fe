@@ -69,7 +69,7 @@ export default function HeaderComp() {
                 >
                     <Layout>
                         <Header
-                            className={`fixed top-0 transition-all z-50 bg-white ${isScrolled ? 'w-full mt-0 border-b border-gray-300' : 'w-[90%] mt-5 mx-auto self-center rounded-lg'}`}
+                            className={`fixed top-0 transition-all z-50 bg-white self-center ${isScrolled ? 'w-full mt-0 border-b border-gray-300' : 'w-[90%] mt-5 mx-auto self-center rounded-lg'}`}
                         >
                             <Row
                                 justify={"space-between"}

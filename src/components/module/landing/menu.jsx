@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRestaurant } from '../../../context/RestaurantContext'
-import { Button, Col, ConfigProvider, DatePicker, Input, Row, Select } from 'antd'
+import { Alert, Button, Col, ConfigProvider, DatePicker, Input, Row, Select } from 'antd'
 import { useAuth } from '../../../context/AuthContext';
-import { IconCalendarWeek, IconChevronDown, IconClock, IconMapPinFilled, IconRosetteFilled, IconSearch, IconToolsKitchen2, IconX } from '@tabler/icons-react';
+import { IconCalendarWeek, IconChevronDown, IconChevronRight, IconClock, IconMapPinFilled, IconNotes, IconRosetteFilled, IconSearch, IconToolsKitchen2, IconX, IconXboxXFilled } from '@tabler/icons-react';
 import { useMenu } from '../../../context/MenuContext';
 import CardMenu from '../../global/menu/cardMenu';
 import CardMenuHome from '../../global/menu/cardMenuHome';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
+import { useOrder } from '../../../context/OrderContext';
 
 export default function MenuComp() {
 
@@ -27,11 +28,50 @@ export default function MenuComp() {
         selectedCategory, setSelectedCategory,
     } = useMenu()
 
+    const {
+        selectedMenu, setSelectedMenu,
+        subTotal, setSubTotal,
+        cart, setCart
+    } = useOrder()
+
     const navigate = useNavigate()
 
     const disabledDate = (current) => {
         return current && current < dayjs().add(1, 'day').endOf('day');
     };
+
+    const [openDate, setOpenDate] = useState(false);
+    const [openTime, setOpenTime] = useState(false);
+    const [openCategory, setOpenCategory] = useState(false);
+    const [openAlert, setOpenAlert] = useState(true);
+
+    const [selectedDate, setSelectedDate] = useState(null);
+
+    const addedToCart = (menuItem) => { 
+        setSelectedMenu(
+            (prevCart) => {
+                const updatedCart = prevCart.map((item) =>
+                    item.id === menuItem.id
+                        ? { ...item, qty: item.qty + 1, subTotal: (item.qty + 1) * item.price }
+                        : item
+                );
+                const isExisting = prevCart.find((item) => item.id === menuItem.id);
+            
+                if (!isExisting) {
+                    updatedCart.push({ ...menuItem, qty: 1, subTotal: menuItem.price });
+                }
+                
+                return updatedCart;                
+            }
+        )
+    }
+
+    useEffect(() => {
+        setSubTotal(
+            selectedMenu.reduce((total, item) => total + item.subTotal, 0)
+        );
+        setCart(selectedMenu)
+    }, [selectedMenu]);
 
     return (
         <>
@@ -58,24 +98,35 @@ export default function MenuComp() {
                 />
                 <ConfigProvider
                     theme={{
+                        token: {
+                            colorPrimary: '#E83600',
+                        },
                         components: {
                             Select: {
                                 colorBgContainer: '#FFFFFF',
                                 colorTextPlaceholder: '#6B6B6B',
-                                colorText: '#6B6B6B',
+                                colorText: '#000000',
                                 colorBorder: '#A5ABB3',
                                 controlHeight: setSize(42, 28, 20),
                                 fontSize: setSize(18, 12, 10),
                                 borderRadius: setSize(8, 6, 4),
                                 colorBgElevated: '#FFFFFF',
                                 optionSelectedBg: '#E83600',
-                                optionSelectedColor: '#FFFFFF'
+                                optionSelectedColor: '#FFFFFF',
+                                fontSizeIcon: setSize(14, 10, 8)
                             },
                             DatePicker: {
                                 controlHeight: setSize(38, 32, 28),
                                 fontSize: setSize(18, 12, 10),
                                 borderRadius: setSize(8, 6, 4),
                                 colorBorder: '#A5ABB3',
+                                fontSizeIcon: setSize(14, 10, 8),
+                                cellWidth: setSize(50, 30, 25),
+                                colorTextPlaceholder: '#6B6B6B'
+                            },
+                            Button: {
+                                controlHeight: setSize(38, 24, 18),
+                                fontSize: setSize(16, 12, 10),
                             }
                         }
                     }}
@@ -92,6 +143,7 @@ export default function MenuComp() {
                             span={setSize(8, 8, 24)}
                         >
                             <Select 
+                                allowClear={true}
                                 style={{
                                     width: '100%'
                                 }}
@@ -104,11 +156,6 @@ export default function MenuComp() {
                                         }}
                                     />
                                 }
-                                suffixIcon={
-                                    <IconChevronDown 
-                                        size={setSize(24, 14, 12)}
-                                    />
-                                }
                                 placeholder="Category Menu"
                                 options={
                                     listCategory.map(val => ({
@@ -117,16 +164,71 @@ export default function MenuComp() {
                                     }))
                                 }
                                 value={selectedCategory}
-                                onChange={(e) => setSelectedCategory(e)}
+                                onChange={(e) => {setSelectedCategory(e), setOpenCategory(true)}}
+                                open={openCategory}
+                                onDropdownVisibleChange={() => setOpenCategory(true)}
+                                dropdownRender={(menu) => (
+                                    <>
+                                        <div 
+                                            className='lg:p-5 md:p-3 p-2'
+                                        >
+                                            <div
+                                                className='font-[Source Sans Pro] font-semibold text-black lg:text-[18px] lg:pb-3 md:text-[12px] md:pb-2 text-[10px] pb-1'
+                                            >
+                                                What Are You Craving?
+                                            </div>
+                                            <div>
+                                                {menu}
+                                            </div>
+                                            <div
+                                                className='lg:mt-3 md:mt-2 mt-1'
+                                            >
+                                                <Button
+                                                    type='primary'
+                                                    style={{
+                                                        width: '100%',
+                                                        borderRadius: 50
+                                                    }}
+                                                    onClick={() => setOpenCategory(false)}
+                                                >
+                                                    Select Category
+                                                </Button>
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
+                                optionRender={(option) => (
+                                    <>
+                                        <div
+                                            className='flex justify-between items-center'
+                                        >
+                                            <div>
+                                                {option.data.label}
+                                            </div>
+                                            <div>
+                                                <IconChevronRight 
+                                                    size={setSize(24, 18, 12)}
+                                                />
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
                             />
                         </Col>
                         <Col
                             span={setSize(8, 8, 12)}
                         >
                             <DatePicker 
+                                allowClear={true}
+                                showNow={false}
+                                value={selectedDate}
+                                onChange={(e) => {setSelectedDate(e), setOpenDate(true)}}
+                                open={openDate}
+                                onOpenChange={() => setOpenDate(true)}
                                 style={{
                                     width: '100%'
                                 }}
+                                format={"YYYY MMMM DD"}
                                 prefix={
                                     <IconCalendarWeek 
                                         color='#FA5523'
@@ -141,14 +243,67 @@ export default function MenuComp() {
                                         size={setSize(24, 14, 12)}
                                     />
                                 }
+                                clearIcon={
+                                    <IconXboxXFilled 
+                                        size={setSize(18, 12, 12)}
+                                    />
+                                }
                                 placeholder='Order Date'
                                 disabledDate={disabledDate} 
+                                width={"100%"}
+                                panelRender={(date) => (
+                                    <div>
+                                        {
+                                            openAlert && (
+                                                <div
+                                                    className='flex justify-between items-center bg-[#FFD39A] lg:m-3 md:m-2 m-2 lg:rounded-[8px] md:rounded-[6px] rounded-[4px] px-2 py-1.5'
+                                                >
+                                                    <div
+                                                        className='lg:text-[15px] md:text-[10px] text-[8px] flex justify-start items-center'
+                                                    >
+                                                        <IconNotes 
+                                                            size={setSize(20, 14, 12)}
+                                                            style={{
+                                                                marginRight: 2
+                                                            }}
+                                                        />
+                                                        Please place orders at least 2 days
+                                                    </div>
+                                                    <div
+                                                        className='lg:text-[15px] md:text-[10px] text-[8px] text-[#E83600]'
+                                                        onClick={() => setOpenAlert(false)}
+                                                    >
+                                                        Okay
+                                                    </div>
+                                                </div>
+                                            )
+                                        }
+                                        <div>
+                                            {date}
+                                        </div>
+                                        <div
+                                            className='lg:px-5 md:px-3 px-2 pb-2'
+                                        >
+                                            <Button
+                                                type='primary'
+                                                style={{
+                                                    width: '100%',
+                                                    borderRadius: 50
+                                                }}
+                                                onClick={() => setOpenDate(false)}
+                                            >
+                                                Select Date
+                                            </Button>
+                                        </div>
+                                    </div>
+                                )}
                             />
                         </Col>
                         <Col
                             span={setSize(8, 8, 12)}
                         >   
-                             <Select 
+                            <Select 
+                                allowClear={true}
                                 style={{
                                     width: '100%'
                                 }}
@@ -161,11 +316,6 @@ export default function MenuComp() {
                                         }}
                                     />
                                 }
-                                suffixIcon={
-                                    <IconChevronDown 
-                                        size={setSize(24, 14, 12)}
-                                    />
-                                }
                                 placeholder="Delivery Time"
                                 options={[
                                     { value: '08.00 - 09.00', label: '08.00 - 09.00' },
@@ -175,6 +325,53 @@ export default function MenuComp() {
                                     { value: '12.00 - 13.00', label: '12.00 - 13.00' },
                                     { value: '13.00 - 14.00', label: '13.00 - 14.00' },
                                 ]}
+                                open={openTime}
+                                onDropdownVisibleChange={() => setOpenTime(true)}
+                                onChange={(e) => {setOpenTime(true), console.log(e)}}
+                                dropdownRender={(menu) => (
+                                    <>
+                                        <div className='lg:p-5 md:p-3 p-2'>
+                                            <div
+                                                className='font-[Source Sans Pro] font-semibold text-black lg:text-[18px] lg:pb-3 md:text-[12px] md:pb-2 text-[10px] pb-1'
+                                            >
+                                                Select Time Delivery
+                                            </div>
+                                            <div>
+                                                {menu}
+                                            </div>
+                                            <div
+                                                className='lg:mt-3 md:mt-2 mt-1'
+                                            >
+                                                <Button
+                                                    type='primary'
+                                                    style={{
+                                                        width: '100%',
+                                                        borderRadius: 50
+                                                    }}
+                                                    onClick={() => setOpenTime(false)}
+                                                >
+                                                    Select Time
+                                                </Button>
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
+                                optionRender={(option) => (
+                                    <>
+                                        <div
+                                            className='flex justify-between items-center'
+                                        >
+                                            <div>
+                                                {option.data.label}
+                                            </div>
+                                            <div>
+                                                <IconChevronRight 
+                                                    size={setSize(24, 18, 12)}
+                                                />
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
                             />
                         </Col>
                     </Row>
@@ -310,7 +507,7 @@ export default function MenuComp() {
                                         price={value.price}
                                         stock={value.qty}
                                         showResto={false}
-                                        addToCart={() => navigate('/order')}
+                                        addToCart={() => {addedToCart(value), navigate('/order')}}
                                     />
                                 </Col>
                             ))
@@ -331,7 +528,7 @@ export default function MenuComp() {
                                     color='#E83600'
                                     size={setSize(180, 100, 100)}
                                     className='absolute'
-                                    onClick={() => navigate('/menu')}
+                                    onClick={() => {navigate('/menu')}}
                                 />
                                <div
                                     className='font-[Thunder] font-bold text-white lg:text-[36px] md:text-[24px] text-[24px] absolute lg:top-13 lg:left-14 md:top-6 top-6 md:left-6 left-6'
