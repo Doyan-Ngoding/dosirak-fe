@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Button, Col, ConfigProvider, Layout, Menu, Row } from 'antd';
 import ConfigComp from './configComp';
 import { useAuth } from '../../../context/AuthContext';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { IconBasket, IconMenu2, IconRosetteFilled, IconShoppingBag } from '@tabler/icons-react';
 import DrawerMenu from './drawerMenu';
 const { Header } = Layout;
@@ -17,6 +17,8 @@ export default function HeaderComp() {
 
     const router = useLocation();
     const pathname = router.pathname
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         let route = (pathname === "/order-summary" || pathname === "/payment-method" || pathname === "/complete") ? 3 : Object.keys(routes).find(key => routes[key] === router.pathname);
@@ -69,7 +71,7 @@ export default function HeaderComp() {
                 >
                     <Layout>
                         <Header
-                            className={`fixed top-0 transition-all z-50 bg-white ${isScrolled ? 'w-full mt-0 border-b border-gray-300' : 'w-[90%] mt-5 mx-auto self-center rounded-lg'}`}
+                            className={`fixed top-0 transition-all z-50 bg-white self-center ${isScrolled ? 'w-full mt-0 border-b border-gray-300' : 'w-[90%] mt-5 mx-auto self-center rounded-lg'}`}
                         >
                             <Row
                                 justify={"space-between"}
@@ -138,6 +140,7 @@ export default function HeaderComp() {
                                                 </div>
                                                 <Button
                                                     type='primary'
+                                                    onClick={() => navigate("/order")}
                                                 >
                                                     Order Now!
                                                 </Button>

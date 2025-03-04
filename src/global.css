@@ -60,13 +60,13 @@ body {
 }
 
 .menu-price-1 {
-  color: #FF815B;
+  color: #FA5523;
   font-size: 24px;
   font-weight: 700;
 }
 
 .menu-price-2 {
-  color: #FF815B;
+  color: #FA5523;
   font-size: 20px;
   font-weight: 600;
 }
@@ -80,11 +80,11 @@ body {
 }
 
 .icon-hover-2 {
-  color: #FF815B;
+  color: #FA5523;
 }
 
 .icon-hover-2:hover {
-  color: #FA5523;
+  color: #FF815B;
 }
 
 .icon-hover-3 {

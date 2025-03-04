@@ -34,7 +34,9 @@ const Order = ({children }) => {
     const [editAbleAddress, setEditAbleAddress] = useState(false);
     const [addressUser, setAddressUser] = useState();
     const [showDatePicker, setShowDatePicker] = useState(false);
-    const [selectedDate, setSelectedDate] = useState();
+    const [selectedDate, setSelectedDate] = useLocalStorage("selectedDate");
+    const [selectedTempDate, setSelectedTempDate] = useState();
+    const [selectedTempTime, setSelectedTempTime] = useState();
 
     const [isLoading, setIsLoading] = useState(false);
     const [resMessageOrder, setResMessageOrder] = useState();
@@ -111,6 +113,7 @@ const Order = ({children }) => {
                     localStorage.removeItem("cart")
                     localStorage.removeItem("orderTemp")
                     localStorage.removeItem("formatAmount")
+                    localStorage.removeItem("selectedDate")
                     navigate('/payment')
                     localStorage.removeItem("formatAmount")
                 }, 2000)
@@ -213,6 +216,8 @@ const Order = ({children }) => {
 
         showDatePicker, setShowDatePicker,
         selectedDate, setSelectedDate,
+        selectedTempDate, setSelectedTempDate,
+        selectedTempTime, setSelectedTempTime,
 
         addQty, subQty,
 

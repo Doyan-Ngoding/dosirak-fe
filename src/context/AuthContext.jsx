@@ -99,7 +99,7 @@ const Auth = ({children }) => {
                     } else if (pathname === '/order') {
                         if (res.data.user?.role === 'user') {
                             setModalLogin(false);
-                            if (localStorage.getItem("cart")) {
+                            if (localStorage.getItem("cart") && JSON.parse(localStorage.getItem("cart")).length > 0) {
                                 setResMessage(['success', 'Log In Success!'])
                                 setTimeout(() => {
                                     navigate('/order-summary');
@@ -139,7 +139,7 @@ const Auth = ({children }) => {
             setIsLoading(false);
             setModalSignup(false);
             if (pathname === '/order') {
-                if (localStorage.getItem("cart")) {
+                if (localStorage.getItem("cart") && JSON.parse(localStorage.getItem("cart")).length > 0) {
                     setResMessage(['success', 'Sign Up Success!'])
                     setTimeout(() => {
                         navigate('/order-summary');
@@ -210,6 +210,14 @@ const Auth = ({children }) => {
             }
         }
     }, [token, pathname]);
+
+    const hanldeLogout = () => {
+        localStorage.clear()
+        setResMessage(['success', 'Log Out Success!'])
+        setTimeout(() => {
+            navigate("/")
+        }, 1000)
+    }
     
     const state = {
         modalLogin, setModalLogin,
@@ -225,6 +233,7 @@ const Auth = ({children }) => {
 
         handleLogin,
         handleRegister,
+        hanldeLogout,
         isLoading, setIsLoading,
         token, setToken,
         getUserAuth,
