@@ -22,7 +22,7 @@ export default function CardTitleStep({
             <Row
                 justify={"space-between"}
                 align={"middle"}
-                className='bg-[#FA5523E5] lg:p-8 md:p-5 p-5 rounded-2xl'
+                className='bg-[#E83600] lg:p-8 md:p-5 p-5 rounded-2xl'
             >
                 <Col
                     span={setSize('', '', 24)}

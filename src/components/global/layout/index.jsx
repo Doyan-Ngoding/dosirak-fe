@@ -23,7 +23,7 @@ const {
 
 export default function LayoutComp(props) {
 
-    const { setSize, isStandard, isMobile, routes, setModalSignup, authUser } = useAuth();
+    const { setSize, isStandard, isMobile, routes, setModalSignup, authUser, hanldeLogout } = useAuth();
 
     const [activeKey, setActiveKey] = useState("1");
     const router = useLocation();
@@ -90,16 +90,32 @@ export default function LayoutComp(props) {
                                 <IconBasket 
                                     color='#FFFFFF'
                                     size={setSize(20, 20, 20)}
-                                    className='absolute lg:top-2.5 lg:left-2.5 md:top-2 md:left-2'
+                                    className='absolute lg:top-2.5 lg:left-2.5 md:top-2 md:left-2 top-2.5 left-2.5'
                                 />
                             </div>
                             {
-                                (pathname === '/order' && !authUser) && (
+                                (pathname === '/order') ? (
+                                    !authUser ? (
+                                        <Button
+                                            type='primary'
+                                            onClick={() => setModalSignup(true)}
+                                        >
+                                            Sign In
+                                        </Button>
+                                    ) : (
+                                        <Button
+                                            type='primary'
+                                            onClick={hanldeLogout}
+                                        >
+                                            Sign Out
+                                        </Button>
+                                    )
+                                ) : (
                                     <Button
                                         type='primary'
-                                        onClick={() => setModalSignup(true)}
+                                        onClick={hanldeLogout}
                                     >
-                                        Sign In
+                                        Sign Out
                                     </Button>
                                 )
                             }

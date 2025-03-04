@@ -8,7 +8,7 @@ import {
     Row 
 } from 'antd';
 import CardTitleStep from '../../../global/title/cardTitleStep';
-import { IconShoppingBagCheck } from '@tabler/icons-react';
+import { IconCreditCardPay, IconShoppingBagCheck } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../../context/AuthContext';
 import RedirectComp from '../payment/redirect';
@@ -168,7 +168,7 @@ export default function CompleteComp() {
                                         borderRadius: 50,
                                         width: '80%'
                                         }}
-                                        onClick={() => navigate("/")}
+                                        onClick={() => {localStorage.removeItem("resCallback"), navigate("/")}}
                                     >
                                         Back To Home
                                     </Button>

@@ -210,6 +210,14 @@ const Auth = ({children }) => {
             }
         }
     }, [token, pathname]);
+
+    const hanldeLogout = () => {
+        localStorage.clear()
+        setResMessage(['success', 'Log Out Success!'])
+        setTimeout(() => {
+            navigate("/")
+        }, 1000)
+    }
     
     const state = {
         modalLogin, setModalLogin,
@@ -225,6 +233,7 @@ const Auth = ({children }) => {
 
         handleLogin,
         handleRegister,
+        hanldeLogout,
         isLoading, setIsLoading,
         token, setToken,
         getUserAuth,

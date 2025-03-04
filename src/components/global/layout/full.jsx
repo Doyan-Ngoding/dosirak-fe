@@ -17,7 +17,8 @@ export default function FullComp(props) {
         setResMessage,
         token,
         getUserAuth,
-        resMessage
+        resMessage,
+        hanldeLogout
     } = useAuth()
 
     const [activeKey, setActiveKey] = useState("5");
@@ -175,7 +176,7 @@ export default function FullComp(props) {
                                 !isMobile && (
                                     <div style={{ position: 'absolute', bottom: 0, borderTop: '1px solid #DCDCDC', width: '100%' }}>
                                         <Menu.Item key={'11'}><Link to={'/cms'}><div className='flex items-center'><IconSettings size={setSize(18, 14, 12)} /><div className='pl-2'>Settings</div></div></Link></Menu.Item>
-                                        <Menu.Item key={'12'} danger><Link to={'/cms'}><div className='flex items-center'><IconPower color='red' size={setSize(18, 14, 12)} /><div className='pl-2'>Logout</div></div></Link></Menu.Item>
+                                        <Menu.Item key={'12'} danger onClick={hanldeLogout}><div className='flex items-center'><IconPower color='red' size={setSize(18, 14, 12)} /><div className='pl-2'>Log Out</div></div></Menu.Item>
                                         <div
                                             className='flex justify-center text-[#4880FF] py-3 border-t border-[#DCDCDC]'
                                         >
@@ -316,7 +317,7 @@ export default function FullComp(props) {
                         <Menu.Item key={'8'}><Link to={'/cms/user'}><div className='flex items-center'><IconUsers size={setSize(18, 16, 12)} /><div className='pl-2'>Users</div></div></Link></Menu.Item>
                         <div style={{ position: 'absolute', bottom: 0, borderTop: '1px solid #DCDCDC', width: '70%' }}>
                             <Menu.Item key={'11'}><Link to={'/cms'}><div className='flex items-center'><IconSettings size={setSize(18, 14, 12)} /><div className='pl-2'>Settings</div></div></Link></Menu.Item>
-                            <Menu.Item key={'12'} danger><Link to={'/cms'}><div className='flex items-center'><IconPower color='red' size={setSize(18, 14, 12)} /><div className='pl-2'>Logout</div></div></Link></Menu.Item>
+                            <Menu.Item key={'12'} danger onClick={hanldeLogout}><div className='flex items-center'><IconPower color='red' size={setSize(18, 14, 12)} /><div className='pl-2'>Log Out</div></div></Menu.Item>
                         </div>
                     </Menu>   
                 </Drawer>

@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Anchor, Col, ConfigProvider, Row } from 'antd'
 import { useAuth } from '../../../context/AuthContext'
 import { useMenu } from '../../../context/MenuContext';
 import SplitTitle from '../../global/split/title';
 import CardMenuHome from '../../global/menu/cardMenuHome';
+import { useNavigate } from 'react-router-dom';
+import { useOrder } from '../../../context/OrderContext';
 
 export default function ContentListComp() {
+
+    const navigate = useNavigate()
 
     const {
         setSize
@@ -16,6 +20,39 @@ export default function ContentListComp() {
         tabCategory, 
     } = useMenu();
     
+    const {
+        selectedMenu, setSelectedMenu,
+        subTotal, setSubTotal,
+        cart, setCart
+    } = useOrder();
+
+    const addedToCart = (menuItem) => { 
+        setSelectedMenu(
+            (prevCart) => {
+                const updatedCart = prevCart.map((item) =>
+                    item.id === menuItem.id
+                        ? { ...item, qty: item.qty + 1, subTotal: (item.qty + 1) * item.price }
+                        : item
+                );
+                const isExisting = prevCart.find((item) => item.id === menuItem.id);
+            
+                if (!isExisting) {
+                    updatedCart.push({ ...menuItem, qty: 1, subTotal: menuItem.price });
+                }
+                
+                return updatedCart;                
+            }
+        )
+    }
+
+    useEffect(() => {
+        setSubTotal(
+            selectedMenu.reduce((total, item) => total + item.subTotal, 0)
+        );
+        setCart(selectedMenu)
+    }, [selectedMenu]);
+    
+
     return (
         <>
             <div
@@ -78,7 +115,7 @@ export default function ContentListComp() {
                                                         price={value.price}
                                                         stock={value.qty}
                                                         showResto={false}
-                                                        addToCart={() => navigate('/order')}
+                                                        addToCart={() => {addedToCart(value), navigate('/order')}}
                                                         isMenu={true}
                                                     />
                                                 </Col>

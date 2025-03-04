@@ -228,7 +228,7 @@ export default function MenuComp() {
                                 style={{
                                     width: '100%'
                                 }}
-                                format={"YYYY MMMM DD"}
+                                format={"dddd, DD MMM YYYY"}
                                 prefix={
                                     <IconCalendarWeek 
                                         color='#FA5523'
