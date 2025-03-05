@@ -33,7 +33,7 @@ export default function SplitTitle({
                             <div
                                 className='absolute text-center font-extrabold text-[#E83600] lg:text-[24px] md:text-[16px] text-[14px]'
                                 style={{
-                                    fontFamily: 'Vina Sans'
+                                    fontFamily: 'Bebas Neue'
                                 }}
                             >
                                 {no}
@@ -41,9 +41,9 @@ export default function SplitTitle({
                         </div>
                     </div>
                     <div
-                        className='lg:pl-8 md:pl-5 pl-4 text-white font-medium lg:text-[35px] md:text-[24px] text-[20px] mt-[-5px]'
+                        className='lg:pl-8 md:pl-5 pl-4 text-white font-medium lg:text-[35px] md:text-[24px] text-[20px] mt-[5px]'
                         style={{
-                            fontFamily: 'Vina Sans'
+                            fontFamily: 'Bebas Neue'
                         }}
                     >
                         {title}

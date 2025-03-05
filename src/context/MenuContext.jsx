@@ -22,9 +22,11 @@ const Menu = ({children }) => {
     const [tabCategory, setTabCategory] = useState([]);
 
     const [listRestaurant, setListRestaurant] = useState([]);
+    const [tabRestaurant, setTabRestaurant] = useState([]);
     
     const [listMenu, setListMenu] = useState([]);
-    const [listMenuGrouped, setListMenuGrouped] = useState([]);
+    const [listMenuGroupedRestaurant, setListMenuGroupedRestaurant] = useState([]);
+    const [listMenuGroupedCategory, setListMenuGroupedCategory] = useState([]);
 
     const [modalAddMenu, setModalAddMenu] = useState(false);
     const [modalEditMenu, setModalEditMenu] = useState(false);
@@ -45,6 +47,17 @@ const Menu = ({children }) => {
         })
     }
 
+    const getListRestauran = () => {
+        axios.get(`${import.meta.env.VITE_API_BE}/restaurants`)
+        .then(res => {
+            setListRestaurant(res.data.results)
+            setTabRestaurant(res.data.results?.map(item => item.name))
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
     const getListMenuGrouped = () => {
         axios.get(`${import.meta.env.VITE_API_BE}/main-menu`)
         .then(res => {
@@ -55,7 +68,36 @@ const Menu = ({children }) => {
         })
     }
 
-    const groupedMenu = (menu, category) => {
+    const groupedMenuRestaurant = (menu, restaurant) => {
+        const grouped = restaurant.reduce((acc, restaurant) => {
+            acc[restaurant] = []; 
+            return acc;
+        }, {});
+    
+        menu.forEach(item => {
+            const restaurant = item.restaurant_name || "Uncategorized"; 
+            if (!grouped[restaurant]) {
+                grouped[restaurant] = []; 
+            }
+            grouped[restaurant].push(item);
+        });
+    
+        const groupedMenus = restaurant.map(restaurant => ({
+            restaurant,
+            menu: grouped[restaurant] || [] 
+        }));
+    
+        const additionalRestaurants = Object.keys(grouped)
+            .filter(restaurant => !restaurant.includes(restaurant))
+            .map(restaurant => ({
+                restaurant,
+                menu: grouped[restaurant]
+            }));
+    
+        setListMenuGroupedRestaurant([...groupedMenus, ...additionalRestaurants])
+    }
+
+    const groupedMenuCategory = (menu, category) => {
         const grouped = category.reduce((acc, category) => {
             acc[category] = []; 
             return acc;
@@ -81,17 +123,7 @@ const Menu = ({children }) => {
                 menu: grouped[category]
             }));
     
-        setListMenuGrouped([...groupedMenus, ...additionalCategories])
-    }
-
-    const getListRestauran = () => {
-        axios.get(`${import.meta.env.VITE_API_BE}/restaurants`)
-        .then(res => {
-            setListRestaurant(res.data.results)
-        })
-        .catch(err => {
-            console.log(err)
-        })
+        setListMenuGroupedCategory([...groupedMenus, ...additionalCategories])
     }
 
     const handleAddMenu = (rules) => {
@@ -142,7 +174,7 @@ const Menu = ({children }) => {
         formData.append("name", rules.name);
         formData.append("description", rules.description);
         formData.append("price", rules.price);
-        formData.append("created_by", authUser?.id);
+        formData.append("created_by", authUser?.name);
         formData.append("image", rules.image?.originFileObj);
         axios.patch(`${import.meta.env.VITE_API_BE}/main-menu/${detailMenu.id}`, formData)
         .then(res => {
@@ -192,7 +224,11 @@ const Menu = ({children }) => {
     }, []);
 
     useEffect(() => {
-        groupedMenu(listMenu, tabCategory)
+        groupedMenuRestaurant(listMenu, tabRestaurant)
+    }, [listMenu, tabRestaurant]);
+
+    useEffect(() => {
+        groupedMenuCategory(listMenu, tabCategory)
     }, [listMenu, tabCategory]);
 
     const state = {
@@ -203,9 +239,11 @@ const Menu = ({children }) => {
         tabCategory, setTabCategory,
 
         listRestaurant, setListRestaurant,
+        tabRestaurant, setTabRestaurant,
 
         listMenu, setListMenu,
-        listMenuGrouped, setListMenuGrouped,
+        listMenuGroupedRestaurant, setListMenuGroupedRestaurant,
+        listMenuGroupedCategory, setListMenuGroupedCategory,
 
         modalAddMenu, setModalAddMenu,
         modalEditMenu, setModalEditMenu,

@@ -2,6 +2,7 @@ import React from 'react'
 import { ConfigProvider, Select, Table } from 'antd'
 import { columnInvoiceList } from '../../../global/consts/columns'
 import { useAuth } from '../../../../context/AuthContext';
+import { useOrder } from '../../../../context/OrderContext';
 
 export default function InvoiceSumComp() {
 
@@ -9,38 +10,11 @@ export default function InvoiceSumComp() {
         setSize
     } = useAuth()
 
-    const data = [
-        {
-            invoice_id: 'INV109012',
-            username: 'Udin',
-            date: '2018-07-25 10:30:30',
-            amount: 98700,
-            status: 'Scheduled',
-            scheduled_time: '2018-07-26 10:30:30',
-            bulk: 'Tidak',
-            qty: 10,
-        },
-        {
-            invoice_id: 'INV109013',
-            username: 'Udin',
-            date: '2018-07-25 10:30:30',
-            amount: 98700,
-            status: 'Immediately',
-            scheduled_time: null,
-            bulk: 'Tidak',
-            qty: 10,
-        },
-        {
-            invoice_id: 'INV109014',
-            username: 'Udin',
-            date: '2018-07-25 10:30:30',
-            amount: 98700,
-            status: 'Immediately',
-            scheduled_time: null,
-            bulk: 'Ya',
-            qty: 190,
-        },
-    ]
+    const {
+        listOrderSuccess,
+        listMonth,
+        selectedMonthOrder, setSelectedMonthOrder,
+    } = useOrder()
 
     return (
         <>
@@ -77,20 +51,19 @@ export default function InvoiceSumComp() {
                             style={{
                                 width: setSize(180, 120, 100),
                             }}
-                            options={[
-                                { label: 'October', value: 'October'},
-                                { label: 'Octobers', value: 'Octobers'},
-                            ]}
+                            options={listMonth}
+                            value={selectedMonthOrder}
+                            onChange={(e) => setSelectedMonthOrder(e)}
                         />
                     </ConfigProvider>
                 </div>
                 <Table 
-                    dataSource={data}
-                    columns={columnInvoiceList(data)}
+                    dataSource={listOrderSuccess}
+                    columns={columnInvoiceList(listOrderSuccess)}
                     className='lg:pt-5 md:pt-3 pt-2'
                     size={setSize('medium', 'small', 'small')}
                     pagination={{
-                        total: data && data?.length,
+                        total: listOrderSuccess && listOrderSuccess?.length,
                         showTotal: (total, range) =>
                           `${range[0]}-${range[1]} of ${
                             total ? total.toLocaleString() : ""

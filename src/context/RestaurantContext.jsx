@@ -27,7 +27,7 @@ const Restaurant = ({children }) => {
         .then(res => {
             setListNearRestaurant(res.data.results)
             setListRestaurant(res.data.results)
-            setSelectedNearReastaurant(res.data.results?.[0].name)
+            // setSelectedNearReastaurant(res.data.results.length > 0 && res.data.results?.[0].name)
         })
         .catch(err => {
             // setResMessage(['error', err.response?.data?.message || "Failed Get Restaurants!"])

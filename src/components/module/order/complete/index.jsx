@@ -30,7 +30,8 @@ export default function CompleteComp() {
         resPayment,
         newResPayment,
         resCallback,
-        handleGetInvoice
+        handleGetInvoice,
+        resHistory
     } = useOrder();
 
     useEffect(() => {
@@ -39,15 +40,18 @@ export default function CompleteComp() {
     }, []);
 
     useEffect(() => {
-        if (resCallback === true) {
+        if (resHistory) {
             localStorage.removeItem("linkPayment")
             localStorage.removeItem("resPayment")
             localStorage.removeItem("formatAmount")
             localStorage.removeItem("resPayment")
             localStorage.removeItem("newResPayment")
             localStorage.removeItem("resCallback")
+            // setTimeout(() => {
+            //     localStorage.removeItem("resHistory")
+            // }, 2000)
         }
-    }, [resCallback]);
+    }, [resHistory]);
 
     useEffect(() => {
         if (!token && !authUser) {
@@ -168,7 +172,7 @@ export default function CompleteComp() {
                                         borderRadius: 50,
                                         width: '80%'
                                         }}
-                                        onClick={() => {localStorage.removeItem("resCallback"), navigate("/")}}
+                                        onClick={() => {localStorage.removeItem("resHistory"), navigate("/")}}
                                     >
                                         Back To Home
                                     </Button>

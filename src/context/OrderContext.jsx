@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import React, { 
     createContext, 
     useContext,
+    useEffect,
     useState,
 } from 'react'
 import { useNavigate } from 'react-router-dom';
@@ -50,6 +51,11 @@ const Order = ({children }) => {
     const [linkPayment, setLinkPayment] = useLocalStorage("linkPayment");
     const [newResPayment, setNewResPayment] = useLocalStorage("newResPayment");
     const [resCallback, setResCallback] = useLocalStorage("resCallback");
+    const [resHistory, setResHistory] = useLocalStorage("resHistory");
+
+    const [listOrderSuccess, setListOrderSuccess] = useState([]);
+    const [listMonth, setListMonth] = useState([]);
+    const [selectedMonthOrder, setSelectedMonthOrder] = useState(dayjs().format("YYMM"));
 
     const addQty = (id) => {
         setSelectedMenu((prevCart) => 
@@ -78,26 +84,28 @@ const Order = ({children }) => {
             user_id: authUser.id,
             detail_menus: selectedMenu || cart,
             pre_order: dayjs(selectedDate).format('YYYY-MM-DD HH:mm:ss'),
-            amount: total
+            amount: total,
+            address_order: addressUser,
         })
         .then(res => {
             setOrderTemp(res.data.order)
-            console.log(res.data.order);
-            
             axios.post(`${import.meta.env.VITE_API_BE}/create-payment`, {
                 customer_details: {
                     id: authUser.id,
-                    name: authUser.name
+                    name: authUser.name,
+                    // email: authUser.email,
+                    // phone: authUser.phone
                 },
                 item_details: res.data.order?.detailMenus.map(item => ({
                     description: item.name,
                     quantity: item.qty, 
                     price: item.price,
+                    // item_id: item.id
                 })),
                 amount: formatAmount,
                 payment_type: "payment_link",
                 due_days: 1,
-                notes: 'tesnote',
+                notes: 'dev',
                 orders_id: res.data.order?.id
             })
             .then(response => {
@@ -175,14 +183,25 @@ const Order = ({children }) => {
         .then(res => {
             setIsLoading(false)
             setNewResPayment(res.data.data)
+            console.log(res.data.data)
             axios.post(`${import.meta.env.VITE_URL_BE}/callback`, {
                 order_id: res.data.data?.order_id,
                 transaction_status: res.data.data?.status,
                 fraud_status: "accept"
             })
-            .then(res => {
+            .then(response => {
                 setIsLoading(false)
-                setResCallback(res.data.success);
+                setResCallback(response.data.success);
+                axios.post(`${import.meta.env.VITE_API_BE}/create-history`, {
+                    order_id: res.data.data?.orders_id,
+                    payment_method: res.data.data?.payment_type,
+                })
+                .then(responses => {
+                    setResHistory(responses.data.data)
+                })
+                .catch(err => {
+                    setResMessageOrder(['error', err.response?.data?.message || "Failed to create history!"])
+                }) 
             })
             .catch(err => {
                 setIsLoading(false)
@@ -194,6 +213,42 @@ const Order = ({children }) => {
             setResMessageOrder(['error', err.response?.data?.message || "Failed to get a Invoice!"])
         }) 
     }
+
+    const getListOrderSuccess = (date) => {
+        axios.get(`${import.meta.env.VITE_API_BE}/orders-success?year_month=${date}`)
+        .then(res => {
+            setListOrderSuccess(res.data.orders)
+        })
+        .catch(err => {
+            console.log(err.message);
+        }) 
+    }
+
+    const generateMonthList = () => {
+        const currentYear = new Date().getFullYear();
+        const months = [];
+    
+        for (let i = 0; i < 12; i++) {
+            const month = (i + 1).toString().padStart(2, '0'); 
+            const value = `${currentYear.toString().slice(-2)}${month}`;
+    
+            months.push({
+                label: new Date(currentYear, i).toLocaleString('en-US', { month: 'long' }),
+                value: value
+            });
+        }
+
+        setListMonth(months)
+    };
+
+    useEffect(() => {
+        generateMonthList();
+    }, []);
+
+    useEffect(() => {
+        getListOrderSuccess(selectedMonthOrder);
+    }, [selectedMonthOrder]);
+    
 
     const state = {
         menuSearched, setMenuSearched,
@@ -234,9 +289,14 @@ const Order = ({children }) => {
         linkPayment, setLinkPayment,
         newResPayment, setNewResPayment,
         resCallback, setResCallback,
+        resHistory, setResHistory,
 
         handleAddPayment,
         handleGetInvoice,
+
+        listOrderSuccess, setListOrderSuccess,
+        listMonth, setListMonth,
+        selectedMonthOrder, setSelectedMonthOrder,
     }
 
     return (
