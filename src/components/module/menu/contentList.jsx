@@ -16,8 +16,9 @@ export default function ContentListComp() {
     } = useAuth()
 
     const {
-        listMenuGrouped,
+        listMenuGroupedRestaurant,
         tabCategory, 
+        tabRestaurant,
     } = useMenu();
     
     const {
@@ -69,7 +70,7 @@ export default function ContentListComp() {
                             className="inline-flex space-x-4"
                             targetOffset={15}
                             items={
-                                tabCategory ? tabCategory.map((value) => ({
+                                tabRestaurant ? tabRestaurant.map((value) => ({
                                     key: value,
                                     href: '#'+value,
                                     title: value,
@@ -82,17 +83,17 @@ export default function ContentListComp() {
                     className='lg:pt-10 md:pt-7 pt-5'
                 >
                     {
-                        listMenuGrouped && listMenuGrouped.map((value, key) => (
+                        listMenuGroupedRestaurant && listMenuGroupedRestaurant.map((value, key) => (
                             <>
                                 <div
-                                    id={value.category}
+                                    id={value.restaurant}
                                 >
                                     <div
                                         className='lg:pb-3 md:pb-2 pb-1'
                                     >
                                         <SplitTitle 
                                             no={key+1}
-                                            title={value.category}
+                                            title={value.restaurant}
                                         />
                                     </div>
                                     <Row

@@ -27,7 +27,7 @@ import SignupMobile from '../../global/modal/signupMobile'
 export default function OrderComp() {
 
     const {
-        listMenuGrouped,
+        listMenuGroupedCategory,
         tabCategory, 
     } = useMenu();
 
@@ -95,7 +95,7 @@ export default function OrderComp() {
                                 className="sticky lg:top-[75px] md:top-[65px] top-[55px] z-10 bg-white w-auto text-[Plus Jakarta Sans]"
                             >
                                 <div
-                                    className="overflow-x-auto whitespace-nowrap custom-scroll border-b border-gray-500"
+                                    className="overflow-x-auto whitespace-nowrap custom-scroll border-b border-gray-500 mb-5"
                                 >
                                     <Anchor
                                         direction="horizontal"
@@ -112,7 +112,7 @@ export default function OrderComp() {
                                 </div>
                             </div>
                             {
-                                listMenuGrouped.map((value) => (
+                                listMenuGroupedCategory.map((value) => (
                                     <>
                                         <div
                                             id={value.category} 

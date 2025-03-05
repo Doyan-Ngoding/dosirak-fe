@@ -69,24 +69,24 @@ const iconFilter = () => {
 export const columnInvoiceList = (data = []) => [
     {
         title: "Invoice Number",
-        key: "invoice_id",
-        dataIndex: "invoice_id",
-        sorter: (a, b) => String(a.invoice_id || '').localeCompare(String(b.invoice_id || '')),
+        key: "format_id",
+        dataIndex: "format_id",
+        sorter: (a, b) => String(a.format_id || '').localeCompare(String(b.format_id || '')),
         ...iconSort(),
     },
     {
         title: "User",
-        key: "username",
-        dataIndex: "username",
-        sorter: (a, b) => String(a.username || '').localeCompare(String(b.username || '')),
+        key: "name",
+        dataIndex: "name",
+        sorter: (a, b) => String(a.name || '').localeCompare(String(b.name || '')),
         ...iconSort(),
     },
     {
         title: "Date Time",
-        key: "date",
-        dataIndex: "date",
+        key: "pre_order",
+        dataIndex: "pre_order",
         render: (text) => text ? dayjs(text).format('DD.MM.YYYY - hh.mm A') : '',
-        sorter: (a, b) => String(a.date || '').localeCompare(String(b.date || '')),
+        sorter: (a, b) => String(a.pre_order || '').localeCompare(String(b.pre_order || '')),
         ...iconSort(),
     },
     {
@@ -97,41 +97,41 @@ export const columnInvoiceList = (data = []) => [
         sorter: (a, b) => String(a.amount || '').localeCompare(String(b.amount || '')),
         ...iconSort(),
     },
-    {
-        title: "Status",
-        key: "status",
-        dataIndex: "status",
-        render: (text, record) => (
-            <>
-                <Tooltip title={text === "Scheduled" ? (record.date ? dayjs(record.date).format('DD.MM.YYYY - hh.mm A') : '') : ''}>
-                    <div
-                        className={`${text === "Scheduled" ? 'bg-amber-100 cursor-pointer' : 'bg-blue-50'} rounded-lg text-center`}
-                    >
-                        {text}
-                    </div>
-                </Tooltip>
-            </>
-        ),
-        filters: [
-            ...new Set(data?.map((item) => item.status)),
-            ].map((el) => {
-            return { text: el, value: el };
-        }),
-        onFilter: (value, record) => record.status.indexOf(value) === 0,
-        filterSearch: true,
-        ...iconFilter()
-    },
+    // {
+    //     title: "Status",
+    //     key: "status",
+    //     dataIndex: "status",
+    //     render: (text, record) => (
+    //         <>
+    //             <Tooltip title={text === "Scheduled" ? (record.date ? dayjs(record.date).format('DD.MM.YYYY - hh.mm A') : '') : ''}>
+    //                 <div
+    //                     className={`${text === "Scheduled" ? 'bg-amber-100 cursor-pointer' : 'bg-blue-50'} rounded-lg text-center`}
+    //                 >
+    //                     {text}
+    //                 </div>
+    //             </Tooltip>
+    //         </>
+    //     ),
+    //     filters: [
+    //         ...new Set(data?.map((item) => item.status)),
+    //         ].map((el) => {
+    //         return { text: el, value: el };
+    //     }),
+    //     onFilter: (value, record) => record.status.indexOf(value) === 0,
+    //     filterSearch: true,
+    //     ...iconFilter()
+    // },
     {
         title: "Bulk",
-        key: "bulk",
-        dataIndex: "bulk",
+        key: "qty",
+        dataIndex: "qty",
         render: (text, record) => (
             <>
-                <Tooltip title={text === "Ya" ? record.qty + ' items' : ''}>
+                <Tooltip title={ text + ' items'}>
                     <div
-                        className={`${text === "Ya" ? 'bg-red-100 cursor-pointer' : 'bg-blue-50'} rounded-lg text-center`}
+                        className={`${text >= 100 ? 'bg-red-100' : 'bg-blue-50'} rounded-lg text-center cursor-pointer`}
                     >
-                        {text}
+                        {text >= 100 ? 'Ya' : 'Tidak'}
                     </div>
                 </Tooltip>
             </>
