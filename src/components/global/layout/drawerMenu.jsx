@@ -34,7 +34,9 @@ export default function DrawerMenu({
                     components: {
                         Menu: {
                             itemHeight: '150%',
-                            fontSize: 20
+                            fontSize: setSize(0, 20, 16),
+                            fontFamily: 'Bebas Neue',
+                            itemPaddingInline: 10
                         }
                     }
                 }}
@@ -53,9 +55,9 @@ export default function DrawerMenu({
                         onClick={e => setActiveKey(e)}
                         className={`font-semibold text-[20px]`}
                     >
-                        <Menu.Item key={'1'} className={`${!other && 'pt-1.5'}`}><Link to={'/'}>HOME</Link></Menu.Item>
-                        <Menu.Item key={'2'} className={`${!other && 'pt-1.5'}`}><Link to={'/menu'}>MENU</Link></Menu.Item>
-                        <Menu.Item key={'3'} className={`${!other && 'pt-1.5'}`}><Link to={'/order'}>ORDER ONLINE</Link></Menu.Item>
+                        <Menu.Item key={'1'} className='pt-1'><Link to={'/'}>HOME</Link></Menu.Item>
+                        <Menu.Item key={'2'} className='pt-1'><Link to={'/menu'}>MENU</Link></Menu.Item>
+                        <Menu.Item key={'3'} className='pt-1'><Link to={'/order'}>ORDER ONLINE</Link></Menu.Item>
                     </Menu>   
                 </Drawer>
             </ConfigProvider>

@@ -23,21 +23,51 @@ export default function SplitTitle({
                         className='relative flex items-center'
                     >
                         <div 
-                            className='relative flex items-center justify-center lg:pl-5 md:pl-1'
+                            className='relative flex items-center justify-center lg:pl-2 md:pl-1'
                         >
                             <IconRosetteFilled 
                                 color='#FFFFFF'
                                 size={setSize(50, 30, 24)}
                                 className='absolute'
                             />
-                            <div
-                                className='absolute text-center font-extrabold text-[#E83600] lg:text-[24px] md:text-[16px] text-[14px]'
-                                style={{
-                                    fontFamily: 'Bebas Neue'
-                                }}
-                            >
-                                {no}
-                            </div>
+                            {/* {typeof no === 'string' ? (
+                                <div
+                                    className='absolute text-center font-extrabold text-[#E83600] lg:text-[24px] md:text-[16px] text-[14px]'
+                                    style={{ fontFamily: 'Bebas Neue' }}
+                                >
+                                    {no}
+                                </div>
+                            ) : ( */}
+                                <div className="realtive z-1 flex items-center justify-center">
+                                    {/* {no}s */}
+                                    {
+                                        title && (
+                                            title.toLowerCase() === "paik's noodle" ? (
+                                                <img src='/assets/icon/resto-1.png' style={{ width: setSize(28, 18, 14) }}  />
+                                            ) : (
+                                                title.toLowerCase() === "smile kimbab" ? (
+                                                    <img src='/assets/icon/resto-2.png' style={{ width: setSize(28, 18, 14) }}  />
+                                                ) : (
+                                                    title.toLowerCase() === "xin xin corn dog" ? (
+                                                        <img src='/assets/icon/resto-3.png' style={{ width: setSize(28, 18, 14) }}  />
+                                                    ) : (
+                                                        title.toLowerCase() === "boom chicken" ? (
+                                                            <img src='/assets/icon/resto-4.png' style={{ width: setSize(26, 16, 12) }}  />
+                                                        ) : (
+                                                            title.toLowerCase() === "hongkong banjum" ? (
+                                                                <img src='/assets/icon/resto-5.png' style={{ width: setSize(28, 18, 14) }}  />
+                                                            ) : (
+                                                                no
+                                                            )
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    }
+                                    {/* {no} */}
+                                </div>
+                            {/* )} */}
                         </div>
                     </div>
                     <div

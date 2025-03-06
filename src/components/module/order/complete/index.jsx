@@ -8,10 +8,11 @@ import {
     Row 
 } from 'antd';
 import CardTitleStep from '../../../global/title/cardTitleStep';
-import { IconCreditCardPay, IconShoppingBagCheck } from '@tabler/icons-react';
+import { IconCreditCardPay, IconHomeFilled, IconShoppingBagCheck } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../../context/AuthContext';
 import RedirectComp from '../payment/redirect';
+import dayjs from 'dayjs';
 
 export default function CompleteComp() {
 
@@ -77,6 +78,8 @@ export default function CompleteComp() {
             messageApi[type](content)
         }
     }, [resMessageOrder]);
+
+    let exDate = dayjs('2025-03-07 08:00:00').format('dddd, DD MMM YYYY HH:mm') + '-' + dayjs('2025-03-07 08:00:00').add(1, 'hour').format('HH:mm')
 
     return (
         <>
@@ -154,11 +157,27 @@ export default function CompleteComp() {
                                             padding: "10px 0"
                                         }}
                                     >
-                                        Chef will start cooking for you!
+                                        Your Order has Been Recorded
                                     </div>
-                                    {/* <div>
-                                        <span style={{ color: '#838383' }}>Estimated delivery time <span style={{ backgroundColor: 'rgba(232, 54, 0, 0.1)', color: '#E83600', textDecoration: 'underline', padding: 4 }}>00:59:00</span></span>
-                                    </div> */}
+                                    <div>
+                                        <span style={{ color: '#838383' }} className='lg:text-[14px] md:text-[12px] text-[10px]'>Estimated delivery time <span style={{ backgroundColor: 'rgba(232, 54, 0, 0.1)', color: '#E83600', textDecoration: 'underline', padding: 4 }}>{exDate}</span></span>
+                                    </div>
+                                    <div
+                                        className='border border-[#287D3C] bg-[#287D3C0D] flex items-center mt-3 lg:px-[20px] lg:py-[12px] md:px-[18px] md:py-[10px] px-[10px] py-[8px] rounded-[10px]'
+                                    >
+                                        <IconHomeFilled 
+                                            color='#287D3C'
+                                            size={setSize(20, 18, 16)}
+                                            style={{
+                                                marginRight: setSize(10, 8, 5)
+                                            }}
+                                        />
+                                        <span
+                                            className='text-[#287D3C] lg:text-[14px] md:text-[12px] text-[10px]'
+                                        >
+                                            Jl. Menur III Blok A4 no.10 Tangerang, Kelapa Dua, Bencongan Indah 15810
+                                        </span>
+                                    </div>
                                     <div
                                         className='flex justify-center'
                                     >
@@ -170,7 +189,7 @@ export default function CompleteComp() {
                                         color: '#E83600',
                                         border: '1px solid #E83600',
                                         borderRadius: 50,
-                                        width: '80%'
+                                        width: '100%'
                                         }}
                                         onClick={() => {localStorage.removeItem("resHistory"), navigate("/")}}
                                     >

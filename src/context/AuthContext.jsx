@@ -41,7 +41,7 @@ const Auth = ({children }) => {
 
     const allowAdmin = ['/cms', '/cms/product', '/cms/user', '/cms/category', '/cms/restaurant'] 
     const allowUser = ['/order-summary', '/payment-method', '/payment', '/complete']
-    const allowGeneral = ['/', '/menu', '/order', '/cms/login']
+    const allowGeneral = ['/', '/menu', '/order', '/cms/login', '/finish']
 
     const [modalLogin, setModalLogin] = useState(false);
     const [modalSignup, setModalSignup] = useState(false);

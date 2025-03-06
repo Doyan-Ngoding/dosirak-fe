@@ -92,7 +92,6 @@ export default function ContentListComp() {
                                         className='lg:pb-3 md:pb-2 pb-1'
                                     >
                                         <SplitTitle 
-                                            no={key+1}
                                             title={value.restaurant}
                                         />
                                     </div>
