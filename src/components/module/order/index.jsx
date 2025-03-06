@@ -92,7 +92,7 @@ export default function OrderComp() {
                         >
                             <HeaderOrder />
                             <div
-                                className="sticky lg:top-[75px] md:top-[65px] top-[55px] z-10 bg-white w-auto text-[Plus Jakarta Sans]"
+                                className="sticky lg:top-[75px] md:top-[65px] top-[55px] z-1 bg-white w-auto text-[Plus Jakarta Sans]"
                             >
                                 <div
                                     className="overflow-x-auto whitespace-nowrap custom-scroll border-b border-gray-500 mb-5"

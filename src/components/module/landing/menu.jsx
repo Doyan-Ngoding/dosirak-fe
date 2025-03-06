@@ -14,7 +14,8 @@ export default function MenuComp() {
 
     const {
         listNearRestaurant,
-        selectedNearReastaurant, setSelectedNearReastaurant
+        selectedNearReastaurant, setSelectedNearReastaurant,
+        selectedRestaurant, setSelectedRestaurant
     } = useRestaurant();
 
     const {
@@ -125,7 +126,7 @@ export default function MenuComp() {
                                 colorTextPlaceholder: '#6B6B6B'
                             },
                             Button: {
-                                controlHeight: setSize(38, 24, 18),
+                                controlHeight: setSize(38, 24, 10),
                                 fontSize: setSize(16, 12, 10),
                             }
                         }
@@ -382,7 +383,7 @@ export default function MenuComp() {
                     {selectedCategory && selectedCategory.toUpperCase()}
                 </div>
                 <div
-                    className='flex justify-between items-center gap-5'
+                    className='flex justify-between items-center lg:gap-5 md:gap-5 gap-2'
                 >
                     <div
                         className='lg:w-[25%] md:w-[30%] w-[50%]'
@@ -413,75 +414,24 @@ export default function MenuComp() {
                         className='flex gap-2 lg:w-[75%] md:w-[70%] w-[50%] overflow-x-auto no-scrollbar'
                     >
                         {
-                            isMobile ? (
-                                <ConfigProvider
-                                    theme={{
-                                        components: {
-                                            Select: {
-                                                borderRadiusSM: 50,
-                                                fontSize: 10,
-                                                colorPrimary: '#287D3C',
-                                                colorBgContainer: '#287D3C',
-                                                colorTextPlaceholder: '#FFFFFF',
-                                                colorText: '#F9F9F9',
-                                                colorBorder: '#34A44F',
-                                                controlHeightSM: 20,
-                                                colorBgElevated: '#287D3C',
-                                                optionSelectedBg: '#34A44F',
-                                                colorPrimaryBorderHover: '#34A44F'
-                                            }
-                                        }
+                            listNearRestaurant && listNearRestaurant.map((value) => (
+                                <Button
+                                    size={setSize('large', 'small', 'small')}
+                                    style={{
+                                        borderRadius: 50,
+                                        color: selectedRestaurant === value.name ? '#FFFFFF' : '#287D3C',
+                                        borderColor: '#287D3C',
+                                        padding: setSize('0px 25px', '0px 10px', '0px 8px'),
+                                        backgroundColor: selectedRestaurant === value.name && '#287D3C',
+                                        fontSize: setSize(18, 12, 8),
                                     }}
+                                    onClick={() => setSelectedRestaurant(value.name)}
+                                    icon={
+                                        selectedRestaurant === value.name && <IconMapPinFilled size={setSize(24, 14, 14)} style={{ marginTop: 2}} />
+                                    }
                                 >
-                                    <Select 
-                                        size='small'
-                                        options={
-                                            listNearRestaurant.map(val => ({
-                                                label: val.name, 
-                                                value: val.name
-                                            }))
-                                        }
-                                        value={selectedNearReastaurant}
-                                        onChange={(e) => setSelectedNearReastaurant(e)}
-                                        style={{
-                                            width: '100%',
-                                            marginTop: 1
-                                        }}
-                                        suffixIcon={
-                                            <div
-                                                className='bg-white rounded-full px-[2px] py-[1px] mr-[-5px]'
-                                            >
-                                               <IconChevronDown 
-                                                    color='#287D3C'
-                                                    size={10}
-                                                    style={{
-                                                        marginTop: -3
-                                                    }}
-                                                />
-                                            </div>                                 
-                                        }
-                                    />
-                                </ConfigProvider>
-                            ) : (
-                                listNearRestaurant && listNearRestaurant.map((value) => (
-                                    <Button
-                                        size={setSize('large', 'small', 'small')}
-                                        style={{
-                                            borderRadius: 50,
-                                            color: selectedNearReastaurant === value.name ? '#FFFFFF' : '#287D3C',
-                                            borderColor: '#287D3C',
-                                            padding: setSize('0px 25px', '0px 10px', 0),
-                                            backgroundColor: selectedNearReastaurant === value.name && '#287D3C',
-                                            fontSize: setSize(18, 12, 12),
-                                        }}
-                                        onClick={() => setSelectedNearReastaurant(value.name)}
-                                        icon={
-                                            selectedNearReastaurant === value.name && <IconMapPinFilled size={setSize(24, 14, 14)} style={{ marginTop: 2}} />
-                                        }
-                                    >
-                                        {value.name}
-                                    </Button>
-                                )
+                                    {value.name}
+                                </Button>
                             ))
                         }
                     </div>

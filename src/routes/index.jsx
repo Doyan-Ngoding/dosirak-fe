@@ -18,6 +18,7 @@ import CmsUserPage from '../pages/cms/user';
 import CmsCategoryPage from '../pages/cms/category';
 import CmsRestaurantPage from '../pages/cms/restaurant';
 import RedirectPage from '../pages/redirect';
+import FinishPage from '../pages/finish';
 
 function Index() {
     return (
@@ -30,6 +31,7 @@ function Index() {
             <Route path='/payment-method' element={<PaymentMethodPage />} />
             <Route path='/payment' element={<RedirectPage />} />
             <Route path='/complete' element={<CompletePage />} />
+            <Route path='/finish' element={<FinishPage />} />
             <Route path='/cms' element={<CmsPage />} />
             <Route path='/cms/login' element={<CmsLoginPage />} />
             <Route path='/cms/product' element={<CmsProductPage />} />
