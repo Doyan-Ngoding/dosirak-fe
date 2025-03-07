@@ -52,10 +52,7 @@ const Order = ({children }) => {
     const [newResPayment, setNewResPayment] = useLocalStorage("newResPayment");
     const [resCallback, setResCallback] = useLocalStorage("resCallback");
     const [resHistory, setResHistory] = useLocalStorage("resHistory");
-
-    const [listOrderSuccess, setListOrderSuccess] = useState([]);
-    const [listMonth, setListMonth] = useState([]);
-    const [selectedMonthOrder, setSelectedMonthOrder] = useState(dayjs().format("YYMM"));
+    const [resOrder, setResOrder] = useLocalStorage("resOrder");
 
     const addQty = (id) => {
         setSelectedMenu((prevCart) => 
@@ -198,6 +195,7 @@ const Order = ({children }) => {
                 })
                 .then(responses => {
                     setResHistory(responses.data.data)
+                    setResOrder(responses.data.order[0])
                 })
                 .catch(err => {
                     setResMessageOrder(['error', err.response?.data?.message || "Failed to create history!"])
@@ -213,41 +211,6 @@ const Order = ({children }) => {
             setResMessageOrder(['error', err.response?.data?.message || "Failed to get a Invoice!"])
         }) 
     }
-
-    const getListOrderSuccess = (date) => {
-        axios.get(`${import.meta.env.VITE_API_BE}/orders-success?year_month=${date}`)
-        .then(res => {
-            setListOrderSuccess(res.data.orders)
-        })
-        .catch(err => {
-            console.log(err.message);
-        }) 
-    }
-
-    const generateMonthList = () => {
-        const currentYear = new Date().getFullYear();
-        const months = [];
-    
-        for (let i = 0; i < 12; i++) {
-            const month = (i + 1).toString().padStart(2, '0'); 
-            const value = `${currentYear.toString().slice(-2)}${month}`;
-    
-            months.push({
-                label: new Date(currentYear, i).toLocaleString('en-US', { month: 'long' }),
-                value: value
-            });
-        }
-
-        setListMonth(months)
-    };
-
-    useEffect(() => {
-        generateMonthList();
-    }, []);
-
-    useEffect(() => {
-        getListOrderSuccess(selectedMonthOrder);
-    }, [selectedMonthOrder]);
     
 
     const state = {
@@ -290,13 +253,10 @@ const Order = ({children }) => {
         newResPayment, setNewResPayment,
         resCallback, setResCallback,
         resHistory, setResHistory,
+        resOrder, setResOrder,
 
         handleAddPayment,
         handleGetInvoice,
-
-        listOrderSuccess, setListOrderSuccess,
-        listMonth, setListMonth,
-        selectedMonthOrder, setSelectedMonthOrder,
     }
 
     return (
