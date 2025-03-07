@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import FullComp from '../../../global/layout/full'
 import { Button, Input, Table } from 'antd'
 import { useAuth } from '../../../../context/AuthContext'
@@ -70,6 +70,32 @@ export default function CmsUserComp() {
         },
     ]
 
+    const [searchText, setSearchText] = useState(null);
+    const [filteredData, setFilteredData] = useState([]);
+
+    useEffect(() => {
+        setFilteredData(listUser)
+    }, [listUser]);
+
+    const handleSearch = (e) => {
+        const value = e.target.value.toLowerCase();
+        setSearchText(value);
+    
+        if (!value || value === null) {
+            setFilteredData(listUser);
+            return;
+        }
+        
+        const filtered = listUser.filter((item) => 
+            item.name.toLowerCase().includes(value) ||
+            item.email.toLowerCase().includes(value) || 
+            item.phone.includes(value) ||
+            item.location.toLowerCase().includes(value)
+        );
+    
+        setFilteredData(filtered);
+    };
+
     return (
         <>
             <FullComp
@@ -97,6 +123,8 @@ export default function CmsUserComp() {
                                     size={setSize(20, 16, 14)}
                                 />
                             }
+                            value={searchText}
+                            onChange={handleSearch}
                         />
                         <Button
                             type='primary'
@@ -109,12 +137,12 @@ export default function CmsUserComp() {
                         className='lg:mt-5 md:mt-3 mt-3'
                     >
                         <Table 
-                            dataSource={listUser}
-                            columns={columnUserList(listUser, getDetailUser, setModalEditUser, handleDeleteUser)}
+                            dataSource={filteredData}
+                            columns={columnUserList(filteredData, getDetailUser, setModalEditUser, handleDeleteUser)}
                             className='lg:pt-5 md:pt-3 pt-2'
                             size={setSize('medium', 'small', 'small')}
                             pagination={{
-                                total: listUser && listUser?.length,
+                                total: filteredData && filteredData?.length,
                                 showTotal: (total, range) =>
                                   `${range[0]}-${range[1]} of ${
                                     total ? total.toLocaleString() : ""

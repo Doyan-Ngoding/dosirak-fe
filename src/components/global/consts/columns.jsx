@@ -1,4 +1,4 @@
-import { IconChevronDown, IconChevronUp, IconEdit, IconFilter, IconSelector, IconTrash } from "@tabler/icons-react";
+import { IconChevronDown, IconChevronUp, IconEdit, IconEye, IconFilter, IconSelector, IconTrash } from "@tabler/icons-react";
 import { useAuth } from "../../../context/AuthContext";
 import dayjs from "dayjs";
 import { Image, Modal, Popconfirm, Tooltip } from "antd";
@@ -137,18 +137,18 @@ export const columnInvoiceList = (data = []) => [
             </>
         ),
         filters: [
-            ...new Set(data?.map((item) => item.bulk)),
+            ...new Set(data?.map((item) => item.qty)),
             ].map((el) => {
             return { text: el, value: el };
         }),
-        onFilter: (value, record) => record.bulk.indexOf(value) === 0,
+        onFilter: (value, record) => record.qty.indexOf(value) === 0,
         filterSearch: true,
         ...iconFilter(),
     },
 ]
 
 export const columnProductList = (data = [], getDetail, modalEdit, handleDelete) => {
-    const { setSize } = useAuth();
+    const { setSize, authUser } = useAuth();
     return [
         {
             title: '#',
@@ -220,7 +220,7 @@ export const columnProductList = (data = [], getDetail, modalEdit, handleDelete)
                 />
             )
         },
-        {
+        (authUser && authUser.role === 'superadmin') && {
             title: '',
             width: 80,
             render: (text, record, index) => (
@@ -251,7 +251,7 @@ export const columnProductList = (data = [], getDetail, modalEdit, handleDelete)
                 </>
             )
         },
-    ]
+    ].filter(Boolean)
 }
 
 export const columnUserList = (data = [], getDetail, modalEdit, handleDelete) => {
@@ -338,7 +338,7 @@ export const columnUserList = (data = [], getDetail, modalEdit, handleDelete) =>
 }
 
 export const columnCategoryList = (data = [], getDetail, modalEdit, handleDelete, category) => {
-    const { setSize } = useAuth();
+    const { setSize, authUser } = useAuth();
     return [
         {
             title: '#',
@@ -353,7 +353,7 @@ export const columnCategoryList = (data = [], getDetail, modalEdit, handleDelete
             sorter: (a, b) => String(a.name || '').localeCompare(String(b.name || '')),
             ...iconSort(),
         },
-        {
+        (authUser && authUser.role === 'superadmin') && {
             title: '',
             width: 80,
             render: (text, record, index) => (
@@ -380,6 +380,98 @@ export const columnCategoryList = (data = [], getDetail, modalEdit, handleDelete
                                 style={{ cursor: 'pointer' }}
                             />
                         </Popconfirm>
+                    </div>
+                </>
+            )
+        },
+    ].filter(Boolean)
+}
+
+export const columnOrderList = (data = [], modalDetail, dataDetail) => {
+
+    const { setSize } = useAuth()
+
+    return [
+        {
+            title: "Order Number",
+            key: "format_id",
+            dataIndex: "format_id",
+            sorter: (a, b) => String(a.format_id || '').localeCompare(String(b.format_id || '')),
+            ...iconSort(),
+        },
+        {
+            title: "User",
+            key: "name",
+            dataIndex: "name",
+            sorter: (a, b) => String(a.name || '').localeCompare(String(b.name || '')),
+            ...iconSort(),
+        },
+        {
+            title: "Pre Order Date",
+            key: "pre_order",
+            dataIndex: "pre_order",
+            render: (text) => text ? dayjs(text).format('dddd, DD MMM YYYY HH:mm') + '-' + dayjs(text).add(1, 'hour').format('HH:mm') : '',
+            sorter: (a, b) => String(a.pre_order || '').localeCompare(String(b.pre_order || '')),
+            ...iconSort(),
+        },
+        {
+            title: "Address",
+            key: "address_order",
+            dataIndex: "address_order",
+        },
+        {
+            title: "Qty",
+            key: "qty",
+            dataIndex: "qty",
+            sorter: (a, b) => String(a.qty || '').localeCompare(String(b.qty || '')),
+            ...iconSort(),
+        },
+        {
+            title: "Amount",
+            key: "amount",
+            dataIndex: "amount",
+            render: (text) => 'Rp. ' + (text ? parseFloat(text).toLocaleString() : '-'),
+            sorter: (a, b) => String(a.amount || '').localeCompare(String(b.amount || '')),
+            ...iconSort(),
+        },
+        {
+            title: 'Status',
+            key: 'status',
+            dataIndex: 'status',
+            render: (text) => (
+                <div
+                    className={`${text === 'success' ? 'bg-green-100' : 'bg-blue-50'} rounded-lg text-center cursor-pointer`}
+                >
+                    {
+                        text === 'success' ? (
+                            'Success Payment'
+                        ) : text
+                    }
+                </div>
+            ),
+            filters: [
+                ...new Set(data?.map((item) => (item.status))),
+                ].map((el) => {
+                return { text: el, value: el };
+            }),
+            onFilter: (value, record) => (record.status).indexOf(value) === 0,
+            filterSearch: true,
+            ...iconFilter(),
+        },
+        {
+            title: '',
+            width: 80,
+            render: (text, record, index) => (
+                <>
+                    <div
+                        className="flex items-center justify-between w-full"
+                    >
+                        <IconEye 
+                            size={setSize(16, 14, 12)}
+                            color="#4880FF"
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => {modalDetail(true), dataDetail(record)}}
+                        />
                     </div>
                 </>
             )

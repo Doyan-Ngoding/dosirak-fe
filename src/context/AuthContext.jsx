@@ -37,6 +37,7 @@ const Auth = ({children }) => {
         8: '/cms/user',
         9: '/cms/category',
         10: '/cms/restaurant',
+        11: '/cms/order',
     }
 
     const allowAdmin = ['/cms', '/cms/product', '/cms/user', '/cms/category', '/cms/restaurant'] 
@@ -85,7 +86,7 @@ const Auth = ({children }) => {
                 setAuthUser(res.data.user)
                 if (res.data.user) {
                     if (pathname === '/cms/login') {
-                        if (res.data.user?.role === 'superadmin') {
+                        if (res.data.user?.role === 'superadmin' || res.data.user?.role === 'employee') {
                             setResMessage(['success', 'Log In Success!'])
                             setTimeout(() => {
                                 navigate('/cms');
@@ -173,7 +174,7 @@ const Auth = ({children }) => {
                         setTimeout(() => {
                             navigate("/")
                         }, 2000)
-                    } else if (allowAdmin.includes(pathname) && !res.data.user?.role === "superadmin") {
+                    } else if (allowAdmin.includes(pathname) && !res.data.user?.role === "superadmin" && !res.data.user?.role === "employee") {
                         setResMessage(['error', "You Can't Access this Page"])
                         setTimeout(() => {
                             navigate("/cms/login")

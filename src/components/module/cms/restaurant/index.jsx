@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import FullComp from '../../../global/layout/full'
 import { Button, Input, Table } from 'antd'
 import { useAuth } from '../../../../context/AuthContext'
@@ -10,7 +10,8 @@ import Action from '../../../global/modal/action'
 export default function CmsRestaurantComp() {
 
     const {
-        setSize
+        setSize,
+        authUser
     } = useAuth()
 
     const {
@@ -35,6 +36,29 @@ export default function CmsRestaurantComp() {
             type: "input"
         }
     ]
+
+    const [searchText, setSearchText] = useState(null);
+    const [filteredData, setFilteredData] = useState([]);
+
+    useEffect(() => {
+        setFilteredData(listRestaurant)
+    }, [listRestaurant]);
+
+    const handleSearch = (e) => {
+        const value = e.target.value.toLowerCase();
+        setSearchText(value);
+    
+        if (!value || value === null) {
+            setFilteredData(listRestaurant);
+            return;
+        }
+        
+        const filtered = listRestaurant.filter((item) => 
+            item.name.toLowerCase().includes(value)
+        );
+    
+        setFilteredData(filtered);
+    };
 
     return (
         <>
@@ -63,24 +87,30 @@ export default function CmsRestaurantComp() {
                                     size={setSize(20, 16, 14)}
                                 />
                             }
+                            value={searchText}
+                            onChange={handleSearch}
                         />
-                        <Button
-                            type='primary'
-                            onClick={() => setModalAddRestaurant(true)}
-                        >
-                            + Add Restaurant
-                        </Button>
+                        {
+                            (authUser && authUser.role === "superadmin") && (
+                                <Button
+                                type='primary'
+                                onClick={() => setModalAddRestaurant(true)}
+                            >
+                                + Add Restaurant
+                            </Button>
+                            )
+                        }
                     </div>
                     <div
                         className='lg:mt-5 md:mt-3 mt-3'
                     >
                         <Table 
-                            dataSource={listRestaurant}
-                            columns={columnCategoryList(listRestaurant, getDetailRestaurant, setModalEditRestaurant, handleDeleteRestaurant, 'Restaurant')}
+                            dataSource={filteredData}
+                            columns={columnCategoryList(filteredData, getDetailRestaurant, setModalEditRestaurant, handleDeleteRestaurant, 'Restaurant')}
                             className='lg:pt-5 md:pt-3 pt-2'
                             size={setSize('medium', 'small', 'small')}
                             pagination={{
-                                total: listRestaurant && listRestaurant?.length,
+                                total: filteredData && filteredData?.length,
                                 showTotal: (total, range) =>
                                   `${range[0]}-${range[1]} of ${
                                     total ? total.toLocaleString() : ""

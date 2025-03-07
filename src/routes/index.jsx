@@ -19,6 +19,7 @@ import CmsCategoryPage from '../pages/cms/category';
 import CmsRestaurantPage from '../pages/cms/restaurant';
 import RedirectPage from '../pages/redirect';
 import FinishPage from '../pages/finish';
+import CmsOrderPage from '../pages/cms/order';
 
 function Index() {
     return (
@@ -38,6 +39,7 @@ function Index() {
             <Route path='/cms/user' element={<CmsUserPage />} />
             <Route path='/cms/category' element={<CmsCategoryPage />} />
             <Route path='/cms/restaurant' element={<CmsRestaurantPage />} />
+            <Route path='/cms/order' element={<CmsOrderPage />} />
         </Routes>
     )
 }
