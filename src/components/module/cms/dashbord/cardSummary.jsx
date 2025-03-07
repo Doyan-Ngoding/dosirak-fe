@@ -2,6 +2,7 @@ import React from 'react'
 import { Col, Row } from 'antd'
 import CardSummary from '../../../global/card/cardSummary'
 import { useAuth } from '../../../../context/AuthContext'
+import { useSummary } from '../../../../context/SummaryContext'
 
 export default function CardSummaryComp() {
 
@@ -9,10 +10,16 @@ export default function CardSummaryComp() {
         setSize
     } = useAuth()
 
+    const {
+        totalUser,
+        totalOrder,
+        totalRevenue,
+    } = useSummary()
+
     const data = [
-        { title: 'Total Order', value: 10293 },
-        { title: 'Total Revenue', value: 89000 },
-        { title: 'Total User', value: 204 },
+        { title: 'Total Order', value: totalOrder || '0' },
+        { title: 'Total Revenue', value: totalRevenue || '0' },
+        { title: 'Total User', value: totalUser || '0' },
         { title: 'Total Visitor', value: 40689 },
     ]
 

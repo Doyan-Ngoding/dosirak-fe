@@ -2,7 +2,7 @@ import React from 'react'
 import { ConfigProvider, Select, Table } from 'antd'
 import { columnInvoiceList } from '../../../global/consts/columns'
 import { useAuth } from '../../../../context/AuthContext';
-import { useOrder } from '../../../../context/OrderContext';
+import { useSummary } from '../../../../context/SummaryContext';
 
 export default function InvoiceSumComp() {
 
@@ -14,7 +14,7 @@ export default function InvoiceSumComp() {
         listOrderSuccess,
         listMonth,
         selectedMonthOrder, setSelectedMonthOrder,
-    } = useOrder()
+    } = useSummary()
 
     return (
         <>

@@ -32,7 +32,8 @@ export default function CompleteComp() {
         newResPayment,
         resCallback,
         handleGetInvoice,
-        resHistory
+        resHistory,
+        resOrder
     } = useOrder();
 
     useEffect(() => {
@@ -48,9 +49,7 @@ export default function CompleteComp() {
             localStorage.removeItem("resPayment")
             localStorage.removeItem("newResPayment")
             localStorage.removeItem("resCallback")
-            // setTimeout(() => {
-            //     localStorage.removeItem("resHistory")
-            // }, 2000)
+            localStorage.removeItem("resHistory")
         }
     }, [resHistory]);
 
@@ -79,7 +78,7 @@ export default function CompleteComp() {
         }
     }, [resMessageOrder]);
 
-    let exDate = dayjs('2025-03-07 08:00:00').format('dddd, DD MMM YYYY HH:mm') + '-' + dayjs('2025-03-07 08:00:00').add(1, 'hour').format('HH:mm')
+    let exDate = dayjs(resOrder && resOrder.pre_order).format('dddd, DD MMM YYYY HH:mm') + '-' + dayjs(resOrder && resOrder.pre_order).add(1, 'hour').format('HH:mm')
 
     return (
         <>
@@ -175,7 +174,7 @@ export default function CompleteComp() {
                                         <span
                                             className='text-[#287D3C] lg:text-[14px] md:text-[12px] text-[10px]'
                                         >
-                                            Jl. Menur III Blok A4 no.10 Tangerang, Kelapa Dua, Bencongan Indah 15810
+                                            {resOrder && resOrder.address_order}
                                         </span>
                                     </div>
                                     <div
