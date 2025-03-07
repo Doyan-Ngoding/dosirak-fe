@@ -74,6 +74,65 @@ export default function MenuComp() {
         setCart(selectedMenu)
     }, [selectedMenu]);
 
+    const [filteredData, setFilteredData] = useState([]);
+
+    const [searchTextResto, setSearchTextResto] = useState(null);
+    const [filteredResto, setFilteredResto] = useState([]);
+
+    useEffect(() => {
+        setFilteredData(listMenu)
+    }, [listMenu]);
+
+    const handleSearchResto = (e) => {
+        const value = e.toLowerCase();
+    
+        if (!value || value === null) {
+            setFilteredData(listMenu);
+            return;
+        }
+        
+        const filtered = listMenu.filter((item) => 
+            item.restaurant_name.toLowerCase().includes(value)
+        );
+    
+        setFilteredData(filtered);
+    };
+
+    useEffect(() => {
+        setFilteredResto(listNearRestaurant)
+    }, [listNearRestaurant]);
+
+    const handleSearchRestos = (e) => {
+        const value = e.target.value.toLowerCase();
+        setSearchTextResto(value);
+    
+        if (!value || value === null) {
+            setFilteredResto(listNearRestaurant);
+            return;
+        }
+        
+        const filtered = listNearRestaurant.filter((item) => 
+            item.name.toLowerCase().includes(value)
+        );
+    
+        setFilteredResto(filtered);
+    };
+
+    const handleSearchCatrgory = (e) => {
+        const value = e.toLowerCase();
+    
+        if (!value || value === null) {
+            setFilteredData(listMenu);
+            return;
+        }
+        
+        const filtered = listMenu.filter((item) => 
+            item.category_name.toLowerCase().includes(value)
+        );
+    
+        setFilteredData(filtered);
+    };
+
     return (
         <>
             <div
@@ -190,7 +249,7 @@ export default function MenuComp() {
                                                         width: '100%',
                                                         borderRadius: 50
                                                     }}
-                                                    onClick={() => setOpenCategory(false)}
+                                                    onClick={() => {setOpenCategory(false), handleSearchCatrgory(selectedCategory)}}
                                                 >
                                                     Select Category
                                                 </Button>
@@ -408,13 +467,15 @@ export default function MenuComp() {
                                     size={setSize(30, 18, 13)}
                                 />
                             }
+                            value={searchTextResto}
+                            onChange={handleSearchRestos}
                         />  
                     </div>
                     <div
                         className='flex gap-2 lg:w-[75%] md:w-[70%] w-[50%] overflow-x-auto no-scrollbar'
                     >
                         {
-                            listNearRestaurant && listNearRestaurant.map((value) => (
+                            listNearRestaurant && filteredResto.map((value) => (
                                 <Button
                                     size={setSize('large', 'small', 'small')}
                                     style={{
@@ -425,7 +486,7 @@ export default function MenuComp() {
                                         backgroundColor: selectedRestaurant === value.name && '#287D3C',
                                         fontSize: setSize(18, 12, 8),
                                     }}
-                                    onClick={() => setSelectedRestaurant(value.name)}
+                                    onClick={() => {setSelectedRestaurant(value.name), handleSearchResto(value.name)}}
                                     icon={
                                         selectedRestaurant === value.name && <IconMapPinFilled size={setSize(24, 14, 14)} style={{ marginTop: 2}} />
                                     }
@@ -445,7 +506,7 @@ export default function MenuComp() {
                         gutter={[12, 12]}
                     >
                         {
-                            listMenu && listMenu.slice(0, 4).map((value) => (
+                            filteredData && filteredData.slice(0, 4).map((value) => (
                                 <Col
                                     span={setSize(5, 5, 8)}
                                 >

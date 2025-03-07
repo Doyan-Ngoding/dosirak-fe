@@ -7,7 +7,8 @@ import { useSummary } from '../../../../context/SummaryContext'
 export default function CardSummaryComp() {
 
     const {
-        setSize
+        setSize,
+        authUser
     } = useAuth()
 
     const {
@@ -16,12 +17,16 @@ export default function CardSummaryComp() {
         totalRevenue,
     } = useSummary()
 
-    const data = [
-        { title: 'Total Order', value: totalOrder || '0' },
-        { title: 'Total Revenue', value: totalRevenue || '0' },
-        { title: 'Total User', value: totalUser || '0' },
-        { title: 'Total Visitor', value: 40689 },
-    ]
+    const data = authUser && (
+        authUser.role === 'superadmin' ? ([
+            { title: 'Total Order', value: totalOrder || '0' },
+            { title: 'Total Revenue', value: totalRevenue || '0' },
+            { title: 'Total User', value: totalUser || '0' },
+            { title: 'Total Visitor', value: 40689 },
+        ]) : ([
+            { title: 'Total Order', value: totalOrder || '0' },
+        ])
+    )
 
     return (
         <>

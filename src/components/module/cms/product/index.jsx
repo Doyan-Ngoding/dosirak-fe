@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import FullComp from '../../../global/layout/full'
 import { Button, Input, Table } from 'antd'
 import { useAuth } from '../../../../context/AuthContext'
@@ -11,7 +11,8 @@ export default function CmsProductComp() {
 
     const {
         setSize,
-        isMobile
+        isMobile,
+        authUser,
     } = useAuth()
 
     const {
@@ -76,6 +77,30 @@ export default function CmsProductComp() {
         },
     ]    
 
+    const [searchText, setSearchText] = useState(null);
+    const [filteredData, setFilteredData] = useState([]);
+
+    useEffect(() => {
+        setFilteredData(listMenu)
+    }, [listMenu]);
+
+    const handleSearch = (e) => {
+        const value = e.target.value.toLowerCase();
+        setSearchText(value);
+    
+        if (!value || value === null) {
+            setFilteredData(listMenu);
+            return;
+        }
+        
+        const filtered = listMenu.filter((item) => 
+            item.name.toLowerCase().includes(value) ||
+            item.description.toLowerCase().includes(value)
+        );
+    
+        setFilteredData(filtered);
+    };
+
     return (
         <>
             <FullComp
@@ -103,24 +128,30 @@ export default function CmsProductComp() {
                                     size={setSize(20, 16, 14)}
                                 />
                             }
+                            value={searchText}
+                            onChange={handleSearch} 
                         />
-                        <Button
-                            type='primary'
-                            onClick={() => setModalAddMenu(true)}
-                        >
-                            + Add Product
-                        </Button>
+                        {
+                            (authUser && authUser.role === 'superadmin') && (
+                                <Button
+                                    type='primary'
+                                    onClick={() => setModalAddMenu(true)}
+                                >
+                                    + Add Product
+                                </Button>
+                            )
+                        }
                     </div>
                     <div
                         className='lg:mt-5 md:mt-3 mt-3'
                     >
                         <Table 
-                            dataSource={listMenu}
-                            columns={columnProductList(listMenu, getDetailMenu, setModalEditMenu, handleDeleteMenu)}
+                            dataSource={filteredData}
+                            columns={columnProductList(filteredData, getDetailMenu, setModalEditMenu, handleDeleteMenu)}
                             className='lg:pt-5 md:pt-3 pt-2'
                             size={setSize('medium', 'small', 'small')}
                             pagination={{
-                                total: listMenu && listMenu?.length,
+                                total: filteredData && filteredData?.length,
                                 showTotal: (total, range) =>
                                   `${range[0]}-${range[1]} of ${
                                     total ? total.toLocaleString() : ""

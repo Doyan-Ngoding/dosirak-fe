@@ -14,6 +14,7 @@ const Summary = ({children }) => {
     const [listOrderSuccess, setListOrderSuccess] = useState([]);
     const [listMonth, setListMonth] = useState([]);
     const [selectedMonthOrder, setSelectedMonthOrder] = useState(dayjs().format("YYMM"));
+    const [listAllOrder, setListAllOrder] = useState([]);
 
     const [totalUser, setTotalUser] = useState(0)
     const [totalOrder, setTotalOrder] = useState(0)
@@ -70,8 +71,7 @@ const Summary = ({children }) => {
         axios.get(`${import.meta.env.VITE_API_BE}/orders-success?year_month=all`)
         .then(res => {
             setTotalOrder(res.data.orders.length)
-            console.log(res.data.orders);
-            
+            setListAllOrder(res.data.orders);
         })
         .catch(err => {
             console.log(err.message);
@@ -93,6 +93,7 @@ const Summary = ({children }) => {
         listOrderSuccess, setListOrderSuccess,
         listMonth, setListMonth,
         selectedMonthOrder, setSelectedMonthOrder,
+        listAllOrder, setListAllOrder,
 
         totalUser, setTotalUser,
         totalOrder, setTotalOrder,

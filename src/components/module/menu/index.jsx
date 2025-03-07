@@ -18,11 +18,11 @@ export default function MenuComp() {
                     >
                         <SliderComp />
                     </Col>
-                    <Col
+                    {/* <Col
                         span={24}
                     >
                         <HeadListComp />
-                    </Col>
+                    </Col> */}
                     <Col
                         span={24}
                     >
