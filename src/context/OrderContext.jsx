@@ -76,7 +76,8 @@ const Order = ({children }) => {
             user_id: authUser.id,
             detail_menus: selectedMenu || cart,
             pre_order: dayjs(selectedDate).format('YYYY-MM-DD HH:mm:ss'),
-            amount: total
+            amount: total,
+            address_order: addressUser,
         })
         .then(res => {
             setOrderTemp(res.data.order)
