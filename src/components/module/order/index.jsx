@@ -7,18 +7,34 @@ import CardMenu from '../../global/menu/cardMenu'
 import { 
     Anchor,
     Col,
-    Row, 
+    ConfigProvider,
+    Input,
+    Row,
+    Select, 
 } from 'antd'
 import SiderOrder from './sider'
 import { useOrder } from '../../../context/OrderContext'
 import { useAuth } from '../../../context/AuthContext'
 import ContentListComp from '../menu/contentList'
+import LoginStandard from '../../global/modal/loginStandard'
+import ForgotStandard from '../../global/modal/forgotStandard'
+import VerifyStandard from '../../global/modal/verifyStandard'
+import ResetStandard from '../../global/modal/resetStandard'
+import SignupStandard from '../../global/modal/signupStandard'
+import LoginMobile from '../../global/modal/loginMobile'
+import ForgotMobile from '../../global/modal/forgotMobile'
+import VerifyMobile from '../../global/modal/verifyMobile'
+import ResetMobile from '../../global/modal/resetMobile'
+import SignupMobile from '../../global/modal/signupMobile'
+import { useRestaurant } from '../../../context/RestaurantContext'
+import { IconCircleChevronDownFilled, IconSearch, IconXboxXFilled } from '@tabler/icons-react'
 
 export default function OrderComp() {
 
     const {
-        listMenuGrouped,
+        listMenuGroupedCategory,
         tabCategory, 
+        listMenu,
     } = useMenu();
 
     const {
@@ -28,11 +44,24 @@ export default function OrderComp() {
     } = useOrder();
 
     const {
-        setSize = () => {} 
-    } = useAuth();
+        listNearRestaurant,
+        selectedNearReastaurant, setSelectedNearReastaurant,
+    } = useRestaurant()
 
-    const [activeTab, setActiveTab] = useState(tabCategory[0] || '');
-    const sectionRefs = useRef({});
+    const {
+        modalLogin, setModalLogin,
+        modalSignup, setModalSignup,
+        modalOtp, setModalOtp,
+        modalReset, setModalReset,
+        modalForgot, setModalForgot,
+        setSize,
+        isMobile,
+        handleLogin,
+        handleRegister,
+        authUser,
+        isLoading,
+        token
+    } = useAuth();
 
     const addedToCart = (menuItem) => { 
         setSelectedMenu(
@@ -59,6 +88,60 @@ export default function OrderComp() {
         );
         setCart(selectedMenu)
     }, [selectedMenu]);
+   
+    const [searchText, setSearchText] = useState(null);
+    const [filteredData, setFilteredData] = useState([]);
+
+    useEffect(() => {
+        setFilteredData(listMenuGroupedCategory)
+    }, [listMenuGroupedCategory]);
+
+    const handleSearch = (e) => {
+        const value = e.target.value.toLowerCase();
+        setSearchText(value);
+    
+        if (!value || value === null) {
+            setFilteredData(listMenuGroupedCategory);
+            return;
+        }
+        
+        const filtered = listMenuGroupedCategory
+        .map((category) => {
+            const filteredMenu = category.menu.filter(
+                (menuItem) =>
+                    menuItem.name.toLowerCase().includes(value) ||
+                    menuItem.description.toLowerCase().includes(value) ||
+                    menuItem.restaurant_name.toLowerCase().includes(value)
+            );
+
+            return filteredMenu.length > 0 ? { ...category, menu: filteredMenu } : null;
+        })
+        .filter(Boolean);
+    
+        setFilteredData(filtered);
+    };
+
+    const handleSearchResto = (e) => {
+        const value = e.toLowerCase();
+    
+        if (!value || value === null) {
+            setFilteredData(listMenuGroupedCategory);
+            return;
+        }
+        
+        const filtered = listMenuGroupedCategory
+        .map((category) => {
+            const filteredMenu = category.menu.filter(
+                (menuItem) =>
+                    menuItem.restaurant_name.toLowerCase().includes(value)
+            );
+
+            return filteredMenu.length > 0 ? { ...category, menu: filteredMenu } : null;
+        })
+        .filter(Boolean);
+    
+        setFilteredData(filtered);
+    };
     
     return (
         <>
@@ -72,12 +155,105 @@ export default function OrderComp() {
                                 padding: setSize("50px 80px", "30px 50px", "30px")
                             }}
                         >
-                            <HeaderOrder />
+                            <ConfigProvider
+                                theme={{
+                                    components: {
+                                        Select: {
+                                            // fontSizeIcon: setSize(24, 10, 8),
+                                        }
+                                    }
+                                }}
+                            >
+                                <Row
+                                    align={'bottom'}
+                                    justify={'space-between'}
+                                    className='lg:mb-14 md:mb-10 mb-10'
+                                >
+                                    <Col
+                                        span={setSize(12, 24, 24)}
+                                    >
+                                        <div
+                                            className='text-[#6B6B6B80] text-[20px] font-semibold'
+                                        >
+                                            Our Menu
+                                        </div>
+                                        <div
+                                            className='title'
+                                        >
+                                            READY TO ORDER?
+                                        </div>
+                                    </Col>
+                                    <Col
+                                        span={setSize(12, 24, 24)}
+                                        className='mt-10'
+                                    >
+                                        <Row
+                                            justify={setSize("end", "end", "start")}
+                                            align={"bottom"}
+                                        >
+                                            <Col
+                                                className='lg:w-[50%] md:w-[40%] w-[100%]'
+                                            >
+                                                <Select
+                                                    placeholder={'Select restaurant near you'}
+                                                    allowClear={true}
+                                                    options={
+                                                        listNearRestaurant.map(val => ({
+                                                            label: val.name, 
+                                                            value: val.name
+                                                        }))
+                                                    }
+                                                    value={selectedNearReastaurant}
+                                                    onChange={(e) => {setSelectedNearReastaurant(e), handleSearchResto(e)}}
+                                                    className='lg:w-[95%] md:w-[90%] w-[70%]'
+                                                    showArrow={!selectedNearReastaurant}
+                                                    suffixIcon={
+                                                        <IconCircleChevronDownFilled 
+                                                            color='#FFFFFF'
+                                                            size={setSize(30, 28, 26)}
+                                                        />
+                                                    }
+                                                    clearIcon={
+                                                        <IconXboxXFilled 
+                                                            color='#FFFFFF'
+                                                            size={setSize(30, 28, 26)}
+                                                            style={{
+                                                                margin: setSize('-10px 0px 0px -20px', '-8px 0px 0px -15px', '-8px 0px 0px -15px'),
+                                                            }}
+                                                        />
+                                                    }
+                                                />
+                                            </Col>
+                                            <Col
+                                                className='lg:w-[45%] md:w-[40%] w-[70%]'
+                                            >
+                                                <Input 
+                                                    placeholder='Search your menu here'
+                                                    style={{ borderRadius: 50 }}
+                                                    className='lg:w-[100%] md:w-[100%] w-[100%] rounded-[50px] lg:mt-0 md:mt-0 mt-5'
+                                                    value={searchText}
+                                                    onChange={handleSearch}
+                                                    suffix={
+                                                        <div
+                                                            className='bg-[#FA5523] rounded-full lg:py-1.5 px-1.5 py-[5px]'
+                                                        >
+                                                            <IconSearch 
+                                                                color='#FFFFFF'
+                                                                size={setSize(20, 16, 14)}
+                                                            />
+                                                        </div>  
+                                                    }
+                                                />
+                                            </Col>
+                                        </Row>
+                                    </Col>
+                                </Row>
+                            </ConfigProvider>
                             <div
-                                className="sticky lg:top-[75px] md:top-[65px] top-[55px] z-10 bg-white w-auto text-[Plus Jakarta Sans]"
+                                className="sticky lg:top-[75px] md:top-[65px] top-[55px] z-1 bg-white w-auto text-[Plus Jakarta Sans]"
                             >
                                 <div
-                                    className="overflow-x-auto whitespace-nowrap custom-scroll border-b border-gray-500"
+                                    className="overflow-x-auto whitespace-nowrap custom-scroll border-b border-gray-500 mb-5"
                                 >
                                     <Anchor
                                         direction="horizontal"
@@ -94,7 +270,7 @@ export default function OrderComp() {
                                 </div>
                             </div>
                             {
-                                listMenuGrouped.map((value) => (
+                                filteredData.map((value) => (
                                     <>
                                         <div
                                             id={value.category} 
@@ -168,6 +344,59 @@ export default function OrderComp() {
                     }
                 `}
                 </style>
+                {
+                    !isMobile ? (
+                        <>
+                            <LoginStandard 
+                                isOpen={modalLogin}
+                                setIsOpen={setModalLogin}
+                                action={handleLogin}
+                                loading={isLoading}
+                            />
+                            <ForgotStandard 
+                                isOpen={modalForgot}
+                                setIsOpen={setModalForgot}
+                            />
+                            <VerifyStandard 
+                                isOpen={modalOtp}
+                                setIsOpen={setModalOtp}
+                            />
+                            <ResetStandard 
+                                isOpen={modalReset}
+                                setIsOpen={setModalReset}
+                            />
+                            <SignupStandard 
+                                isOpen={modalSignup}
+                                setIsOpen={setModalSignup}
+                            />
+                        </>
+                    ) : (
+                        <>
+                            <LoginMobile 
+                                isOpen={modalLogin}
+                                setIsOpen={setModalLogin}
+                                action={handleLogin}
+                                loading={isLoading}
+                            />
+                            <ForgotMobile 
+                                isOpen={modalForgot}
+                                setIsOpen={setModalForgot}
+                            />
+                            <VerifyMobile 
+                                isOpen={modalOtp}
+                                setIsOpen={setModalOtp}
+                            />
+                            <ResetMobile 
+                                isOpen={modalReset}
+                                setIsOpen={setModalReset}
+                            />
+                            <SignupMobile 
+                                isOpen={modalSignup}
+                                setIsOpen={setModalSignup}
+                            />
+                        </>
+                    )
+                }
             </LayoutComp>
         </>
     )

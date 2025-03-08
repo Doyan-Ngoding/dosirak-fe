@@ -16,7 +16,7 @@ export default function CardTitle({
     return (
         <>
             <div
-                className='bg-[#FA5523E5] rounded-2xl lg:p-3.5 md:p-1 p-1 flex items-center mb-5'
+                className='bg-[#E83600] rounded-2xl lg:p-3.5 md:p-1 p-1 flex items-center mb-5'
             >
                 <div
                     className='relative lg:w-14 md:w-10 w-10 lg:h-14 md:h-10 h-10'

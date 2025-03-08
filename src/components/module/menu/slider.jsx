@@ -104,8 +104,8 @@ export default function SliderComp() {
 
     return (
         <>
-            <Carousel>
-            {/* <Carousel autoplay> */}
+            {/* <Carousel> */}
+            <Carousel autoplay>
                 <div
                     className={`bg-[url(/assets/cover/banner-1.png)] bg-cover bg-bottom bg-no-repeat lg:h-[75vh] md:h-[350px] h-[250px] w-full max-w-full xl:w-[100%]`}
                 >

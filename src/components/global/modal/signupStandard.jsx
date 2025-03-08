@@ -36,7 +36,7 @@ export default function SignupStandard({ isOpen, setIsOpen }) {
             setModalOtp(false);
             setIsOpen(false);
             if (pathname === '/order') {
-                if (localStorage.getItem("cart")) {
+                if (localStorage.getItem("cart") && JSON.parse(localStorage.getItem("cart")).length > 0) {
                     setResMessage(['success', 'Registration Success!'])
                     setTimeout(() => {
                         navigate('/order-summary');

@@ -68,10 +68,10 @@ export default function RedirectComp() {
             if (["paid", "success", "settlement"].includes(updatedStatus)) {
                 clearInterval(interval);
                 navigate("/complete");
-                setTimeout(() => {
-                    localStorage.removeItem("linkPayment");
-                    localStorage.removeItem("resPayment");
-                }, 1000);
+                // setTimeout(() => {
+                //     localStorage.removeItem("linkPayment");
+                //     localStorage.removeItem("resPayment");
+                // }, 1000);
             }
         } catch (error) {
             console.error("Failed to fetch payment status:", error);

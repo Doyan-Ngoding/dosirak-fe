@@ -4,8 +4,13 @@ import { Col, Row } from 'antd'
 import CardSummaryComp from './cardSummary'
 import SalesChartComp from './salesChart'
 import InvoiceSumComp from './invoiceSum'
+import { useAuth } from '../../../../context/AuthContext'
 
 export default function CmsComp() {
+
+    const {
+        authUser
+    } = useAuth()
 
     return (
         <>
@@ -18,16 +23,22 @@ export default function CmsComp() {
                     >
                         <CardSummaryComp />
                     </Col>
-                    <Col
-                        span={24}
-                    >
-                        <SalesChartComp />
-                    </Col>
-                    <Col
-                        span={24}
-                    >
-                        <InvoiceSumComp />
-                    </Col>
+                    {
+                        (authUser && authUser.role === 'superadmin') && (
+                            <>
+                                <Col
+                                    span={24}
+                                >
+                                    <SalesChartComp />
+                                </Col>
+                                <Col
+                                    span={24}
+                                >
+                                    <InvoiceSumComp />
+                                </Col>
+                            </>
+                        )
+                    }
                 </Row>
             </FullComp>
         </>

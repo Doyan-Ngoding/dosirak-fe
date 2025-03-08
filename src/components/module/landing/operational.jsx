@@ -44,11 +44,11 @@ export default function OperationalComp() {
                             className='lg:mt-5 md:mt-4 mt-2'
                         >
                             <div className='border-b border-[#DADADA] lg:py-3.5 lg:text-[14px] md:py-2 md:text-[10px] py-1.5 text-[8px]'><span className='font-bold'>Monday: </span> 08.00 AM-00.00 AM</div>
-                            <div className='border-b border-[#DADADA] lg:py-3.5 lg:text-[14px] md:py-2 md:text-[10px] py-1.5 text-[8px]'><span className='font-bold'>Tuesday: </span> 08.00 AM-00.03 AM</div>
-                            <div className='border-b border-[#DADADA] lg:py-3.5 lg:text-[14px] md:py-2 md:text-[10px] py-1.5 text-[8px]'><span className='font-bold'>Wednesday: </span> 08.00 AM-00.03 AM</div>
-                            <div className='border-b border-[#DADADA] lg:py-3.5 lg:text-[14px] md:py-2 md:text-[10px] py-1.5 text-[8px]'><span className='font-bold'>Thursday: </span> 08.00 AM-00.03 AM</div>
-                            <div className='border-b border-[#DADADA] lg:py-3.5 lg:text-[14px] md:py-2 md:text-[10px] py-1.5 text-[8px]'><span className='font-bold'>Friday: </span> 08.00 AM-00.03 AM</div>
-                            <div className='border-b border-[#DADADA] lg:py-3.5 lg:text-[14px] md:py-2 md:text-[10px] py-1.5 text-[8px]'><span className='font-bold'>Saturday: </span> 08.00 AM-00.03 AM</div>
+                            <div className='border-b border-[#DADADA] lg:py-3.5 lg:text-[14px] md:py-2 md:text-[10px] py-1.5 text-[8px]'><span className='font-bold'>Tuesday: </span> 08.00 AM-03.00 AM</div>
+                            <div className='border-b border-[#DADADA] lg:py-3.5 lg:text-[14px] md:py-2 md:text-[10px] py-1.5 text-[8px]'><span className='font-bold'>Wednesday: </span> 08.00 AM-03.00 AM</div>
+                            <div className='border-b border-[#DADADA] lg:py-3.5 lg:text-[14px] md:py-2 md:text-[10px] py-1.5 text-[8px]'><span className='font-bold'>Thursday: </span> 08.00 AM-03.00 AM</div>
+                            <div className='border-b border-[#DADADA] lg:py-3.5 lg:text-[14px] md:py-2 md:text-[10px] py-1.5 text-[8px]'><span className='font-bold'>Friday: </span> 08.00 AM-03.00 AM</div>
+                            <div className='border-b border-[#DADADA] lg:py-3.5 lg:text-[14px] md:py-2 md:text-[10px] py-1.5 text-[8px]'><span className='font-bold'>Saturday: </span> 08.00 AM-03.00 AM</div>
                             <div className='border-b border-[#DADADA] lg:py-3.5 lg:text-[14px] md:py-2 md:text-[10px] py-1.5 text-[8px]'><span className='font-bold'>Sunday: </span> 08.00 AM-23.00 PM</div>
                         </div>
                     </div>
@@ -64,13 +64,13 @@ export default function OperationalComp() {
                         <div
                             className='lg:mt-5 md:mt-4 mt-2 text-[#FEFFDD]'
                         >
-                            <div className='border-b border-[#FEFFDD] lg:py-3.5 lg:text-[14px] md:py-2 md:text-[10px] py-1.5 text-[8px]'><span className='font-bold'>Monday: </span> 08.00 AM-00.00 AM</div>
-                            <div className='border-b border-[#FEFFDD] lg:py-3.5 lg:text-[14px] md:py-2 md:text-[10px] py-1.5 text-[8px]'><span className='font-bold'>Tuesday: </span> 08.00 AM-00.03 AM</div>
-                            <div className='border-b border-[#FEFFDD] lg:py-3.5 lg:text-[14px] md:py-2 md:text-[10px] py-1.5 text-[8px]'><span className='font-bold'>Wednesday: </span> 08.00 AM-00.03 AM</div>
-                            <div className='border-b border-[#FEFFDD] lg:py-3.5 lg:text-[14px] md:py-2 md:text-[10px] py-1.5 text-[8px]'><span className='font-bold'>Thursday: </span> 08.00 AM-00.03 AM</div>
-                            <div className='border-b border-[#FEFFDD] lg:py-3.5 lg:text-[14px] md:py-2 md:text-[10px] py-1.5 text-[8px]'><span className='font-bold'>Friday: </span> 08.00 AM-00.03 AM</div>
-                            <div className='border-b border-[#FEFFDD] lg:py-3.5 lg:text-[14px] md:py-2 md:text-[10px] py-1.5 text-[8px]'><span className='font-bold'>Saturday: </span> 08.00 AM-00.03 AM</div>
-                            <div className='border-b border-[#FEFFDD] lg:py-3.5 lg:text-[14px] md:py-2 md:text-[10px] py-1.5 text-[8px]'><span className='font-bold'>Sunday: </span> 08.00 AM-23.00 PM</div>
+                            <div className='border-b border-[#FEFFDD] lg:py-3.5 lg:text-[14px] md:py-2 md:text-[10px] py-1.5 text-[8px]'><span className='font-bold'>Monday: </span> 08.00 AM-03.00 AM</div>
+                            <div className='border-b border-[#FEFFDD] lg:py-3.5 lg:text-[14px] md:py-2 md:text-[10px] py-1.5 text-[8px]'><span className='font-bold'>Tuesday: </span> 08.00 AM-03.00 AM</div>
+                            <div className='border-b border-[#FEFFDD] lg:py-3.5 lg:text-[14px] md:py-2 md:text-[10px] py-1.5 text-[8px]'><span className='font-bold'>Wednesday: </span> 08.00 AM-03.00 AM</div>
+                            <div className='border-b border-[#FEFFDD] lg:py-3.5 lg:text-[14px] md:py-2 md:text-[10px] py-1.5 text-[8px]'><span className='font-bold'>Thursday: </span> 08.00 AM-03.00 AM</div>
+                            <div className='border-b border-[#FEFFDD] lg:py-3.5 lg:text-[14px] md:py-2 md:text-[10px] py-1.5 text-[8px]'><span className='font-bold'>Friday: </span> 08.00 AM-03.00 AM</div>
+                            <div className='border-b border-[#FEFFDD] lg:py-3.5 lg:text-[14px] md:py-2 md:text-[10px] py-1.5 text-[8px]'><span className='font-bold'>Saturday: </span> 08.00 AM-03.00 AM</div>
+                            <div className='border-b border-[#FEFFDD] lg:py-3.5 lg:text-[14px] md:py-2 md:text-[10px] py-1.5 text-[8px]'><span className='font-bold'>Sunday: </span> 08.00 AM-03.00 PM</div>
                         </div>
                     </div>
                     

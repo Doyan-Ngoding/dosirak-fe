@@ -1,60 +1,47 @@
 import React, { useEffect, useState } from 'react'
 import FullComp from '../../../global/layout/full'
-import { Button, Input, message, Table } from 'antd'
-import { useAuth } from '../../../../context/AuthContext'
+import { Input, Table } from 'antd'
 import { IconSearch } from '@tabler/icons-react'
-import { columnCategoryList } from '../../../global/consts/columns'
-import { useCategory } from '../../../../context/CategoryContext'
-import Action from '../../../global/modal/action'
+import { useAuth } from '../../../../context/AuthContext'
+import  { columnOrderList } from '../../../global/consts/columns'
+import { useSummary } from '../../../../context/SummaryContext'
+import ModalDetailOrder from '../../../global/modal/detailOrder'
+import dayjs from 'dayjs'
 
-export default function CmsCategoryComp() {
+export default function CmsOrderComp() {
 
     const {
-        setSize,
-        authUser
+        setSize
     } = useAuth()
 
     const {
-        listCategory,
-        detailCategory,
-        modalAddCategory, setModalAddCategory,
-        modalEditCategory, setModalEditCategory,
-        isLoading, setIsLoading, 
-        resMessage, setResMessage,
-        handleAddCategory,
-        getDetailCategory,
-        handleEditCategory,
-        handleDeleteCategory,
-    } = useCategory()
+        listAllOrder
+    } = useSummary()
 
-    
-    const formAdd = [
-        {
-            name: "name",
-            label: "Category Name",
-            required: true,
-            type: "input"
-        }
-    ]
+    const [modalDetail, setModalDetail] = useState(false);
+    const [dataDetail, setDataDetail] = useState();
 
     const [searchText, setSearchText] = useState(null);
     const [filteredData, setFilteredData] = useState([]);
 
     useEffect(() => {
-        setFilteredData(listCategory)
-    }, [listCategory]);
+        setFilteredData(listAllOrder)
+    }, [listAllOrder]);
 
     const handleSearch = (e) => {
         const value = e.target.value.toLowerCase();
         setSearchText(value);
     
         if (!value || value === null) {
-            setFilteredData(listCategory);
+            setFilteredData(listAllOrder);
             return;
         }
         
-        const filtered = listCategory.filter((item) => 
-            item.name.toLowerCase().includes(value)
+        const filtered = listAllOrder.filter((item) => 
+            item.name.toLowerCase().includes(value) || 
+            item.format_id.toLowerCase().includes(value) || 
+            (item.pre_order && dayjs(item.pre_order).format('dddd, DD MMM YYYY HH:mm') + '-' + dayjs(item.pre_order).add(1, 'hour').format('HH:mm')).toLowerCase().includes(value) || 
+            item.address_order.toLowerCase().includes(value) 
         );
     
         setFilteredData(filtered);
@@ -63,7 +50,7 @@ export default function CmsCategoryComp() {
     return (
         <>
             <FullComp
-                menu="Users"
+                menu="Orders"
             >
                 <div
                     className='bg-white w-full lg:my-0 lg:rounded-2xl lg:py-5 lg:px-5 md:my-0 md:rounded-xl md:py-3 md:px-3 my-0 rounded-xl py-2 px-2'
@@ -72,7 +59,7 @@ export default function CmsCategoryComp() {
                         className='flex justify-end items-center lg:gap-5 md:gap-3 gap-2'
                     >
                         <Input 
-                            placeholder='Search proudct here...'
+                            placeholder='Search here...'
                             style={{
                                 width: setSize(200, 180, 150)
                             }}
@@ -90,23 +77,13 @@ export default function CmsCategoryComp() {
                             value={searchText}
                             onChange={handleSearch}
                         />
-                        {
-                            (authUser && authUser.role === 'superadmin') && (
-                                <Button
-                                    type='primary'
-                                    onClick={() => setModalAddCategory(true)}
-                                >
-                                    + Add Category
-                                </Button>
-                            )
-                        }
                     </div>
                     <div
                         className='lg:mt-5 md:mt-3 mt-3'
                     >
                         <Table 
                             dataSource={filteredData}
-                            columns={columnCategoryList(filteredData, getDetailCategory, setModalEditCategory, handleDeleteCategory, 'Category')}
+                            columns={columnOrderList(filteredData, setModalDetail, setDataDetail)}
                             className='lg:pt-5 md:pt-3 pt-2'
                             size={setSize('medium', 'small', 'small')}
                             pagination={{
@@ -122,32 +99,17 @@ export default function CmsCategoryComp() {
                                 pageSizeOptions: [10, 20, 50, 100],
                                 size: setSize('large', 'medium', 'small'),
                             }}
+                            scroll={{
+                                x: setSize(0, 1000, 800),
+                            }}
                         />
                     </div>
                 </div>
             </FullComp>
-            <Action 
-                isOpen={modalAddCategory}
-                setIsopen={setModalAddCategory}
-                isLoading={isLoading}
-                setIsLoading={setIsLoading}
-                title={"Add Category"}
-                item={formAdd}
-                action={handleAddCategory}
-                resMessage={resMessage}
-                setResMessage={setResMessage}
-            />
-            <Action 
-                isOpen={modalEditCategory}
-                setIsopen={setModalEditCategory}
-                isLoading={isLoading}
-                setIsLoading={setIsLoading}
-                title={"Edit Category"}
-                item={formAdd}
-                data={detailCategory}
-                action={handleEditCategory}
-                resMessage={resMessage}
-                setResMessage={setResMessage}
+            <ModalDetailOrder 
+                isOpen={modalDetail}
+                setIsopen={setModalDetail}
+                data={dataDetail}
             />
         </>
     )

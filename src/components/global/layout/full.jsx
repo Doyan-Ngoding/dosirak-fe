@@ -3,7 +3,7 @@ import ConfigComp from './configComp'
 import { Badge, ConfigProvider, Drawer, Layout, Menu, message } from 'antd'
 import { useAuth } from '../../../context/AuthContext'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { IconBell, IconBellFilled, IconBuildingWarehouse, IconCategory, IconCategory2, IconChevronDown, IconChevronLeft, IconDashboard, IconLayoutGrid, IconMenu2, IconPower, IconSettings, IconUserFilled, IconUsers } from '@tabler/icons-react'
+import { IconBell, IconBellFilled, IconBuildingWarehouse, IconCategory, IconCategory2, IconChevronDown, IconChevronLeft, IconDashboard, IconLayoutGrid, IconMenu2, IconPaperBag, IconPower, IconSettings, IconUserFilled, IconUsers } from '@tabler/icons-react'
 const { Sider, Header, Content, Footer } = Layout
 
 export default function FullComp(props) {
@@ -17,7 +17,8 @@ export default function FullComp(props) {
         setResMessage,
         token,
         getUserAuth,
-        resMessage
+        resMessage,
+        hanldeLogout
     } = useAuth()
 
     const [activeKey, setActiveKey] = useState("5");
@@ -170,12 +171,13 @@ export default function FullComp(props) {
                             <Menu.Item key={'7'}><Link to={'/cms/product'}><div className='flex items-center'><IconLayoutGrid size={setSize(18, 14, 12)} /><div className='pl-2'>Products</div></div></Link></Menu.Item>
                             <Menu.Item key={'9'}><Link to={'/cms/category'}><div className='flex items-center'><IconCategory2 size={setSize(18, 14, 12)} /><div className='pl-2'>Category</div></div></Link></Menu.Item>
                             <Menu.Item key={'10'}><Link to={'/cms/restaurant'}><div className='flex items-center'><IconBuildingWarehouse size={setSize(18, 14, 12)} /><div className='pl-2'>Restaurant</div></div></Link></Menu.Item>
-                            <Menu.Item key={'8'}><Link to={'/cms/user'}><div className='flex items-center'><IconUsers size={setSize(18, 14, 12)} /><div className='pl-2'>Users</div></div></Link></Menu.Item>
+                            <Menu.Item key={'11'}><Link to={'/cms/order'}><div className='flex items-center'><IconPaperBag size={setSize(18, 14, 12)} /><div className='pl-2'>Order</div></div></Link></Menu.Item>
+                            { (authUser && authUser.role === 'superadmin') && <Menu.Item key={'8'}><Link to={'/cms/user'}><div className='flex items-center'><IconUsers size={setSize(18, 14, 12)} /><div className='pl-2'>Users</div></div></Link></Menu.Item> }
                            {
                                 !isMobile && (
                                     <div style={{ position: 'absolute', bottom: 0, borderTop: '1px solid #DCDCDC', width: '100%' }}>
-                                        <Menu.Item key={'11'}><Link to={'/cms'}><div className='flex items-center'><IconSettings size={setSize(18, 14, 12)} /><div className='pl-2'>Settings</div></div></Link></Menu.Item>
-                                        <Menu.Item key={'12'} danger><Link to={'/cms'}><div className='flex items-center'><IconPower color='red' size={setSize(18, 14, 12)} /><div className='pl-2'>Logout</div></div></Link></Menu.Item>
+                                        <Menu.Item key={'12'}><Link to={'/cms'}><div className='flex items-center'><IconSettings size={setSize(18, 14, 12)} /><div className='pl-2'>Settings</div></div></Link></Menu.Item>
+                                        <Menu.Item key={'13'} danger onClick={hanldeLogout}><div className='flex items-center'><IconPower color='red' size={setSize(18, 14, 12)} /><div className='pl-2'>Log Out</div></div></Menu.Item>
                                         <div
                                             className='flex justify-center text-[#4880FF] py-3 border-t border-[#DCDCDC]'
                                         >
@@ -313,10 +315,11 @@ export default function FullComp(props) {
                         <Menu.Item key={'7'}><Link to={'/cms/product'}><div className='flex items-center'><IconLayoutGrid size={setSize(18, 16, 12)} /><div className='pl-2'>Products</div></div></Link></Menu.Item>
                         <Menu.Item key={'9'}><Link to={'/cms/category'}><div className='flex items-center'><IconCategory2 size={setSize(18, 16, 12)} /><div className='pl-2'>Category</div></div></Link></Menu.Item>
                         <Menu.Item key={'10'}><Link to={'/cms/restaurant'}><div className='flex items-center'><IconBuildingWarehouse size={setSize(18, 16, 12)} /><div className='pl-2'>Restaurant</div></div></Link></Menu.Item>
-                        <Menu.Item key={'8'}><Link to={'/cms/user'}><div className='flex items-center'><IconUsers size={setSize(18, 16, 12)} /><div className='pl-2'>Users</div></div></Link></Menu.Item>
+                        <Menu.Item key={'11'}><Link to={'/cms/order'}><div className='flex items-center'><IconPaperBag size={setSize(18, 16, 12)} /><div className='pl-2'>Order</div></div></Link></Menu.Item>
+                        { (authUser && authUser.role === 'superadmin') && <Menu.Item key={'8'}><Link to={'/cms/user'}><div className='flex items-center'><IconUsers size={setSize(18, 16, 12)} /><div className='pl-2'>Users</div></div></Link></Menu.Item>}
                         <div style={{ position: 'absolute', bottom: 0, borderTop: '1px solid #DCDCDC', width: '70%' }}>
-                            <Menu.Item key={'11'}><Link to={'/cms'}><div className='flex items-center'><IconSettings size={setSize(18, 14, 12)} /><div className='pl-2'>Settings</div></div></Link></Menu.Item>
-                            <Menu.Item key={'12'} danger><Link to={'/cms'}><div className='flex items-center'><IconPower color='red' size={setSize(18, 14, 12)} /><div className='pl-2'>Logout</div></div></Link></Menu.Item>
+                            <Menu.Item key={'12'}><Link to={'/cms'}><div className='flex items-center'><IconSettings size={setSize(18, 14, 12)} /><div className='pl-2'>Settings</div></div></Link></Menu.Item>
+                            <Menu.Item key={'13'} danger onClick={hanldeLogout}><div className='flex items-center'><IconPower color='red' size={setSize(18, 14, 12)} /><div className='pl-2'>Log Out</div></div></Menu.Item>
                         </div>
                     </Menu>   
                 </Drawer>

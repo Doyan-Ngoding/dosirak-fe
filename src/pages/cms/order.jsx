@@ -1,14 +1,14 @@
 import React from 'react'
 import AuthProvider from '../../context/AuthContext'
-import CmsComp from '../../components/module/cms/dashbord'
+import CmsOrderComp from '../../components/module/cms/order'
 import SummaryProvider from '../../context/SummaryContext'
 
-export default function CmsPage() {
+export default function CmsOrderPage() {
     return (
         <>
             <AuthProvider>
                 <SummaryProvider>
-                    <CmsComp />
+                    <CmsOrderComp />
                 </SummaryProvider>
             </AuthProvider>
         </>

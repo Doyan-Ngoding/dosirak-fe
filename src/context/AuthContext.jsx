@@ -37,11 +37,12 @@ const Auth = ({children }) => {
         8: '/cms/user',
         9: '/cms/category',
         10: '/cms/restaurant',
+        11: '/cms/order',
     }
 
     const allowAdmin = ['/cms', '/cms/product', '/cms/user', '/cms/category', '/cms/restaurant'] 
-    const allowUser = ['/order-summary', '/payment-method', '/payment', '/complete', '/invoice/:id']
-    const allowGeneral = ['/', '/menu', '/order', '/cms/login']
+    const allowUser = ['/order-summary', '/payment-method', '/payment', '/complete']
+    const allowGeneral = ['/', '/menu', '/order', '/cms/login', '/finish']
 
     const [modalLogin, setModalLogin] = useState(false);
     const [modalSignup, setModalSignup] = useState(false);
@@ -85,7 +86,7 @@ const Auth = ({children }) => {
                 setAuthUser(res.data.user)
                 if (res.data.user) {
                     if (pathname === '/cms/login') {
-                        if (res.data.user?.role === 'superadmin') {
+                        if (res.data.user?.role === 'superadmin' || res.data.user?.role === 'employee') {
                             setResMessage(['success', 'Log In Success!'])
                             setTimeout(() => {
                                 navigate('/cms');
@@ -99,7 +100,7 @@ const Auth = ({children }) => {
                     } else if (pathname === '/order') {
                         if (res.data.user?.role === 'user') {
                             setModalLogin(false);
-                            if (localStorage.getItem("cart")) {
+                            if (localStorage.getItem("cart") && JSON.parse(localStorage.getItem("cart")).length > 0) {
                                 setResMessage(['success', 'Log In Success!'])
                                 setTimeout(() => {
                                     navigate('/order-summary');
@@ -139,7 +140,7 @@ const Auth = ({children }) => {
             setIsLoading(false);
             setModalSignup(false);
             if (pathname === '/order') {
-                if (localStorage.getItem("cart")) {
+                if (localStorage.getItem("cart") && JSON.parse(localStorage.getItem("cart")).length > 0) {
                     setResMessage(['success', 'Sign Up Success!'])
                     setTimeout(() => {
                         navigate('/order-summary');
@@ -173,7 +174,7 @@ const Auth = ({children }) => {
                         setTimeout(() => {
                             navigate("/")
                         }, 2000)
-                    } else if (allowAdmin.includes(pathname) && !res.data.user?.role === "superadmin") {
+                    } else if (allowAdmin.includes(pathname) && !res.data.user?.role === "superadmin" && !res.data.user?.role === "employee") {
                         setResMessage(['error', "You Can't Access this Page"])
                         setTimeout(() => {
                             navigate("/cms/login")
@@ -210,6 +211,14 @@ const Auth = ({children }) => {
             }
         }
     }, [token, pathname]);
+
+    const hanldeLogout = () => {
+        localStorage.clear()
+        setResMessage(['success', 'Log Out Success!'])
+        setTimeout(() => {
+            navigate("/")
+        }, 1000)
+    }
     
     const state = {
         modalLogin, setModalLogin,
@@ -225,6 +234,7 @@ const Auth = ({children }) => {
 
         handleLogin,
         handleRegister,
+        hanldeLogout,
         isLoading, setIsLoading,
         token, setToken,
         getUserAuth,
