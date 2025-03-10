@@ -100,7 +100,7 @@ export default function CmsProductComp() {
     
         setFilteredData(filtered);
     };
-
+    
     return (
         <>
             <FullComp
