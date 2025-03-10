@@ -34,6 +34,18 @@ export default function CmsRestaurantComp() {
             label: "Restaurant Name",
             required: true,
             type: "input"
+        }, 
+        {
+            name: "address",
+            label: "Restaurant Address",
+            required: true,
+            type: "input"
+        },
+        {
+            name: "image",
+            label: "Restaurant Image",
+            required: true,
+            type: "upload"
         }
     ]
 

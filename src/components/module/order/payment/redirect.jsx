@@ -52,8 +52,8 @@ export default function RedirectComp() {
         }
     }, [resPayment, linkPayment]);
 
-   useEffect(() => {
-    if (!resPayment || !resPayment.order_id) return;
+    useEffect(() => {
+        if (!resPayment || !resPayment.order_id) return;
 
     console.log("Start interval to check payment status");
     const interval = setInterval(async () => {

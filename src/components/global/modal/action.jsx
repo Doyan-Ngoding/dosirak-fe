@@ -57,7 +57,7 @@ export default function Action({
     const props = {
         name: 'file',
         onChange(info) {
-          setFileList(info.fileList)
+            setFileList(info.fileList)
             if (info.file.status === 'done') {
                 message.success(`Uploaded successfully`);
                 form.setFieldValue("image", info.file.originFileObj)
@@ -66,7 +66,7 @@ export default function Action({
             }
         },
         beforeUpload: file => {
-          const isSize = file.size / 1024 / 1024 < 1;
+            const isSize = file.size / 1024 / 1024 < 1;
             if (!isSize) {
                 message.error('Image must smaller than 1MB!');
                 form.setFieldValue("image", "")
