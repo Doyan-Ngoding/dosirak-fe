@@ -153,9 +153,9 @@ export default function CmsProductComp() {
                             pagination={{
                                 total: filteredData && filteredData?.length,
                                 showTotal: (total, range) =>
-                                  `${range[0]}-${range[1]} of ${
-                                    total ? total.toLocaleString() : ""
-                                  } items`,
+                                    `${range[0]}-${range[1]} of ${
+                                        total ? total.toLocaleString() : ""
+                                    } items`,
                                 defaultPageSize: 10,
                                 defaultCurrent: 1,
                                 showSizeChanger: true,
@@ -182,7 +182,7 @@ export default function CmsProductComp() {
                 setResMessage={setResMessage}
                 // isReq={false}
             />
-             <Action 
+            <Action 
                 isOpen={modalEditMenu}
                 setIsopen={setModalEditMenu}
                 isLoading={isLoading}
