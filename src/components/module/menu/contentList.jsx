@@ -77,6 +77,9 @@ export default function ContentListComp() {
         setFilteredData(filtered);
     };
 
+    console.log(filteredData);
+    
+
     return (
         <>
              <div
@@ -190,6 +193,7 @@ export default function ContentListComp() {
                                         className='lg:pb-3 md:pb-2 pb-1'
                                     >
                                         <SplitTitle 
+                                            no={value.restaurant_image}
                                             title={value.restaurant}
                                         />
                                     </div>

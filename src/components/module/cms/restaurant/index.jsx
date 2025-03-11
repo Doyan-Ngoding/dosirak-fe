@@ -3,7 +3,7 @@ import FullComp from '../../../global/layout/full'
 import { Button, Input, Table } from 'antd'
 import { useAuth } from '../../../../context/AuthContext'
 import { IconSearch } from '@tabler/icons-react'
-import { columnCategoryList } from '../../../global/consts/columns'
+import { columnRestaurantList } from '../../../global/consts/columns'
 import { useRestaurant } from '../../../../context/RestaurantContext'
 import Action from '../../../global/modal/action'
 
@@ -36,17 +36,29 @@ export default function CmsRestaurantComp() {
             type: "input"
         }, 
         {
-            name: "address",
-            label: "Restaurant Address",
+            name: "email",
+            label: "Restaurant Email",
             required: true,
             type: "input"
         },
         {
+            name: "phone",
+            label: "Restaurant Phone Number",
+            required: true,
+            type: "input"
+        },
+        {
+            name: "address",
+            label: "Restaurant Address",
+            required: true,
+            type: "textarea"
+        },
+        {
             name: "image",
             label: "Restaurant Image",
-            required: true,
+            required: false,
             type: "upload"
-        }
+        },
     ]
 
     const [searchText, setSearchText] = useState(null);
@@ -118,7 +130,7 @@ export default function CmsRestaurantComp() {
                     >
                         <Table 
                             dataSource={filteredData}
-                            columns={columnCategoryList(filteredData, getDetailRestaurant, setModalEditRestaurant, handleDeleteRestaurant, 'Restaurant')}
+                            columns={columnRestaurantList(filteredData, getDetailRestaurant, setModalEditRestaurant, handleDeleteRestaurant, 'Restaurant')}
                             className='lg:pt-5 md:pt-3 pt-2'
                             size={setSize('medium', 'small', 'small')}
                             pagination={{

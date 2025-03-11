@@ -157,7 +157,7 @@ export default function Action({
                                                         val.name === "password" ? (
                                                             <Input.Password />
                                                         ) : (
-                                                            <Input type={(val.name === "phone" || val.name === "price") ? "number" : undefined} />
+                                                            <Input type={((val.name === "phone" && title === "Add User") || val.name === "price") ? "number" : undefined} />
                                                         )
                                                     )
                                                 ) : (
@@ -167,7 +167,7 @@ export default function Action({
                                                         val.type === "select" ? (
                                                             <Select options={val.option} />
                                                         ) : (
-                                                            (val.type === "upload" && title === "Add Product") ? (
+                                                            (val.type === "upload" && (title === "Add Product" || title === "Add Restaurant")) ? (
                                                                 <>
                                                                     <Upload
                                                                         {...props}
@@ -183,7 +183,7 @@ export default function Action({
                                                                                 />
                                                                             }
                                                                         >
-                                                                            Upload Image
+                                                                            Upload Images
                                                                         </Button>
                                                                     </Upload>
                                                                     <small
@@ -193,7 +193,7 @@ export default function Action({
                                                                     </small>
                                                                 </>
                                                             ) : (   
-                                                                (val.type === "upload" && title === "Edit Product") ? (
+                                                                (val.type === "upload" && (title === "Edit Product" || title === "Edit Restaurant")) ? (
                                                                     <>
                                                                         <Upload
                                                                             {...propsImg}
