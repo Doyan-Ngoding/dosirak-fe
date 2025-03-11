@@ -68,7 +68,8 @@ const Menu = ({children }) => {
         })
     }
 
-    const groupedMenuRestaurant = (menu, restaurant) => {
+    const groupedMenuRestaurant = (menu, restaurant, listResto) => {
+        console.log(listResto, 'disni')
         const grouped = restaurant.reduce((acc, restaurant) => {
             acc[restaurant] = []; 
             return acc;
@@ -84,6 +85,7 @@ const Menu = ({children }) => {
     
         const groupedMenus = restaurant.map(restaurant => ({
             restaurant,
+            restaurant_image: listResto.find(key => key.name === restaurant) ? listResto.find(key => key.name === restaurant).image : '',
             menu: grouped[restaurant] || [] 
         }));
     
@@ -91,6 +93,7 @@ const Menu = ({children }) => {
             .filter(restaurant => !restaurant.includes(restaurant))
             .map(restaurant => ({
                 restaurant,
+                restaurant_image: listResto.find(key => key.name === restaurant) ? listResto.find(key => key.name === restaurant).image : '',
                 menu: grouped[restaurant]
             }));
     
@@ -224,8 +227,8 @@ const Menu = ({children }) => {
     }, []);
 
     useEffect(() => {
-        groupedMenuRestaurant(listMenu, tabRestaurant)
-    }, [listMenu, tabRestaurant]);
+        groupedMenuRestaurant(listMenu, tabRestaurant, listRestaurant)
+    }, [listMenu, tabRestaurant, listRestaurant]);
 
     useEffect(() => {
         groupedMenuCategory(listMenu, tabCategory)

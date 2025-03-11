@@ -40,7 +40,8 @@ export default function SplitTitle({
                             ) : ( */}
                                 <div className="realtive z-1 flex items-center justify-center">
                                     {/* {no}s */}
-                                    {
+                                    <img src={`${import.meta.env.VITE_URL_BE}/${no}`} style={{ width: setSize(28, 18, 14) }}  />
+                                    {/* {
                                         title && (
                                             title.toLowerCase() === "paik's noodle" ? (
                                                 <img src='/assets/icon/resto-1.png' style={{ width: setSize(28, 18, 14) }}  />
@@ -64,7 +65,7 @@ export default function SplitTitle({
                                                 )
                                             )
                                         )
-                                    }
+                                    } */}
                                     {/* {no} */}
                                 </div>
                             {/* )} */}

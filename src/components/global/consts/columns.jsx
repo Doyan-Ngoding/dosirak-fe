@@ -387,6 +387,87 @@ export const columnCategoryList = (data = [], getDetail, modalEdit, handleDelete
     ].filter(Boolean)
 }
 
+export const columnRestaurantList = (data = [], getDetail, modalEdit, handleDelete, category) => {
+    const { setSize, authUser } = useAuth();
+    return [
+        {
+            title: '#',
+            key: '#',
+            dataIndex: '#',
+            render: (text, record, index) => index + 1
+        },
+        {
+            title: category + ' Name',
+            key: 'name',
+            dataIndex: 'name',
+            sorter: (a, b) => String(a.name || '').localeCompare(String(b.name || '')),
+            ...iconSort(),
+        },
+        {
+            title: 'Email',
+            key: 'email',
+            dataIndex: 'email',
+            sorter: (a, b) => String(a.email || '').localeCompare(String(b.email || '')),
+            ...iconSort(),
+        },
+        {
+            title: 'Phone',
+            key: 'phone',
+            dataIndex: 'phone',
+            sorter: (a, b) => String(a.phone || '').localeCompare(String(b.phone || '')),
+            ...iconSort(),
+        }, 
+        {
+            title: 'Address',
+            key: 'address',
+            dataIndex: 'address',
+            width: 300,
+        }, 
+        {
+            title: 'Image',
+            key: 'image',
+            dataIndex: 'image',
+            render: (text) => (
+                <Image 
+                    width={50}
+                    src={`${import.meta.env.VITE_URL_BE}/${text}`}
+                />
+            )
+        },
+        (authUser && authUser.role === 'superadmin') && {
+            title: '',
+            width: 80,
+            render: (text, record, index) => (
+                <>
+                    <div
+                        className="flex items-center justify-between w-full"
+                    >
+                        <IconEdit 
+                            size={setSize(16, 14, 12)}
+                            color="#faad14"
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => {getDetail(record.id), modalEdit(true)}}
+                        />
+                        <Popconfirm
+                            title={`Delete the ${category.toLowerCase()}`}
+                            description={<span>Are you sure to delete this {category.toLowerCase()}: <b>{record.name}</b>?</span>}
+                            onConfirm={() => handleDelete(record.id)}
+                            okText="Yes"
+                            cancelText="No"
+                        >
+                            <IconTrash 
+                                size={setSize(16, 14, 12)}
+                                color="red"
+                                style={{ cursor: 'pointer' }}
+                            />
+                        </Popconfirm>
+                    </div>
+                </>
+            )
+        },
+    ].filter(Boolean)
+}
+
 export const columnOrderList = (data = [], modalDetail, dataDetail) => {
 
     const { setSize } = useAuth()

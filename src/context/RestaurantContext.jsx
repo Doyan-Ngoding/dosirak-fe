@@ -48,7 +48,13 @@ const Restaurant = ({children }) => {
 
     const handleAddRestaurant = async (rules) => {
         setIsLoading(true)
-        await axios.post(`${import.meta.env.VITE_API_BE}/restaurants`, rules)
+        const formData = new FormData();
+        formData.append("name", rules.name);
+        formData.append("address", rules.address);
+        formData.append("email", rules.email);
+        formData.append("phone", rules.phone);
+        formData.append("image", rules.image);
+        await axios.post(`${import.meta.env.VITE_API_BE}/restaurants`, formData)
         .then(res => {
             setTimeout(() => {
                 setIsLoading(false)
@@ -70,7 +76,13 @@ const Restaurant = ({children }) => {
 
     const handleEditRestaurant = async (rules) => {
         setIsLoading(true)
-        await axios.patch(`${import.meta.env.VITE_API_BE}/restaurants/${detailRestaurant.id}`, rules)
+        const formData = new FormData();
+        formData.append("name", rules.name);
+        formData.append("address", rules.address);
+        formData.append("email", rules.email);
+        formData.append("phone", rules.phone);
+        formData.append("image", rules.image?.originFileObj);
+        await axios.patch(`${import.meta.env.VITE_API_BE}/restaurants/${detailRestaurant.id}`, formData)
         .then(res => {
             setTimeout(() => {
                 setIsLoading(false)
