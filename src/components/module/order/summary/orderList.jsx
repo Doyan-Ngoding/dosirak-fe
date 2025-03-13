@@ -128,7 +128,7 @@ export default function OrderListComp() {
                                                                                 fontSize: setSize(20, 18, 18)
                                                                             }}
                                                                         >
-                                                                            {value.qty ? 'x' + value.qty : '0'}  
+                                                                            {value.qty ? value.qty : '0'}  
                                                                         </div>
                                                                     </Col> 
                                                                     <Col>
@@ -177,7 +177,7 @@ export default function OrderListComp() {
                                                     <Col
                                                         className='menu-price-2'
                                                     >
-                                                        {value.qty ? 'x' + value.qty : '0'}
+                                                        {value.qty ? value.qty : '0'}
                                                     </Col>
                                                     <Col
                                                         className='icon-hover-2'

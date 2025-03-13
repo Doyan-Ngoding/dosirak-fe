@@ -81,72 +81,88 @@ export default function HeaderComp() {
                             >
                                 {
                                     !isStandard && (
-                                        <Col>
+                                        <Col 
+                                            style={{
+                                                display: 'flex',
+                                                alignItems:'center',
+                                                height: '100%',
+                                                width: '50%'
+                                            }}
+                                        >
                                             <IconMenu2 
                                                 color='#6B6B6B'
                                                 onClick={() => setIsDrawer(true)}
+                                                size={30}
                                             />
-                                        </Col>
-                                    )
-                                }
-                                <Col
-                                    style={{ margin: !isStandard ? '0 auto' : ''}}
-                                >
-                                    <div className='flex justify-center'>   
-                                        <img src='/assets/logo.png' alt='Logo Dosirak' width={setSize("70%", "75%", "60%")} style={{ paddingLeft: setSize(0, 100, 0), paddingRight: setSize(0, 0, 40) }}/>
-                                    </div>
-                                </Col>
-                                {
-                                    isStandard && (
-                                        <Col
-                                            className='w-[50%]'
-                                        >
-                                            <Menu
-                                                theme='light'
-                                                mode='horizontal'
-                                                selectedKeys={[activeKey]} 
-                                                defaultSelectedKeys={['1']} 
-                                                onClick={e => setActiveKey(e)}
-                                                className={`flex flex-1 ${setSize("justify-center", "justify-start", "justify-start")} min-w-0 relative font-semibold`}
-                                                overflowedIndicator={<IconMenu2 />}
-                                                disabledOverflow={true}
-                                            >
-                                                <Menu.Item key={'1'}><Link to={'/'}>Home</Link></Menu.Item>
-                                                <Menu.Item key={'2'}><Link to={'/menu'}>Menu</Link></Menu.Item>
-                                                <Menu.Item key={'3'}><Link to={'/contact'}>Contact</Link></Menu.Item>
-                                            </Menu>  
-                                        </Col>
-                                    )   
-                                }
-                                {
-                                    !isMobile && (
-                                        <Col>
-                                            <div 
-                                                className='flex items-center'
-                                            >
-                                                <div
-                                                    className='relative lg:w-10 md:w-10 w-10 lg:h-10 md:h-8 h-10 mr-3'
-                                                >
-                                                    <IconRosetteFilled 
-                                                        color='#E83600'
-                                                        size={setSize(40, 35, 40)}
-                                                        className='absolute'
-                                                    />
-                                                    <IconBasket 
-                                                        color='#FFFFFF'
-                                                        size={setSize(20, 20, 20)}
-                                                        className='absolute lg:top-2.5 lg:left-2.5 md:top-2 md:left-2'
-                                                    />
-                                                </div>
-                                                <Button
-                                                    type='primary'
-                                                    onClick={() => navigate("/order")}
-                                                >
-                                                    Order Now!
-                                                </Button>
+                                            <div>
+                                                <img src='/assets/logo.png' alt='Logo Dosirak' width={setSize("70%", "60%", "80%")} style={{ paddingLeft: setSize(0, 10, 10), paddingRight: setSize(0, 0, 40) }}/>
                                             </div>
                                         </Col>
                                     )
+                                }
+                                {
+                                    isStandard && (
+                                        <>
+                                            <Col
+                                                style={{ margin: !isStandard ? '0 auto' : ''}}
+                                            >
+                                                <div className='flex justify-center'>   
+                                                    <img src='/assets/logo.png' alt='Logo Dosirak' width={setSize("70%", "75%", "60%")} style={{ paddingLeft: setSize(0, 100, 0), paddingRight: setSize(0, 0, 40) }}/>
+                                                </div>
+                                            </Col>
+                                            <Col
+                                                className='w-[50%]'
+                                            >
+                                                <Menu
+                                                    theme='light'
+                                                    mode='horizontal'
+                                                    selectedKeys={[activeKey]} 
+                                                    defaultSelectedKeys={['1']} 
+                                                    onClick={e => setActiveKey(e)}
+                                                    className={`flex flex-1 ${setSize("justify-center", "justify-start", "justify-start")} min-w-0 relative font-semibold`}
+                                                    overflowedIndicator={<IconMenu2 />}
+                                                    disabledOverflow={true}
+                                                >
+                                                    <Menu.Item key={'1'}><Link to={'/'}>Home</Link></Menu.Item>
+                                                    <Menu.Item key={'2'}><Link to={'/menu'}>Menu</Link></Menu.Item>
+                                                    <Menu.Item key={'3'}><Link to={'/contact'}>Contact</Link></Menu.Item>
+                                                </Menu>  
+                                            </Col>
+                                        </>
+                                    )   
+                                }
+                                {
+                                    <Col>
+                                        <div 
+                                            className='flex items-center cursor-pointer'
+                                        >
+                                            <div
+                                                className='relative lg:w-10 md:w-10 w-8 lg:h-10 md:h-8 h-6 lg:mr-3 md:mr-3 mr-1' 
+                                                onClick={() => navigate("/order")}
+                                            >
+                                                <IconRosetteFilled 
+                                                    color='#E83600'
+                                                    size={setSize(40, 35, 24)}
+                                                    className='absolute'
+                                                />
+                                                <IconBasket 
+                                                    color='#FFFFFF'
+                                                    size={setSize(20, 20, 16)}
+                                                    className='absolute lg:top-2.5 lg:left-2.5 md:top-2 md:left-2 top-1 left-1'
+                                                />
+                                            </div>
+                                            <Button
+                                                type='primary'
+                                                onClick={() => navigate("/order")}
+                                                style={{
+                                                    height: setSize(30, 30, 20),
+                                                    fontSize: setSize(14, 12 ,10)
+                                                }}
+                                            >
+                                                Order Now!
+                                            </Button>
+                                        </div>
+                                    </Col>
                                 }
                             </Row>
                         </Header>

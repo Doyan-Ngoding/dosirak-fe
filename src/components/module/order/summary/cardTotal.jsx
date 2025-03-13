@@ -115,7 +115,7 @@ export default function CardTotal({
                                     color: 'rgba(0, 0, 0, 0.5)'
                                 }}
                             >
-                                DISKON ONGKIR 50% 
+                                {/* DISKON ONGKIR 50%  */}
                             </div>
                         </Col>
                         <Col

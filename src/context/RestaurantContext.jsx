@@ -6,10 +6,13 @@ import React, {
     useState,
 } from 'react'
 import { useMediaQuery } from 'react-responsive'
+import { useAuth } from './AuthContext';
 
 const RestaurantContext = createContext(null)
 
 const Restaurant = ({children }) => {
+
+    const { authUser } = useAuth()
 
     const [listRestaurant, setListRestaurant] = useState([]);
     const [listNearRestaurant, setListNearRestaurant] = useState([]);
@@ -50,10 +53,8 @@ const Restaurant = ({children }) => {
         setIsLoading(true)
         const formData = new FormData();
         formData.append("name", rules.name);
-        formData.append("address", rules.address);
-        formData.append("email", rules.email);
-        formData.append("phone", rules.phone);
         formData.append("image", rules.image);
+        formData.append("created_by", authUser && authUser.name);
         await axios.post(`${import.meta.env.VITE_API_BE}/restaurants`, formData)
         .then(res => {
             setTimeout(() => {
@@ -78,10 +79,8 @@ const Restaurant = ({children }) => {
         setIsLoading(true)
         const formData = new FormData();
         formData.append("name", rules.name);
-        formData.append("address", rules.address);
-        formData.append("email", rules.email);
-        formData.append("phone", rules.phone);
         formData.append("image", rules.image?.originFileObj);
+        formData.append("updated_by", authUser && authUser.name);
         await axios.patch(`${import.meta.env.VITE_API_BE}/restaurants/${detailRestaurant.id}`, formData)
         .then(res => {
             setTimeout(() => {
@@ -104,7 +103,7 @@ const Restaurant = ({children }) => {
 
     const handleDeleteRestaurant = async (id) => {
         setIsLoading(true)
-        await axios.delete(`${import.meta.env.VITE_API_BE}/restaurants/${id}`)
+        await axios.delete(`${import.meta.env.VITE_API_BE}/restaurants/${id}`, { data: { deleted_by: authUser && authUser.name } })
         .then(res => {
             setTimeout(() => {
                 setIsLoading(false)

@@ -91,7 +91,7 @@ export default function CardMenuCart({
                                 <div
                                     className='text-[#FF815B] lg:text-2xl md:text-lg text-lg font-bold'
                                 >
-                                    {qty ? 'x' + qty : '0'}
+                                    {qty ? qty : '0'}
                                 </div>
                             </Col>
                             <Col

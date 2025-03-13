@@ -44,7 +44,7 @@ export default function DerliveryMethod() {
     useEffect(() => {
         if (selectedTempDate && selectedTempTime) {
             setSelectedDate(
-                `${dayjs(selectedTempDate && selectedTempDate).format('YYYY-MM-DD')} ${selectedTempTime && selectedTempTime.slice(0, 2)}:00:00`
+                `${dayjs(selectedTempDate && selectedTempDate).subtract(1, 'day').format('YYYY-MM-DD')} ${selectedTempTime && selectedTempTime.slice(0, 2)}:00:00`
             );
         }
     }, [selectedTempDate, selectedTempTime]);
@@ -62,7 +62,7 @@ export default function DerliveryMethod() {
                     <div
                         className='text-[#393939] font-semibold lg:text-lg md:text-[16px] text-[12px]'
                     >
-                        DELIVERY METHOD
+                        DELIVERY SCHEDULE
                     </div>
                 </Col>
                 <Col
@@ -116,8 +116,8 @@ export default function DerliveryMethod() {
                                 <DatePicker 
                                     allowClear={true}
                                     showNow={false}
-                                    value={selectedTempDate}
-                                    onChange={(e) => {setSelectedTempDate(e), setOpenDate(true)}}
+                                    value={selectedTempDate && dayjs(selectedTempDate).subtract(1, 'day')}
+                                    onChange={(e) => {setSelectedTempDate(dayjs(e).add(1, 'day')), setOpenDate(true)}}
                                     open={openDate}
                                     onOpenChange={() => setOpenDate(true)}
                                     style={{

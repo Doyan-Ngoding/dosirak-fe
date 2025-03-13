@@ -46,6 +46,7 @@ export default function SignupMobile({
                 password: values.password,
                 location: values.location,
                 confirmPassword: values.confirmPassword,
+                created_by: "user",
             });
             setToken(response.data.results.token);
             setAuthUser(response.data.results.user)

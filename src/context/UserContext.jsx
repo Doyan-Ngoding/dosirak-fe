@@ -5,10 +5,13 @@ import React, {
     useEffect,
     useState,
 } from 'react'
+import { useAuth } from './AuthContext';
 
 const UserContext = createContext(null)
 
 const User = ({children }) => {
+
+    const { authUser } = useAuth()
 
     const [listUser, setListUser] = useState([]);
     const [detailUser, setDetailUser] = useState();
@@ -42,7 +45,7 @@ const User = ({children }) => {
 
     const handleAddUser = async (rules) => {
         setIsLoading(true)
-        await axios.post(`${import.meta.env.VITE_API_BE}/register/users`, rules, {
+        await axios.post(`${import.meta.env.VITE_API_BE}/register/users`, {...rules, created_by: authUser && authUser.name}, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`, 
             }
@@ -68,7 +71,7 @@ const User = ({children }) => {
 
     const handleEditUser = async (rules) => {
         setIsLoading(true)
-        await axios.patch(`${import.meta.env.VITE_API_BE}/users/${detailUser.id}`, rules, {
+        await axios.patch(`${import.meta.env.VITE_API_BE}/users/${detailUser.id}`, {...rules, updated_by: authUser && authUser.name}, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`, 
             }
@@ -94,7 +97,7 @@ const User = ({children }) => {
 
     const handleDeleteUser = async (id) => {
         setIsLoading(true)
-        await axios.delete(`${import.meta.env.VITE_API_BE}/users/${id}`, {
+        await axios.delete(`${import.meta.env.VITE_API_BE}/users/${id}`, { data: { deleted_by: authUser && authUser.name } }, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`, 
             }

@@ -190,7 +190,7 @@ export default function CompleteComp() {
                                         borderRadius: 50,
                                         width: '100%'
                                         }}
-                                        onClick={() => {localStorage.removeItem("resHistory"), navigate("/")}}
+                                        onClick={() => {localStorage.removeItem("resOrder"), navigate("/")}}
                                     >
                                         Back To Home
                                     </Button>

@@ -143,6 +143,10 @@ export default function OrderComp() {
         setFilteredData(filtered);
     };
     
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []); 
+    
     return (
         <>
             <LayoutComp>
@@ -183,6 +187,18 @@ export default function OrderComp() {
                                             READY TO ORDER?
                                         </div>
                                     </Col>
+                                    {
+                                        isMobile && selectedMenu.length > 0 && (
+                                            <Col
+                                                span={setSize(6, 8, 24)}
+                                                style={{
+                                                    top: "20px",  
+                                                }}
+                                            >
+                                                <SiderOrder /> 
+                                            </Col>
+                                        )
+                                    }
                                     <Col
                                         span={setSize(12, 24, 24)}
                                         className='mt-10'
@@ -301,6 +317,7 @@ export default function OrderComp() {
                                                                     price={value.price}
                                                                     stock={value.qty}
                                                                     addToCart={() => addedToCart(value)}
+                                                                    id_menu={value.id}
                                                                 />
                                                             </Col>
                                                         </>
@@ -314,9 +331,15 @@ export default function OrderComp() {
                         </div>
                     </Col>
                     {
-                        selectedMenu.length > 0 && (
+                        !isMobile && selectedMenu.length > 0 && (
                             <Col
                                 span={setSize(6, 8, 24)}
+                                style={{
+                                    position: "sticky",
+                                    top: "75px", 
+                                    height: "100vh", 
+                                    overflowY: "auto", 
+                                }}
                             >
                                 <SiderOrder /> 
                             </Col>

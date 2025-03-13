@@ -32,7 +32,10 @@ export default function MenuComp() {
     const {
         selectedMenu, setSelectedMenu,
         subTotal, setSubTotal,
-        cart, setCart
+        cart, setCart,
+        setSelectedDate,
+        selectedTempDate, setSelectedTempDate,
+        selectedTempTime, setSelectedTempTime,
     } = useOrder()
 
     const navigate = useNavigate()
@@ -46,7 +49,7 @@ export default function MenuComp() {
     const [openCategory, setOpenCategory] = useState(false);
     const [openAlert, setOpenAlert] = useState(true);
 
-    const [selectedDate, setSelectedDate] = useState(null);
+    // const [selectedDate, setSelectedDate] = useState(null);
 
     const addedToCart = (menuItem) => { 
         setSelectedMenu(
@@ -132,6 +135,15 @@ export default function MenuComp() {
     
         setFilteredData(filtered);
     };
+
+    
+    useEffect(() => {
+        if (selectedTempDate && selectedTempTime) {
+            setSelectedDate(
+                `${dayjs(selectedTempDate && selectedTempDate).subtract(1, 'day').format('YYYY-MM-DD')} ${selectedTempTime && selectedTempTime.slice(0, 2)}:00:00`
+            );
+        }
+    }, [selectedTempDate, selectedTempTime]);
 
     return (
         <>
@@ -281,8 +293,8 @@ export default function MenuComp() {
                             <DatePicker 
                                 allowClear={true}
                                 showNow={false}
-                                value={selectedDate}
-                                onChange={(e) => {setSelectedDate(e), setOpenDate(true)}}
+                                value={selectedTempDate && dayjs(selectedTempDate).subtract(1, 'day')}
+                                onChange={(e) => {setSelectedTempDate(dayjs(e).add(1, 'day')), setOpenDate(true)}}
                                 open={openDate}
                                 onOpenChange={() => setOpenDate(true)}
                                 style={{
@@ -327,13 +339,7 @@ export default function MenuComp() {
                                                                 marginRight: 2
                                                             }}
                                                         />
-                                                        Please place orders at least 2 days
-                                                    </div>
-                                                    <div
-                                                        className='lg:text-[15px] md:text-[10px] text-[8px] text-[#E83600]'
-                                                        onClick={() => setOpenAlert(false)}
-                                                    >
-                                                        Okay
+                                                        Please place orders at least 2 days before
                                                     </div>
                                                 </div>
                                             )
@@ -387,7 +393,8 @@ export default function MenuComp() {
                                 ]}
                                 open={openTime}
                                 onDropdownVisibleChange={() => setOpenTime(true)}
-                                onChange={(e) => {setOpenTime(true), console.log(e)}}
+                                onChange={(e) => {setOpenTime(true), setSelectedTempTime(e)}}
+                                value={selectedTempTime}
                                 dropdownRender={(menu) => (
                                     <>
                                         <div className='lg:p-5 md:p-3 p-2'>
@@ -518,7 +525,8 @@ export default function MenuComp() {
                                         price={value.price}
                                         stock={value.qty}
                                         showResto={false}
-                                        addToCart={() => {addedToCart(value), navigate('/order')}}
+                                        id_menu={value.id}
+                                        addToCart={() => {addedToCart(value)}}
                                     />
                                 </Col>
                             ))

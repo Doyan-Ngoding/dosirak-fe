@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import CardTitle from '../../global/title/cardTitle'
 import CardMenuCart from '../../global/menu/cardMenuCart'
 import CardTotal from '../../global/menu/cardTotal'
 import { useOrder } from '../../../context/OrderContext'
 import { useAuth } from '../../../context/AuthContext'
 import ModalComp from '../../global/modal'
-import { ConfigProvider, Input } from 'antd'
+import { ConfigProvider, Input, message } from 'antd'
 import { IconCirclePlus } from '@tabler/icons-react'
 import { useNavigate } from 'react-router-dom'
 import LoginStandard from '../../global/modal/loginStandard'
@@ -37,8 +37,19 @@ export default function SiderOrder() {
         token
     } = useAuth();
 
+    const [validMessage, setValidMessage] = useState();
+    const [messageApi, contextHolder] = message.useMessage();
+
     const onCheckout = () => {
-        token ? navigate("/order-summary") : setModalLogin(true)
+        const totalQty = cart.reduce((sum, item) => sum + (item.qty || 0), 0);
+        
+        if (totalQty < 15) {
+            setValidMessage(["error", "Minimum order is 15 items"])
+        } else if (totalQty > 200) {
+            setValidMessage(["error", "Maximum order is 200 items"])
+        } else {
+            token ? navigate("/order-summary") : setModalLogin(true)
+        }
     }
 
     useEffect(() => {
@@ -48,8 +59,16 @@ export default function SiderOrder() {
         setCart(selectedMenu)
     }, [selectedMenu]);
 
+     useEffect(() => {
+        if (validMessage && validMessage.length === 2) {
+            const [type, content] = validMessage;
+            messageApi[type](content);
+        }
+    }, [validMessage, messageApi]);
+
     return (
         <>
+            {contextHolder}
             <div
                 className='bg-[#F4F6F9] h-full p-4'
             >
@@ -66,6 +85,7 @@ export default function SiderOrder() {
                                 qty={value.qty}
                                 addQty={() => addQty(value.id)}
                                 subQty={() => subQty(value.id)}
+                                id_menu={value.id}
                             />
                         ))
                     )
