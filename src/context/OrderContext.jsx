@@ -36,8 +36,8 @@ const Order = ({children }) => {
     const [addressUser, setAddressUser] = useState();
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [selectedDate, setSelectedDate] = useLocalStorage("selectedDate");
-    const [selectedTempDate, setSelectedTempDate] = useState();
-    const [selectedTempTime, setSelectedTempTime] = useState();
+    const [selectedTempDate, setSelectedTempDate] = useLocalStorage("selectedTempDate");
+    const [selectedTempTime, setSelectedTempTime] = useLocalStorage("selectedTempTime");
 
     const [isLoading, setIsLoading] = useState(false);
     const [resMessageOrder, setResMessageOrder] = useState();
@@ -77,6 +77,15 @@ const Order = ({children }) => {
 
     const handleAddOrder = async () => {
         setIsLoading(true)
+        const totalQty = cart.reduce((sum, item) => sum + (item.qty || 0), 0);
+        if (totalQty < 15) {
+            setResMessageOrder(["error", "Minimum order is 15 items"])
+            return;
+        }  
+        if (totalQty > 200) {
+            setResMessageOrder(["error", "Maximum order is 200 items"])
+            return;
+        } 
         await axios.post(`${import.meta.env.VITE_API_BE}/orders`, {
             user_id: authUser.id,
             detail_menus: selectedMenu || cart,
@@ -119,6 +128,8 @@ const Order = ({children }) => {
                     localStorage.removeItem("orderTemp")
                     localStorage.removeItem("formatAmount")
                     localStorage.removeItem("selectedDate")
+                    localStorage.removeItem("selectedTempDate")
+                    localStorage.removeItem("selectedTempTime")
                     navigate('/payment')
                     localStorage.removeItem("formatAmount")
                 }, 2000)

@@ -397,32 +397,46 @@ export const columnRestaurantList = (data = [], getDetail, modalEdit, handleDele
             render: (text, record, index) => index + 1
         },
         {
-            title: category + ' Name',
+            title: 'Restaurant Name',
             key: 'name',
             dataIndex: 'name',
             sorter: (a, b) => String(a.name || '').localeCompare(String(b.name || '')),
             ...iconSort(),
+            filters: [
+                ...new Set(data?.map((item) => (item.name))),
+                ].map((el) => {
+                return { text: el, value: el };
+            }),
+            onFilter: (value, record) => (record.name).indexOf(value) === 0,
+            filterSearch: true,
         },
-        {
-            title: 'Email',
-            key: 'email',
-            dataIndex: 'email',
-            sorter: (a, b) => String(a.email || '').localeCompare(String(b.email || '')),
-            ...iconSort(),
-        },
-        {
-            title: 'Phone',
-            key: 'phone',
-            dataIndex: 'phone',
-            sorter: (a, b) => String(a.phone || '').localeCompare(String(b.phone || '')),
-            ...iconSort(),
-        }, 
-        {
-            title: 'Address',
-            key: 'address',
-            dataIndex: 'address',
-            width: 300,
-        }, 
+        // {
+        //     title: 'Sub Restaurant Name',
+        //     key: 'sub_name',
+        //     dataIndex: 'sub_name',
+        //     sorter: (a, b) => String(a.sub_name || '').localeCompare(String(b.sub_name || '')),
+        //     ...iconSort(),
+        // },
+        // {
+        //     title: 'Email',
+        //     key: 'email',
+        //     dataIndex: 'email',
+        //     sorter: (a, b) => String(a.email || '').localeCompare(String(b.email || '')),
+        //     ...iconSort(),
+        // },
+        // {
+        //     title: 'Phone',
+        //     key: 'phone',
+        //     dataIndex: 'phone',
+        //     sorter: (a, b) => String(a.phone || '').localeCompare(String(b.phone || '')),
+        //     ...iconSort(),
+        // }, 
+        // {
+        //     title: 'Address',
+        //     key: 'address',
+        //     dataIndex: 'address',
+        //     width: 300,
+        // }, 
         {
             title: 'Image',
             key: 'image',

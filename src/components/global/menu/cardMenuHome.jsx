@@ -1,7 +1,8 @@
-import React from 'react'
-import { IconChefHat, IconShoppingBagPlus } from '@tabler/icons-react'
+import React, { useEffect, useState } from 'react'
+import { IconChefHat, IconCircleMinus, IconCirclePlusFilled, IconShoppingBagPlus } from '@tabler/icons-react'
 import { useAuth } from '../../../context/AuthContext'
 import { Col, Row } from 'antd'
+import { useOrder } from '../../../context/OrderContext'
 
 export default function CardMenuHome({
     image,
@@ -12,12 +13,24 @@ export default function CardMenuHome({
     stock,
     addToCart,
     showResto = true,
-    isMenu = false
+    isMenu = false,
+    id_menu,
 }) {
 
     const {
         setSize
     } = useAuth()
+
+    const {
+        addQty, subQty,
+        cart, setCart
+    } = useOrder();
+
+    const getQty = (id) => {
+        const get_menu = cart.find(item => item.id === id);
+        return get_menu ? get_menu.qty : 0
+    }
+    
 
     return (
         <>
@@ -64,21 +77,65 @@ export default function CardMenuHome({
                     <Col>
                         <div
                             style={{
-                                paddingRight: setSize(10, 8, 5),
+                                paddingRight: setSize(0, 0, 0),
                             }}
                             className='flex justify-end'
                         >
-                            <IconShoppingBagPlus 
-                                size={setSize(30, 18, 15)}
-                                style={{
-                                    color: '#FFFFFF',
-                                    borderRadius: 50,
-                                    padding: setSize(5, 3, 2),
-                                    cursor:  'pointer'
-                                }}
-                                onClick={addToCart}
-                                className='icon-hover-3'
-                            />
+                            {
+                                getQty(id_menu) <= 0 ? (
+                                    <IconShoppingBagPlus 
+                                        size={setSize(28, 18, 15)}
+                                        style={{
+                                            color: '#FFFFFF',
+                                            borderRadius: 50,
+                                            padding: setSize(5, 3, 2),
+                                            cursor:  'pointer'
+                                        }}
+                                        onClick={addToCart}
+                                        className='icon-hover-3'
+                                    />
+                                ) : (
+                                    <Row
+                                        justify='space-between'
+                                        align='middle'
+                                    >
+                                        <Col
+                                            className='icon-hover'
+                                        >
+                                            <IconCircleMinus 
+                                                size={setSize(28, 16, 14)}
+                                                style={{
+                                                    cursor: 'pointer'
+                                                }}
+                                                onClick={() => subQty(id_menu)}
+                                            />
+                                        </Col>
+                                        <Col>
+                                            <div
+                                                style={{
+                                                    color: '#FF815B',
+                                                    fontSize: setSize(20, 12, 10),
+                                                    padding: setSize('0px 10px', '0px 5px', '0px 5px'),
+                                                    fontWeight: 'bold'
+                                                }}
+                                            >
+                                                {getQty(id_menu)}
+                                            </div>
+                                        </Col>
+                                        <Col
+                                            className='icon-hover-2'
+                                        >
+                                            <IconCirclePlusFilled 
+                                                size={setSize(28, 16, 14)}
+                                                style={{
+                                                    cursor: 'pointer',
+                                                }}
+                                                onClick={() => addQty(id_menu)}
+                                            />
+                                        </Col>
+                                    </Row>
+                                )
+                            }
                         </div>
                     </Col>
                 </Row>

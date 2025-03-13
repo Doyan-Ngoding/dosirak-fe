@@ -30,6 +30,7 @@ export default function SignupStandard({ isOpen, setIsOpen }) {
                 password: values.password,
                 location: values.location,
                 confirmPassword: values.confirmPassword,
+                created_by: "user",
             });
             setToken(response.data.results.token);
             setAuthUser(response.data.results.user)

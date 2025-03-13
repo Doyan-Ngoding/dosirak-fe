@@ -5,10 +5,13 @@ import React, {
     useEffect,
     useState,
 } from 'react'
+import { useAuth } from './AuthContext';
 
 const CategoryContext = createContext(null)
 
 const Category = ({children }) => {
+
+    const { authUser } = useAuth()
 
     const [listCategory, setListCategory] = useState([]);
     const [detailCategory, setDetailCategory] = useState();
@@ -42,7 +45,7 @@ const Category = ({children }) => {
 
     const handleAddCategory = async (rules) => {
         setIsLoading(true)
-        await axios.post(`${import.meta.env.VITE_API_BE}/categories`, rules)
+        await axios.post(`${import.meta.env.VITE_API_BE}/categories`, {...rules, created_by: authUser && authUser.name})
         .then(res => {
             setTimeout(() => {
                 setIsLoading(false)
@@ -64,7 +67,7 @@ const Category = ({children }) => {
 
     const handleEditCategory = async (rules) => {
         setIsLoading(true)
-        await axios.patch(`${import.meta.env.VITE_API_BE}/categories/${detailCategory.id}`, rules)
+        await axios.patch(`${import.meta.env.VITE_API_BE}/categories/${detailCategory.id}`, {...rules, updated_by: authUser && authUser.name})
         .then(res => {
             setTimeout(() => {
                 setIsLoading(false)
@@ -86,7 +89,7 @@ const Category = ({children }) => {
 
     const handleDeleteCategory = async (id) => {
         setIsLoading(true)
-        await axios.delete(`${import.meta.env.VITE_API_BE}/categories/${id}`)
+        await axios.delete(`${import.meta.env.VITE_API_BE}/categories/${id}`, { data: { deleted_by: authUser && authUser.name } })
         .then(res => {
             setTimeout(() => {
                 setIsLoading(false)

@@ -176,7 +176,7 @@ export default function FullComp(props) {
                            {
                                 !isMobile && (
                                     <div style={{ position: 'absolute', bottom: 0, borderTop: '1px solid #DCDCDC', width: '100%' }}>
-                                        <Menu.Item key={'12'}><Link to={'/cms'}><div className='flex items-center'><IconSettings size={setSize(18, 14, 12)} /><div className='pl-2'>Settings</div></div></Link></Menu.Item>
+                                        {/* <Menu.Item key={'12'}><Link to={'/cms'}><div className='flex items-center'><IconSettings size={setSize(18, 14, 12)} /><div className='pl-2'>Settings</div></div></Link></Menu.Item> */}
                                         <Menu.Item key={'13'} danger onClick={hanldeLogout}><div className='flex items-center'><IconPower color='red' size={setSize(18, 14, 12)} /><div className='pl-2'>Log Out</div></div></Menu.Item>
                                         <div
                                             className='flex justify-center text-[#4880FF] py-3 border-t border-[#DCDCDC]'

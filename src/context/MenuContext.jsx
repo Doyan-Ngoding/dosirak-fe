@@ -137,7 +137,7 @@ const Menu = ({children }) => {
         formData.append("name", rules.name);
         formData.append("description", rules.description);
         formData.append("price", rules.price);
-        formData.append("created_by", authUser?.name);
+        formData.append("created_by", authUser && authUser?.name);
         formData.append("image", rules.image);
         axios.post(`${import.meta.env.VITE_API_BE}/main-menu`, formData)
         .then(res => {
@@ -177,7 +177,7 @@ const Menu = ({children }) => {
         formData.append("name", rules.name);
         formData.append("description", rules.description);
         formData.append("price", rules.price);
-        formData.append("created_by", authUser?.name);
+        formData.append("updated_by", authUser && authUser?.name);
         formData.append("image", rules.image?.originFileObj);
         axios.patch(`${import.meta.env.VITE_API_BE}/main-menu/${detailMenu.id}`, formData)
         .then(res => {
@@ -201,7 +201,7 @@ const Menu = ({children }) => {
 
     const handleDeleteMenu = async (id) => {
         setIsLoading(true)
-        await axios.delete(`${import.meta.env.VITE_API_BE}/main-menu/${id}`)
+        await axios.delete(`${import.meta.env.VITE_API_BE}/main-menu/${id}`, { data: { deleted_by: authUser && authUser.name } })
         .then(res => {
             setTimeout(() => {
                 setIsLoading(false)

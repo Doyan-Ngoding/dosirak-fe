@@ -36,24 +36,6 @@ export default function CmsRestaurantComp() {
             type: "input"
         }, 
         {
-            name: "email",
-            label: "Restaurant Email",
-            required: true,
-            type: "input"
-        },
-        {
-            name: "phone",
-            label: "Restaurant Phone Number",
-            required: true,
-            type: "input"
-        },
-        {
-            name: "address",
-            label: "Restaurant Address",
-            required: true,
-            type: "textarea"
-        },
-        {
             name: "image",
             label: "Restaurant Image",
             required: false,
@@ -78,7 +60,7 @@ export default function CmsRestaurantComp() {
         }
         
         const filtered = listRestaurant.filter((item) => 
-            item.name.toLowerCase().includes(value)
+            item.name.toLowerCase().includes(value) 
         );
     
         setFilteredData(filtered);

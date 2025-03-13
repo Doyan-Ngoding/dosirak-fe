@@ -44,8 +44,8 @@ export default function FooterComp() {
                             size={setSize('large', 'medium', 'small')}
                             style={{
                                 borderRadius: 50,
-                                color: '#FFFFFF',
-                                backgroundColor: 'transparent'
+                                color: '#E83600',
+                                backgroundColor: '#FFFFFF'
                             }}
                             onClick={() => navigate('/order')}
                         >
@@ -59,7 +59,7 @@ export default function FooterComp() {
                                 backgroundColor: 'transparent'
                             }}
                         >
-                            VISIT STORE
+                            SEE AVAILABALE STORE
                         </Button>
                     </ConfigProvider>
                 </div>

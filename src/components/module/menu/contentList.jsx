@@ -217,8 +217,9 @@ export default function ContentListComp() {
                                                         price={value.price}
                                                         stock={value.qty}
                                                         showResto={false}
-                                                        addToCart={() => {addedToCart(value), navigate('/order')}}
+                                                        addToCart={() => {addedToCart(value)}}
                                                         isMenu={true}
+                                                        id_menu={value.id}
                                                     />
                                                 </Col>
                                             ))
