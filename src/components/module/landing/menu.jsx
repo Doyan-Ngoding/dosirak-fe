@@ -9,6 +9,7 @@ import CardMenuHome from '../../global/menu/cardMenuHome';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { useOrder } from '../../../context/OrderContext';
+import PreviewMenu from '../../global/modal/previewMenu';
 
 export default function MenuComp() {
 
@@ -36,6 +37,7 @@ export default function MenuComp() {
         setSelectedDate,
         selectedTempDate, setSelectedTempDate,
         selectedTempTime, setSelectedTempTime,
+        selectedResto, setSelectedResto,
     } = useOrder()
 
     const navigate = useNavigate()
@@ -48,6 +50,7 @@ export default function MenuComp() {
     const [openTime, setOpenTime] = useState(false);
     const [openCategory, setOpenCategory] = useState(false);
     const [openAlert, setOpenAlert] = useState(true);
+
 
     // const [selectedDate, setSelectedDate] = useState(null);
 
@@ -75,6 +78,11 @@ export default function MenuComp() {
             selectedMenu.reduce((total, item) => total + item.subTotal, 0)
         );
         setCart(selectedMenu)
+        if (selectedMenu && selectedMenu.length > 0) {
+            setSelectedResto(selectedMenu[0].restaurant_name)
+        } else {
+            localStorage.removeItem("selectedResto")
+        }
     }, [selectedMenu]);
 
     const [filteredData, setFilteredData] = useState([]);
@@ -83,8 +91,10 @@ export default function MenuComp() {
     const [filteredResto, setFilteredResto] = useState([]);
 
     useEffect(() => {
-        setFilteredData(listMenu)
-    }, [listMenu]);
+        setFilteredData(listMenu.filter((item) => 
+            item.restaurant_name.includes(selectedRestaurant)
+        ))
+    }, [listMenu, selectedRestaurant]);
 
     const handleSearchResto = (e) => {
         const value = e.toLowerCase();
@@ -122,15 +132,15 @@ export default function MenuComp() {
     };
 
     const handleSearchCatrgory = (e) => {
-        const value = e.toLowerCase();
-    
-        if (!value || value === null) {
+        if (!e || e === null ) {
             setFilteredData(listMenu);
             return;
         }
-        
+        const value = e.toLowerCase();
+
         const filtered = listMenu.filter((item) => 
             item.category_name.toLowerCase().includes(value)
+            && item.restaurant_name.includes(selectedRestaurant)
         );
     
         setFilteredData(filtered);
@@ -145,6 +155,7 @@ export default function MenuComp() {
         }
     }, [selectedTempDate, selectedTempTime]);
 
+    
     return (
         <>
             <div
@@ -527,6 +538,7 @@ export default function MenuComp() {
                                         showResto={false}
                                         id_menu={value.id}
                                         addToCart={() => {addedToCart(value)}}
+                                        detail={value}
                                     />
                                 </Col>
                             ))

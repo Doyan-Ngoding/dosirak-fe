@@ -40,12 +40,17 @@ export default function OrderComp() {
     const {
         selectedMenu, setSelectedMenu,
         subTotal, setSubTotal,
-        cart, setCart
+        cart, setCart,
+        selectedResto,
     } = useOrder();
 
     const {
         listNearRestaurant,
         selectedNearReastaurant, setSelectedNearReastaurant,
+        listSubRestaurant, setListSubRestaurant,
+        selectedSubRestaurant, setSelectedSubRestaurant,
+        subRestoAddress, setSubRestoAddress,
+        getDetailSubRestaurant,
     } = useRestaurant()
 
     const {
@@ -93,7 +98,22 @@ export default function OrderComp() {
     const [filteredData, setFilteredData] = useState([]);
 
     useEffect(() => {
-        setFilteredData(listMenuGroupedCategory)
+        setFilteredData(
+            selectedResto ? (
+                listMenuGroupedCategory
+                .map((category) => {
+                    const filteredMenu = category.menu.filter(
+                        (menuItem) =>
+                            menuItem.restaurant_name.includes(selectedResto)
+                    );
+    
+                    return filteredMenu.length > 0 ? { ...category, menu: filteredMenu } : null;
+                })
+                .filter(Boolean)
+            ) : (
+                listMenuGroupedCategory
+            )
+        )
     }, [listMenuGroupedCategory]);
 
     const handleSearch = (e) => {
@@ -101,7 +121,22 @@ export default function OrderComp() {
         setSearchText(value);
     
         if (!value || value === null) {
-            setFilteredData(listMenuGroupedCategory);
+            setFilteredData(
+                selectedResto ? (
+                    listMenuGroupedCategory
+                    .map((category) => {
+                        const filteredMenu = category.menu.filter(
+                            (menuItem) =>
+                                menuItem.restaurant_name.includes(selectedResto)
+                        );
+        
+                        return filteredMenu.length > 0 ? { ...category, menu: filteredMenu } : null;
+                    })
+                    .filter(Boolean)
+                ) : (
+                    listMenuGroupedCategory
+                )
+            );
             return;
         }
         
@@ -110,8 +145,8 @@ export default function OrderComp() {
             const filteredMenu = category.menu.filter(
                 (menuItem) =>
                     menuItem.name.toLowerCase().includes(value) ||
-                    menuItem.description.toLowerCase().includes(value) ||
-                    menuItem.restaurant_name.toLowerCase().includes(value)
+                    menuItem.description.toLowerCase().includes(value) 
+                    // menuItem.restaurant_name.toLowerCase().includes(value)
             );
 
             return filteredMenu.length > 0 ? { ...category, menu: filteredMenu } : null;
@@ -164,6 +199,7 @@ export default function OrderComp() {
                                     components: {
                                         Select: {
                                             // fontSizeIcon: setSize(24, 10, 8),
+                                            colorText: '#FFFFFF'
                                         }
                                     }
                                 }}
@@ -212,30 +248,20 @@ export default function OrderComp() {
                                             >
                                                 <Select
                                                     placeholder={'Select restaurant near you'}
-                                                    allowClear={true}
+                                                    allowClear={false}
                                                     options={
-                                                        listNearRestaurant.map(val => ({
+                                                        listSubRestaurant.map(val => ({
                                                             label: val.name, 
-                                                            value: val.name
+                                                            value: val.id
                                                         }))
                                                     }
-                                                    value={selectedNearReastaurant}
-                                                    onChange={(e) => {setSelectedNearReastaurant(e), handleSearchResto(e)}}
-                                                    className='lg:w-[95%] md:w-[90%] w-[70%]'
-                                                    showArrow={!selectedNearReastaurant}
+                                                    value={selectedSubRestaurant}
+                                                    onChange={(e) => {setSelectedSubRestaurant(e), getDetailSubRestaurant((e))}}
+                                                    className='lg:w-[95%] md:w-[90%] w-[70%] texxt-white'
                                                     suffixIcon={
                                                         <IconCircleChevronDownFilled 
                                                             color='#FFFFFF'
                                                             size={setSize(30, 28, 26)}
-                                                        />
-                                                    }
-                                                    clearIcon={
-                                                        <IconXboxXFilled 
-                                                            color='#FFFFFF'
-                                                            size={setSize(30, 28, 26)}
-                                                            style={{
-                                                                margin: setSize('-10px 0px 0px -20px', '-8px 0px 0px -15px', '-8px 0px 0px -15px'),
-                                                            }}
                                                         />
                                                     }
                                                 />

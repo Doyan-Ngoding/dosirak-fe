@@ -69,7 +69,6 @@ const Menu = ({children }) => {
     }
 
     const groupedMenuRestaurant = (menu, restaurant, listResto) => {
-        console.log(listResto, 'disni')
         const grouped = restaurant.reduce((acc, restaurant) => {
             acc[restaurant] = []; 
             return acc;

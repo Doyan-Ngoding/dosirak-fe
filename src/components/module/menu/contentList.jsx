@@ -25,7 +25,8 @@ export default function ContentListComp() {
     const {
         selectedMenu, setSelectedMenu,
         subTotal, setSubTotal,
-        cart, setCart
+        cart, setCart,
+        setSelectedResto
     } = useOrder();
 
     const addedToCart = (menuItem) => { 
@@ -52,14 +53,24 @@ export default function ContentListComp() {
             selectedMenu.reduce((total, item) => total + item.subTotal, 0)
         );
         setCart(selectedMenu)
+        if (selectedMenu && selectedMenu.length > 0) {
+            setSelectedResto(selectedMenu[0].restaurant_name)
+        } else {
+            localStorage.removeItem("selectedResto")
+        }
     }, [selectedMenu]);
     
     const [searchText, setSearchText] = useState(null);
     const [filteredData, setFilteredData] = useState([]);
+    const [filteredTab, setFilteredTab] = useState([]);
 
     useEffect(() => {
         setFilteredData(listMenuGroupedRestaurant)
     }, [listMenuGroupedRestaurant]);
+
+    useEffect(() => {
+        setFilteredTab(tabRestaurant)
+    }, [tabRestaurant]);
 
     const handleSearch = (e) => {
         const value = e.target.value.toLowerCase();
@@ -67,18 +78,19 @@ export default function ContentListComp() {
     
         if (!value || value === null) {
             setFilteredData(listMenuGroupedRestaurant);
+            setFilteredTab(tabRestaurant)
             return;
         }
         
         const filtered = listMenuGroupedRestaurant.filter((item) => 
             item.restaurant.toLowerCase().includes(value)
         );
+        const filteredTabs = tabRestaurant.filter(r => r.toLowerCase().includes(value.toLowerCase()));
     
         setFilteredData(filtered);
+        setFilteredTab(filteredTabs)
     };
 
-    console.log(filteredData);
-    
 
     return (
         <>
@@ -171,7 +183,7 @@ export default function ContentListComp() {
                             className="inline-flex space-x-4"
                             targetOffset={15}
                             items={
-                                tabRestaurant ? tabRestaurant.map((value) => ({
+                                tabRestaurant ? filteredTab.map((value) => ({
                                     key: value,
                                     href: '#'+value,
                                     title: value,
@@ -214,12 +226,14 @@ export default function ContentListComp() {
                                                         image={value.image}
                                                         title={value.name}
                                                         desc={value.description}
+                                                        restaurant={value.restaurant_name}
                                                         price={value.price}
                                                         stock={value.qty}
                                                         showResto={false}
                                                         addToCart={() => {addedToCart(value)}}
                                                         isMenu={true}
                                                         id_menu={value.id}
+                                                        detail={value}
                                                     />
                                                 </Col>
                                             ))
