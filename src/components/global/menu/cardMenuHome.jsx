@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { IconChefHat, IconCircleMinus, IconCirclePlusFilled, IconShoppingBagPlus } from '@tabler/icons-react'
 import { useAuth } from '../../../context/AuthContext'
-import { Col, Row } from 'antd'
+import { Col, Row, Tooltip } from 'antd'
 import { useOrder } from '../../../context/OrderContext'
+import PreviewMenu from '../modal/previewMenu'
 
 export default function CardMenuHome({
     image,
@@ -15,6 +16,7 @@ export default function CardMenuHome({
     showResto = true,
     isMenu = false,
     id_menu,
+    detail
 }) {
 
     const {
@@ -23,7 +25,8 @@ export default function CardMenuHome({
 
     const {
         addQty, subQty,
-        cart, setCart
+        cart, setCart,
+        selectedResto, setSelectedResto,
     } = useOrder();
 
     const getQty = (id) => {
@@ -31,6 +34,8 @@ export default function CardMenuHome({
         return get_menu ? get_menu.qty : 0
     }
     
+    const [visible, setVisible] = useState(false);
+    const [detailData, setDetailData] = useState();
 
     return (
         <>
@@ -40,9 +45,11 @@ export default function CardMenuHome({
                 <div
                     className={`bg-cover bg-center bg-no-repeat rounded-t-xl flex items-end ${isMenu ? 'lg:h-[180px] md:h-[100px] h-[80px]' : 'lg:h-[130px] md:h-[80px] h-[70px]'}`}
                     style={{ backgroundImage: `url('${import.meta.env.VITE_URL_BE}/${image}')` }}
+                    onClick={() => setVisible(true)}
                 />
                 <div
                     className='text-[#393939] font-semibold lg:text-[18px] md:text-[12px] text-[10px] lg:px-2 md:px-2 px-1 pt-1'
+                    onClick={() => setVisible(true)}
                 >
                     {title}
                 </div>
@@ -59,6 +66,7 @@ export default function CardMenuHome({
                         height: "3em", 
                         overflow: "hidden",
                     }}
+                    onClick={() => setVisible(true)}
                 >
                     {desc}
                 </div>
@@ -83,17 +91,22 @@ export default function CardMenuHome({
                         >
                             {
                                 getQty(id_menu) <= 0 ? (
-                                    <IconShoppingBagPlus 
-                                        size={setSize(28, 18, 15)}
-                                        style={{
-                                            color: '#FFFFFF',
-                                            borderRadius: 50,
-                                            padding: setSize(5, 3, 2),
-                                            cursor:  'pointer'
-                                        }}
-                                        onClick={addToCart}
-                                        className='icon-hover-3'
-                                    />
+                                    <Tooltip
+                                        title={(selectedResto || selectedResto !== restaurant) && "You can't choose menus from different restaurants!"}
+                                        trigger={"hover"}
+                                    >
+                                        <IconShoppingBagPlus 
+                                            size={setSize(28, 18, 15)}
+                                            style={{
+                                                color: '#FFFFFF',
+                                                borderRadius: 50,
+                                                padding: setSize(5, 3, 2),
+                                                cursor:  (!selectedResto || selectedResto === restaurant) ? 'pointer' : 'not-allowed',
+                                            }}
+                                            onClick={(!selectedResto || selectedResto === restaurant) && addToCart}
+                                            className='icon-hover-3'
+                                        />
+                                    </Tooltip>
                                 ) : (
                                     <Row
                                         justify='space-between'
@@ -107,7 +120,7 @@ export default function CardMenuHome({
                                                 style={{
                                                     cursor: 'pointer'
                                                 }}
-                                                onClick={() => subQty(id_menu)}
+                                                onClick={() => (!selectedResto || selectedResto === restaurant) && subQty(id_menu)}
                                             />
                                         </Col>
                                         <Col>
@@ -130,7 +143,7 @@ export default function CardMenuHome({
                                                 style={{
                                                     cursor: 'pointer',
                                                 }}
-                                                onClick={() => addQty(id_menu)}
+                                                onClick={() => (!selectedResto || selectedResto === restaurant) && addQty(id_menu)}
                                             />
                                         </Col>
                                     </Row>
@@ -140,6 +153,11 @@ export default function CardMenuHome({
                     </Col>
                 </Row>
             </div>
+            <PreviewMenu 
+                visible={visible}
+                setVisible={setVisible}
+                data={detail}
+            />
         </>
     )
 }

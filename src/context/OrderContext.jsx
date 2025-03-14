@@ -54,6 +54,8 @@ const Order = ({children }) => {
     const [resHistory, setResHistory] = useLocalStorage("resHistory");
     const [resOrder, setResOrder] = useLocalStorage("resOrder");
 
+    const [selectedResto, setSelectedResto] = useLocalStorage("selectedResto");
+
     const addQty = (id) => {
         setSelectedMenu((prevCart) => 
             prevCart.map((item) => 
@@ -268,6 +270,8 @@ const Order = ({children }) => {
 
         handleAddPayment,
         handleGetInvoice,
+
+        selectedResto, setSelectedResto,
     }
 
     return (
