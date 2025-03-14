@@ -77,7 +77,7 @@ export default function SiderOrder() {
                 />
                 {
                     selectedMenu.length > 0 && (
-                        selectedMenu.map(value => (
+                        [...selectedMenu].reverse().map(value => (
                             <CardMenuCart 
                                 image={value.image}
                                 title={value.name}
