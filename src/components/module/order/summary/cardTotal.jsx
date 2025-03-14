@@ -37,7 +37,7 @@ export default function CardTotal({
 
     useEffect(() => {
         setTotal(
-            subTotal + deliveryFee + promo
+            parseFloat(subTotal) + parseFloat(deliveryFee) + parseFloat(promo)
         )
         setFormatAmount({
             vat: 0,
@@ -132,7 +132,7 @@ export default function CardTotal({
                                     color: 'rgba(0, 0, 0, 0.5)'
                                 }}
                             >
-                                <s style={{ fontSize: 14 }}>Rp. {deliveryFee ? parseFloat(deliveryFee).toLocaleString() : '0'}</s>
+                                {/* <s style={{ fontSize: 14 }}>Rp. {deliveryFee ? parseFloat(deliveryFee).toLocaleString() : '0'}</s> */}
                                 <span style={{ paddingLeft: 10, color: '#000000' }}>
                                     Rp. {deliveryFee ? parseFloat(deliveryFee).toLocaleString() : '0'}
                                 </span>

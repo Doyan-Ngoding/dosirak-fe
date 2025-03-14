@@ -9,6 +9,7 @@ import {
     Col,
     ConfigProvider,
     Input,
+    Layout,
     Row,
     Select, 
 } from 'antd'
@@ -28,6 +29,7 @@ import ResetMobile from '../../global/modal/resetMobile'
 import SignupMobile from '../../global/modal/signupMobile'
 import { useRestaurant } from '../../../context/RestaurantContext'
 import { IconCircleChevronDownFilled, IconSearch, IconXboxXFilled } from '@tabler/icons-react'
+const { Header, Content, Footer, Sider } = Layout;
 
 export default function OrderComp() {
 
@@ -181,13 +183,20 @@ export default function OrderComp() {
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []); 
-    
+
     return (
         <>
             <LayoutComp>
-                <Row>
+                <Row
+                    style={{
+                        backgroundColor: '#F4F6F9'
+                    }}
+                >
                     <Col
                         span={selectedMenu.length > 0 ? setSize(18, 16, 24) : 24}
+                        style={{
+                            backgroundColor: "#ffffff"
+                        }}
                     >
                         <div
                             style={{
@@ -363,7 +372,7 @@ export default function OrderComp() {
                                 style={{
                                     position: "sticky",
                                     top: "75px", 
-                                    height: "100vh", 
+                                    height: "100%", 
                                     overflowY: "auto", 
                                 }}
                             >

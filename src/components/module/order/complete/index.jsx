@@ -50,6 +50,9 @@ export default function CompleteComp() {
             localStorage.removeItem("newResPayment")
             localStorage.removeItem("resCallback")
             localStorage.removeItem("resHistory")
+            localStorage.removeItem("addressUserCurr")
+            localStorage.removeItem("selectedResto")
+            localStorage.removeItem("subRestoAddress")
         }
     }, [resHistory]);
 

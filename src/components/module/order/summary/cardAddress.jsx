@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react'
 import { 
+    Button,
     Col,
     ConfigProvider,
     Input,
+    message,
     Row 
 } from 'antd'
 import { 
@@ -11,6 +13,8 @@ import {
 } from '@tabler/icons-react';
 import { useOrder } from '../../../../context/OrderContext';
 import { useAuth } from '../../../../context/AuthContext';
+import axios from 'axios';
+import { useRestaurant } from '../../../../context/RestaurantContext';
 const { TextArea } = Input;
 
 export default function CardAddress() {
@@ -18,6 +22,10 @@ export default function CardAddress() {
     const {
         editAbleAddress, setEditAbleAddress,
         addressUser, setAddressUser,
+        messageAddress,
+        validAddress,
+        addressUserCurr,
+        handleCreateQuotationTemp,
     } = useOrder()
 
     const {
@@ -28,11 +36,28 @@ export default function CardAddress() {
     useEffect(() => {
         if (authUser && authUser?.location) {
             setAddressUser(authUser.location);
+            validAddress(authUser.location)
         }
     }, [authUser]);
 
+    const [messageApi, contextHolder] = message.useMessage();
+
+    useEffect(() => {
+        if ((messageAddress && messageAddress.length === 2)) {
+            const [type, content] = messageAddress;
+            messageApi[type](content)
+        }
+    }, [messageAddress]);
+
+    useEffect(() => {
+        if (localStorage.getItem("subRestoAddress") && addressUserCurr) {
+            handleCreateQuotationTemp()
+        }
+    }, [localStorage.getItem("subRestoAddress"), addressUserCurr]);
+    
     return (
         <>
+            {contextHolder}
             <Row
                 align={"middle"}
                 justify={"end"}
@@ -94,17 +119,30 @@ export default function CardAddress() {
                         className='input-address'
                         onClick={() => setEditAbleAddress(!editAbleAddress)}
                     >
-                        <IconPencilMinus 
-                            size={setSize(20, 18, 16)}
-                        />
-                        <div
-                            style={{
-                                paddingLeft: 10,
-                                fontSize: setSize(14, 14, 12)
-                            }}
-                        >
-                            Change Address
-                        </div>
+                        {
+                            editAbleAddress ? (
+                                <Button
+                                    type='primary'
+                                    onClick={() => validAddress(addressUser)}
+                                >
+                                    Save
+                                </Button>
+                            ) : (
+                                <>
+                                    <IconPencilMinus 
+                                        size={setSize(20, 18, 16)}
+                                    />
+                                    <div
+                                        style={{
+                                            paddingLeft: 10,
+                                            fontSize: setSize(14, 14, 12)
+                                        }}
+                                    >
+                                        Change Address
+                                    </div>
+                                </>
+                            )
+                        }
                     </div>
                 </Col>
             </Row>

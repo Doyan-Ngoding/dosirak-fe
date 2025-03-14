@@ -9,6 +9,7 @@ import React, {
 import { useNavigate } from 'react-router-dom';
 import { useLocalStorage } from 'react-use';
 import { useAuth } from './AuthContext';
+import { useRestaurant } from './RestaurantContext';
 
 const OrderContext = createContext(null)
 
@@ -56,6 +57,13 @@ const Order = ({children }) => {
 
     const [selectedResto, setSelectedResto] = useLocalStorage("selectedResto");
 
+    const [longitude, setLongitude] = useState();
+    const [latitude, setLatitude] = useState();
+    const [addressUserCurr, setAddressUserCurr] = useLocalStorage("addressUserCurr");
+    const [messageAddress, setMessageAddress] = useState();
+
+    const [resQuotationTemp, setResQuotationTemp] = useState();
+
     const addQty = (id) => {
         setSelectedMenu((prevCart) => 
             prevCart.map((item) => 
@@ -88,6 +96,9 @@ const Order = ({children }) => {
             setResMessageOrder(["error", "Maximum order is 200 items"])
             return;
         } 
+
+        const resto = JSON.parse(localStorage.getItem("subRestoAddress"))
+        const users = JSON.parse(localStorage.getItem("addressUserCurr"))
         await axios.post(`${import.meta.env.VITE_API_BE}/orders`, {
             user_id: authUser.id,
             detail_menus: selectedMenu || cart,
@@ -97,54 +108,69 @@ const Order = ({children }) => {
         })
         .then(res => {
             setOrderTemp(res.data.order)
-            axios.post(`${import.meta.env.VITE_API_BE}/create-payment`, {
-                customer_details: {
-                    id: authUser.id,
-                    name: authUser.name,
-                    // email: authUser.email,
-                    // phone: authUser.phone
-                },
-                item_details: res.data.order?.detailMenus.map(item => ({
-                    description: item.name,
-                    quantity: item.qty, 
-                    price: item.price,
-                    // item_id: item.id
-                })),
-                amount: formatAmount,
-                payment_type: "payment_link",
-                due_days: 1,
-                notes: 'dev',
-                orders_id: res.data.order?.id
+            axios.post(`${import.meta.env.VITE_API_BE}/deliveries/quotation`, {
+                orders_id: res.data.order?.id,
+                scheduled_at: dayjs(selectedDate).format('YYYY-MM-DD HH:mm:ss'),
+                service_type: "SEDAN",
+                stop: [
+                    resto,
+                    users
+                ]
             })
-            .then(response => {
-                setIsLoading(false)
-                setResPayment(response.data.data)
-                setLinkPayment(response.data?.data.payment_link_url)
-                setTimeout(() => {
-                    setSelectedMenu()
-                    setSelectedDate()
-                    setSubTotal()
-                    setTotal()
-                    setPromo()
-                    localStorage.removeItem("cart")
-                    localStorage.removeItem("orderTemp")
-                    localStorage.removeItem("formatAmount")
-                    localStorage.removeItem("selectedDate")
-                    localStorage.removeItem("selectedTempDate")
-                    localStorage.removeItem("selectedTempTime")
-                    navigate('/payment')
-                    localStorage.removeItem("formatAmount")
-                }, 2000)
+            .then(resQuo => {
+                axios.post(`${import.meta.env.VITE_API_BE}/create-payment`, {
+                    customer_details: {
+                        id: authUser.id,
+                        name: authUser.name,
+                        // email: authUser.email,
+                        // phone: authUser.phone
+                    },
+                    item_details: res.data.order?.detailMenus.map(item => ({
+                        description: item.name,
+                        quantity: item.qty, 
+                        price: item.price,
+                        // item_id: item.id
+                    })),
+                    amount: formatAmount,
+                    payment_type: "payment_link",
+                    due_days: 1,
+                    notes: 'dev',
+                    orders_id: res.data.order?.id
+                })
+                .then(response => {
+                    setIsLoading(false)
+                    setResPayment(response.data.data)
+                    setLinkPayment(response.data?.data.payment_link_url)
+                    setTimeout(() => {
+                        setSelectedMenu()
+                        setSelectedDate()
+                        setSubTotal()
+                        setTotal()
+                        setPromo()
+                        localStorage.removeItem("cart")
+                        localStorage.removeItem("orderTemp")
+                        localStorage.removeItem("formatAmount")
+                        localStorage.removeItem("selectedDate")
+                        localStorage.removeItem("selectedTempDate")
+                        localStorage.removeItem("selectedTempTime")
+                        navigate('/payment')
+                        localStorage.removeItem("formatAmount")
+                    }, 2000)
+                })
+                // .catch(error => {
+                //     setIsLoading(false)
+                //     setResMessageOrder(['error', error.response?.data?.message || "Failed to Make a payment!"])
+                // })  
             })
-            .catch(error => {
-                setIsLoading(false)
-                setResMessageOrder(['error', error.response?.data?.message || "Failed to Make a Order!"])
-            }) 
+            // .catch(err => {
+            //     setIsLoading(false)
+            //     setResMessageOrder(['error', err.response?.data?.message || "Failed to Make a quotation!"])
+            // }) 
         })
-        .catch(err => {
-            setIsLoading(false)
-            setResMessageOrder(['error', err.response?.data?.message || "Failed to Make a Order!"])
-        }) 
+        // .catch(err => {
+        //     setIsLoading(false)
+        //     setResMessageOrder(['error', err.response?.data?.message || "Failed to Make a Order!"])
+        // }) 
     }
 
     const handleAddPayment = async () => {
@@ -224,7 +250,58 @@ const Order = ({children }) => {
             setResMessageOrder(['error', err.response?.data?.message || "Failed to get a Invoice!"])
         }) 
     }
+
+    const validAddress = async (address) => {
+        await axios.get(`https://us1.locationiq.com/v1/search.php`, {
+            params: {
+                key: import.meta.env.VITE_LOCATIONIQ_API_KEY,
+                q: address,
+                format: "json",
+            },
+        })
+        .then(res => {
+            if (res.data && res.data.length > 0) {
+                setLongitude(res.data[0].lon);
+                setLatitude(res.data[0].lat);
+                setAddressUserCurr({
+                    coordinates: {
+                        lat: res.data[0].lat,
+                        lng: res.data[0].lon,
+                    },
+                    address: address
+                })
+                setEditAbleAddress(false)
+            }
+        })
+        .catch(err => {
+            setMessageAddress(['error', "Address is not valid!"])
+            setLatitude()
+            setLongitude()
+            localStorage.removeItem("addressUserCurr")
+            setEditAbleAddress(true)
+        })
+    }
     
+
+    const handleCreateQuotationTemp = async () => {
+        const resto = JSON.parse(localStorage.getItem("subRestoAddress"))
+        const users = JSON.parse(localStorage.getItem("addressUserCurr"))
+        await axios.post(`${import.meta.env.VITE_API_BE}/deliveries/quotation-temp`, {
+            service_type: 'SEDAN',
+            stop: [
+                resto,
+                users
+            ]
+        })
+        .then(res => {
+            if (res.data) {
+                setDeliveryFee(res.data.data.data.priceBreakdown.total)   
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        }) 
+    }
 
     const state = {
         menuSearched, setMenuSearched,
@@ -272,6 +349,15 @@ const Order = ({children }) => {
         handleGetInvoice,
 
         selectedResto, setSelectedResto,
+
+        longitude, setLongitude,
+        latitude, setLatitude,
+        addressUserCurr, setAddressUserCurr,
+        messageAddress, setMessageAddress,
+        validAddress,
+
+        resQuotationTemp, setResQuotationTemp,
+        handleCreateQuotationTemp,
     }
 
     return (
