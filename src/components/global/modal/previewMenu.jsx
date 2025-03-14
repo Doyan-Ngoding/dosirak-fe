@@ -26,7 +26,7 @@ export default function PreviewMenu({
         if (cart) {
             const get_menu = cart.find(item => item.id === data.id);
             setQtyTemp(
-                get_menu ? get_menu.qty : 0
+                get_menu ? get_menu.qty : 1
             )   
         }
     }, [cart]);
@@ -80,7 +80,6 @@ export default function PreviewMenu({
                     onCancel={() => setVisible(false)}
                     footer={false}
                     width={setSize("60%", "80%", "80%")}
-                    height={"800px"}
                 >
                     <Row
                         gutter={[24, 12]}
@@ -97,10 +96,14 @@ export default function PreviewMenu({
                         <Col
                             span={setSize(12, 12, 24)}
                         >
-                            <div>
+                            <div
+                                style={{
+                                    paddingBottom: setSize(0, 0, 50)
+                                }}
+                            >
                                 <div
                                     style={{
-                                        fontSize: setSize(24, 12, 10),
+                                        fontSize: setSize(24, 18, 16),
                                         fontFamily: 'Plus Jakarta Sans',
                                         fontWeight: 800,
                                     }}
@@ -111,7 +114,7 @@ export default function PreviewMenu({
                                 </div>
                                 <div
                                     style={{
-                                        fontSize: setSize(16, 12, 10),
+                                        fontSize: setSize(16, 10, 10),
                                         fontFamily: 'Plus Jakarta Sans',
                                         fontWeight: 600
                                     }}
@@ -124,7 +127,7 @@ export default function PreviewMenu({
                             <div
                                 style={{
                                     bottom: 0,
-                                    position: 'absolute',
+                                    position: setSize('absolute', 'absolute', ''),
                                     width: '100%',
                                 }}
                             >
@@ -134,13 +137,10 @@ export default function PreviewMenu({
                                 >
                                     <Col
                                         span={12}
-                                        style={{
-                                            border: '1px solid black',
-                                        }}
                                     >
                                         <div
                                             style={{
-                                                fontSize: setSize(18, 12, 10),
+                                                fontSize: setSize(18, 12, 12),
                                                 fontFamily: 'Plus Jakarta Sans',
                                                 fontWeight: 800
                                             }}
@@ -149,10 +149,9 @@ export default function PreviewMenu({
                                         </div>
                                     </Col>
                                     <Col
-                                        span={setSize(9, 12, 12)}
+                                        span={setSize(9, 10, 8)}
                                         style={{
-                                            border: '1px solid black',
-                                            paddingRight: setSize(30, 7, 5)
+                                            paddingRight: setSize(30, 20, 5),
                                         }}
                                     >
                                         <Row
@@ -163,7 +162,7 @@ export default function PreviewMenu({
                                                 className='icon-hover'
                                             >
                                                 <IconCircleMinus 
-                                                    size={setSize(28, 16, 14)}
+                                                    size={setSize(28, 18, 16)}
                                                     style={{
                                                         cursor: 'pointer'
                                                     }}
@@ -174,7 +173,7 @@ export default function PreviewMenu({
                                                 <div
                                                     style={{
                                                         color: '#FF815B',
-                                                        fontSize: setSize(20, 12, 10),
+                                                        fontSize: setSize(20, 12, 12),
                                                         padding: setSize('0px 10px', '0px 5px', '0px 5px'),
                                                         fontWeight: 'bold'
                                                     }}
@@ -186,7 +185,7 @@ export default function PreviewMenu({
                                                 className='icon-hover-2'
                                             >
                                                 <IconCirclePlusFilled 
-                                                    size={setSize(28, 16, 14)}
+                                                    size={setSize(28, 18, 16)}
                                                     style={{
                                                         cursor: 'pointer',
                                                     }}
@@ -200,20 +199,20 @@ export default function PreviewMenu({
                                 <div
                                     style={{
                                         paddingTop: 10,
-                                        paddingRight: setSize(30, 10, 10)
+                                        paddingRight: setSize(30, 10, 0)
                                     }}
                                 >
                                     <Tooltip
-                                        title={(selectedResto || selectedResto !== (data && data.restaurant_name)) && "You can't choose menus from different restaurants!"}
+                                        title={(selectedResto && selectedResto !== (data.restaurant_name)) && "You can't choose menus from different restaurants!"}
                                         trigger={"hover"}
                                     >
                                         <Button
                                             type='primary'
                                             style={{
                                                 width: "100%",
-                                                cursor:  (!selectedResto || selectedResto === (data && data.restaurant_name)) ? 'pointer' : 'not-allowed',
+                                                cursor:  (!selectedResto || selectedResto === (data.restaurant_name)) ? 'pointer' : 'not-allowed',
                                             }}
-                                            onClick={(!selectedResto || selectedResto === (data && data.restaurant_name)) && addedToCart(data)}
+                                            onClick={() => (!selectedResto || selectedResto === (data.restaurant_name)) && addedToCart(data)}
                                         >
                                             Add To Cart
                                         </Button>
