@@ -3,6 +3,7 @@ import AuthProvider from '../context/AuthContext'
 import MenuComp from '../components/module/menu'
 import MenuProvider from '../context/MenuContext'
 import OrderProvider from '../context/OrderContext'
+import RestaurantProvider from '../context/RestaurantContext'
 
 export default function MenuPage() {
     return (
@@ -10,7 +11,9 @@ export default function MenuPage() {
             <AuthProvider>
                 <MenuProvider>
                     <OrderProvider>
-                        <MenuComp />
+                        <RestaurantProvider>
+                            <MenuComp />
+                        </RestaurantProvider>
                     </OrderProvider>
                 </MenuProvider>
             </AuthProvider>

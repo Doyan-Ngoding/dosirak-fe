@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Anchor, Col, ConfigProvider, Input, Row } from 'antd'
+import { Anchor, Button, Col, ConfigProvider, DatePicker, Input, Row, Select } from 'antd'
 import { useAuth } from '../../../context/AuthContext'
 import { useMenu } from '../../../context/MenuContext';
 import SplitTitle from '../../global/split/title';
 import CardMenuHome from '../../global/menu/cardMenuHome';
 import { useNavigate } from 'react-router-dom';
 import { useOrder } from '../../../context/OrderContext';
-import { IconBuildingStore, IconSearch } from '@tabler/icons-react';
+import { IconBuildingStore, IconCalendarWeek, IconChevronDown, IconChevronRight, IconClock, IconNotes, IconSearch, IconToolsKitchen2, IconXboxXFilled } from '@tabler/icons-react';
+import dayjs from 'dayjs';
+import { useRestaurant } from '../../../context/RestaurantContext';
 
 export default function ContentListComp() {
 
@@ -20,14 +22,26 @@ export default function ContentListComp() {
         listMenuGroupedRestaurant,
         tabCategory, 
         tabRestaurant,
+        listMenu,
+        listCategory,
+        selectedCategory, setSelectedCategory,
     } = useMenu();
     
     const {
         selectedMenu, setSelectedMenu,
         subTotal, setSubTotal,
         cart, setCart,
-        setSelectedResto
+        setSelectedDate,
+        selectedTempDate, setSelectedTempDate,
+        selectedTempTime, setSelectedTempTime,
+        selectedResto, setSelectedResto,
     } = useOrder();
+
+    const {
+        newListSubRestaurant,
+        selectedSubRestaurant, setSelectedSubRestaurant,
+        getDetailSubRestaurant,
+    } = useRestaurant()
 
     const addedToCart = (menuItem) => { 
         setSelectedMenu(
@@ -60,9 +74,17 @@ export default function ContentListComp() {
         }
     }, [selectedMenu]);
     
+    const disabledDate = (current) => {
+        return current && current < dayjs().add(1, 'day').endOf('day');
+    };
+
     const [searchText, setSearchText] = useState(null);
     const [filteredData, setFilteredData] = useState([]);
     const [filteredTab, setFilteredTab] = useState([]);
+    const [openDate, setOpenDate] = useState(false);
+    const [openTime, setOpenTime] = useState(false);
+    const [openCategory, setOpenCategory] = useState(false);
+    const [openAlert, setOpenAlert] = useState(true);
 
     useEffect(() => {
         setFilteredData(listMenuGroupedRestaurant)
@@ -90,7 +112,6 @@ export default function ContentListComp() {
         setFilteredData(filtered);
         setFilteredTab(filteredTabs)
     };
-
 
     return (
         <>
@@ -172,7 +193,282 @@ export default function ContentListComp() {
             <div
                 className='lg:pt-[50px] md:pt-[30px] pt-[20px] lg:px-[50px] md:px-[30px] px-[20px]'
             >
-                <div
+                <ConfigProvider
+                    theme={{
+                        token: {
+                            colorPrimary: '#E83600',
+                        },
+                        components: {
+                            Select: {
+                                colorBgContainer: '#FFFFFF',
+                                colorTextPlaceholder: '#6B6B6B',
+                                colorText: '#000000',
+                                colorBorder: '#A5ABB3',
+                                controlHeight: setSize(42, 28, 20),
+                                fontSize: setSize(18, 12, 10),
+                                borderRadius: setSize(8, 6, 4),
+                                colorBgElevated: '#FFFFFF',
+                                optionSelectedBg: '#E83600',
+                                optionSelectedColor: '#FFFFFF',
+                                fontSizeIcon: setSize(14, 10, 8)
+                            },
+                            DatePicker: {
+                                controlHeight: setSize(38, 32, 28),
+                                fontSize: setSize(18, 12, 10),
+                                borderRadius: setSize(8, 6, 4),
+                                colorBorder: '#A5ABB3',
+                                fontSizeIcon: setSize(14, 10, 8),
+                                cellWidth: setSize(50, 30, 25),
+                                colorTextPlaceholder: '#6B6B6B'
+                            },
+                            Button: {
+                                controlHeight: setSize(38, 24, 18),
+                                fontSize: setSize(16, 12, 10),
+                            }
+                        }
+                    }}
+                >
+                    <Row
+                        justify={"space-between"}
+                        align={"middle"}
+                        style={{
+                            marginBottom: 12
+                        }}
+                        gutter={[24, 6]}
+                    >
+                        <Col
+                            span={setSize(8, 8, 24)}
+                        >
+                            <Select 
+                                allowClear={true}
+                                style={{
+                                    width: '100%'
+                                }}
+                                prefix={
+                                    <IconToolsKitchen2 
+                                        color='#FA5523'
+                                        size={setSize(24, 14, 12)}
+                                        style={{
+                                            marginRight: 5
+                                        }}
+                                    />
+                                }
+                                placeholder="Category Menu"
+                                options={
+                                    listCategory.map(val => ({
+                                        label: val.name, 
+                                        value: val.name
+                                    }))
+                                }
+                                value={selectedCategory}
+                                onChange={(e) => {setSelectedCategory(e), setOpenCategory(true)}}
+                                open={openCategory}
+                                onDropdownVisibleChange={() => setOpenCategory(true)}
+                                dropdownRender={(menu) => (
+                                    <>
+                                        <div 
+                                            className='lg:p-5 md:p-3 p-2'
+                                        >
+                                            <div
+                                                className='font-[Source Sans Pro] font-semibold text-black lg:text-[18px] lg:pb-3 md:text-[12px] md:pb-2 text-[10px] pb-1'
+                                            >
+                                                What Are You Craving?
+                                            </div>
+                                            <div>
+                                                {menu}
+                                            </div>
+                                            <div
+                                                className='lg:mt-3 md:mt-2 mt-1'
+                                            >
+                                                <Button
+                                                    type='primary'
+                                                    style={{
+                                                        width: '100%',
+                                                        borderRadius: 50
+                                                    }}
+                                                    onClick={() => {setOpenCategory(false), handleSearchCatrgory(selectedCategory)}}
+                                                >
+                                                    Select Category
+                                                </Button>
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
+                                optionRender={(option) => (
+                                    <>
+                                        <div
+                                            className='flex justify-between items-center'
+                                        >
+                                            <div>
+                                                {option.data.label}
+                                            </div>
+                                            <div>
+                                                <IconChevronRight 
+                                                    size={setSize(24, 18, 12)}
+                                                />
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
+                            />
+                        </Col>
+                        <Col
+                            span={setSize(8, 8, 12)}
+                        >
+                            <DatePicker 
+                                allowClear={true}
+                                showNow={false}
+                                value={selectedTempDate && dayjs(selectedTempDate).subtract(1, 'day')}
+                                onChange={(e) => {setSelectedTempDate(dayjs(e).add(1, 'day')), setOpenDate(true)}}
+                                open={openDate}
+                                onOpenChange={() => setOpenDate(true)}
+                                style={{
+                                    width: '100%'
+                                }}
+                                format={"dddd, DD MMM YYYY"}
+                                prefix={
+                                    <IconCalendarWeek 
+                                        color='#FA5523'
+                                        size={setSize(24, 14, 12)}
+                                        style={{
+                                            marginRight: 5
+                                        }}
+                                    />
+                                }
+                                suffixIcon={
+                                    <IconChevronDown 
+                                        size={setSize(24, 14, 12)}
+                                    />
+                                }
+                                clearIcon={
+                                    <IconXboxXFilled 
+                                        size={setSize(18, 12, 12)}
+                                    />
+                                }
+                                placeholder='Order Date'
+                                disabledDate={disabledDate} 
+                                width={"100%"}
+                                panelRender={(date) => (
+                                    <div>
+                                        {
+                                            openAlert && (
+                                                <div
+                                                    className='flex justify-between items-center bg-[#FFD39A] lg:m-3 md:m-2 m-2 lg:rounded-[8px] md:rounded-[6px] rounded-[4px] px-2 py-1.5'
+                                                >
+                                                    <div
+                                                        className='lg:text-[15px] md:text-[10px] text-[8px] flex justify-start items-center'
+                                                    >
+                                                        <IconNotes 
+                                                            size={setSize(20, 14, 12)}
+                                                            style={{
+                                                                marginRight: 2
+                                                            }}
+                                                        />
+                                                        Please place orders at least 2 days before
+                                                    </div>
+                                                </div>
+                                            )
+                                        }
+                                        <div>
+                                            {date}
+                                        </div>
+                                        <div
+                                            className='lg:px-5 md:px-3 px-2 pb-2'
+                                        >
+                                            <Button
+                                                type='primary'
+                                                style={{
+                                                    width: '100%',
+                                                    borderRadius: 50
+                                                }}
+                                                onClick={() => setOpenDate(false)}
+                                            >
+                                                Select Date
+                                            </Button>
+                                        </div>
+                                    </div>
+                                )}
+                            />
+                        </Col>
+                        <Col
+                            span={setSize(8, 8, 12)}
+                        >   
+                            <Select 
+                                allowClear={true}
+                                style={{
+                                    width: '100%'
+                                }}
+                                prefix={
+                                    <IconClock 
+                                        color='#FA5523'
+                                        size={setSize(24, 14, 12)}
+                                        style={{
+                                            marginRight: 5
+                                        }}
+                                    />
+                                }
+                                placeholder="Delivery Time"
+                                options={[
+                                    { value: '08.00 - 09.00', label: '08.00 - 09.00' },
+                                    { value: '09.00 - 10.00', label: '09.00 - 10.00' },
+                                    { value: '10.00 - 11.00', label: '10.00 - 11.00' },
+                                    { value: '11.00 - 12.00', label: '11.00 - 12.00' },
+                                    { value: '12.00 - 13.00', label: '12.00 - 13.00' },
+                                    { value: '13.00 - 14.00', label: '13.00 - 14.00' },
+                                ]}
+                                open={openTime}
+                                onDropdownVisibleChange={() => setOpenTime(true)}
+                                onChange={(e) => {setOpenTime(true), setSelectedTempTime(e)}}
+                                value={selectedTempTime}
+                                dropdownRender={(menu) => (
+                                    <>
+                                        <div className='lg:p-5 md:p-3 p-2'>
+                                            <div
+                                                className='font-[Source Sans Pro] font-semibold text-black lg:text-[18px] lg:pb-3 md:text-[12px] md:pb-2 text-[10px] pb-1'
+                                            >
+                                                Select Time Delivery
+                                            </div>
+                                            <div>
+                                                {menu}
+                                            </div>
+                                            <div
+                                                className='lg:mt-3 md:mt-2 mt-1'
+                                            >
+                                                <Button
+                                                    type='primary'
+                                                    style={{
+                                                        width: '100%',
+                                                        borderRadius: 50
+                                                    }}
+                                                    onClick={() => setOpenTime(false)}
+                                                >
+                                                    Select Time
+                                                </Button>
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
+                                optionRender={(option) => (
+                                    <>
+                                        <div
+                                            className='flex justify-between items-center'
+                                        >
+                                            <div>
+                                                {option.data.label}
+                                            </div>
+                                            <div>
+                                                <IconChevronRight 
+                                                    size={setSize(24, 18, 12)}
+                                                />
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
+                            />
+                        </Col>
+                    </Row>
+                </ConfigProvider>
+                {/* <div
                     className="sticky lg:top-[68px] md:top-[50px] top-[35px] z-10 bg-white w-auto text-[Plus Jakarta Sans]"
                 >
                     <div
@@ -191,36 +487,98 @@ export default function ContentListComp() {
                             }
                         />
                     </div>
-                </div>
+                </div> */}
                 <div
-                    className='lg:pt-10 md:pt-7 pt-5'
+                    // className='lg:pt-10 md:pt-7 pt-5'
                 >
                     {
                         listMenuGroupedRestaurant && filteredData.map((value, key) => (
                             <>
                                 <div
                                     id={value.restaurant}
+                                    style={{
+                                        borderBottom: '1px solid darkgrey'
+                                    }}
                                 >
-                                    <div
-                                        className='lg:pb-3 md:pb-2 pb-1'
-                                    >
-                                        <SplitTitle 
-                                            no={value.restaurant_image}
-                                            title={value.restaurant}
-                                        />
-                                    </div>
                                     <Row
                                         justify={'start'}
                                         align={'middle'}
                                         gutter={[12, 12]}
                                         style={{
-                                            paddingBottom: setSize(60, 40, 30)
+                                            paddingBottom: setSize(60, 40, 30),
+                                            paddingTop: setSize(60, 40, 30),
                                         }}
                                     >
+                                        <Col
+                                            span={setSize(6, 6, 8)}
+                                            style={{
+                                                position: 'relative',
+                                                zIndex: 10
+                                            }}
+                                        >
+                                            <div
+                                                className="flex items-center justify-center m-auto border border-[#E83600] w-fit rounded-[50%] lg:p-5 md:p-3 p-2"
+                                                style={{
+                                                    height: setSize(120, 70, 50),
+                                                    width: setSize(120, 70, 50),
+                                                }}
+                                            >
+                                                <img src={`${import.meta.env.VITE_URL_BE}/${value.restaurant_image}`} style={{ width: setSize(120, 70, 50) }}  />
+                                            </div>   
+                                            <div
+                                                className='text-center text-[#E83600] lg:py-5 lg:text-[30px] md:py-2 md:text-[20px] py-2 text-[16px]'
+                                                style={{
+                                                    fontFamily: 'Bebas Neue'
+                                                }}
+                                            >
+                                                {value.restaurant}
+                                            </div>
+                                            <div
+                                                className="flex items-center justify-center"
+                                            >
+                                                <ConfigProvider
+                                                    theme={{
+                                                        components: {
+                                                            Select: {
+                                                                colorBgContainer: '#FFFFFF',
+                                                                colorTextPlaceholder: '#6B6B6B',
+                                                                colorText: '#000000',
+                                                                colorBorder: '#A5ABB3',
+                                                                controlHeight: setSize(42, 28, 20),
+                                                                fontSize: setSize(14, 10, 8),
+                                                                borderRadius: 50,
+                                                                colorBgElevated: '#FFFFFF',
+                                                                optionSelectedBg: '#E83600',
+                                                                optionSelectedColor: '#FFFFFF',
+                                                                fontSizeIcon: setSize(14, 10, 8)
+                                                            },
+                                                        }
+                                                    }}
+                                                >
+                                                    <Select 
+                                                        placeholder="Select branch near you"
+                                                        options={
+                                                            newListSubRestaurant.filter(item => item.restaurant.name === value.restaurant).map(val => ({
+                                                                label: val.name, 
+                                                                value: val.id
+                                                            }))
+                                                        }
+                                                        value={newListSubRestaurant.some(item =>  item.restaurant.name === value.restaurant && item.id === selectedSubRestaurant) ? selectedSubRestaurant : undefined}
+                                                        defaultValue={newListSubRestaurant.some(item =>  item.restaurant.name === value.restaurant && item.id === selectedSubRestaurant) ? selectedSubRestaurant : undefined}
+                                                        onChange={(e) => {setSelectedSubRestaurant(e), getDetailSubRestaurant((e))}}
+                                                        className='lg:w-[95%] md:w-[90%] w-[100%]'
+                                                        style={{
+                                                            width: 'auto'
+                                                        }}
+                                                    />
+                                                </ConfigProvider>
+                                            </div>
+                                        </Col>
                                         {
                                             value.menu.map((value, key) => (
                                                 <Col
                                                     span={setSize(6, 6, 8)}
+                                                    className='flex overflow-x-auto space-x-4 pb-4'
                                                 >
                                                     <CardMenuHome 
                                                         image={value.image}
