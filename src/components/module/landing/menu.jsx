@@ -208,7 +208,7 @@ export default function MenuComp() {
                                 colorTextPlaceholder: '#6B6B6B'
                             },
                             Button: {
-                                controlHeight: setSize(38, 24, 10),
+                                controlHeight: setSize(38, 24, 18),
                                 fontSize: setSize(16, 12, 10),
                             }
                         }

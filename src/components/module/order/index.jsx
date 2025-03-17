@@ -266,7 +266,7 @@ export default function OrderComp() {
                                                     }
                                                     value={selectedSubRestaurant}
                                                     onChange={(e) => {setSelectedSubRestaurant(e), getDetailSubRestaurant((e))}}
-                                                    className='lg:w-[95%] md:w-[90%] w-[70%] texxt-white'
+                                                    className='lg:w-[95%] md:w-[90%] w-[100%] texxt-white'
                                                     suffixIcon={
                                                         <IconCircleChevronDownFilled 
                                                             color='#FFFFFF'
@@ -276,7 +276,7 @@ export default function OrderComp() {
                                                 />
                                             </Col>
                                             <Col
-                                                className='lg:w-[45%] md:w-[40%] w-[70%]'
+                                                className='lg:w-[45%] md:w-[40%] w-[100%]'
                                             >
                                                 <Input 
                                                     placeholder='Search your menu here'

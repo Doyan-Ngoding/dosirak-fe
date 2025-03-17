@@ -212,7 +212,7 @@ export default function PreviewMenu({
                                                 width: "100%",
                                                 cursor:  (!selectedResto || selectedResto === (data.restaurant_name)) ? 'pointer' : 'not-allowed',
                                             }}
-                                            onClick={() => (!selectedResto || selectedResto === (data.restaurant_name)) && addedToCart(data)}
+                                            onClick={() => {(!selectedResto || selectedResto === (data.restaurant_name)) && addedToCart(data), setVisible(false)}}
                                         >
                                             Add To Cart
                                         </Button>

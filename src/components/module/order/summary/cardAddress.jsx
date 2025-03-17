@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { 
     Button,
     Col,
@@ -9,6 +9,8 @@ import {
 } from 'antd'
 import { 
     IconHomeFilled, 
+    IconMapPin, 
+    IconMapPinFilled, 
     IconPencilMinus 
 } from '@tabler/icons-react';
 import { useOrder } from '../../../../context/OrderContext';
@@ -24,6 +26,7 @@ export default function CardAddress() {
         addressUser, setAddressUser,
         messageAddress,
         validAddress,
+        validAddress2,
         addressUserCurr,
         handleCreateQuotationTemp,
     } = useOrder()
@@ -33,13 +36,29 @@ export default function CardAddress() {
         authUser
     } = useAuth()
 
-    useEffect(() => {
-        if (authUser && authUser?.location) {
-            setAddressUser(authUser.location);
-            validAddress(authUser.location)
-        }
-    }, [authUser]);
+    // useEffect(() => {
+    //     if (authUser && authUser?.location) {
+    //         setAddressUser(authUser.location);
+    //         validAddress(authUser.location)
+    //     }
+    // }, [authUser]);
 
+    const showPosition = (pos) => {
+        const crd = pos.coords;
+        validAddress2(crd.longitude, crd.latitude)
+    }
+
+    useEffect(() => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            validAddress(authUser && authUser.location)
+        }
+    }, []);
+
+    const clickedMap = () => {
+        navigator.geolocation.getCurrentPosition(showPosition)
+    }
     const [messageApi, contextHolder] = message.useMessage();
 
     useEffect(() => {
@@ -68,9 +87,9 @@ export default function CardAddress() {
                     span={24}
                 >
                     <div
-                        className='text-[#393939] font-semibold lg:text-lg md:text-[16px] text-[12px]'
+                        className='text-[#393939] flex justify-between font-semibold lg:text-lg md:text-[16px] text-[12px]'
                     >
-                        SELECT ADDRESS
+                        SELECT ADDRESS <div style={{ paddingRight: 10}}><IconMapPinFilled color='#E83600' onClick={clickedMap} style={{ cursor: 'pointer'}} /></div>
                     </div>
                 </Col>
                 <Col

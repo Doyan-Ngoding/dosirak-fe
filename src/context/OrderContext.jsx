@@ -282,6 +282,42 @@ const Order = ({children }) => {
         })
     }
     
+    const validAddress2 = async (lng, lat) => {
+        await axios.get(`https://us1.locationiq.com/v1/reverse`, {
+            params: {
+                key: import.meta.env.VITE_LOCATIONIQ_API_KEY,
+                lat: lat,
+                lon: lng,
+                format: "json",
+            },
+        })
+        .then(res => {
+            console.log(res.data);
+            
+            if (res.data) {
+                setLongitude(res.data.lon);
+                setLatitude(res.data.lat);
+                setAddressUser(res.data.display_name)
+                console.log(res.data.display_name, 'disni');
+                
+                setAddressUserCurr({
+                    coordinates: {
+                        lat: res.data.lat,
+                        lng: res.data.lon,
+                    },
+                    address: res.data.display_name
+                })
+                setEditAbleAddress(false)
+            }
+        })
+        .catch(err => {
+            setMessageAddress(['error', "Address is not valid!"])
+            setLatitude()
+            setLongitude()
+            localStorage.removeItem("addressUserCurr")
+            setEditAbleAddress(true)
+        })
+    }
 
     const handleCreateQuotationTemp = async () => {
         const resto = JSON.parse(localStorage.getItem("subRestoAddress"))
@@ -300,6 +336,7 @@ const Order = ({children }) => {
         })
         .catch(err => {
             console.log(err);
+            setMessageAddress(['error', "Address is out of service!"])
         }) 
     }
 
@@ -355,6 +392,7 @@ const Order = ({children }) => {
         addressUserCurr, setAddressUserCurr,
         messageAddress, setMessageAddress,
         validAddress,
+        validAddress2,
 
         resQuotationTemp, setResQuotationTemp,
         handleCreateQuotationTemp,

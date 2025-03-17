@@ -34,6 +34,8 @@ const Restaurant = ({children }) => {
     const [selectedSubRestaurant, setSelectedSubRestaurant] = useState("");
     const [subRestoAddress, setSubRestoAddress] = useLocalStorage("subRestoAddress");
 
+    const [newListSubRestaurant, setNewListSubRestaurant] = useState([]);
+
     const getListRestauran = () => {
         axios.get(`${import.meta.env.VITE_API_BE}/restaurants`)
         .then(res => {
@@ -170,13 +172,25 @@ const Restaurant = ({children }) => {
         }) 
     }
 
+    const getListSubRestaurants = () => {
+        axios.get(`${import.meta.env.VITE_API_BE}/sub-restaurants?restaurant_name=`)
+        .then(res => {
+            setNewListSubRestaurant(res.data.results)
+        })
+        .catch(err => {
+            // setResMessage(['error', err.response?.data?.message || "Failed Get Restaurants!"])
+            console.log(err)
+        })
+    }
+
     useEffect(() => {
         getListRestauran();
         getListSubRestaurant();
+        getListSubRestaurants()
     }, []);
 
     useEffect(() => {
-        getListSubRestaurant()
+        getListSubRestaurant();
     }, [selectedResto]);
 
     const state = {
@@ -200,6 +214,8 @@ const Restaurant = ({children }) => {
         selectedSubRestaurant, setSelectedSubRestaurant,
         subRestoAddress, setSubRestoAddress,
         getDetailSubRestaurant,
+
+        newListSubRestaurant, setNewListSubRestaurant,
     }   
 
     return (
