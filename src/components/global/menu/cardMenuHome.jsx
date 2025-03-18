@@ -92,7 +92,7 @@ export default function CardMenuHome({
                             {
                                 getQty(id_menu) <= 0 ? (
                                     <Tooltip
-                                        title={(selectedResto || selectedResto !== restaurant) && "You can't choose menus from different restaurants!"}
+                                        title={(selectedResto && selectedResto !== restaurant) && "You can't choose menus from different restaurants!"}
                                         trigger={"hover"}
                                     >
                                         <IconShoppingBagPlus 
@@ -101,7 +101,7 @@ export default function CardMenuHome({
                                                 color: '#FFFFFF',
                                                 borderRadius: 50,
                                                 padding: setSize(5, 3, 2),
-                                                cursor:  (!selectedResto || selectedResto === restaurant) ? 'pointer' : 'not-allowed',
+                                                cursor:  (selectedResto && selectedResto !== restaurant) ? 'not-allowed' : 'pointer',
                                             }}
                                             onClick={(!selectedResto || selectedResto === restaurant) && addToCart}
                                             className='icon-hover-3'

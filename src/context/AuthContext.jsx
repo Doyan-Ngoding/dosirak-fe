@@ -38,11 +38,12 @@ const Auth = ({children }) => {
         9: '/cms/category',
         10: '/cms/restaurant',
         11: '/cms/order',
+        12: '/history',
     }
 
     const allowAdmin = ['/cms', '/cms/product', '/cms/user', '/cms/category', '/cms/restaurant'] 
     const allowUser = ['/order-summary', '/payment-method', '/payment', '/complete']
-    const allowGeneral = ['/', '/menu', '/order', '/cms/login', '/finish']
+    const allowGeneral = ['/', '/menu', '/order', '/cms/login', '/finish', '/history']
 
     const [modalLogin, setModalLogin] = useState(false);
     const [modalSignup, setModalSignup] = useState(false);

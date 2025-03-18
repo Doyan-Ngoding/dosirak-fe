@@ -573,3 +573,79 @@ export const columnOrderList = (data = [], modalDetail, dataDetail) => {
         },
     ]
 }
+export const columnOrderListUser = (data = [], modalDetail, dataDetail) => {
+
+    const { setSize } = useAuth()
+
+    return [
+        {
+            title: "Order ID",
+            key: "format_id",
+            dataIndex: "format_id",
+            sorter: (a, b) => String(a.format_id || '').localeCompare(String(b.format_id || '')),
+            ...iconSort(),
+        },
+        {
+            title: "Pre Order Date",
+            key: "pre_order",
+            dataIndex: "pre_order",
+            render: (text) => text ? dayjs(text).format('dddd, DD MMM YYYY HH:mm') + '-' + dayjs(text).add(1, 'hour').format('HH:mm') : '',
+            sorter: (a, b) => String(a.pre_order || '').localeCompare(String(b.pre_order || '')),
+            ...iconSort(),
+        },
+        {
+            title: "Qty",
+            key: "qty",
+            dataIndex: "qty",
+            sorter: (a, b) => String(a.qty || '').localeCompare(String(b.qty || '')),
+            ...iconSort(),
+        },
+        {
+            title: "Amount",
+            key: "amount",
+            dataIndex: "amount",
+            render: (text) => 'Rp. ' + (text ? parseFloat(text).toLocaleString() : '-'),
+            sorter: (a, b) => String(a.amount || '').localeCompare(String(b.amount || '')),
+            ...iconSort(),
+        },
+        {
+            title: 'Status',
+            key: 'status',
+            dataIndex: 'status',
+            render: (text) => (
+                <div
+                    className={`${text === 'success' ? 'bg-green-100' : 'bg-blue-50'} rounded-lg text-center cursor-pointer`}
+                >
+                    {
+                        text === 'success' ? (
+                            'Success Payment'
+                        ) : text
+                    }
+                </div>
+            ),
+            filters: [
+                ...new Set(data?.map((item) => (item.status))),
+                ].map((el) => {
+                return { text: el, value: el };
+            }),
+            onFilter: (value, record) => (record.status).indexOf(value) === 0,
+            filterSearch: true,
+            ...iconFilter(),
+        },
+        {
+            title: '',
+            width: 150,
+            align: 'center',
+            render: (text, record, index) => (
+                <>
+                    <div
+                        className="flex items-center justify-between w-full text-[#E83600] cursor-pointer"
+                        onClick={() => {modalDetail(true), dataDetail(record)}}
+                    >
+                        See Details
+                    </div>
+                </>
+            )
+        },
+    ]
+}

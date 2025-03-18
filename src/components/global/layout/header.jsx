@@ -125,7 +125,7 @@ export default function HeaderComp() {
                                                 >
                                                     <Menu.Item key={'1'}><Link to={'/'}>Home</Link></Menu.Item>
                                                     <Menu.Item key={'2'}><Link to={'/menu'}>Menu</Link></Menu.Item>
-                                                    <Menu.Item key={'3'}><Link to={'/contact'}>Contact</Link></Menu.Item>
+                                                    <Menu.Item key={'12'}><Link to={'/history'}>History</Link></Menu.Item>
                                                 </Menu>  
                                             </Col>
                                         </>
