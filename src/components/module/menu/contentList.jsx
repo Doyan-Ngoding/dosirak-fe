@@ -500,20 +500,23 @@ export default function ContentListComp() {
                                         borderBottom: '1px solid darkgrey'
                                     }}
                                 >
-                                    <Row
-                                        justify={'start'}
-                                        align={'middle'}
-                                        gutter={[12, 12]}
+                                    <div
+                                        // justify={'start'}
+                                        // align={'middle'}
+                                        // gutter={[12, 12]}
                                         style={{
                                             paddingBottom: setSize(60, 40, 30),
                                             paddingTop: setSize(60, 40, 30),
+                                            display: 'flex',
+                                            // margin: 'auto'
                                         }}
                                     >
                                         <Col
                                             span={setSize(6, 6, 8)}
                                             style={{
                                                 position: 'relative',
-                                                zIndex: 10
+                                                zIndex: 10,
+                                                margin: 'auto'
                                             }}
                                         >
                                             <div
@@ -574,29 +577,35 @@ export default function ContentListComp() {
                                                 </ConfigProvider>
                                             </div>
                                         </Col>
-                                        {
-                                            value.menu.map((value, key) => (
-                                                <Col
-                                                    span={setSize(6, 6, 8)}
-                                                    className='flex overflow-x-auto space-x-4 pb-4'
-                                                >
-                                                    <CardMenuHome 
-                                                        image={value.image}
-                                                        title={value.name}
-                                                        desc={value.description}
-                                                        restaurant={value.restaurant_name}
-                                                        price={value.price}
-                                                        stock={value.qty}
-                                                        showResto={false}
-                                                        addToCart={() => {addedToCart(value)}}
-                                                        isMenu={true}
-                                                        id_menu={value.id}
-                                                        detail={value}
-                                                    />
-                                                </Col>
-                                            ))
-                                        }
-                                    </Row>
+                                        <div
+                                            className='flex overflow-x-auto space-x-4 pb-4 w-full custom-scrolls'
+                                        >
+                                            {
+                                                value.menu.map((value, key) => (
+                                                    <Col
+                                                        span={setSize(6, 6, 12)}
+                                                        // style={{
+                                                        //     width: '30vw'
+                                                        // }}
+                                                    >
+                                                        <CardMenuHome 
+                                                            image={value.image}
+                                                            title={value.name}
+                                                            desc={value.description}
+                                                            restaurant={value.restaurant_name}
+                                                            price={value.price}
+                                                            stock={value.qty}
+                                                            showResto={false}
+                                                            addToCart={() => {addedToCart(value)}}
+                                                            isMenu={true}
+                                                            id_menu={value.id}
+                                                            detail={value}
+                                                        />
+                                                    </Col>
+                                                ))
+                                            }
+                                        </div>
+                                    </div>
                                 </div>
                             </>
                         ))
