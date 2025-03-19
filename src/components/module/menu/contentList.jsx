@@ -523,7 +523,7 @@ export default function ContentListComp() {
                                                     width: setSize(120, 70, 50),
                                                 }}
                                             >
-                                                <img src={`${import.meta.env.VITE_URL_BE}/${value.restaurant_image}`} style={{ width: setSize(120, 70, 50) }}  />
+                                                <img src={`/assets${value.restaurant_image}`} style={{ width: setSize(120, 70, 50) }}  />
                                             </div>   
                                             <div
                                                 className='text-center text-[#E83600] lg:py-5 lg:text-[30px] md:py-2 md:text-[20px] py-2 text-[16px]'

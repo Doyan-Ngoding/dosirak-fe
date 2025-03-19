@@ -66,9 +66,9 @@ export default function Action({
             }
         },
         beforeUpload: file => {
-            const isSize = file.size / 1024 / 1024 < 1;
+            const isSize = file.size / 1024 / 1024 < 3;
             if (!isSize) {
-                message.error('Image must smaller than 1MB!');
+                message.error('Image must smaller than 3MB!');
                 form.setFieldValue("image", "")
             }
             return isSize;
@@ -82,7 +82,7 @@ export default function Action({
                 name: data && data.image,
                 status: 'done',
                 response: 'done',
-                url: `${import.meta.env.VITE_URL_BE}/${data && data.image}`
+                url: `/assets${data && data.image}`
             }
         ],
         onChange(info) {

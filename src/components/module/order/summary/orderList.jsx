@@ -56,7 +56,7 @@ export default function OrderListComp() {
                                     >
                                         <div 
                                             className={`bg-cover bg-center bg-no-repeat rounded-sm h-[100%] w-[100%] aspect-square`}
-                                            style={{ backgroundImage: `url('${import.meta.env.VITE_URL_BE}/${value.image}')` }}
+                                            style={{ backgroundImage: `url('/assets${value.image}')` }}
                                         />
                                     </Col>
                                     <Col
