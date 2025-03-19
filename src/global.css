@@ -169,3 +169,21 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+.custom-scrolls::-webkit-scrollbar {
+  /* width: 0px; */
+  height: 5px;
+}
+
+.custom-scrolls::-webkit-scrollbar-track {
+  background: transparent;
+  
+}
+
+.custom-scrolls::-webkit-scrollbar-thumb {
+  background: #DCDCDC;
+}
+
+.custom-scrolls::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}
