@@ -89,7 +89,7 @@ export default function PreviewMenu({
                         >
                             <div>
                                 <div>
-                                    <img src={`${import.meta.env.VITE_URL_BE}/${(data && data.image) ? data.image : ''}`} width={setSize("100%", "100%", "100%")} />
+                                    <img src={`/assets${(data && data.image) ? data.image : ''}`} width={setSize("100%", "100%", "100%")} />
                                 </div>
                             </div>
                         </Col>

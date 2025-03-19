@@ -41,7 +41,7 @@ export default function CardMenuCart({
                     >
                         <div 
                             className={`bg-cover bg-center bg-no-repeat w-full aspect-square rounded-sm`}
-                            style={{ backgroundImage: `url('${import.meta.env.VITE_URL_BE}/${image}')` }}
+                            style={{ backgroundImage: `url('/assets${image}')` }}
                         />
                     </Col>
                     <Col

@@ -140,7 +140,7 @@ export default function CardTotal({
                         </Col>
                     </Row>
                 </Col>
-                <Col
+                {/* <Col
                     span={24}
                 >
                     <Row
@@ -168,7 +168,7 @@ export default function CardTotal({
                             Rp. {packingFee ? parseFloat(packingFee).toLocaleString() : '0'}
                         </Col>
                     </Row>
-                </Col>
+                </Col> */}
                 <Col
                     span={24}
                 >

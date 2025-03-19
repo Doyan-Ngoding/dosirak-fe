@@ -216,9 +216,9 @@ export const columnProductList = (data = [], getDetail, modalEdit, handleDelete)
             render: (text) => (
                 <Image 
                     width={70}
-                    src={`${import.meta.env.VITE_URL_BE}/${text}`}
+                    src={`/assets${text}`}
                 />
-            )
+            )   
         },
         (authUser && authUser.role === 'superadmin') && {
             title: '',
@@ -444,7 +444,7 @@ export const columnRestaurantList = (data = [], getDetail, modalEdit, handleDele
             render: (text) => (
                 <Image 
                     width={50}
-                    src={`${import.meta.env.VITE_URL_BE}/${text}`}
+                    src={`/assets${text}`}
                 />
             )
         },
