@@ -1,0 +1,67 @@
+name: Deploy to Prod Environment
+
+on:
+  create:
+    tags:
+      - "prod.*"
+
+env:
+  APP_NAME: dosirak-fe
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: dev
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        run: podman login ghcr.io -u ${{ secrets.GH_USER }} --password "${{ secrets.GH_TOKEN }}"
+
+      - name: Build Podman image
+        run: |
+          podman build -t ghcr.io/doyan-ngoding/${{ env.APP_NAME }}:latest .
+
+      - name: Push Podman image
+        run: |
+          podman push ghcr.io/doyan-ngoding/${{ env.APP_NAME }}:latest
+
+      - name: Deploy to Remote VM
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.VM_KEY }}
+          script: |
+            docker login ghcr.io -u ${{ secrets.GH_USER }} --password "${{ secrets.GH_TOKEN }}"
+            docker pull ghcr.io/doyan-ngoding/${{ env.APP_NAME }}:latest
+            docker stop ${{ env.APP_NAME }} || true
+            docker rm ${{ env.APP_NAME }} || true
+            docker run -d --restart=always --name ${{ env.APP_NAME }} -p 3007:3000 \
+              -e "VITE_API_BE='https://api.kdosirak.com/api" \
+              -e "VITE_URL_BE='https://api.kdosirak.com/api" \
+              -e "VITE_LOCATIONIQ_API_KEY=${{ env.APP_HOST }}" \
+              -e "NODE_ENV=production" \
+              "ghcr.io/doyan-ngoding/${{ env.APP_NAME }}:latest"
+
+      - name: Clean up images
+        run: |
+          podman images --format "{{.Repository}}:{{.Tag}} {{.CreatedAt}}" \
+            | grep "doyan-ngoding/${{ env.APP_NAME }}" \
+            | sort -rk2 \
+            | awk 'NR>3 {print $1}' \
+            | xargs -I {} podman rmi -f {}
+
+      - name: Clean up untagged GHCR images
+        uses: quartx-analytics/ghcr-cleaner@v1
+        with:
+          owner-type: org
+          token: ${{ secrets.GH_TOKEN }}
+          repository_owner: ${{ github.repository_owner }}
+          package-name: ${{ env.APP_NAME }}
+          delete-untagged: true
+          delete-tags: true
+          keep-latest: 3
