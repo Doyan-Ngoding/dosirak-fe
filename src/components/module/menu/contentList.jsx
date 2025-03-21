@@ -255,7 +255,7 @@ export default function ContentListComp() {
                                 }
                                 placeholder="Category Menu"
                                 options={
-                                    listCategory.map(val => ({
+                                    listCategory && listCategory.map(val => ({
                                         label: val.name, 
                                         value: val.name
                                     }))
