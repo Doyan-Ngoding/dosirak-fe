@@ -40,7 +40,7 @@ const Menu = ({children }) => {
         axios.get(`${import.meta.env.VITE_API_BE}/categories`)
         .then(res => {
             setListCategory(res.data.results)
-            setTabCategory(res.data.results?.map(item => item.name))
+            setTabCategory(res.data.results && res.data.results?.map(item => item.name))
         })
         .catch(err => {
             console.log(err)
@@ -51,7 +51,7 @@ const Menu = ({children }) => {
         axios.get(`${import.meta.env.VITE_API_BE}/restaurants`)
         .then(res => {
             setListRestaurant(res.data.results)
-            setTabRestaurant(res.data.results?.map(item => item.name))
+            setTabRestaurant(res.data.results && res.data.results?.map(item => item.name))
         })
         .catch(err => {
             console.log(err)
