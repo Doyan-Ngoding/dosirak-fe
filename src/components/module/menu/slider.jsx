@@ -67,8 +67,8 @@ export default function SliderComp() {
                             className='bebas-neue-regular font-medium lg:text-[80px] md:text-[42px] text-[30px]'
                         >
                             <div>
-                                <div className='text-white flex items-center'><div>{text1}</div><img src='/assets/icon/fire.png' style={{ width: setSize('8%', '5%', '6%'), height: '2%', paddingBottom: setSize('15px', '10px', '8px') }}/></div>
-                                <div className='leading-[10px] text-white'>{text2}</div>
+                                <div className='text-[#FFF948] flex items-center'><div>{text1}</div><img src='/assets/icon/fire.png' style={{ width: setSize('8%', '5%', '6%'), height: '2%', paddingBottom: setSize('15px', '10px', '8px') }}/></div>
+                                <div className='leading-[10px] text-[#FFF948]'>{text2}</div>
                             </div>
                         </div>
                         <div
@@ -107,7 +107,7 @@ export default function SliderComp() {
             {/* <Carousel> */}
             <Carousel autoplay>
                 <div
-                    className={`bg-[url(/assets/cover/banner-1.png)] bg-cover bg-bottom bg-no-repeat lg:h-[75vh] md:h-[350px] h-[250px] w-full max-w-full xl:w-[100%]`}
+                    className={`bg-[url(/assets/cover/banner-1.png)] bg-cover bg-center bg-no-repeat lg:h-[100vh] md:h-[350px] h-[250px] w-full max-w-full xl:w-[100%]`}
                 >
                     <ChildComp 
                         text1="TASTE THE LEGEND"
@@ -115,7 +115,7 @@ export default function SliderComp() {
                     />
                 </div>
                 <div
-                    className={`bg-[url(/assets/cover/banner-2.png)] bg-cover bg-bottom bg-no-repeat lg:h-[75vh] md:h-[350px] h-[250px] w-full max-w-full xl:w-[100%]`}
+                    className={`bg-[url(/assets/cover/banner-2.png)] bg-cover bg-center bg-no-repeat lg:h-[100vh] md:h-[350px] h-[250px] w-full max-w-full xl:w-[100%]`}
                 >
                     <ChildComp 
                         text1="FIRST ORDER SPESIAL!"
@@ -123,7 +123,7 @@ export default function SliderComp() {
                     />
                 </div>
                 <div
-                    className={`bg-[url(/assets/cover/banner-3.png)] bg-cover bg-bottom bg-no-repeat lg:h-[75vh] md:h-[350px] h-[250px] w-full max-w-full xl:w-[100%]`}
+                    className={`bg-[url(/assets/cover/banner-3.png)] bg-cover bg-center bg-no-repeat lg:h-[100vh] md:h-[350px] h-[250px] w-full max-w-full xl:w-[100%]`}
                 >
                     <ChildComp 
                         text1="TASTE KOREA, ONE BOX AT A TIME!"
