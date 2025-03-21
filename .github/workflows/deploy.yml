@@ -40,12 +40,13 @@ jobs:
             docker pull ghcr.io/doyan-ngoding/${{ env.APP_NAME }}:latest
             docker stop ${{ env.APP_NAME }} || true
             docker rm ${{ env.APP_NAME }} || true
+            echo '${{ secrets.PROD_ENV_FILE }}' > .env
+            echo '${{ secrets.PROD_ENV_FILE }}' > .env.production
             docker run -d --restart=always --name ${{ env.APP_NAME }} -p 3007:3000 \
-              -e "VITE_API_BE='https://api.kdosirak.com/api" \
-              -e "VITE_URL_BE='https://api.kdosirak.com/api" \
-              -e "VITE_LOCATIONIQ_API_KEY=${{ env.APP_HOST }}" \
               -e "NODE_ENV=production" \
               "ghcr.io/doyan-ngoding/${{ env.APP_NAME }}:latest"
+            rm .env
+            rm .env.production
 
       - name: Clean up images
         run: |
