@@ -136,8 +136,8 @@ const Restaurant = ({children }) => {
         axios.get(`${import.meta.env.VITE_API_BE}/sub-restaurants?restaurant_name=${selectedResto ? selectedResto : ""}`)
         .then(res => {
             setListSubRestaurant(res.data.results)
-            setSelectedSubRestaurant(res.data.results.length > 0 && res.data.results?.[0].id)
-            setSubRestoAddress(res.data.results.length > 0 && (
+            setSelectedSubRestaurant((res.data.results && res.data.results.length > 0) && res.data.results?.[0].id)
+            setSubRestoAddress((res.data.results && res.data.results.length > 0) && (
                 {
                     coordinates: {
                         lat: res.data.results?.[0].latitude,
