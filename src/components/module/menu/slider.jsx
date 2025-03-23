@@ -107,7 +107,7 @@ export default function SliderComp() {
             {/* <Carousel> */}
             <Carousel autoplay>
                 <div
-                    className={`bg-[url(/assets/cover/banner-1.png)] bg-cover bg-center bg-no-repeat lg:h-[100vh] md:h-[350px] h-[250px] w-full max-w-full xl:w-[100%]`}
+                    className={`bg-[url(/assets/cover/banners-1.png)] bg-cover bg-center bg-no-repeat lg:h-[100vh] md:h-[350px] h-[250px] w-full max-w-full xl:w-[100%]`}
                 >
                     <ChildComp 
                         text1="TASTE THE LEGEND"
@@ -115,7 +115,7 @@ export default function SliderComp() {
                     />
                 </div>
                 <div
-                    className={`bg-[url(/assets/cover/banner-2.png)] bg-cover bg-center bg-no-repeat lg:h-[100vh] md:h-[350px] h-[250px] w-full max-w-full xl:w-[100%]`}
+                    className={`bg-[url(/assets/cover/banners-2.png)] bg-cover bg-center bg-no-repeat lg:h-[100vh] md:h-[350px] h-[250px] w-full max-w-full xl:w-[100%]`}
                 >
                     <ChildComp 
                         text1="FIRST ORDER SPESIAL!"
@@ -123,7 +123,7 @@ export default function SliderComp() {
                     />
                 </div>
                 <div
-                    className={`bg-[url(/assets/cover/banner-3.png)] bg-cover bg-center bg-no-repeat lg:h-[100vh] md:h-[350px] h-[250px] w-full max-w-full xl:w-[100%]`}
+                    className={`bg-[url(/assets/cover/banners-3.png)] bg-cover bg-center bg-no-repeat lg:h-[100vh] md:h-[350px] h-[250px] w-full max-w-full xl:w-[100%]`}
                 >
                     <ChildComp 
                         text1="TASTE KOREA, ONE BOX AT A TIME!"
