@@ -119,7 +119,7 @@ export default function SliderComp() {
                 >
                     <ChildComp 
                         text1="FIRST ORDER SPESIAL!"
-                        text2="FIND YOUR FAVORITE KOREAN DISH"
+                        text2="FIND YOUR FAVORITE KOREAN DISH!"
                     />
                 </div>
                 <div
