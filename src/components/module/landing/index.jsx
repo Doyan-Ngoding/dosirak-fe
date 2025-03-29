@@ -12,6 +12,7 @@ import TestimoniComp from './testimoni'
 import OperationalComp from './operational'
 import LocationComp from './location'
 import FooterComp from './footer'
+import RestoComp from './resto'
 
 export default function LandingComp() {
     return (
@@ -34,10 +35,11 @@ export default function LandingComp() {
                     <Col
                         span={24}
                     >
-                        <SplitComp 
+                        {/* <SplitComp 
                             img={"/assets/cover/resto.png"}
                             type='resto'
-                        />       
+                        />        */}
+                        <RestoComp />
                     </Col>
                     <Col
                         span={24}

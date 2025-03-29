@@ -45,7 +45,7 @@ export default function ModalDetailOrder({
                         >
                             Order Number
                         </div>
-                        <div>
+                        <div className='w-[70%]'>
                             : {data && data.format_id}
                         </div>
                     </div>
@@ -57,7 +57,7 @@ export default function ModalDetailOrder({
                         >
                             Name
                         </div>
-                        <div>
+                        <div className='w-[70%]'>
                             : {data && data.name}
                         </div>
                     </div>
@@ -69,7 +69,7 @@ export default function ModalDetailOrder({
                         >
                             Pre Order Date
                         </div>
-                        <div>
+                        <div className='w-[70%]'>
                             : {data && dayjs(data.pre_order).format('dddd, DD MMM YYYY HH:mm') + '-' + dayjs(data.pre_order).add(1, 'hour').format('HH:mm')}
                         </div>
                     </div>
@@ -81,7 +81,7 @@ export default function ModalDetailOrder({
                         >
                             Address
                         </div>
-                        <div>
+                        <div className='w-[70%]'>
                             : {data && data.address_order}
                         </div>
                     </div>
@@ -93,7 +93,7 @@ export default function ModalDetailOrder({
                         >
                             Status
                         </div>
-                        <div>
+                        <div className='w-[70%]'>
                             : {data && (data.status === 'success' ? 'Success Payment' : data.status)}
                         </div>
                     </div>

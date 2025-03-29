@@ -95,7 +95,7 @@ export default function HeaderComp() {
                                                 size={30}
                                             />
                                             <div>
-                                                <img src='/assets/logo.png' alt='Logo Dosirak' width={setSize("70%", "60%", "80%")} style={{ paddingLeft: setSize(0, 10, 10), paddingRight: setSize(0, 0, 40) }}/>
+                                                <img src='/assets/logos.png' alt='Logo Dosirak' width={setSize("60px", "45px", "35px")} style={{ paddingLeft: setSize(0, 5, 5) }}/>
                                             </div>
                                         </Col>
                                     )
@@ -107,7 +107,7 @@ export default function HeaderComp() {
                                                 style={{ margin: !isStandard ? '0 auto' : ''}}
                                             >
                                                 <div className='flex justify-center'>   
-                                                    <img src='/assets/logo.png' alt='Logo Dosirak' width={setSize("70%", "75%", "60%")} style={{ paddingLeft: setSize(0, 100, 0), paddingRight: setSize(0, 0, 40) }}/>
+                                                    <img src='/assets/logos.png' alt='Logo Dosirak' width={setSize("60px", "45px", "35px")} style={{ paddingLeft: setSize(0, 100, 0), paddingRight: setSize(10, 0, 40) }}/>
                                                 </div>
                                             </Col>
                                             <Col

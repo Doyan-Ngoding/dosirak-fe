@@ -571,7 +571,7 @@ export default function ContentListComp() {
                                                         onChange={(e) => {setSelectedSubRestaurant(e), getDetailSubRestaurant((e))}}
                                                         className='lg:w-[95%] md:w-[90%] w-[100%]'
                                                         style={{
-                                                            width: 'auto'
+                                                            width: '90%'
                                                         }}
                                                     />
                                                 </ConfigProvider>

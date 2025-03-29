@@ -2,6 +2,7 @@ import React from 'react'
 import { Button, Carousel, ConfigProvider } from 'antd'
 import { useAuth } from '../../../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
+import { IconChevronRight, IconToolsKitchen2 } from '@tabler/icons-react'
 
 export default function CoverComp() {
 
@@ -43,7 +44,7 @@ export default function CoverComp() {
                         }}
                         onClick={() => navigate('/order')}
                     >
-                        SET SCHEDULE ORDER →
+                        SET SCHEDULE ORDER <IconChevronRight size={setSize(16, 14, 10)} />
                     </Button>
                     <Button
                         size={setSize('large', 'medium', 'small')}
@@ -54,7 +55,7 @@ export default function CoverComp() {
                         }}
                         onClick={() => navigate('/menu')}
                     >
-                        EXPLORE MENU →
+                        EXPLORE MENU <IconToolsKitchen2 size={setSize(16, 14, 10)} />
                     </Button>
                 </ConfigProvider>
             </div>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Carousel, ConfigProvider } from 'antd';
 import { useAuth } from '../../../context/AuthContext';
-import { IconRosetteDiscount } from '@tabler/icons-react';
+import { IconChevronRight, IconRosetteDiscount } from '@tabler/icons-react';
 
 const contentStyle = {
     height: '160px',
@@ -67,8 +67,8 @@ export default function SliderComp() {
                             className='bebas-neue-regular font-medium lg:text-[80px] md:text-[42px] text-[30px]'
                         >
                             <div>
-                                <div className='text-[#FFF948] flex items-center'><div>{text1}</div><img src='/assets/icon/fire.png' style={{ width: setSize('8%', '5%', '6%'), height: '2%', paddingBottom: setSize('15px', '10px', '8px') }}/></div>
-                                <div className='leading-[10px] text-[#FFF948]'>{text2}</div>
+                                <div className='text-[#FFFFFF] flex items-center'><div>{text1}</div><img src='/assets/icon/fire.png' style={{ width: setSize('8%', '5%', '6%'), height: '2%', paddingBottom: setSize('15px', '10px', '8px') }}/></div>
+                                <div className='leading-[10px] text-[#FFFFFF]'>{text2}</div>
                             </div>
                         </div>
                         <div
@@ -93,7 +93,7 @@ export default function SliderComp() {
                                     height: isMobile && 20
                                 }}
                             >
-                                ORDER NOW & GRAB PROMO →
+                                ORDER NOW & GRAB PROMO <IconChevronRight size={setSize(16, 14, 10)} />
                             </Button>
                         </div>
                     </div>
@@ -106,24 +106,24 @@ export default function SliderComp() {
         <>
             {/* <Carousel> */}
             <Carousel autoplay>
-                <div
-                    className={`bg-[url(/assets/cover/banners-1.png)] bg-cover bg-center bg-no-repeat lg:h-[100vh] md:h-[350px] h-[250px] w-full max-w-full xl:w-[100%]`}
+                {/* <div
+                    className={`bg-[url(/assets/cover/banners-1.png)] bg-cover bg-center bg-no-repeat w-full max-w-full xl:w-[100%] aspect-[16/9]`}
                 >
                     <ChildComp 
                         text1="TASTE THE LEGEND"
                         text2="PAIK'S NOODLES X DOSIRAK PROMO!"
                     />
-                </div>
+                </div> */}
                 <div
-                    className={`bg-[url(/assets/cover/banners-2.png)] bg-cover bg-center bg-no-repeat lg:h-[100vh] md:h-[350px] h-[250px] w-full max-w-full xl:w-[100%]`}
+                    className={`bg-[url(/assets/cover/banners-2.png)] bg-cover bg-center bg-no-repeat w-full max-w-full xl:w-[100%] aspect-[16/9]`}
                 >
                     <ChildComp 
                         text1="FIRST ORDER SPESIAL!"
-                        text2="FIND YOUR FAVORITE KOREAN DISH"
+                        text2="FIND YOUR FAVORITE KOREAN DISH!"
                     />
                 </div>
                 <div
-                    className={`bg-[url(/assets/cover/banners-3.png)] bg-cover bg-center bg-no-repeat lg:h-[100vh] md:h-[350px] h-[250px] w-full max-w-full xl:w-[100%]`}
+                    className={`bg-[url(/assets/cover/banners-3.png)] bg-cover bg-center bg-no-repeat w-full max-w-full xl:w-[100%] aspect-[16/9]`}
                 >
                     <ChildComp 
                         text1="TASTE KOREA, ONE BOX AT A TIME!"
