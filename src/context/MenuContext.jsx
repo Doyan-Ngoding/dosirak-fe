@@ -6,6 +6,7 @@ import React, {
     useState,
 } from 'react'
 import { useAuth } from './AuthContext';
+import { useLocation } from 'react-router-dom';
 
 const MenuContext = createContext(null)
 
@@ -36,6 +37,13 @@ const Menu = ({children }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [resMessage, setResMessage] = useState();
 
+    const location = useLocation()
+
+    const searchVal = (location && location.search) ? location.search.split('=')[1].replace('%20', ' ') : ''
+
+    console.log(searchVal);
+    
+
     const getListCategory = () => {
         axios.get(`${import.meta.env.VITE_API_BE}/categories`)
         .then(res => {
@@ -50,8 +58,18 @@ const Menu = ({children }) => {
     const getListRestauran = () => {
         axios.get(`${import.meta.env.VITE_API_BE}/restaurants`)
         .then(res => {
-            setListRestaurant(res.data.results)
-            setTabRestaurant(res.data.results && res.data.results?.map(item => item.name))
+            if (searchVal) {
+                setListRestaurant(res.data.results.filter(value => value.name === searchVal))
+                console.log(res.data.results.filter(value => value.name === searchVal));
+                
+                setTabRestaurant(res.data.results && res.data.results.filter(value => value.name === searchVal)?.map(item => item.name))
+            } else {
+                setListRestaurant(res.data.results)
+                console.log(res.data.results);
+                
+                setTabRestaurant(res.data.results && res.data.results?.map(item => item.name))
+            }
+           
         })
         .catch(err => {
             console.log(err)

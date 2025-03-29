@@ -340,6 +340,17 @@ const Order = ({children }) => {
         }) 
     }
 
+    const showPosition = (pos) => {
+        const crd = pos.coords;
+        validAddress2(crd.longitude, crd.latitude)
+    }
+
+    useEffect(() => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        }
+    }, []);
+
     const state = {
         menuSearched, setMenuSearched,
 

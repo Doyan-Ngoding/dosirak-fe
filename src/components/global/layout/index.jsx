@@ -57,7 +57,7 @@ export default function LayoutComp(props) {
                             isStandard && (
                                 <>
                                     <div>   
-                                        <img src='/assets/logo.png' alt='Logo Dosirak' width={setSize("70%", "75%", "60%")} />
+                                        <img src='/assets/logos.png' alt='Logo Dosirak' width={setSize("60px", "45px", "35px")} />
                                     </div>
                                     <Menu
                                         theme='light'
