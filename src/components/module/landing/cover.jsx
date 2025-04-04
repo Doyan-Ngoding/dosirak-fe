@@ -11,10 +11,10 @@ export default function CoverComp() {
 
     const ChildComp = ({text1 = '', text2 = ''}) => (
         <div
-            className='absolute lg:bottom-20 md:bottom-10 bottom-10 left-1/2 transform -translate-x-1/2 w-full text-center'  
+            className='w-full text-center flex justify-center'  
         >
             <div
-                className='bebas-neue-regular font-medium lg:text-[85px] md:text-[60px] text-[30px]'
+                className='absolute bottom-20 bebas-neue-regular font-medium lg:text-[85px] md:text-[60px] text-[30px]'
             >
                 <div>
                 <div className='lg:leading-[30px] md:leading-[15px] leading-[10px] text-white'>{text1}</div>
@@ -22,7 +22,7 @@ export default function CoverComp() {
                 </div>
             </div>
             <div
-                className='font-[Plus Jakarta Sans] flex justify-center gap-3'
+                className='absolute bottom-10 font-[Plus Jakarta Sans] flex justify-center gap-3'
             >
                 <ConfigProvider
                     theme={{
@@ -64,10 +64,7 @@ export default function CoverComp() {
 
     return (
         <>
-            <Carousel>
-                <div
-                    className='!w-[100%]'
-                >
+            <Carousel autoplay>
                     <div
                         className={`bg-[url(/assets/cover/menu.png)] bg-cover bg-center bg-no-repeat lg:h-[100vh] md:h-[500px] h-[300px] w-full max-w-full xl:w-[100%]`}
                     >
@@ -75,8 +72,23 @@ export default function CoverComp() {
                             text1='AUTHENTIC KOREAN LUNCH BOXES,'
                             text2='DELIVERED FRESH & HEALTHY!'
                        />
+                    </div> 
+                    <div
+                        className={`bg-[url(/assets/cover/banners-2.png)] bg-cover bg-center bg-no-repeat lg:h-[100vh] md:h-[500px] h-[300px] w-full max-w-full xl:w-[100%]`}
+                    >
+                       <ChildComp 
+                            text1='AUTHENTIC KOREAN LUNCH BOXES,'
+                            text2='DELIVERED FRESH & HEALTHY!'
+                       />
                     </div>
-                </div>
+                    <div
+                        className={`bg-[url(/assets/cover/banners-3.png)] bg-cover bg-center bg-no-repeat lg:h-[100vh] md:h-[500px] h-[300px] w-full max-w-full xl:w-[100%]`}
+                    >
+                       <ChildComp 
+                            text1='AUTHENTIC KOREAN LUNCH BOXES,'
+                            text2='DELIVERED FRESH & HEALTHY!'
+                       />
+                    </div>
             </Carousel>
         </>
     )

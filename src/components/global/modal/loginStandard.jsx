@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { 
     Button,
+    Divider,
     Form,
     Input,
     message,
@@ -97,7 +98,24 @@ export default function LoginStandard({
                             Log In
                         </Button>
                     </Form.Item>
-                    <div className="w-full flex justify-center font-semibold mt-[-10px]">Don't have an account? <span className='text-[#E83600] ml-2 cursor-pointer hover:text-[#FA5523]' onClick={() => {setModalSignup(true), setIsOpen(false)}}>Sign Up</span></div>
+                    <Divider>
+                        OR
+                    </Divider>
+                    <Button 
+                        className="flex items-center w-full py-3 rounded-full border-gray-300 shadow-sm" 
+                        icon={<img src='/assets/icon/icon-google.png' width={setSize('30px', '20px', '20px')}/>} 
+                        size={setSize('large', 'medium', 'small')}
+                    >
+                        Sign in with Google
+                    </Button>
+                    <Button 
+                        className="flex items-center w-full py-3 rounded-full border-gray-300 shadow-sm mt-3" 
+                        icon={<img src='/assets/icon/icon-facebook.png' width={setSize('32px', '22px', '20px')}/>} 
+                        size={setSize('large', 'medium', 'small')}
+                    >
+                        Sign in with Facebook
+                    </Button>
+                    <div className="w-full flex justify-center font-semibold mt-[20px]">Don't have an account? <span className='text-[#E83600] ml-2 cursor-pointer hover:text-[#FA5523]' onClick={() => {setModalSignup(true), setIsOpen(false)}}>Sign Up</span></div>
                 </Form>
             </Modal>    
         </>

@@ -9,6 +9,7 @@ import React, {
 import { useMediaQuery } from 'react-responsive'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useLocalStorage } from "react-use"
+import { useGoogleLogin } from '@react-oauth/google';
 
 const AuthContext = createContext(null)
 
@@ -220,6 +221,20 @@ const Auth = ({children }) => {
             navigate("/")
         }, 1000)
     }
+
+    const handleLoginSuccessGoogle = (response) => {
+        setToken(response.access_token)
+    }
+
+    const handleLoginErrorGoogle = (error) => {
+        setResMessage(['error', 'Log In Failed!'])
+        console.error('Login Failed:', error);
+    };
+
+    const handleLoginGoogle = useGoogleLogin({
+        onSuccess: handleLoginSuccessGoogle,
+        onError: handleLoginErrorGoogle,
+    });
     
     const state = {
         modalLogin, setModalLogin,
@@ -243,6 +258,8 @@ const Auth = ({children }) => {
         allowAdmin,
 
         resMessage, setResMessage,
+
+        handleLoginGoogle,
     }
 
     return (

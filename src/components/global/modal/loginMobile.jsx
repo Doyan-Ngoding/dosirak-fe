@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { 
     Button,
+    Divider,
     Drawer, 
     Form,
     Input,
@@ -21,7 +22,8 @@ export default function LoginMobile({
         setSize,
         setModalForgot, 
         setModalSignup,
-        resMessage
+        resMessage,
+        handleLoginGoogle
     } = useAuth()
 
     const [messageApi, contextHolder] = message.useMessage();
@@ -132,7 +134,26 @@ export default function LoginMobile({
                             Log In
                         </Button>
                     </Form.Item>
-                    <div className="w-full flex justify-center font-semibold mt-[-10px] text-[12px]">Don't have an account? <span className='text-[#E83600] ml-2  cursor-pointer hover:text-[#FA5523]' onClick={() => {setModalSignup(true), setIsOpen(false)}}>Sign Up</span></div>
+                    <Divider style={{ fontSize: 12 }}>
+                        OR
+                    </Divider>
+                    <Button 
+                        className="flex items-center w-full py-3 rounded-full border-gray-300 shadow-sm" 
+                        icon={<img src='/assets/icon/icon-google.png' width={'20px'}/>} 
+                        size="small"
+                        // onClick={handleLoginGoogle}
+                    >
+                        Sign in with Google
+                    </Button>
+                    <Button 
+                        className="flex items-center w-full py-3 rounded-full border-gray-300 shadow-sm mt-2" 
+                        icon={<img src='/assets/icon/icon-facebook.png' width={'22px'}/>} 
+                        size="small"
+                        // onClick={handleLoginGoogle}
+                    >
+                        Sign in with Facebook
+                    </Button>
+                    <div className="w-full flex justify-center font-semibold mt-[10px] text-[12px]">Don't have an account? <span className='text-[#E83600] ml-2  cursor-pointer hover:text-[#FA5523]' onClick={() => {setModalSignup(true), setIsOpen(false)}}>Sign Up</span></div>
                 </Form>
             </Drawer>
         </>
