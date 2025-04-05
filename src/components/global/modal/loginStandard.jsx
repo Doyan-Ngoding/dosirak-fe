@@ -22,7 +22,8 @@ export default function LoginStandard({
         setSize,
         setModalForgot,
         setModalSignup,
-        resMessage
+        resMessage,
+        handleLoginGoogle
     } = useAuth()
 
     const [messageApi, contextHolder] = message.useMessage();
@@ -105,6 +106,7 @@ export default function LoginStandard({
                         className="flex items-center w-full py-3 rounded-full border-gray-300 shadow-sm" 
                         icon={<img src='/assets/icon/icon-google.png' width={setSize('30px', '20px', '20px')}/>} 
                         size={setSize('large', 'medium', 'small')}
+                        onClick={handleLoginGoogle}
                     >
                         Sign in with Google
                     </Button>

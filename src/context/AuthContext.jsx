@@ -222,8 +222,77 @@ const Auth = ({children }) => {
         }, 1000)
     }
 
-    const handleLoginSuccessGoogle = (response) => {
-        setToken(response.access_token)
+    const handleLoginSuccessGoogle = async (credential) => {
+        try {
+            // setIsLoading(true)
+            const googleUserInfo = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
+                headers: {
+                  Authorization: `Bearer ${credential.access_token}`,
+                },
+            });
+
+            const { email, name } = googleUserInfo.data;
+
+            const res = await axios.post(`${import.meta.env.VITE_API_BE}/google-login`, {
+                email,
+                name,
+            });
+          
+            console.log(res)
+            setToken(res.data.results.token); 
+            getUserAuth(res.data.results.token);
+            // setIsLoading(false);
+            axios.get(`${import.meta.env.VITE_API_BE}/auth/me`, {
+                headers: {
+                    Authorization: `Bearer ${res.data.results.token}`,
+                },
+            })
+            .then(res => {
+                setAuthUser(res.data.user)
+                if (res.data.user) {
+                    if (pathname === '/cms/login') {
+                        if (res.data.user?.role === 'superadmin' || res.data.user?.role === 'employee') {
+                            setResMessage(['success', 'Log In Success!'])
+                            setTimeout(() => {
+                                navigate('/cms');
+                            }, 2000)
+                        } else {
+                            setResMessage(['error', 'Log In Failed! Your Not an Admin!'])
+                            setTimeout(() => {
+                                navigate('/cms/login')  
+                            }, 2000)
+                        }
+                    } else if (pathname === '/order') {
+                        if (res.data.user?.role === 'user') {
+                            setModalLogin(false);
+                            if (localStorage.getItem("cart") && JSON.parse(localStorage.getItem("cart")).length > 0) {
+                                setResMessage(['success', 'Log In Success!'])
+                                setTimeout(() => {
+                                    navigate('/order-summary');
+                                }, 2000)
+                            } else {
+                                setResMessage(['success', 'Log In Success!'])
+                                setTimeout(() => {
+                                    navigate('/order');
+                                }, 2000)
+                            }
+                        } else {
+                            setResMessage(['error', 'Log In Failed! Your No a User!'])
+                            setTimeout(() => {
+                                navigate('/')
+                            }, 2000)
+                        }
+                    } 
+                } 
+            })
+            .catch(err => {
+                // setIsLoading(false);
+                setResMessage(['error', err.response?.data?.message || "Login failed!"])
+            })  
+          } catch (err) {
+            setResMessage(['error', 'Google login failed']);
+            console.error(err);
+          }
     }
 
     const handleLoginErrorGoogle = (error) => {
@@ -235,6 +304,43 @@ const Auth = ({children }) => {
         onSuccess: handleLoginSuccessGoogle,
         onError: handleLoginErrorGoogle,
     });
+
+    
+    // const handleLoginGoogle = () => {
+    //     window.google.accounts.id.initialize({
+    //       client_id: `${import.meta.env.VITE_GOOGLE_CLIENT_ID}`,
+    //       callback: async (response) => {
+    //         try {
+    //           const res = await axios.post(`${import.meta.env.VITE_API_BE}/google-login`, {
+    //             credential: response.credential,
+    //           });
+    
+    //           const token = res.data.results.token;
+    //           localStorage.setItem('token', token);
+    
+    //           setResMessage(['success', 'Login with Google successful!']);
+    //         } catch (err) {
+    //           setResMessage(['error', 'Login with Google failed']);
+    //         }
+    //       },
+    //     });
+    
+    //     // window.google.accounts.id.prompt(); 
+    
+    //     window.google.accounts.id.renderButton(
+    //       document.getElementById('google-btn'),
+    //       { theme: 'outline', size: 'large' }
+    //     );
+    //   };
+    
+    // const handleLoginGoogle = () => {
+    //     window.google.accounts.id.initialize({
+    //         client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+    //         callback: handleLoginSuccessGoogle, // will receive { credential }
+    //     });
+    
+    //     window.google.accounts.id.prompt(); // shows the One Tap or popup
+    // };
     
     const state = {
         modalLogin, setModalLogin,
@@ -260,6 +366,7 @@ const Auth = ({children }) => {
         resMessage, setResMessage,
 
         handleLoginGoogle,
+
     }
 
     return (

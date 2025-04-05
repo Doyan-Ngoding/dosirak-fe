@@ -141,7 +141,7 @@ export default function LoginMobile({
                         className="flex items-center w-full py-3 rounded-full border-gray-300 shadow-sm" 
                         icon={<img src='/assets/icon/icon-google.png' width={'20px'}/>} 
                         size="small"
-                        // onClick={handleLoginGoogle}
+                        onClick={handleLoginGoogle}
                     >
                         Sign in with Google
                     </Button>
