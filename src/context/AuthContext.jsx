@@ -341,6 +341,29 @@ const Auth = ({children }) => {
     
     //     window.google.accounts.id.prompt(); // shows the One Tap or popup
     // };
+
+    const handleLoginSuccessFacebook = async (res) => {
+        try {
+            console.log(res);
+            
+            const response = await axios.post(`${import.meta.env.VITE_API_BE}/facebook-login`, {
+                accessToken: res.accessToken,
+            });
+        
+            setToken(response.data.results.token);
+            setModalLogin(false);
+            setResMessage(['success', 'Facebook login success']);
+        } catch (err) {
+            console.error(err);
+            setResMessage(['error', 'Facebook login failed']);
+        }
+    };
+    
+    const handleLoginErrorFacebook = (err) => {
+        console.error('Facebook login failed:', err);
+        setResMessage(['error', 'Facebook login failed']);
+    };
+            
     
     const state = {
         modalLogin, setModalLogin,
@@ -366,7 +389,8 @@ const Auth = ({children }) => {
         resMessage, setResMessage,
 
         handleLoginGoogle,
-
+        handleLoginSuccessFacebook,
+        handleLoginErrorFacebook,
     }
 
     return (
