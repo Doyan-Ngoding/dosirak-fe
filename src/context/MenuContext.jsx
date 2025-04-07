@@ -191,9 +191,7 @@ const Menu = ({children }) => {
         formData.append("name", rules.name);
         formData.append("description", rules.description);
         formData.append("price", rules.price || 0);
-        formData.append("base_price", rules.base_price || ""); 
-        formData.append("variant", rules.variants || "");       
-        formData.append("size", rules.size || "");             
+        formData.append("variant", JSON.stringify(rules.variants) || "");       
         formData.append("is_parent_menu", rules.is_parent_menu === "false" ? false : true); 
         formData.append("updated_by", authUser && authUser?.name);
         formData.append("image", rules.image?.originFileObj);

@@ -160,6 +160,7 @@ export const columnProductList = (data = [], getDetail, modalEdit, handleDelete)
             title: 'Product Name',
             key: 'name',
             dataIndex: 'name',
+            width: 200,
             sorter: (a, b) => String(a.name || '').localeCompare(String(b.name || '')),
             ...iconSort(),
         },
@@ -167,6 +168,7 @@ export const columnProductList = (data = [], getDetail, modalEdit, handleDelete)
             title: 'Description',
             key: 'description',
             dataIndex: 'description',
+            width: 250,
         },
         // {
         //     title: 'Qty',
@@ -179,9 +181,38 @@ export const columnProductList = (data = [], getDetail, modalEdit, handleDelete)
             title: 'Price',
             key: 'price',
             dataIndex: 'price',
+            width: 150,
             render: (text) => 'Rp. ' + (text ? parseFloat(text).toLocaleString() : '-'),
             sorter: (a, b) => String(a.price || '').localeCompare(String(b.price || '')),
             ...iconSort(),
+        },
+        {
+            title: 'Variant',
+            key: 'variant',
+            dataIndex: 'variant',
+            width: 250,
+            render: (text) => (
+                text ? (
+                    <dl>
+                        {
+                            JSON.parse(text).map(value => (
+                                <>
+                                    <dt style={{ fontWeight: 'bold' }}>
+                                        {value.variant}
+                                    </dt>
+                                    {
+                                        value.sizes.map(val => (
+                                            <>
+                                                <dd>- {val.size}: Rp. {parseFloat(val.base_price).toLocaleString()}</dd>       
+                                            </>
+                                        ))
+                                    }
+                                </>
+                            ))
+                        }
+                    </dl>
+                ) : '-'
+            )
         },
         {
             title: 'Category',

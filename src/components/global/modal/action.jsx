@@ -61,18 +61,27 @@ export default function Action({
 
     useEffect(() => {
         if (data) {
-            (data && formItems) && (
-                form.setFieldsValue(
-                    formItems.reduce((acc, field) => {
-                        if (field.name !== "password") {
-                            acc[field.name] = data[field.name];
-                        }
-                        return acc;
-                    }, {})
-                )
-            ) 
+            const initialValues = formItems.reduce((acc, field) => {
+              if (field.name !== "password") {
+                if (field.name === "variants" && typeof data["variant"] === "string") {
+                  try {
+                    acc["variants"] = JSON.parse(data["variant"]);
+                  } catch (e) {
+                    acc["variants"] = [];
+                  }
+                } else if (field.name === "is_parent_menu") {
+                  acc["is_parent_menu"] = String(data["is_parent_menu"]);
+                  setIsParent(String(data["is_parent_menu"]));
+                } else {
+                  acc[field.name] = data[field.name];
+                }
+              }
+              return acc;
+            }, {});
+        
+            form.setFieldsValue(initialValues);
         }
-    }, [data]);
+    }, [data, formItems]);
 
     const dummyRequest = ({ file, onSuccess }) => {
         setTimeout(() => {
