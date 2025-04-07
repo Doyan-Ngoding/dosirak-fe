@@ -1,18 +1,17 @@
-import React, { useEffect } from "react";
-import LayoutComp from "../../../global/layout";
-import { Button, Col, message, Row } from "antd";
-import { useAuth } from "../../../../context/AuthContext";
-import { useOrder } from "../../../../context/OrderContext";
-import CardTitleStep from "../../../global/title/cardTitleStep";
-import { IconCreditCardPay } from "@tabler/icons-react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+    import React, { useEffect } from "react";
+    import LayoutComp from "../../../global/layout";
+    import { Button, Col, message, Row } from "antd";
+    import { useAuth } from "../../../../context/AuthContext";
+    import { useOrder } from "../../../../context/OrderContext";
+    import CardTitleStep from "../../../global/title/cardTitleStep";
+    import { IconCreditCardPay } from "@tabler/icons-react";
+    import { useNavigate } from "react-router-dom";
+    import axios from "axios";
 
-export default function RedirectComp() {
+    export default function RedirectComp() {
     const navigate = useNavigate();
     const { setSize, resMessage, setResMessage, token, authUser } = useAuth();
-    const { currStep, setCurrStep, resMessageOrder, resPayment, linkPayment } =
-        useOrder();
+    const { currStep, setCurrStep, resMessageOrder, resPayment } = useOrder();
 
     const [messageApi, contextHolder] = message.useMessage();
 
@@ -44,45 +43,69 @@ export default function RedirectComp() {
     }, [resMessageOrder, messageApi]);
 
     useEffect(() => {
-        if (resPayment?.status === "pending") {
-        const timer = setTimeout(() => {
-            window.open(linkPayment, "_blank");
-        }, 3000);
-        return () => clearTimeout(timer);
-        }
-    }, [resPayment, linkPayment]);
-
-    useEffect(() => {
-        if (!resPayment || !resPayment.order_id) return;
-
-    console.log("Start interval to check payment status");
-    const interval = setInterval(async () => {
-        try {
-            console.log("Fetching payment status...");
-            const response = await axios.get(
-                `${import.meta.env.VITE_API_BE}/invoices/${resPayment.id}`
-            );
-            const updatedStatus = response.data?.data?.status;
-            console.log("Updated status:", updatedStatus);
-
-            if (["paid", "success", "settlement"].includes(updatedStatus)) {
-                clearInterval(interval);
-                navigate("/complete");
-                // setTimeout(() => {
-                //     localStorage.removeItem("linkPayment");
-                //     localStorage.removeItem("resPayment");
-                // }, 1000);
+            if (resPayment?.status === "pending") {
+            const timer = setTimeout(() => {
+                navigate(`/payment-details/${resPayment?.order_id}`, {
+                state: { payment: resPayment },
+                });
+            }, 3000);
+            return () => clearTimeout(timer);
             }
-        } catch (error) {
-            console.error("Failed to fetch payment status:", error);
-        }
-    }, 5000);
+        }, [resPayment, navigate]);
 
-    return () => {
-        console.log("Clearing interval...");
-        clearInterval(interval);
-    };
-}, [resPayment, navigate]);
+            useEffect(() => {
+                if (!resPayment || !resPayment.order_id) return;
+            
+                console.log("Start interval to check payment status");
+                const interval = setInterval(async () => {
+                try {
+                    console.log("Fetching payment status...");
+                    const response = await axios.get(
+                    `${import.meta.env.VITE_API_BE}/invoices/${resPayment.id}`
+                    );
+                    const updatedStatus = response.data?.data?.status;
+                    console.log("Updated status:", updatedStatus);
+            
+                    if (["paid", "success", "settlement"].includes(updatedStatus)) {
+                    clearInterval(interval);
+                    navigate("/complete");
+                    }
+                } catch (error) {
+                    console.error("Failed to fetch payment status:", error);
+                }
+                }, 5000);
+            
+                return () => {
+                console.log("Clearing interval...");
+                clearInterval(interval);
+                };
+            }, [resPayment, navigate]);
+
+    // ✅ Function to send payment invoice data
+    const handleSendInvoice = async () => {
+        try {
+          const response = await axios.post(
+            `${import.meta.env.VITE_API_BE}/payment-invoice`,
+            resPayment,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+            }
+          );
+      
+          const orderId = response.data?.data?.order_id; // <- dari response
+          console.log("✅ Invoice sent:", response.data);
+      
+          navigate(`/payment-details/${orderId}`, {
+            state: { payment: response.data?.data }, // jika ingin lempar datanya juga
+          });
+        } catch (error) {
+          console.error("❌ Failed to send invoice:", error);
+          messageApi.error("Failed to send payment data to server");
+        }
+      };
 
     return (
         <>
@@ -159,19 +182,18 @@ export default function RedirectComp() {
                     You will automatically be directed in 3 seconds to the payment
                     page or
                 </div>
-                <Link to={linkPayment} target="_blank">
-                    <Button
+                <Button
                     size={setSize("large", "medium", "medium")}
                     type="primary"
                     style={{
-                        border: "1px solid #E83600",
-                        borderRadius: 50,
-                        width: "80%",
+                    border: "1px solid #E83600",
+                    borderRadius: 50,
+                    width: "80%",
                     }}
-                    >
+                    onClick={handleSendInvoice}
+                >
                     Click Here to Pay your Order!
-                    </Button>
-                </Link>
+                </Button>
                 </Col>
             </Row>
             </div>

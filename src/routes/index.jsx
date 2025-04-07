@@ -17,6 +17,7 @@ import RedirectPage from "../pages/redirect";
 import FinishPage from "../pages/finish";
 import CmsOrderPage from "../pages/cms/order";
 import HistoryPage from "../pages/history";
+import PaymentDetailsPage from "../pages/orderDetail";
 
 function Index() {
   return (
@@ -29,6 +30,7 @@ function Index() {
       <Route path="/order-summary" element={<OrderSummaryPage />} />
       <Route path="/payment-method" element={<PaymentMethodPage />} />
       <Route path="/payment" element={<RedirectPage />} />
+      <Route path="/payment-details/:orderId" element={<PaymentDetailsPage />} />
       <Route path="/complete" element={<CompletePage />} />
       <Route path="/finish" element={<FinishPage />} />
       <Route path="/cms" element={<CmsPage />} />
