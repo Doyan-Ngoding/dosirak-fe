@@ -16,7 +16,8 @@ export default function CardMenuHome({
     showResto = true,
     isMenu = false,
     id_menu,
-    detail
+    detail,
+    isParent
 }) {
 
     const {
@@ -103,7 +104,7 @@ export default function CardMenuHome({
                                                 padding: setSize(5, 3, 2),
                                                 cursor:  (selectedResto && selectedResto !== restaurant) ? 'not-allowed' : 'pointer',
                                             }}
-                                            onClick={(!selectedResto || selectedResto === restaurant) && addToCart}
+                                            onClick={() => (!selectedResto || selectedResto === restaurant) && (isParent ? setVisible(true) : addToCart())}
                                             className='icon-hover-3'
                                         />
                                     </Tooltip>

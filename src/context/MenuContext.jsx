@@ -41,9 +41,6 @@ const Menu = ({children }) => {
 
     const searchVal = (location && location.search) ? location.search.split('=')[1].replace('%20', ' ') : ''
 
-    console.log(searchVal);
-    
-
     const getListCategory = () => {
         axios.get(`${import.meta.env.VITE_API_BE}/categories`)
         .then(res => {
@@ -60,13 +57,9 @@ const Menu = ({children }) => {
         .then(res => {
             if (searchVal) {
                 setListRestaurant(res.data.results.filter(value => value.name === searchVal))
-                console.log(res.data.results.filter(value => value.name === searchVal));
-                
                 setTabRestaurant(res.data.results && res.data.results.filter(value => value.name === searchVal)?.map(item => item.name))
             } else {
                 setListRestaurant(res.data.results)
-                console.log(res.data.results);
-                
                 setTabRestaurant(res.data.results && res.data.results?.map(item => item.name))
             }
            
@@ -153,7 +146,11 @@ const Menu = ({children }) => {
         formData.append("restaurant_name", rules.restaurant_name);
         formData.append("name", rules.name);
         formData.append("description", rules.description);
-        formData.append("price", rules.price);
+        formData.append("price", rules.price || 0);
+        formData.append("base_price", rules.base_price || ""); 
+        formData.append("variant", JSON.stringify(rules.variants) || "");       
+        formData.append("size", rules.size || "");             
+        formData.append("is_parent_menu", rules.is_parent_menu === "false" ? false : true); 
         formData.append("created_by", authUser && authUser?.name);
         formData.append("image", rules.image);
         axios.post(`${import.meta.env.VITE_API_BE}/main-menu`, formData)
@@ -193,7 +190,11 @@ const Menu = ({children }) => {
         formData.append("restaurant_name", rules.restaurant_name);
         formData.append("name", rules.name);
         formData.append("description", rules.description);
-        formData.append("price", rules.price);
+        formData.append("price", rules.price || 0);
+        formData.append("base_price", rules.base_price || ""); 
+        formData.append("variant", rules.variants || "");       
+        formData.append("size", rules.size || "");             
+        formData.append("is_parent_menu", rules.is_parent_menu === "false" ? false : true); 
         formData.append("updated_by", authUser && authUser?.name);
         formData.append("image", rules.image?.originFileObj);
         axios.patch(`${import.meta.env.VITE_API_BE}/main-menu/${detailMenu.id}`, formData)

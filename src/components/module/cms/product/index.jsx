@@ -44,12 +44,6 @@ export default function CmsProductComp() {
             type: "textarea"
         },
         {
-            name: "price",
-            label: "Price",
-            required: false,
-            type: "input"
-        },
-        {
             name: "category_name",
             label: "Category",
             required: true,
@@ -70,11 +64,33 @@ export default function CmsProductComp() {
             }))
         },
         {
+            name: "is_parent_menu",
+            label: "Is Parent Menu?",
+            required: true,
+            type: "select",
+            option: [
+              { label: "Yes", value: "true" },
+              { label: "No", value: "false" }
+            ],
+        },
+        {
+            name: "price",
+            label: "Price",
+            required: false,
+            type: "input"
+        },
+        {
+            name: "variants",
+            label: "Variants",
+            required: false,
+            type: "custom"
+        },
+        {
             name: "image",
             label: "Product Image",
             required: false,
             type: "upload"
-        },
+        },      
     ]    
 
     const [searchText, setSearchText] = useState(null);
@@ -100,7 +116,7 @@ export default function CmsProductComp() {
     
         setFilteredData(filtered);
     };
-    
+
     return (
         <>
             <FullComp

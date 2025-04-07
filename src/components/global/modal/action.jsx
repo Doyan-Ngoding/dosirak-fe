@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { use, useEffect, useState } from 'react'
 import { Button, ConfigProvider, Form, Input, message, Modal, Select, Upload } from 'antd'
 import { useAuth } from '../../../context/AuthContext'
 import { IconUpload } from '@tabler/icons-react';
@@ -25,6 +25,8 @@ export default function Action({
 
     const [messageApi, contextHolder] = message.useMessage();
     const [fileList, setFileList] = useState([])
+    const [isParent, setIsParent] = useState("false");
+    const [formItems, setFormItems] = useState(item);
 
     useEffect(() => {
         if ((resMessage && resMessage.length === 2)) {
@@ -33,11 +35,35 @@ export default function Action({
         }
     }, [resMessage]);
 
+    const handleParentChange = (isParent) => {
+        let updatedFields = [...item];
+      
+        if (isParent === "true") {
+          updatedFields = updatedFields.filter(item => item.name !== "price");
+        } else {
+          updatedFields = updatedFields.filter(item => item.name !== "variants");
+        }
+      
+        setFormItems(updatedFields);
+    };
+
+    useEffect(() => {
+        let updatedFields = [...item];
+
+        if (isParent === "true") {
+          updatedFields = updatedFields.filter(item => item.name !== "price");
+        } else {
+          updatedFields = updatedFields.filter(item => item.name !== "variants");
+        }
+      
+        setFormItems(updatedFields);
+    }, [isParent, item]);
+
     useEffect(() => {
         if (data) {
-            (data && item) && (
+            (data && formItems) && (
                 form.setFieldsValue(
-                    item.reduce((acc, field) => {
+                    formItems.reduce((acc, field) => {
                         if (field.name !== "password") {
                             acc[field.name] = data[field.name];
                         }
@@ -120,12 +146,13 @@ export default function Action({
                     width={setSize("40%", "50%", "60%")}
                 >
                     {
-                        item && (
+                        formItems && (
                             <Form
                                 layout="vertical"
                                 form={form}
                                 onFinish={async () => {
                                     try {
+                                        console.log(form.getFieldsValue())
                                         await action(form.getFieldsValue())
                                         setTimeout(() => {
                                             setIsLoading(false)
@@ -139,11 +166,11 @@ export default function Action({
                                 }}
                             >
                                 {
-                                    item.map(val => (
+                                    formItems.map(val => (
                                         <Form.Item
                                             label={val.label}
                                             name={val.name}
-                                            rules={val.name !== 'image' ? [
+                                            rules={(val.name !== 'image' && val.name !== 'variants') ? [
                                                 {
                                                     required: (val.name === "password") ? (isReq ? true : false) : val.required,
                                                     message: `Please input your ${val.label.toLowerCase()}!`,
@@ -157,7 +184,13 @@ export default function Action({
                                                         val.name === "password" ? (
                                                             <Input.Password />
                                                         ) : (
-                                                            <Input type={((val.name === "phone" && title === "Add User") || val.name === "price") ? "number" : undefined} />
+                                                            val.name === "price" ? (
+                                                                isParent === "false" && (
+                                                                    <Input type={"number"} />
+                                                                ) 
+                                                            ) : (
+                                                                <Input type={((val.name === "phone" && title === "Add User")) ? "number" : undefined} />
+                                                            )
                                                         )
                                                     )
                                                 ) : (
@@ -165,7 +198,11 @@ export default function Action({
                                                         <Input.TextArea rows={3} />
                                                     ) : (
                                                         val.type === "select" ? (
-                                                            <Select options={val.option} />
+                                                            val.name === "is_parent_menu" ? (
+                                                                <Select options={val.option} value={isParent} onChange={(e) => {setIsParent(e), handleParentChange(e)}} />
+                                                            ) : (
+                                                                <Select options={val.option} />
+                                                            )
                                                         ) : (
                                                             (val.type === "upload" && (title === "Add Product" || title === "Add Restaurant")) ? (
                                                                 <>
@@ -219,7 +256,78 @@ export default function Action({
                                                                         </small>
                                                                     </>
                                                                 ) : (
-                                                                    <></>
+                                                                    (val.type === "custom" && val.name === "variants" && isParent === "true") ? (
+                                                                        <Form.List name="variants">
+                                                                            {(fields, { add, remove }) => (
+                                                                                <div className="flex flex-col gap-4">
+                                                                                {fields.map((field, index) => (
+                                                                                    <div key={field.key} className="border p-4 rounded-md space-y-2 bg-gray-50">
+                                                                                    <Form.Item
+                                                                                        {...field}
+                                                                                        label="Variant Name"
+                                                                                        name={[field.name, "variant"]}
+                                                                                        rules={[{ required: true, message: 'Variant name is required' }]}
+                                                                                    >
+                                                                                        <Input placeholder="e.g. Beef, Pork, etc" />
+                                                                                    </Form.Item>
+
+                                                                                    <Form.List name={[field.name, "sizes"]}>
+                                                                                        {(sizeFields, { add: addSize, remove: removeSize }) => (
+                                                                                        <div className="space-y-2">
+                                                                                            {sizeFields.map((sizeField) => (
+                                                                                            <div key={sizeField.key} className="flex gap-2 items-end">
+                                                                                                <Form.Item
+                                                                                                name={[sizeField.name, "size"]}
+                                                                                                label="Size"
+                                                                                                rules={[{ required: true, message: 'Size required' }]}
+                                                                                                >
+                                                                                                <Input placeholder="e.g. Regular, Large" />
+                                                                                                </Form.Item>
+                                                                                                <Form.Item
+                                                                                                name={[sizeField.name, "base_price"]}
+                                                                                                label="Base Price"
+                                                                                                rules={[{ required: true, message: 'Price required' }]}
+                                                                                                >
+                                                                                                <Input type="number" placeholder="e.g. 12000" />
+                                                                                                </Form.Item>
+                                                                                                <Button
+                                                                                                danger
+                                                                                                type="text"
+                                                                                                onClick={() => removeSize(sizeField.name)}
+                                                                                                >
+                                                                                                Remove
+                                                                                                </Button>
+                                                                                            </div>
+                                                                                            ))}
+                                                                                            <Form.Item>
+                                                                                            <Button
+                                                                                                type="dashed"
+                                                                                                onClick={() => addSize()}
+                                                                                                block
+                                                                                            >
+                                                                                                + Add Size
+                                                                                            </Button>
+                                                                                            </Form.Item>
+                                                                                        </div>
+                                                                                        )}
+                                                                                    </Form.List>
+
+                                                                                    <Button danger type="text" onClick={() => remove(field.name)}>
+                                                                                        Remove Variant
+                                                                                    </Button>
+                                                                                    </div>
+                                                                                ))}
+                                                                                <Form.Item>
+                                                                                    <Button type="dashed" onClick={() => add()} block>
+                                                                                    + Add Variant
+                                                                                    </Button>
+                                                                                </Form.Item>
+                                                                                </div>
+                                                                            )}
+                                                                            </Form.List>
+                                                                    ) : (
+                                                                        <></>
+                                                                    )
                                                                 )
                                                             )
                                                         )

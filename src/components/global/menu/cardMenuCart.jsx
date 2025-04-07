@@ -17,7 +17,9 @@ export default function CardMenuCart({
     price,
     qty,
     addQty,
-    subQty
+    subQty,
+    variant, 
+    size
 }) {
     
     const {
@@ -52,6 +54,15 @@ export default function CardMenuCart({
                         >
                             {title}
                         </div>
+                        {
+                            (variant && size) && (
+                                <div
+                                    className='text-[10px]'
+                                >
+                                    {title}, {variant}, {size}
+                                </div>
+                            )
+                        }
                     </Col>
                 </Row>
                 <Row

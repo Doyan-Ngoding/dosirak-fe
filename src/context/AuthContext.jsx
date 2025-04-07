@@ -238,7 +238,6 @@ const Auth = ({children }) => {
                 name,
             });
           
-            console.log(res)
             setToken(res.data.results.token); 
             getUserAuth(res.data.results.token);
             // setIsLoading(false);
@@ -344,20 +343,87 @@ const Auth = ({children }) => {
 
     const handleLoginSuccessFacebook = async (res) => {
         try {
-            console.log(res);
-            
-            const response = await axios.post(`${import.meta.env.VITE_API_BE}/facebook-login`, {
-                accessToken: res.accessToken,
+            const accessToken = res.accessToken || res.authResponse?.accessToken;
+            if (!accessToken) {
+                setResMessage(['error', 'No access token returned from Facebook']);
+                return;
+            }
+
+            const fbRes = await axios.get('https://graph.facebook.com/v22.0/me', {
+                params: {
+                    access_token: accessToken,
+                    fields: 'id,name,email',
+                },
             });
-        
+    
+            const { id, name, email } = fbRes.data;
+    
+            if (!email) {
+                setResMessage(['error', 'Facebook did not return an email']);
+                return;
+            }
+    
+            const response = await axios.post(`${import.meta.env.VITE_API_BE}/facebook-login`, {
+                id,
+                name,
+                email,
+            });
+    
             setToken(response.data.results.token);
-            setModalLogin(false);
-            setResMessage(['success', 'Facebook login success']);
+            getUserAuth(res.data.results.token);
+            // setIsLoading(false);
+            axios.get(`${import.meta.env.VITE_API_BE}/auth/me`, {
+                headers: {
+                    Authorization: `Bearer ${res.data.results.token}`,
+                },
+            })
+            .then(res => {
+                setAuthUser(res.data.user)
+                if (res.data.user) {
+                    if (pathname === '/cms/login') {
+                        if (res.data.user?.role === 'superadmin' || res.data.user?.role === 'employee') {
+                            setResMessage(['success', 'Log In Success!'])
+                            setTimeout(() => {
+                                navigate('/cms');
+                            }, 2000)
+                        } else {
+                            setResMessage(['error', 'Log In Failed! Your Not an Admin!'])
+                            setTimeout(() => {
+                                navigate('/cms/login')  
+                            }, 2000)
+                        }
+                    } else if (pathname === '/order') {
+                        if (res.data.user?.role === 'user') {
+                            setModalLogin(false);
+                            if (localStorage.getItem("cart") && JSON.parse(localStorage.getItem("cart")).length > 0) {
+                                setResMessage(['success', 'Log In Success!'])
+                                setTimeout(() => {
+                                    navigate('/order-summary');
+                                }, 2000)
+                            } else {
+                                setResMessage(['success', 'Log In Success!'])
+                                setTimeout(() => {
+                                    navigate('/order');
+                                }, 2000)
+                            }
+                        } else {
+                            setResMessage(['error', 'Log In Failed! Your No a User!'])
+                            setTimeout(() => {
+                                navigate('/')
+                            }, 2000)
+                        }
+                    } 
+                } 
+            })
+            .catch(err => {
+                // setIsLoading(false);
+                setResMessage(['error', err.response?.data?.message || "Login failed!"])
+            })  
         } catch (err) {
             console.error(err);
             setResMessage(['error', 'Facebook login failed']);
         }
-    };
+    };    
     
     const handleLoginErrorFacebook = (err) => {
         console.error('Facebook login failed:', err);

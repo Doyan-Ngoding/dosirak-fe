@@ -83,9 +83,11 @@ export default function SiderOrder() {
                                 title={value.name}
                                 price={value.price}
                                 qty={value.qty}
-                                addQty={() => addQty(value.id)}
-                                subQty={() => subQty(value.id)}
+                                addQty={() => addQty(value.id, value.variant || null, value.size || null)}
+                                subQty={() => subQty(value.id, value.variant || null, value.size || null)}
                                 id_menu={value.id}
+                                variant={value.variant || null}
+                                size={value.size || null}
                             />
                         ))
                     )

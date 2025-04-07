@@ -29,6 +29,7 @@ import ResetMobile from '../../global/modal/resetMobile'
 import SignupMobile from '../../global/modal/signupMobile'
 import { useRestaurant } from '../../../context/RestaurantContext'
 import { IconCircleChevronDownFilled, IconSearch, IconXboxXFilled } from '@tabler/icons-react'
+import CardMenuHome from '../../global/menu/cardMenuHome'
 const { Header, Content, Footer, Sider } = Layout;
 
 export default function OrderComp() {
@@ -344,15 +345,18 @@ export default function OrderComp() {
                                                                     setSize(selectedMenu.length > 0 ? 8 : 6, selectedMenu.length > 0 ? 12 : 8, 12)
                                                                 }
                                                             >
-                                                                <CardMenu 
+                                                                <CardMenuHome 
                                                                     image={value.image}
                                                                     restaurant={value.restaurant_name}
                                                                     title={value.name}
                                                                     desc={value.description}
-                                                                    price={value.price}
+                                                                    price={value.price || (Number(JSON.parse(value.variant)[0].sizes[0]?.base_price) || 0)}
                                                                     stock={value.qty}
-                                                                    addToCart={() => addedToCart(value)}
+                                                                    showResto={false}
                                                                     id_menu={value.id}
+                                                                    addToCart={() => {addedToCart(value)}}
+                                                                    detail={value}
+                                                                    isParent={value.is_parent_menu}
                                                                 />
                                                             </Col>
                                                         </>
