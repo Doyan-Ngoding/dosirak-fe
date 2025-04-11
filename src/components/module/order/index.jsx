@@ -28,7 +28,7 @@ import VerifyMobile from '../../global/modal/verifyMobile'
 import ResetMobile from '../../global/modal/resetMobile'
 import SignupMobile from '../../global/modal/signupMobile'
 import { useRestaurant } from '../../../context/RestaurantContext'
-import { IconCircleChevronDownFilled, IconSearch, IconXboxXFilled } from '@tabler/icons-react'
+import { IconCircleChevronDownFilled, IconPaperBag, IconSearch, IconXboxXFilled } from '@tabler/icons-react'
 import CardMenuHome from '../../global/menu/cardMenuHome'
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -37,6 +37,8 @@ export default function OrderComp() {
     const {
         listMenuGroupedCategory,
         tabCategory, 
+        tabRestaurant,
+        listMenuGroupedRestaurant,
         listMenu,
     } = useMenu();
 
@@ -103,7 +105,7 @@ export default function OrderComp() {
     useEffect(() => {
         setFilteredData(
             selectedResto ? (
-                listMenuGroupedCategory
+                listMenuGroupedRestaurant
                 .map((category) => {
                     const filteredMenu = category.menu.filter(
                         (menuItem) =>
@@ -114,10 +116,10 @@ export default function OrderComp() {
                 })
                 .filter(Boolean)
             ) : (
-                listMenuGroupedCategory
+                listMenuGroupedRestaurant
             )
         )
-    }, [listMenuGroupedCategory]);
+    }, [listMenuGroupedRestaurant]);
 
     const handleSearch = (e) => {
         const value = e.target.value.toLowerCase();
@@ -126,7 +128,7 @@ export default function OrderComp() {
         if (!value || value === null) {
             setFilteredData(
                 selectedResto ? (
-                    listMenuGroupedCategory
+                    listMenuGroupedRestaurant
                     .map((category) => {
                         const filteredMenu = category.menu.filter(
                             (menuItem) =>
@@ -137,13 +139,13 @@ export default function OrderComp() {
                     })
                     .filter(Boolean)
                 ) : (
-                    listMenuGroupedCategory
+                    listMenuGroupedRestaurant
                 )
             );
             return;
         }
         
-        const filtered = listMenuGroupedCategory
+        const filtered = listMenuGroupedRestaurant
         .map((category) => {
             const filteredMenu = category.menu.filter(
                 (menuItem) =>
@@ -163,11 +165,11 @@ export default function OrderComp() {
         const value = e.toLowerCase();
     
         if (!value || value === null) {
-            setFilteredData(listMenuGroupedCategory);
+            setFilteredData(listMenuGroupedRestaurant);
             return;
         }
         
-        const filtered = listMenuGroupedCategory
+        const filtered = listMenuGroupedRestaurant
         .map((category) => {
             const filteredMenu = category.menu.filter(
                 (menuItem) =>
@@ -201,7 +203,7 @@ export default function OrderComp() {
                     >
                         <div
                             style={{
-                                padding: setSize("50px 80px", "30px 50px", "30px")
+                            padding: setSize("50px 80px", "30px 50px", "30px")
                             }}
                         >
                             <ConfigProvider
@@ -312,7 +314,7 @@ export default function OrderComp() {
                                         className="inline-flex space-x-4"
                                         targetOffset={150}
                                         items={
-                                            tabCategory ? tabCategory.map((value) => ({
+                                            tabRestaurant ? tabRestaurant.map((value) => ({
                                                 key: value,
                                                 href: '#'+value,
                                                 title: value,
@@ -325,13 +327,18 @@ export default function OrderComp() {
                                 filteredData.map((value) => (
                                     <>
                                         <div
-                                            id={value.category} 
+                                            id={value.restaurant} 
                                             className='pb-20'
                                         >
                                             <div
                                                 className='lg:text-3xl md:text-2xl text-lg text-[#6B6B6B] font-semibold'
                                             >
-                                                {value.category}
+                                                {value.restaurant} Menu, 
+                                            </div>
+                                            <div
+                                                className='bg-[#FFD39A] font-[Plus Jakarta Sans] flex justify-center items-center w-[100%] m-auto lg:text-[16px] lg:py-2 lg:px-10 md:text-[12px] md:py-1.5 md:px-8 text-[9px] py-1 px-3 lg:rounded-[8px] md:rounded-[8px] rounded-[4px] my-3' 
+                                            >
+                                                <IconPaperBag size={setSize(22, 18, 14)} style={{ marginRight: setSize(10, 8, 5) }} /> For your convenience, please ensure your order comprises at least 15 meals.
                                             </div>
                                             <Row
                                                 className='pt-5'

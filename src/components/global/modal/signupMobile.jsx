@@ -12,6 +12,7 @@ import { useAuth } from '../../../context/AuthContext'
 import axios from 'axios'
 import authConfig from '../../../config/auth';
 import { useLocation, useNavigate } from 'react-router-dom'
+import AlertSuccess from './alertSuccess'
 
 export default function SignupMobile({
     isOpen,
@@ -28,6 +29,8 @@ export default function SignupMobile({
         setAuthUser,
         resMessage,
         setResMessage,
+        setIsSuccess,
+        isSuccess,
     } = useAuth()
 
     const navigate = useNavigate()
@@ -59,10 +62,11 @@ export default function SignupMobile({
                         navigate('/order-summary');
                     }, 3000)
                 } else {
-                    setResMessage(['success', 'Registration Success!'])
-                    setTimeout(() => {
-                        navigate('/order');
-                    }, 3000)
+                    // setResMessage(['success', 'Registration Success!'])
+                    // setTimeout(() => {
+                    //     navigate('/order');
+                    // }, 3000)
+                    setIsSuccess(true)
                 }
             }
         } catch (error) {
@@ -271,6 +275,10 @@ export default function SignupMobile({
                     <div className="w-full flex justify-center font-semibold mt-[-12px] text-[12px]">Already have an account? <span className='text-[#E83600] ml-2 cursor-pointer hover:text-[#FA5523]' onClick={() => {setModalLogin(true), setIsOpen(false)}}>Log In</span></div>
                 </Form>
             </Drawer>
+            <AlertSuccess 
+                isOpen={isSuccess}
+                setIsOpen={setIsSuccess}
+            />
         </>
     )
 }

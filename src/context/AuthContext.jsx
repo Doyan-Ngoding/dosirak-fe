@@ -44,7 +44,7 @@ const Auth = ({children }) => {
 
     const allowAdmin = ['/cms', '/cms/product', '/cms/user', '/cms/category', '/cms/restaurant'] 
     const allowUser = ['/order-summary', '/payment-method', '/payment', '/complete']
-    const allowGeneral = ['/', '/menu', '/order', '/cms/login', '/finish', '/history']
+    const allowGeneral = ['/', '/menu', '/order', '/cms/login', '/finish', '/history', '/contact']
 
     const [modalLogin, setModalLogin] = useState(false);
     const [modalSignup, setModalSignup] = useState(false);
@@ -57,6 +57,8 @@ const Auth = ({children }) => {
 
     const [isLoading, setIsLoading] = useState(false);
     const [resMessage, setResMessage] = useState();
+
+    const [isSuccess, setIsSuccess] = useState(false);
 
     const getUserAuth = async (token) => {
         await axios.get(`${import.meta.env.VITE_API_BE}/auth/me`, {
@@ -457,6 +459,8 @@ const Auth = ({children }) => {
         handleLoginGoogle,
         handleLoginSuccessFacebook,
         handleLoginErrorFacebook,
+        
+        isSuccess, setIsSuccess,
     }
 
     return (

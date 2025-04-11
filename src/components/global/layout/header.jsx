@@ -60,7 +60,7 @@ export default function HeaderComp() {
                                 fontSize: 20,
                                 colorText: '#A5ABB3',
                                 itemBg: '#FFFFFF',
-                                colorSplit: 'none',
+                                colorSplit: `${pathname === '/contact' ? '#A5ABB3' : 'none'}`,
                             },
                             Button: {
                                 fontFamily: 'Plus Jakarta Sans',
@@ -71,7 +71,7 @@ export default function HeaderComp() {
                 >
                     <Layout>
                         <Header
-                            className={`fixed top-0 transition-all z-50 bg-white self-center ${isScrolled ? 'w-full mt-0 border-b border-gray-300' : 'w-[90%] mt-5 mx-auto self-center rounded-lg'}`}
+                            className={`fixed top-0 transition-all z-50 bg-white self-center ${isScrolled ? 'w-full mt-0 border-b border-gray-300' : 'w-[90%] mt-5 mx-auto self-center rounded-lg'} ${pathname === '/contact' && 'border border-[#A5ABB3]'}`}
                         >
                             <Row
                                 justify={"space-between"}
@@ -95,7 +95,7 @@ export default function HeaderComp() {
                                                 size={30}
                                             />
                                             <div>
-                                                <img src='/assets/logos.png' alt='Logo Dosirak' width={setSize("60px", "45px", "35px")} style={{ paddingLeft: setSize(0, 5, 5) }}/>
+                                                <img src='/assets/logos.png' alt='Logo Dosirak' width={setSize("55px", "40px", "32px")} style={{ paddingLeft: setSize(0, 5, 5) }}/>
                                             </div>
                                         </Col>
                                     )
@@ -107,7 +107,7 @@ export default function HeaderComp() {
                                                 style={{ margin: !isStandard ? '0 auto' : ''}}
                                             >
                                                 <div className='flex justify-center'>   
-                                                    <img src='/assets/logos.png' alt='Logo Dosirak' width={setSize("60px", "45px", "35px")} style={{ paddingLeft: setSize(0, 100, 0), paddingRight: setSize(10, 0, 40) }}/>
+                                                    <img src='/assets/logos.png' alt='Logo Dosirak' width={setSize("55px", "40px", "32px")} style={{ paddingLeft: setSize(0, 100, 0), paddingRight: setSize(10, 0, 40) }}/>
                                                 </div>
                                             </Col>
                                             <Col
@@ -125,7 +125,9 @@ export default function HeaderComp() {
                                                 >
                                                     <Menu.Item key={'1'}><Link to={'/'}>Home</Link></Menu.Item>
                                                     <Menu.Item key={'2'}><Link to={'/menu'}>Menu</Link></Menu.Item>
-                                                    <Menu.Item key={'12'}><Link to={'/history'}>History</Link></Menu.Item>
+                                                    <Menu.Item key={'3'}><Link to={'/order'}>Order</Link></Menu.Item>
+                                                    {/* <Menu.Item key={'12'}><Link to={'/history'}>History</Link></Menu.Item> */}
+                                                    <Menu.Item key={'4'}><Link to={'/contact'}>Contact</Link></Menu.Item>
                                                 </Menu>  
                                             </Col>
                                         </>

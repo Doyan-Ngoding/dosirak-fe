@@ -57,7 +57,7 @@ export default function LayoutComp(props) {
                             isStandard && (
                                 <>
                                     <div>   
-                                        <img src='/assets/logos.png' alt='Logo Dosirak' width={setSize("60px", "45px", "35px")} />
+                                        <img src='/assets/logos.png' alt='Logo Dosirak' width={setSize("45px", "45px", "35px")} />
                                     </div>
                                     <Menu
                                         theme='light'
@@ -71,7 +71,8 @@ export default function LayoutComp(props) {
                                         <Menu.Item key={'1'}><Link to={'/'}>Home</Link></Menu.Item>
                                         <Menu.Item key={'2'}><Link to={'/menu'}>Menu</Link></Menu.Item>
                                         <Menu.Item key={'3'}><Link to={'/order'}>Order</Link></Menu.Item>
-                                        <Menu.Item key={'4'}><Link to={'/history'}>History</Link></Menu.Item>  
+                                        <Menu.Item key={'4'}><Link to={'/contact'}>Contact</Link></Menu.Item>
+                                        {/* <Menu.Item key={'12'}><Link to={'/history'}>History</Link></Menu.Item>   */}
                                     </Menu> 
                                 </>
                             )

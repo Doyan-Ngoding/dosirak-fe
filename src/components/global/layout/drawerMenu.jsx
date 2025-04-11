@@ -7,7 +7,8 @@ const routes = {
     1: '/',
     2: '/menu',
     3: '/order',
-    4: '/history',
+    // 4: '/history',
+    5: '/contact'
 }
 
 export default function DrawerMenu({
@@ -59,7 +60,8 @@ export default function DrawerMenu({
                         <Menu.Item key={'1'} className='pt-1'><Link to={'/'}>Home</Link></Menu.Item>
                         <Menu.Item key={'2'} className='pt-1'><Link to={'/menu'}>Menu</Link></Menu.Item>
                         <Menu.Item key={'3'} className='pt-1'><Link to={'/order'}>Order</Link></Menu.Item>
-                        <Menu.Item key={'4'} className='pt-1'><Link to={'/history'}>History</Link></Menu.Item>
+                        {/* <Menu.Item key={'4'} className='pt-1'><Link to={'/history'}>History</Link></Menu.Item> */}
+                        <Menu.Item key={'4'} className='pt-1'><Link to={'/contact'}>Contact</Link></Menu.Item>
                     </Menu>   
                 </Drawer>
             </ConfigProvider>
