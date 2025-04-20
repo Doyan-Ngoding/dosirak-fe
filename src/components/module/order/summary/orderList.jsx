@@ -74,7 +74,7 @@ export default function OrderListComp() {
                                                 {
                                                     (value.variant && value.size) && (
                                                         <div
-                                                            className='text-[10px]'
+                                                            className='text-[10px] lg:text-[12px] md:text-[10px]'
                                                         >
                                                             {value.name}, {value.variant}, {value.size}
                                                         </div>
@@ -124,9 +124,9 @@ export default function OrderListComp() {
                                                                                 size={setSize(28, 20, 18)}
                                                                                 style={{
                                                                                     marginTop: 3,
-                                                                                    cursor: 'pointer'
+                                                                                    cursor: 'not-allowed',
                                                                                 }}
-                                                                                onClick={() => subQty(value.id, value.variant || null, value.size || null)}
+                                                                                // onClick={() => subQty(value.id, value.variant || null, value.size || null)}
                                                                             /> 
                                                                         </div>   
                                                                     </Col> 
@@ -148,9 +148,9 @@ export default function OrderListComp() {
                                                                                 size={setSize(28, 20, 18)}
                                                                                 style={{
                                                                                     marginTop: 3,
-                                                                                    cursor: 'pointer',
+                                                                                    cursor: 'not-allowed',
                                                                                 }}
-                                                                                onClick={() => addQty(value.id, value.variant || null, value.size || null)}
+                                                                                // onClick={() => addQty(value.id, value.variant || null, value.size || null)}
                                                                             />
                                                                         </div>
                                                                     </Col> 
@@ -178,9 +178,9 @@ export default function OrderListComp() {
                                                             size={28}
                                                             style={{
                                                                 marginTop: 3,
-                                                                cursor: 'pointer'
+                                                                cursor: 'not-allowed',
                                                             }}
-                                                            onClick={() => subQty(value.id)}
+                                                            // onClick={() => subQty(value.id)}
                                                         />
                                                     </Col>
                                                     <Col
@@ -195,9 +195,9 @@ export default function OrderListComp() {
                                                             size={28}
                                                             style={{
                                                                 marginTop: 3,
-                                                                cursor: 'pointer',
+                                                                cursor: 'not-allowed',
                                                             }}
-                                                            onClick={() => addQty(value.id)}
+                                                            // onClick={() => addQty(value.id)}
                                                         />
                                                     </Col>
                                                 </Row>

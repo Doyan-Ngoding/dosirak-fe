@@ -172,8 +172,8 @@ export default function SignupStandard({ isOpen, setIsOpen }) {
                         <span
                             className="text-[#E83600] ml-2 cursor-pointer hover:text-[#FA5523]"
                             onClick={() => {
-                                // setModalLogin(true);
-                                setIsSuccess(true)
+                                setModalLogin(true);
+                                // setIsSuccess(true)
                                 setIsOpen(false);
                             }}
                         >

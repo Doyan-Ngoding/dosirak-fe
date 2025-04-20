@@ -147,7 +147,7 @@ export default function HeaderComp() {
                                                     size={setSize(40, 35, 24)}
                                                     className='absolute'
                                                 />
-                                                <IconBasket 
+                                                <IconShoppingBag 
                                                     color='#FFFFFF'
                                                     size={setSize(20, 20, 16)}
                                                     className='absolute lg:top-2.5 lg:left-2.5 md:top-2 md:left-2 top-1 left-1'

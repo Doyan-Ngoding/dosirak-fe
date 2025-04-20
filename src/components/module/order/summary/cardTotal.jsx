@@ -246,6 +246,7 @@ export default function CardTotal({
                             width: '100%',
                             borderRadius: 50
                         }}
+                        disabled={deliveryFee === 0 ? true : false}
                         onClick={handleClick}
                     >
                         {`Order Now!`}

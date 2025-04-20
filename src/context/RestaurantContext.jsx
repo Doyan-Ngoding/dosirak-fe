@@ -36,12 +36,25 @@ const Restaurant = ({children }) => {
 
     const [newListSubRestaurant, setNewListSubRestaurant] = useState([]);
 
+    const [listRestaurantAdmin, setListRestaurantAdmin] = useState([]);
+
     const getListRestauran = () => {
         axios.get(`${import.meta.env.VITE_API_BE}/restaurants`)
         .then(res => {
             setListNearRestaurant(res.data.results)
             setListRestaurant(res.data.results)
             setSelectedRestaurant((res.data.results && res.data.results.length > 0) && res.data.results?.[0].name)
+        })
+        .catch(err => {
+            // setResMessage(['error', err.response?.data?.message || "Failed Get Restaurants!"])
+            console.log(err)
+        })
+    }
+
+    const getListRestauranAdmin = () => {
+        axios.get(`${import.meta.env.VITE_API_BE}/restaurants/admin`)
+        .then(res => {
+            setListRestaurantAdmin(res.data.results)
         })
         .catch(err => {
             // setResMessage(['error', err.response?.data?.message || "Failed Get Restaurants!"])
@@ -70,7 +83,7 @@ const Restaurant = ({children }) => {
             setTimeout(() => {
                 setIsLoading(false)
                 setModalAddRestaurant(false)
-                getListRestauran()
+                getListRestauranAdmin()
             }, 1000)
             setTimeout(() => {
                 setResMessage(['success', 'Successfully Added Restaurant'])
@@ -96,7 +109,7 @@ const Restaurant = ({children }) => {
             setTimeout(() => {
                 setIsLoading(false)
                 setModalEditRestaurant(false)
-                getListRestauran()
+                getListRestauranAdmin()
             }, 1000)
             setTimeout(() => {
                 setResMessage(['success', 'Successfully Edited Restaurant'])
@@ -117,7 +130,7 @@ const Restaurant = ({children }) => {
         .then(res => {
             setTimeout(() => {
                 setIsLoading(false)
-                getListRestauran()
+                getListRestauranAdmin()
             }, 1000)
             setTimeout(() => {
                 setResMessage(['success', 'Successfully Deleted Restaurant'])
@@ -183,10 +196,32 @@ const Restaurant = ({children }) => {
         })
     }
 
+    const handleEditHide = async (id, rules) => {
+        setIsLoading(true)
+        await axios.patch(`${import.meta.env.VITE_API_BE}/restaurants/hide/${id}`, {...rules, updated_by: authUser && authUser.name})
+        .then(res => {
+            setTimeout(() => {
+                setIsLoading(false)
+                getListRestauranAdmin()
+            }, 1000)
+            setTimeout(() => {
+                setResMessage(['success', 'Successfully Edited Restaurant'])
+            }, 2000)
+        })
+        .catch(err => {
+            setIsLoading(false)
+            setResMessage(['error', err.response?.data?.message || "Failed to Edit Restaurant!"])
+        }) 
+        .finally(() => {
+            setResMessage()
+        })
+    }
+
     useEffect(() => {
         getListRestauran();
         getListSubRestaurant();
         getListSubRestaurants()
+        getListRestauranAdmin()
     }, []);
 
     useEffect(() => {
@@ -216,6 +251,9 @@ const Restaurant = ({children }) => {
         getDetailSubRestaurant,
 
         newListSubRestaurant, setNewListSubRestaurant,
+
+        handleEditHide,
+        listRestaurantAdmin, setListRestaurantAdmin,
     }   
 
     return (
