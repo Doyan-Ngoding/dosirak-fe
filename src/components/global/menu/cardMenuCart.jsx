@@ -57,7 +57,7 @@ export default function CardMenuCart({
                         {
                             (variant && size) && (
                                 <div
-                                    className='text-[10px]'
+                                    className='text-[10px] lg:text-[12px] md:text-[10px]'
                                 >
                                     {title}, {variant}, {size}
                                 </div>

@@ -1,7 +1,7 @@
 import { IconChevronDown, IconChevronUp, IconEdit, IconEye, IconFilter, IconSelector, IconTrash } from "@tabler/icons-react";
 import { useAuth } from "../../../context/AuthContext";
 import dayjs from "dayjs";
-import { Image, Modal, Popconfirm, Tooltip } from "antd";
+import { Button, Image, Modal, Popconfirm, Tooltip } from "antd";
 
 const iconSort = () => {
     const { setSize } = useAuth();
@@ -418,7 +418,7 @@ export const columnCategoryList = (data = [], getDetail, modalEdit, handleDelete
     ].filter(Boolean)
 }
 
-export const columnRestaurantList = (data = [], getDetail, modalEdit, handleDelete, category) => {
+export const columnRestaurantList = (data = [], getDetail, modalEdit, handleDelete, category, hideAction) => {
     const { setSize, authUser } = useAuth();
     return [
         {
@@ -479,7 +479,36 @@ export const columnRestaurantList = (data = [], getDetail, modalEdit, handleDele
                 />
             )
         },
-        (authUser && authUser.role === 'superadmin') && {
+        (authUser && authUser.role === 'superadmin') && 
+        {
+            title: 'Hide',
+            key: 'is_hide',
+            dataIndex: 'is_hide',  
+            width: 100,
+            render: (text, record) => (
+                <>
+                    <Popconfirm
+                        title={`Hide this ${category.toLowerCase()}`}
+                        description={<span>Are you sure to {text === true ? 'unhide' : 'hide'} this {category.toLowerCase()}: <b>{record.name}</b>?</span>}
+                        onConfirm={() => hideAction(record.id, {is_hide: text === false ? true : false})}
+                        okText="Yes"
+                        cancelText="No"
+                    >
+                        <Button
+                            size="small"
+                            danger
+                            type={text === false && "primary"}
+                        >
+                            {
+                                text === false ? 'Hide' : 'Unhide'
+                            }
+                            
+                        </Button>
+                    </Popconfirm>
+                </>
+            )
+        },
+        {
             title: '',
             width: 80,
             render: (text, record, index) => (

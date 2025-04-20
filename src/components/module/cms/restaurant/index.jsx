@@ -26,6 +26,8 @@ export default function CmsRestaurantComp() {
         getDetailRestaurant,
         handleEditRestaurant,
         handleDeleteRestaurant,
+        handleEditHide,
+        listRestaurantAdmin
     } = useRestaurant()
 
     const formAdd = [
@@ -47,19 +49,19 @@ export default function CmsRestaurantComp() {
     const [filteredData, setFilteredData] = useState([]);
 
     useEffect(() => {
-        setFilteredData(listRestaurant)
-    }, [listRestaurant]);
+        setFilteredData(listRestaurantAdmin)
+    }, [listRestaurantAdmin]);
 
     const handleSearch = (e) => {
         const value = e.target.value.toLowerCase();
         setSearchText(value);
     
         if (!value || value === null) {
-            setFilteredData(listRestaurant);
+            setFilteredData(listRestaurantAdmin);
             return;
         }
         
-        const filtered = listRestaurant.filter((item) => 
+        const filtered = listRestaurantAdmin.filter((item) => 
             item.name.toLowerCase().includes(value) 
         );
     
@@ -112,7 +114,7 @@ export default function CmsRestaurantComp() {
                     >
                         <Table 
                             dataSource={filteredData}
-                            columns={columnRestaurantList(filteredData, getDetailRestaurant, setModalEditRestaurant, handleDeleteRestaurant, 'Restaurant')}
+                            columns={columnRestaurantList(filteredData, getDetailRestaurant, setModalEditRestaurant, handleDeleteRestaurant, 'Restaurant', handleEditHide)}
                             className='lg:pt-5 md:pt-3 pt-2'
                             size={setSize('medium', 'small', 'small')}
                             pagination={{

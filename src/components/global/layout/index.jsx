@@ -88,7 +88,7 @@ export default function LayoutComp(props) {
                                     size={setSize(40, 35, 40)}
                                     className='absolute'
                                 />
-                                <IconBasket 
+                                <IconShoppingBag 
                                     color='#FFFFFF'
                                     size={setSize(20, 20, 20)}
                                     className='absolute lg:top-2.5 lg:left-2.5 md:top-2 md:left-2 top-2.5 left-2.5'
