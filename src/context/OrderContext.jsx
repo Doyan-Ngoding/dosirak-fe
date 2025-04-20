@@ -64,25 +64,46 @@ const Order = ({children }) => {
 
     const [resQuotationTemp, setResQuotationTemp] = useState();
 
-    const addQty = (id) => {
-        setSelectedMenu((prevCart) => 
-            prevCart.map((item) => 
-                item.id === id
-                    ? { ...item, qty: item.qty + 1, subTotal: (item.qty + 1) * item.price }
-                    : item
-            )
-        );
+    const addQty = (id, variant, size) => {
+        if (variant && size) {
+            setSelectedMenu((prevCart) => 
+                prevCart.map((item) => 
+                    (item.id === id && item.variant === variant && item.size === size)
+                        ? { ...item, qty: item.qty + 1, subTotal: (item.qty + 1) * item.price }
+                        : item
+                )
+            );
+        } else {
+            setSelectedMenu((prevCart) => 
+                prevCart.map((item) => 
+                    item.id === id
+                        ? { ...item, qty: item.qty + 1, subTotal: (item.qty + 1) * item.price }
+                        : item
+                )
+            );
+        }
     };
 
-    const subQty = (id) => {
-        setSelectedMenu((prevCart) => {
-            const updatedCart = prevCart.map((item) =>
-                item.id === id
-                    ? { ...item, qty: item.qty - 1, subTotal: (item.qty - 1) * item.price }
-                    : item
-            ).filter((item) => item.qty > 0); 
-            return updatedCart;
-        });
+    const subQty = (id, variant, size) => {
+        if (variant && size) {
+            setSelectedMenu((prevCart) => {
+                const updatedCart = prevCart.map((item) =>
+                    (item.id === id && item.variant === variant && item.size === size)
+                        ? { ...item, qty: item.qty - 1, subTotal: (item.qty - 1) * item.price }
+                        : item
+                ).filter((item) => item.qty > 0); 
+                return updatedCart;
+            });
+        } else {
+            setSelectedMenu((prevCart) => {
+                const updatedCart = prevCart.map((item) =>
+                    item.id === id
+                        ? { ...item, qty: item.qty - 1, subTotal: (item.qty - 1) * item.price }
+                        : item
+                ).filter((item) => item.qty > 0); 
+                return updatedCart;
+            });
+        }
     };
 
     const handleAddOrder = async () => {
@@ -126,7 +147,7 @@ const Order = ({children }) => {
                         // phone: authUser.phone
                     },
                     item_details: res.data.order?.detailMenus.map(item => ({
-                        description: item.name,
+                        description: item.name + (item.variant ? ' - ' + item.variant : '') + (item.size ? ' - ' + item.size : ''),
                         quantity: item.qty, 
                         price: item.price,
                         // item_id: item.id

@@ -51,7 +51,7 @@ export default function FooterComp() {
                         >
                             ORDER ONLINE
                         </Button>
-                        <Button
+                        {/* <Button
                             size={setSize('large', 'medium', 'small')}
                             style={{
                                 borderRadius: 50,
@@ -60,7 +60,7 @@ export default function FooterComp() {
                             }}
                         >
                             SEE AVAILABALE STORE
-                        </Button>
+                        </Button> */}
                     </ConfigProvider>
                 </div>
                 <div

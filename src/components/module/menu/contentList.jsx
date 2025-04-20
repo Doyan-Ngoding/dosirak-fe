@@ -113,6 +113,9 @@ export default function ContentListComp() {
         setFilteredTab(filteredTabs)
     };
 
+    console.log(selectedMenu, 'ini adalah cart');
+    
+
     return (
         <>
              <div
@@ -583,7 +586,7 @@ export default function ContentListComp() {
                                             {
                                                 value.menu.map((value, key) => (
                                                     <Col
-                                                        span={setSize(6, 6, 12)}
+                                                        span={setSize(6, 8, 12)}
                                                         // style={{
                                                         //     width: '30vw'
                                                         // }}
@@ -593,13 +596,14 @@ export default function ContentListComp() {
                                                             title={value.name}
                                                             desc={value.description}
                                                             restaurant={value.restaurant_name}
-                                                            price={value.price}
+                                                            price={value.price || (Number(JSON.parse(value.variant)[0].sizes[0]?.base_price) || 0)} 
                                                             stock={value.qty}
                                                             showResto={false}
                                                             addToCart={() => {addedToCart(value)}}
                                                             isMenu={true}
                                                             id_menu={value.id}
                                                             detail={value}
+                                                            isParent={value.is_parent_menu}
                                                         />
                                                     </Col>
                                                 ))

@@ -118,6 +118,13 @@ export default function ModalDetailOrder({
                                                 <div>
                                                     {value.name}
                                                 </div>
+                                                {
+                                                    (value.variant && value.size) && (
+                                                        <div>
+                                                            {value.variant}, {value.size}
+                                                        </div>
+                                                    )
+                                                }
                                                 <div>
                                                     {value.qty} x Rp. {value.price && parseFloat(value.price).toLocaleString()}
                                                 </div>

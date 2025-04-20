@@ -41,11 +41,11 @@ export default function LandingComp() {
                         />        */}
                         <RestoComp />
                     </Col>
-                    <Col
+                    {/* <Col
                         span={24}
                     >
                         <ServeComp />
-                    </Col>
+                    </Col> */}
                     <Col
                         span={24}
                     >

@@ -8,7 +8,8 @@ import { useOrder } from '../../../../context/OrderContext'
 import { useAuth } from '../../../../context/AuthContext'
 
 export default function CardTotal({
-    handleClick
+    handleClick,
+    qtyTemp,
 }) {
 
     const {

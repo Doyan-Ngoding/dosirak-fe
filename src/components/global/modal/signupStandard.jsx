@@ -11,9 +11,10 @@ import axios from 'axios';
 import authConfig from '../../../config/auth';
 import { useAuth } from '../../../context/AuthContext';
 import { useLocation, useNavigate } from 'react-router-dom';
+import AlertSuccess from './alertSuccess';
 
 export default function SignupStandard({ isOpen, setIsOpen }) {
-    const { setSize, setModalLogin, setModalOtp, setToken, resMessage, setResMessage, setAuthUser, } = useAuth();
+    const { setSize, setModalLogin, setModalOtp, setToken, resMessage, setResMessage, setAuthUser, setIsSuccess, isSuccess} = useAuth();
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate()
     const location = useLocation()
@@ -43,10 +44,11 @@ export default function SignupStandard({ isOpen, setIsOpen }) {
                         navigate('/order-summary');
                     }, 2000)
                 } else {
-                    setResMessage(['success', 'Registration Success!'])
-                    setTimeout(() => {
-                        navigate('/order');
-                    }, 2000)
+                    // setResMessage(['success', 'Registration Success!'])
+                    // setTimeout(() => {
+                    //     navigate('/order');
+                    // }, 2000)
+                    setIsSuccess(true)
                 }
             }
         } catch (error) {
@@ -170,7 +172,8 @@ export default function SignupStandard({ isOpen, setIsOpen }) {
                         <span
                             className="text-[#E83600] ml-2 cursor-pointer hover:text-[#FA5523]"
                             onClick={() => {
-                                setModalLogin(true);
+                                // setModalLogin(true);
+                                setIsSuccess(true)
                                 setIsOpen(false);
                             }}
                         >
@@ -179,6 +182,10 @@ export default function SignupStandard({ isOpen, setIsOpen }) {
                     </div>
                 </Form>
             </Modal>
+            <AlertSuccess 
+                isOpen={isSuccess}
+                setIsOpen={setIsSuccess}
+            />
         </>
     );
 }

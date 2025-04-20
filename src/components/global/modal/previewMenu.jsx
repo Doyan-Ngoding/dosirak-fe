@@ -21,6 +21,10 @@ export default function PreviewMenu({
     } = useOrder();
 
     const [qtyTemp, setQtyTemp] = useState();
+    const [parsedVariants, setParsedVariants] = useState([]);
+    const [selectedVariant, setSelectedVariant] = useState(null);
+    const [selectedSize, setSelectedSize] = useState(null);
+    const [currentPrice, setCurrentPrice] = useState(0);
 
     useEffect(() => {
         if (cart) {
@@ -31,25 +35,64 @@ export default function PreviewMenu({
         }
     }, [cart]);
 
-    const addedToCart = (menuItem) => { 
-        setSelectedMenu(
-            (prevCart) => {
-                const updatedCart = prevCart.map((item) =>
-                    item.id === menuItem.id
-                        ? { ...item, qty: qtyTemp, subTotal: (qtyTemp) * item.price }
-                        : item
-                );
-                const isExisting = prevCart.find((item) => item.id === menuItem.id);
-            
-                if (!isExisting) {
-                    updatedCart.push({ ...menuItem, qty: qtyTemp, subTotal: menuItem.price });
-                }
-                
-                return updatedCart;                
-            }
-        )
-    }
+    useEffect(() => {
+        if (data?.is_parent_menu && data?.variant) {
+            const parsed = JSON.parse(data.variant);
+            setParsedVariants(parsed);
+            setSelectedVariant(parsed[0]?.variant);
+            setSelectedSize(parsed[0]?.sizes[0]?.size);
+            setCurrentPrice(Number(parsed[0]?.sizes[0]?.base_price));
+        } else {
+            setCurrentPrice(data?.price || 0);
+        }
+    }, [data]);
 
+    useEffect(() => {
+        if (data?.is_parent_menu && parsedVariants.length > 0) {
+            const foundVariant = parsedVariants.find(v => v.variant === selectedVariant);
+            const foundSize = foundVariant?.sizes.find(s => s.size === selectedSize);
+            if (foundSize) {
+                setCurrentPrice(Number(foundSize.base_price));
+            }
+        }
+    }, [selectedVariant, selectedSize]);    
+
+    const addedToCart = (menuItem) => {
+        const finalPrice = menuItem.price;
+        const variant = selectedVariant || null;
+        const size = selectedSize || null;
+      
+        setSelectedMenu((prevCart) => {
+          let updated = [...prevCart];
+      
+          const existingIndex = updated.findIndex(
+            (item) =>
+              item.id === menuItem.id &&
+              item.variant === variant &&
+              item.size === size
+          );
+      
+          if (existingIndex !== -1) {
+            updated[existingIndex] = {
+              ...updated[existingIndex],
+              qty: qtyTemp,
+              subTotal: (qtyTemp) * finalPrice,
+            };
+          } else {
+            updated.push({
+              ...menuItem,
+              qty: qtyTemp,
+              price: currentPrice,
+              subTotal: qtyTemp * currentPrice,
+              variant,
+              size,
+            });
+          }
+      
+          return updated;
+        });
+    };  
+    
     useEffect(() => {
         setSubTotal(
             selectedMenu.reduce((total, item) => total + item.subTotal, 0)
@@ -61,6 +104,21 @@ export default function PreviewMenu({
             localStorage.removeItem("selectedResto")
         }
     }, [selectedMenu]);
+
+    useEffect(() => {
+        if ((cart) && (data && data.id)) {
+            const matched = cart.find(
+                (item) =>
+                    item.id === data.id 
+            );
+    
+            if (matched) {
+                setSelectedVariant(matched.variant || null);
+                setSelectedSize(matched.size || null);
+            } 
+
+        }
+    }, [visible, cart]);
 
     return (
         <>
@@ -124,6 +182,48 @@ export default function PreviewMenu({
                                     }
                                 </div>
                             </div>
+                            {
+                                (data?.is_parent_menu && parsedVariants.length > 0) && (
+                                    <>
+                                        <div style={{ marginTop: 20 }}>
+                                            <div style={{ fontWeight: 700, fontSize: setSize(14, 12, 12), marginBottom: 6 }}>Variant</div>
+                                            <Row gutter={[8, 8]}>
+                                                {parsedVariants.map((v, i) => (
+                                                <Col key={i}>
+                                                    <Button
+                                                    size="small"
+                                                    type={selectedVariant === v.variant ? 'primary' : 'default'}
+                                                    onClick={() => {
+                                                        setSelectedVariant(v.variant);
+                                                        setSelectedSize(v.sizes[0].size);
+                                                    }}
+                                                    >
+                                                    {v.variant}
+                                                    </Button>
+                                                </Col>
+                                                ))}
+                                            </Row>
+                                        </div>
+                                        <div style={{ marginTop: 15, marginBottom: 20 }}>
+                                            <div style={{ fontWeight: 700, fontSize: setSize(14, 12, 12), marginBottom: 6 }}>Size</div>
+                                            <Row gutter={[8, 8]}>
+                                                {parsedVariants.find(v => v.variant === selectedVariant)?.sizes.map((s, i) => (
+                                                <Col key={i}>
+                                                    <Button
+                                                        size="small"
+                                                        type={selectedSize === s.size ? 'primary' : 'default'}
+                                                        onClick={() => setSelectedSize(s.size)}
+                                                    >
+                                                    {s.size}
+                                                    </Button>
+                                                </Col>
+                                                ))}
+                                            </Row>
+                                        </div>
+                                    </>
+                                )
+                            }
+
                             <div
                                 style={{
                                     bottom: 0,
@@ -145,7 +245,7 @@ export default function PreviewMenu({
                                                 fontWeight: 800
                                             }}
                                         >
-                                            Rp. {(data && data.price) ? parseFloat(data.price).toLocaleString() : '-'}
+                                            Rp. {(data && currentPrice) ? parseFloat(currentPrice).toLocaleString() : '-'}
                                         </div>
                                     </Col>
                                     <Col
@@ -196,6 +296,21 @@ export default function PreviewMenu({
                                         </Row>
                                     </Col>
                                 </Row>
+                                {
+                                    (data?.is_parent_menu && parsedVariants.length > 0) && (
+                                        <div className='text-[10px]'>
+                                            {
+                                                (data && data.name) ? data.name : ''
+                                            },
+                                            {
+                                                (data && selectedVariant) ? ' ' + selectedVariant : ''
+                                            },
+                                            {
+                                                (data && selectedSize) ? ' ' + selectedSize : ''
+                                            }
+                                        </div>
+                                    )
+                                }
                                 <div
                                     style={{
                                         paddingTop: 10,

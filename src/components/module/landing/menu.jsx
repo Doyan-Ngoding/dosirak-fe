@@ -155,6 +155,8 @@ export default function MenuComp() {
         }
     }, [selectedTempDate, selectedTempTime]);
 
+    console.log(selectedMenu);
+    
     
     return (
         <>
@@ -533,12 +535,13 @@ export default function MenuComp() {
                                         restaurant={value.restaurant_name}
                                         title={value.name}
                                         desc={value.description}
-                                        price={value.price}
+                                        price={value.price || (Number(JSON.parse(value.variant)[0].sizes[0]?.base_price) || 0)}
                                         stock={value.qty}
                                         showResto={false}
                                         id_menu={value.id}
                                         addToCart={() => {addedToCart(value)}}
                                         detail={value}
+                                        isParent={value.is_parent_menu}
                                     />
                                 </Col>
                             ))

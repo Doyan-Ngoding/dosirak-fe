@@ -39,10 +39,10 @@ export default function SiderOrder() {
 
     const [validMessage, setValidMessage] = useState();
     const [messageApi, contextHolder] = message.useMessage();
+    const [qtyTemp, setQtyTemp] = useState(0);
 
     const onCheckout = () => {
         const totalQty = cart.reduce((sum, item) => sum + (item.qty || 0), 0);
-        
         if (totalQty < 15) {
             setValidMessage(["error", "Minimum order is 15 items"])
         } else if (totalQty > 200) {
@@ -58,6 +58,10 @@ export default function SiderOrder() {
         );
         setCart(selectedMenu)
     }, [selectedMenu]);
+
+    useEffect(() => {
+        setQtyTemp(cart.reduce((sum, item) => sum + (item.qty || 0), 0))
+    }, [cart]);
 
      useEffect(() => {
         if (validMessage && validMessage.length === 2) {
@@ -83,9 +87,11 @@ export default function SiderOrder() {
                                 title={value.name}
                                 price={value.price}
                                 qty={value.qty}
-                                addQty={() => addQty(value.id)}
-                                subQty={() => subQty(value.id)}
+                                addQty={() => addQty(value.id, value.variant || null, value.size || null)}
+                                subQty={() => subQty(value.id, value.variant || null, value.size || null)}
                                 id_menu={value.id}
+                                variant={value.variant || null}
+                                size={value.size || null}
                             />
                         ))
                     )
@@ -95,6 +101,7 @@ export default function SiderOrder() {
                     total={subTotal}
                     titleAction={'Checkout'}
                     action={onCheckout}
+                    qtyTemp={qtyTemp}
                 />
             </div>
             {/* {

@@ -9,6 +9,7 @@ import {
 } from 'antd'
 import { IconX } from '@tabler/icons-react'
 import { useAuth } from '../../../context/AuthContext'
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
 export default function LoginMobile({
     isOpen,
@@ -23,7 +24,8 @@ export default function LoginMobile({
         setModalForgot, 
         setModalSignup,
         resMessage,
-        handleLoginGoogle
+        handleLoginGoogle,
+        handleLoginSuccessFacebook
     } = useAuth()
 
     const [messageApi, contextHolder] = message.useMessage();
@@ -141,18 +143,28 @@ export default function LoginMobile({
                         className="flex items-center w-full py-3 rounded-full border-gray-300 shadow-sm" 
                         icon={<img src='/assets/icon/icon-google.png' width={'20px'}/>} 
                         size="small"
-                        // onClick={handleLoginGoogle}
+                        onClick={handleLoginGoogle}
                     >
                         Sign in with Google
                     </Button>
-                    <Button 
-                        className="flex items-center w-full py-3 rounded-full border-gray-300 shadow-sm mt-2" 
-                        icon={<img src='/assets/icon/icon-facebook.png' width={'22px'}/>} 
-                        size="small"
-                        // onClick={handleLoginGoogle}
-                    >
-                        Sign in with Facebook
-                    </Button>
+                    <FacebookLogin
+                        appId={import.meta.env.VITE_FACEBOOK_APP_ID}
+                        render={renderProps => (
+                            <Button 
+                                className="flex items-center w-full py-3 rounded-full border-gray-300 shadow-sm mt-2" 
+                                icon={<img src='/assets/icon/icon-facebook.png' width={'22px'}/>} 
+                                size="small"
+                                onClick={renderProps.onClick}
+                            >
+                                Sign in with Facebook
+                            </Button>
+                        )} 
+                        textButton='Sign in with Facebook'
+                        autoLoad={false}  
+                        fields="id,name,email"  
+                        callback={handleLoginSuccessFacebook}
+                        isMobile={false}
+                    />
                     <div className="w-full flex justify-center font-semibold mt-[10px] text-[12px]">Don't have an account? <span className='text-[#E83600] ml-2  cursor-pointer hover:text-[#FA5523]' onClick={() => {setModalSignup(true), setIsOpen(false)}}>Sign Up</span></div>
                 </Form>
             </Drawer>
