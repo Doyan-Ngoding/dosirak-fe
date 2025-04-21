@@ -8,7 +8,7 @@ import {
     Modal 
 } from 'antd'
 import { useAuth } from '../../../context/AuthContext'
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+// import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
 export default function LoginStandard({
     isOpen,
@@ -112,7 +112,7 @@ export default function LoginStandard({
                     >
                         Sign in with Google
                     </Button>
-                    <FacebookLogin
+                    {/* <FacebookLogin
                         appId={import.meta.env.VITE_FACEBOOK_APP_ID}
                         render={renderProps => (
                             <Button 
@@ -129,7 +129,7 @@ export default function LoginStandard({
                         fields="id,name,email"  
                         callback={handleLoginSuccessFacebook}
                         isMobile={false}
-                    />
+                    /> */}
                     <div className="w-full flex justify-center font-semibold mt-[20px]">Don't have an account? <span className='text-[#E83600] ml-2 cursor-pointer hover:text-[#FA5523]' onClick={() => {setModalSignup(true), setIsOpen(false)}}>Sign Up</span></div>
                 </Form>
             </Modal>    
