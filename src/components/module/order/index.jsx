@@ -47,6 +47,7 @@ export default function OrderComp() {
         subTotal, setSubTotal,
         cart, setCart,
         selectedResto,
+        addressUserCurr,
     } = useOrder();
 
     const {
@@ -56,6 +57,7 @@ export default function OrderComp() {
         selectedSubRestaurant, setSelectedSubRestaurant,
         subRestoAddress, setSubRestoAddress,
         getDetailSubRestaurant,
+        currSelectedResto,
     } = useRestaurant()
 
     const {
@@ -102,14 +104,16 @@ export default function OrderComp() {
     const [searchText, setSearchText] = useState(null);
     const [filteredData, setFilteredData] = useState([]);
 
+    const [currTabResto, setCurrTabResto] = useState([]);
+
     useEffect(() => {
         setFilteredData(
-            selectedResto ? (
+            currTabResto ? (
                 listMenuGroupedRestaurant
                 .map((category) => {
                     const filteredMenu = category.menu.filter(
                         (menuItem) =>
-                            menuItem.restaurant_name.includes(selectedResto)
+                            currTabResto.includes(menuItem.restaurant_name)
                     );
     
                     return filteredMenu.length > 0 ? { ...category, menu: filteredMenu } : null;
@@ -119,7 +123,7 @@ export default function OrderComp() {
                 listMenuGroupedRestaurant
             )
         )
-    }, [listMenuGroupedRestaurant]);
+    }, [listMenuGroupedRestaurant, currTabResto]);
 
     const handleSearch = (e) => {
         const value = e.target.value.toLowerCase();
@@ -186,6 +190,45 @@ export default function OrderComp() {
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []); 
+
+    useEffect(() => {
+        setCurrTabResto(
+            (localStorage.getItem("selectedResto") && typeof localStorage.getItem("selectedResto") === "string") ? [selectedResto] 
+            : (
+                tabRestaurant ? tabRestaurant : []
+            )
+        )
+    }, [localStorage.getItem("selectedResto"), tabRestaurant]);
+
+    // console.log(addressUserCurr, 'disni');
+    
+    // function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+    //     const R = 6371;
+    //     const dLat = (lat2 - lat1) * Math.PI / 180;
+    //     const dLon = (lon2 - lon1) * Math.PI / 180;
+    //     const a =
+    //       Math.sin(dLat/2) * Math.sin(dLat/2) +
+    //       Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+    //       Math.sin(dLon/2) * Math.sin(dLon/2)
+    //     ;
+    //     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    //     return R * c;
+    // }
+
+    // const userLat = addressUserCurr.coordinates.lat;  
+    // const userLon = addressUserCurr.coordinates.lng; 
+    // let nearestResto = null;
+    // let minDistance = Infinity;
+
+    // listSubRestaurant.forEach(resto => {
+    // const distance = getDistanceFromLatLonInKm(userLat, userLon, resto.latitude, resto.longitude);
+    // if (distance < minDistance) {
+    //     minDistance = distance;
+    //     nearestResto = resto;
+    // }
+    // });
+
+    // console.log(nearestResto, minDistance);
 
     return (
         <>
@@ -267,7 +310,7 @@ export default function OrderComp() {
                                                             value: val.id
                                                         }))
                                                     }
-                                                    value={selectedSubRestaurant}
+                                                    value={currSelectedResto ? currSelectedResto : selectedSubRestaurant}
                                                     onChange={(e) => {setSelectedSubRestaurant(e), getDetailSubRestaurant((e))}}
                                                     className='lg:w-[95%] md:w-[90%] w-[100%] texxt-white'
                                                     suffixIcon={
@@ -314,7 +357,7 @@ export default function OrderComp() {
                                         className="inline-flex space-x-4"
                                         targetOffset={150}
                                         items={
-                                            tabRestaurant ? tabRestaurant.map((value) => ({
+                                            currTabResto ? currTabResto.map((value) => ({
                                                 key: value,
                                                 href: '#'+value,
                                                 title: value,

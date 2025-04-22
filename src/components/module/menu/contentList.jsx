@@ -41,6 +41,7 @@ export default function ContentListComp() {
         newListSubRestaurant,
         selectedSubRestaurant, setSelectedSubRestaurant,
         getDetailSubRestaurant,
+        currSelectedResto, setCurrSelectedResto
     } = useRestaurant()
 
     const addedToCart = (menuItem) => { 
@@ -569,9 +570,9 @@ export default function ContentListComp() {
                                                                 value: val.id
                                                             }))
                                                         }
-                                                        value={newListSubRestaurant.some(item =>  item.restaurant.name === value.restaurant && item.id === selectedSubRestaurant) ? selectedSubRestaurant : undefined}
-                                                        defaultValue={newListSubRestaurant.some(item =>  item.restaurant.name === value.restaurant && item.id === selectedSubRestaurant) ? selectedSubRestaurant : undefined}
-                                                        onChange={(e) => {setSelectedSubRestaurant(e), getDetailSubRestaurant((e))}}
+                                                        value={newListSubRestaurant.some(item =>  item.restaurant.name === value.restaurant && item.id === currSelectedResto) ? currSelectedResto : (newListSubRestaurant.some(item =>  item.restaurant.name === value.restaurant && item.id === selectedSubRestaurant) ? selectedSubRestaurant : undefined)}
+                                                        defaultValue={newListSubRestaurant.some(item =>  item.restaurant.name === value.restaurant && item.id === currSelectedResto) ? currSelectedResto : (newListSubRestaurant.some(item =>  item.restaurant.name === value.restaurant && item.id === selectedSubRestaurant) ? selectedSubRestaurant : undefined)}
+                                                        onChange={(e) => {setSelectedSubRestaurant(e), getDetailSubRestaurant((e)), setCurrSelectedResto(e)}}
                                                         className='lg:w-[95%] md:w-[90%] w-[100%]'
                                                         style={{
                                                             width: '90%'

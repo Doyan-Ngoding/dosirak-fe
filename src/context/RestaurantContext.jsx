@@ -16,7 +16,7 @@ const Restaurant = ({children }) => {
 
     const { authUser } = useAuth()
 
-    const { selectedResto } = useOrder() || {};
+    const { selectedResto, addressUserCurr } = useOrder() || {};
 
     const [listRestaurant, setListRestaurant] = useState([]);
     const [listNearRestaurant, setListNearRestaurant] = useState([]);
@@ -33,6 +33,7 @@ const Restaurant = ({children }) => {
     const [listSubRestaurant, setListSubRestaurant] = useState([]);
     const [selectedSubRestaurant, setSelectedSubRestaurant] = useState("");
     const [subRestoAddress, setSubRestoAddress] = useLocalStorage("subRestoAddress");
+    const [currSelectedResto, setCurrSelectedResto] = useLocalStorage("currSelectedResto");
 
     const [newListSubRestaurant, setNewListSubRestaurant] = useState([]);
 
@@ -217,6 +218,47 @@ const Restaurant = ({children }) => {
         })
     }
 
+    const getDistanceFromLatLonInKm = (lat1, lon1, lat2, lon2) => {
+        const R = 6371;
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLon = (lon2 - lon1) * Math.PI / 180;
+        const a =
+            Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon/2) * Math.sin(dLon/2)
+        ;
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        return R * c;
+    }
+
+    useEffect(() => {
+        if (addressUserCurr) {
+            const userLat = addressUserCurr.coordinates.lat;  
+            const userLon = addressUserCurr.coordinates.lng; 
+            let nearestResto = null;
+            let minDistance = Infinity;
+
+            listSubRestaurant.forEach(resto => {
+            const distance = getDistanceFromLatLonInKm(userLat, userLon, resto.latitude, resto.longitude);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    nearestResto = resto;
+                }
+            });
+
+            if (nearestResto) {
+                setSelectedSubRestaurant(nearestResto && nearestResto?.id)
+                setSubRestoAddress(nearestResto && {
+                    coordinates: {
+                        lat: nearestResto?.latitude,
+                        lng: nearestResto?.longitude
+                    },
+                    address: nearestResto?.address
+                })
+            }
+        }
+    }, [addressUserCurr, selectedResto]);
+
     useEffect(() => {
         getListRestauran();
         getListSubRestaurant();
@@ -254,6 +296,8 @@ const Restaurant = ({children }) => {
 
         handleEditHide,
         listRestaurantAdmin, setListRestaurantAdmin,
+
+        currSelectedResto, setCurrSelectedResto,
     }   
 
     return (

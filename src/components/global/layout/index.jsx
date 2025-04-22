@@ -245,11 +245,11 @@ export default function LayoutComp(props) {
                                 >
                                     Cookies
                                 </div>
-                                <div
+                                {/* <div
                                     className='text-[#393939] lg:pt-3 md:pt-2 pt-1 lg:text-[14px] md:text-[14px] text-[12px]'
                                 >
                                     Modern Slavery Statement
-                                </div>
+                                </div> */}
                             </Col>
                         </Row>
                         <Row

@@ -89,7 +89,7 @@ export default function CardAddress() {
                     <div
                         className='text-[#393939] flex justify-between font-semibold lg:text-lg md:text-[16px] text-[12px]'
                     >
-                        SELECT ADDRESS <div style={{ paddingRight: 10}}><IconMapPinFilled color='#E83600' onClick={clickedMap} style={{ cursor: 'pointer'}} /></div>
+                        DELIVERY TO <div style={{ paddingRight: 10}}><IconMapPinFilled color='#E83600' onClick={clickedMap} style={{ cursor: 'pointer'}} /></div>
                     </div>
                 </Col>
                 <Col

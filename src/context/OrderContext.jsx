@@ -240,7 +240,7 @@ const Order = ({children }) => {
         .then(res => {
             setIsLoading(false)
             setNewResPayment(res.data.data)
-            console.log(res.data.data)
+            // console.log(res.data.data)
             axios.post(`${import.meta.env.VITE_URL_BE}/callback`, {
                 order_id: res.data.data?.order_id,
                 transaction_status: res.data.data?.status,
@@ -313,13 +313,13 @@ const Order = ({children }) => {
             },
         })
         .then(res => {
-            console.log(res.data);
+            // console.log(res.data);
             
             if (res.data) {
                 setLongitude(res.data.lon);
                 setLatitude(res.data.lat);
                 setAddressUser(res.data.display_name)
-                console.log(res.data.display_name, 'disni');
+                // console.log(res.data.display_name, 'disni');
                 
                 setAddressUserCurr({
                     coordinates: {
