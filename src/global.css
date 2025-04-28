@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Vina+Sans&family=Source+Sans+Pro&family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Nunito+Sans:wght@400;600;700;800&family=Bebas+Neue:wght@400;600;700;800');
+@import url('https://fonts.googleapis.com/css2?family=Vina+Sans&family=Source+Sans+Pro&family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Nunito+Sans:wght@400;600;700;800&family=Bebas+Neue:wght@400;600;700;800&family=Noto+Sans+KR:wght@400;600;700;800&family=Montserrat:wght@400;600;700;800');
 
 @import 'tailwindcss';
 
 :root {
-  font-family: 'Source Sans Pro';
+  font-family: 'Noto Sans KR';
   line-height: 1.5;
   font-weight: 400;
 
@@ -25,6 +25,16 @@
 @font-face {
   font-family: 'Bebas Neue';
   src: url('/assets/font/BebasNeue-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Noto Sans KR';
+  src: url('/assets-v2/font/NotoSansKR.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/assets-v2/font/Montserrattf') format('truetype');
 }
 
 .bebas-neue-regular {

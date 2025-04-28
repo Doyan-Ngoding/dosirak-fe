@@ -11,7 +11,8 @@ export default function ConfigComp(props) {
             <ConfigProvider
                 theme={{
                     token: {
-                        colorPrimary: '#E83600',
+                        colorPrimary: '#FF6B00',
+                        fontFamily: 'Noto Sans KR'
                     },
                     components: {
                         Layout: {

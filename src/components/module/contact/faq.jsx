@@ -11,60 +11,69 @@ export default function FaqComp() {
     return (
         <>
             <div
-                className='bg-[#FF55211A]'
+                className='bg-[#FFF1E6]'
                 style={{
-                    padding: setSize("50px", "40px", "30px"),
+                    padding: setSize("30px", "40px", "30px"),
                 }}
             >
                 <div
-                    className='text-[#E83600] leading-1 font-[Plus Jakarta Sans] lg:text-[20px] md:text-[14px] text-[10px]'
+                    className='text-[#818182] leading-1 font-[Noto Sans KR] font-semibold lg:text-[14px] md:text-[12px] text-[10px]'
                 >
-                    BEFORE YOU ASK - SEE IF IT'S ANSWERED HERE
+                    Before you ask—see if it’s answered here!
                 </div>
                 <div 
-                    className='text-[#E83600] bebas-neue-regular font-bold lg:text-[60px] md:text-[40px] text-[24px]'
+                    className='text-[#FF6B00] font-[Noto Sans KR]  font-bold lg:text-[30px] md:text-[24px] text-[18px] lg:pt-5 md:pt-4 pt-3'
                 >
-                    FAQ
+                    Frequently Asked Questions
                 </div>
                 <div
                     style={{
-                        paddingTop: 10
+                        paddingTop: 20
                     }}
                 >
                     <ConfigProvider
                         theme={{
                             components: {
                                 Collapse: {
-                                    fontSize: setSize(16, 12, 10),
-                                    headerBg: '#FFFFFF'
+                                    fontSize: setSize(12, 10, 10),
+                                    headerBg: '#FFFFFF',
+                                    fontSizeIcon: setSize(12, 10, 10),
                                 }
                             }
                         }}
                     >
                         <Collapse
                             size={setSize('medium', 'small', 'small')}
-                            items={[{ key: '1', label: 'What is KDosirak?', children: <p>{'KDosirak is your go-to platform for ordering authentic Korean lunchboxes (Dosirak), daily catering, and restaurant-prepared meals. We bring delicious, balanced Korean food straight to your office, home, or event.'}</p> }]}
+                            expandIconPosition="end"
+                            bordered={false}
+                            items={[{ key: '1', label: <b>What is KDosirak?</b>, children: <p>{'KDosirak is your go-to platform for ordering authentic Korean lunchboxes (Dosirak), daily catering, and restaurant-prepared meals. We bring delicious, balanced Korean food straight to your office, home, or event.'}</p> }]}
                         />
                         <div
                             style={{ margin: setSize('20px 0px', '15px 0px', '10px 0px') }}
                         />
                         <Collapse
                             size={setSize('medium', 'small', 'small')}
-                            items={[{ key: '1', label: 'Is there minimum order requirement?', children: <p>{'KDosirak is your go-to platform for ordering authentic Korean lunchboxes (Dosirak), daily catering, and restaurant-prepared meals. We bring delicious, balanced Korean food straight to your office, home, or event.'}</p> }]}
+                            expandIconPosition="end"
+                            bordered={false}
+                            items={[{ key: '1', label: <b>Is there minimum order requirement?</b>, children: <p>{'KDosirak is your go-to platform for ordering authentic Korean lunchboxes (Dosirak), daily catering, and restaurant-prepared meals. We bring delicious, balanced Korean food straight to your office, home, or event.'}</p> }]}
                         />
                         <div
                             style={{ margin: setSize('20px 0px', '15px 0px', '10px 0px') }}
                         />
                         <Collapse
                             size={setSize('medium', 'small', 'small')}
-                            items={[{ key: '1', label: 'Do you serve individual customers or only corporate clients?', children: <p>{'KDosirak is your go-to platform for ordering authentic Korean lunchboxes (Dosirak), daily catering, and restaurant-prepared meals. We bring delicious, balanced Korean food straight to your office, home, or event.'}</p> }]}
+                            expandIconPosition="end"
+                            bordered={false}
+                            items={[{ key: '1', label: <b>Do you serve individual customers or only corporate clients?</b>, children: <p>{'KDosirak is your go-to platform for ordering authentic Korean lunchboxes (Dosirak), daily catering, and restaurant-prepared meals. We bring delicious, balanced Korean food straight to your office, home, or event.'}</p> }]}
                         />
-                                                <div
+                        <div
                             style={{ margin: setSize('20px 0px', '15px 0px', '10px 0px') }}
                         />
                         <Collapse
                             size={setSize('medium', 'small', 'small')}
-                            items={[{ key: '1', label: 'How do I track my order?', children: <p>{'KDosirak is your go-to platform for ordering authentic Korean lunchboxes (Dosirak), daily catering, and restaurant-prepared meals. We bring delicious, balanced Korean food straight to your office, home, or event.'}</p> }]}
+                            expandIconPosition="end"
+                            bordered={false}
+                            items={[{ key: '1', label: <b>How do I track my order?</b>, children: <p>{'KDosirak is your go-to platform for ordering authentic Korean lunchboxes (Dosirak), daily catering, and restaurant-prepared meals. We bring delicious, balanced Korean food straight to your office, home, or event.'}</p> }]}
                         />
                     </ConfigProvider>
                 </div>

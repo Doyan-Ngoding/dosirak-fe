@@ -1,7 +1,7 @@
 import React from 'react'
 import { useAuth } from '../../../context/AuthContext'
-import { Button, Col, ConfigProvider, Form, Input, Radio, Row } from 'antd'
-import { IconBrandDiscordFilled, IconBrandInstagramFilled, IconBrandTwitterFilled, IconMailFilled, IconMapPinFilled, IconPhoneCalling, IconPhoneFilled } from '@tabler/icons-react'
+import { Button, Checkbox, Col, ConfigProvider, Form, Input, Radio, Row } from 'antd'
+import { IconBrandDiscordFilled, IconBrandInstagramFilled, IconBrandTwitterFilled, IconMail, IconMailFilled, IconMapPin, IconMapPinFilled, IconPhone, IconPhoneCalling, IconPhoneFilled } from '@tabler/icons-react'
 
 export default function FormContactComp() {
 
@@ -14,109 +14,101 @@ export default function FormContactComp() {
     return (
         <>
             <div
-                className='lg:pt-[100px] md:pt-[80px] pt-[80px] px-10'
+                className='lg:pt-[80px] md:pt-[70px] pt-[60px] px-10'
             >
                 <div 
-                    className='text-[#E83600] bebas-neue-regular font-bold lg:text-[60px] md:text-[40px] text-[24px] text-center'
+                    className='text-[#FF6B00] font-[Noto Sans KR] font-bold lg:text-[30px] md:text-[24px] text-[18px] lg:pt-5 md:pt-4 pt-3 text-center'
                 >
-                    CONTACT US
+                    Contact Us
                 </div>
                 <div
-                    className='text-[#A5ABB3] leading-1 font-[Plus Jakarta Sans] font-semibold lg:text-[20px] md:text-[14px] text-[10px] text-center'
+                    className='text-[#818182] leading-1 font-[Noto Sans KR] font-semibold lg:text-[16px] md:text-[14px] text-[10px] lg:pt-5 md:pt-4 pt-3 text-center'
                 >
-                    ANY QUESTION OR REMARKS? JUST WRITE US MESSAGE!
+                    Any question or remarks? Just write us a message!
                 </div>
                 <Row
                     style={{
                         backgroundColor: '#FFFFFF',
                         borderRadius: 4,
-                        border: '1px solid #A5ABB3',
+                        border: '1px solid #D8D8D8',
                         margin: setSize("50px 50px", "40px 0px", "30px 0px"),
-                        padding: 3
+                        padding: 8
                     }}
                 >
                     <Col
                         span={setSize(11, 11, 24)}
                         style={{
-                            background: '#FA764E'
+                            backgroundImage: 'url(/assets-v2/banner/contact.png)',
+                            backgroundRepeat: 'no-repeat',
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                            width: '100%',
+                            height: '100%',
                         }}
                     >
                         <div
-                            className='lg:p-5 md:p-3 p-3 font-[Plus Jakarta Sans]'
+                            className='lg:p-5 md:p-3 p-3 font-[Noto Sans KR]'
                         >
                             <div
-                                className=' text-white lg:text-[24px] md:text-[18px] text-[14px]'
+                                className=' text-[#A64500] lg:text-[22px] md:text-[18px] text-[14px] font-bold'
                             >
                                 Contact Information
                             </div>
                             <div
-                                className='text-white lg:text-[14px] md:text-[10px] text-[10px]'
+                                className='text-[#3B3B3B] lg:text-[12px] md:text-[10px] text-[10px]'
                             >
-                                start a message with our customer service!
+                                Start a message with our customer service!
                             </div>
                             <div
-                                className='lg:pt-15 md:pt-10 pt-8'
+                                className='lg:pt-40 md:pt-30 pt-20 lg:pb-8 md:pb-5 pb-3'
                             >
                                 <div
                                     className='flex items-center lg:space-x-4 md:space-x-2 space-x-2'
                                 >
-                                    <IconPhoneFilled 
-                                        size={setSize(18, 14, 14)}
+                                    <IconPhone
+                                        size={setSize(16, 14, 13)}
                                         style={{
                                             marginTop: 2
                                         }}
+                                        color='#582500'
                                     />
                                     <div
-                                        className='lg:text-[16px] md:text-[12px] text-[12px]'
+                                        className='lg:text-[13px] md:text-[11px] text-[10px] text-[#582500]'
                                     >
-                                        +1012 3456 789
+                                        +62 958 248 966
                                     </div>
                                 </div>
                                 <div
-                                    className='flex items-center lg:space-x-4 md:space-x-2 space-x-2 pt-5'
+                                    className='flex items-center lg:space-x-4 md:space-x-2 space-x-2 lg:pt-5 md:pt-5 pt-3'
                                 >
-                                    <IconMailFilled 
-                                        size={setSize(18, 14, 14)}
+                                    <IconMail
+                                        size={setSize(16, 14, 13)}
                                         style={{
                                             marginTop: 2
                                         }}
+                                        color='#582500'
                                     />
                                     <div
-                                        className='lg:text-[16px] md:text-[12px] text-[12px]'
+                                        className='lg:text-[13px] md:text-[11px] text-[10px] text-[#582500]'
                                     >
-                                        demo@gmail.com
+                                        halo@kdosirak.com
                                     </div>
                                 </div>
                                 <div
-                                    className='flex items-center lg:space-x-4 md:space-x-2 space-x-2 pt-5'
+                                    className='flex items-center lg:space-x-4 md:space-x-2 space-x-2 lg:pt-5 md:pt-5 pt-3'
                                 >
-                                    <IconMapPinFilled 
-                                        size={setSize(18, 14, 14)}
+                                    <IconMapPin
+                                        size={setSize(16, 14, 13)}
                                         style={{
                                             marginTop: 2
                                         }}
+                                        color='#582500'
                                     />
                                     <div
-                                        className='lg:text-[16px] md:text-[12px] text-[12px]'
+                                        className='lg:text-[13px] md:text-[11px] text-[10px] text-[#582500]'
                                     >
-                                        132 Dartmouth Street Boston, Massachusetts 02156 United States
+                                        Karawaci, Tangerang 15115
                                     </div>
-                                </div>
-                                <div
-                                    className='flex items-center space-x-4 lg:pt-20 md:pt-12 pt-10 lg:pb-10 md:pb-8 pb-5'
-                                >
-                                    <IconBrandTwitterFilled 
-                                        size={setSize(24, 18, 16)}
-                                        className="text-white bg-black rounded-full p-1 hover:text-black hover:bg-white cursor-pointer"
-                                    />
-                                    <IconBrandInstagramFilled 
-                                        size={setSize(24, 18, 16)}
-                                        className="text-white bg-black rounded-full p-1 hover:text-black hover:bg-white cursor-pointer"
-                                    />
-                                    <IconBrandDiscordFilled 
-                                        size={setSize(24, 18, 16)}
-                                        className="text-white bg-black rounded-full p-1 hover:text-black hover:bg-white cursor-pointer"
-                                    />
                                 </div>
                             </div>
                         </div>
@@ -128,13 +120,18 @@ export default function FormContactComp() {
                             theme={{
                                 components: {
                                     Form: {
-                                        itemMarginBottom: setSize(14, 12, 0),
-                                        labelFontSize: setSize(16, 12, 10),
-                                        verticalLabelMargin: setSize('5px 0px -5px 0px', '5px 0px -5px 0px', '5px 0px -10px 0px'),
-                                        fontSize: setSize(16, 12, 10)
+                                        itemMarginBottom: setSize(10, 0, 0),
+                                        labelFontSize: setSize(14, 12, 10),
+                                        verticalLabelMargin: setSize('5px 0px -10px 0px', '5px 0px -12px 0px', '5px 0px -15px 0px'),
+                                        fontSize: setSize(12, 10, 10),
                                     },
-                                    Radio: {
-                                        fontSize: setSize(16, 12, 10)
+                                    Input: {
+                                        fontSize: setSize(12, 10, 10),
+                                        paddingInline: 0,
+                                    },
+                                    Checkbox: {
+                                        fontSize: setSize(12, 10, 10),
+                                        colorText: '#6C6F75'
                                     }
                                 }
                             }}
@@ -142,11 +139,10 @@ export default function FormContactComp() {
                             <Form
                                 form={form}
                                 layout="vertical"
-                                className='lg:p-5 md:p-3 p-3 font-[Plus Jakarta Sans]'
+                                className='font-[Noto Sans KR]'
                                 style={{
-                                    padding: setSize(20, 12, 12)
+                                    padding: setSize('0px 10px 10px 20px', '0px 10px 0px 15px', 12),
                                 }}
-                                
                             >
                                 <Row gutter={16}>
                                     <Col 
@@ -154,7 +150,7 @@ export default function FormContactComp() {
                                     >
                                         <Form.Item
                                             name="firstName"
-                                            label={<span style={{ color: '#E44D26', fontWeight: 600 }}>First Name</span>}
+                                            label={<span style={{ color: '#FF6B00', fontWeight: 600 }}>First Name</span>}
                                             required={false}
                                             rules={[{ required: true, message: 'Please enter your first name' }]}
                                         >
@@ -166,7 +162,7 @@ export default function FormContactComp() {
                                     >
                                         <Form.Item
                                             name="lastName"
-                                            label={<span style={{ color: '#E44D26', fontWeight: 600 }}>Last Name</span>}
+                                            label={<span style={{ color: '#FF6B00', fontWeight: 600 }}>Last Name</span>}
                                             required={false}
                                             rules={[{ required: true, message: 'Please enter your last name' }]}
                                         >
@@ -184,7 +180,7 @@ export default function FormContactComp() {
                                     >
                                         <Form.Item
                                             name="email"
-                                            label={<span style={{ color: '#E44D26', fontWeight: 600 }}>Email</span>}
+                                            label={<span style={{ color: '#FF6B00', fontWeight: 600 }}>Email</span>}
                                             required={false}
                                             rules={[{ required: true, message: 'Please enter your email', type: 'email' }]}
                                         >
@@ -196,7 +192,7 @@ export default function FormContactComp() {
                                     >
                                         <Form.Item
                                             name="phone"
-                                            label={<span style={{ color: '#E44D26', fontWeight: 600 }}>Phone Number</span>}
+                                            label={<span style={{ color: '#FF6B00', fontWeight: 600 }}>Phone Number</span>}
                                             required={false}
                                             rules={[{ required: true, message: 'Please enter your phone number' }]}
                                         >
@@ -206,23 +202,26 @@ export default function FormContactComp() {
                                 </Row>
                                 <Form.Item
                                     name="subject"
-                                    label={<span style={{ color: '#E44D26', fontWeight: 600 }}>Select Subject</span>}
+                                    label={<span style={{ color: '#FF6B00', fontWeight: 600 }}>Select Subject</span>}
                                     required={false}
                                     rules={[{ required: true, message: 'Please select a subject' }]}
                                     style={{
                                         marginTop: setSize(5, 3, 3)
                                     }}
                                 >
-                                    <Radio.Group size='small'>
-                                        <Radio value="general">General Inquiry</Radio>
-                                        <Radio value="menu">Food Menu</Radio>
-                                        <Radio value="subscription">Subscription Order</Radio>
-                                        <Radio value="track">Track Order</Radio>
-                                    </Radio.Group>
+                                    <Checkbox.Group 
+                                        size='small' 
+                                        options={[
+                                            { label: 'General Inquiry', value: 'general' },
+                                            { label: 'Food Menu', value: 'menu' },
+                                            { label: 'Subscription Order', value: 'subscription' },
+                                            { label: 'Track Order', value: 'track' },
+                                        ]}
+                                    />
                                 </Form.Item>
                                 <Form.Item
                                     name="message"
-                                    label={<span style={{ color: '#E44D26', fontWeight: 600 }}>Message</span>}
+                                    label={<span style={{ color: '#FF6B00', fontWeight: 600 }}>Message</span>}
                                     rules={[{ required: true, message: 'Please enter your message' }]}
                                     required={false}
                                     style={{
@@ -237,11 +236,11 @@ export default function FormContactComp() {
                                             type="primary"
                                             htmlType="submit"
                                             style={{
-                                                backgroundColor: '#E44D26',
-                                                borderColor: '#E44D26',
-                                                padding: '0 24px',
-                                                height: setSize(40, 30, 25),
-                                                fontSize: setSize(16, 12, 10)
+                                                backgroundColor: '#FF6B00',
+                                                borderColor: '#FF6B00',
+                                                padding: '0 20px',
+                                                height: setSize(32, 28, 26),
+                                                fontSize: setSize(12, 10, 10)
                                             }}
                                         >
                                             Send Message

@@ -40,11 +40,12 @@ const Auth = ({children }) => {
         10: '/cms/restaurant',
         11: '/cms/order',
         12: '/history',
+        13: '/about',
     }
 
     const allowAdmin = ['/cms', '/cms/product', '/cms/user', '/cms/category', '/cms/restaurant'] 
     const allowUser = ['/order-summary', '/payment-method', '/payment', '/complete']
-    const allowGeneral = ['/', '/menu', '/order', '/cms/login', '/finish', '/history', '/contact']
+    const allowGeneral = ['/', '/menu', '/order', '/cms/login', '/finish', '/history', '/contact', '/about']
 
     const [modalLogin, setModalLogin] = useState(false);
     const [modalSignup, setModalSignup] = useState(false);
@@ -121,7 +122,20 @@ const Auth = ({children }) => {
                                 navigate('/')
                             }, 2000)
                         }
-                    } 
+                    } else if (pathname === '/menu') {
+                        if (res.data.user?.role === 'user') {
+                            setModalLogin(false);
+                            setResMessage(['success', 'Log In Success!'])
+                            setTimeout(() => {
+                                navigate('/history')
+                            }, 2000)
+                        } else {
+                            setResMessage(['error', 'Log In Failed! Your No a User!'])
+                            setTimeout(() => {
+                                navigate('/')
+                            }, 2000)
+                        }
+                    }
                 } 
             })
             .catch(err => {

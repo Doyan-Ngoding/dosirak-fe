@@ -5,6 +5,7 @@ import { useAuth } from '../../../context/AuthContext';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { IconBasket, IconMenu2, IconRosetteFilled, IconShoppingBag } from '@tabler/icons-react';
 import DrawerMenu from './drawerMenu';
+import Icon from '@ant-design/icons/lib/components/Icon';
 const { Header } = Layout;
 
 export default function HeaderComp() {
@@ -45,25 +46,25 @@ export default function HeaderComp() {
                 <ConfigProvider
                     theme={{
                         token: {
-                            colorPrimary: '#E83600'
+                            colorPrimary: '#FF6B00'
                         },
                         components: {
                             Layout: {
                                 headerBg: "#FFFFFF",
-                                headerHeight: setSize((isScrolled ? 70 : 60), 55, 40),
-                                headerPadding: setSize((isScrolled ? '0px 50px' : '0px 20px'), '0px 10px', '0px 10px'),
+                                headerHeight: setSize(50, 40, 30),
+                                headerPadding: setSize((isScrolled ? '0px 50px' : '0px 15px'), (isScrolled ? '0px 20px' : '0px 10px'), (isScrolled ? '0px 15px' : '0px 10px')),
                             },
                             Menu: {
                                 itemHeight: '80%',
-                                fontFamily: 'Plus Jakarta Sans',
+                                fontFamily: 'Noto Sans KR',
                                 itemPaddingInline: 50,
-                                fontSize: 20,
-                                colorText: '#A5ABB3',
+                                fontSize: 16,
+                                colorText: '#838383',
                                 itemBg: '#FFFFFF',
-                                colorSplit: `${pathname === '/contact' ? '#A5ABB3' : 'none'}`,
+                                colorSplit: `${(pathname === '/contact' || pathname === '/about') ? '#D8D8D8' : 'none'}`,
                             },
                             Button: {
-                                fontFamily: 'Plus Jakarta Sans',
+                                fontFamily: 'Noto Sans KR',
                                 borderRadius: 4,
                             }
                         }
@@ -71,7 +72,7 @@ export default function HeaderComp() {
                 >
                     <Layout>
                         <Header
-                            className={`fixed top-0 transition-all z-50 bg-white self-center ${isScrolled ? 'w-full mt-0 border-b border-gray-300' : 'w-[90%] mt-5 mx-auto self-center rounded-lg'} ${pathname === '/contact' && 'border border-[#A5ABB3]'}`}
+                            className={`fixed top-0 transition-all z-50 bg-white self-center ${isScrolled ? 'w-full mt-0 border-b border-gray-300' : 'w-[90%] mt-5 mx-auto self-center rounded-lg'} ${(pathname === '/contact' || pathname === '/about') && 'border border-[#D8D8D8]'}`}
                         >
                             <Row
                                 justify={"space-between"}
@@ -92,10 +93,10 @@ export default function HeaderComp() {
                                             <IconMenu2 
                                                 color='#6B6B6B'
                                                 onClick={() => setIsDrawer(true)}
-                                                size={30}
+                                                size={20}
                                             />
                                             <div>
-                                                <img src='/assets/logos.png' alt='Logo Dosirak' width={setSize("55px", "40px", "32px")} style={{ paddingLeft: setSize(0, 5, 5) }}/>
+                                                <img src='/assets-v2/logo/dosirak-logo.png' alt='Logo Dosirak' width={setSize("40px", "35px", "28px")} style={{ paddingLeft: setSize(0, 5, 5) }}/>
                                             </div>
                                         </Col>
                                     )
@@ -107,7 +108,7 @@ export default function HeaderComp() {
                                                 style={{ margin: !isStandard ? '0 auto' : ''}}
                                             >
                                                 <div className='flex justify-center'>   
-                                                    <img src='/assets/logos.png' alt='Logo Dosirak' width={setSize("55px", "40px", "32px")} style={{ paddingLeft: setSize(0, 100, 0), paddingRight: setSize(10, 0, 40) }}/>
+                                                    <img src='/assets-v2/logo/dosirak-logo.png' alt='Logo Dosirak' width={setSize("45px", "35px", "28px")} style={{ paddingLeft: setSize(0, 100, 0), paddingRight: setSize(10, 0, 40) }}/>
                                                 </div>
                                             </Col>
                                             <Col
@@ -119,15 +120,16 @@ export default function HeaderComp() {
                                                     selectedKeys={[activeKey]} 
                                                     defaultSelectedKeys={['1']} 
                                                     onClick={e => setActiveKey(e)}
-                                                    className={`flex flex-1 ${setSize("justify-center", "justify-start", "justify-start")} min-w-0 relative font-semibold`}
+                                                    className={`flex flex-1 ${setSize("justify-center", "justify-start", "justify-start")} min-w-0 relative`}
                                                     overflowedIndicator={<IconMenu2 />}
                                                     disabledOverflow={true}
                                                 >
                                                     <Menu.Item key={'1'}><Link to={'/'}>Home</Link></Menu.Item>
-                                                    <Menu.Item key={'2'}><Link to={'/menu'}>Menu</Link></Menu.Item>
-                                                    <Menu.Item key={'3'}><Link to={'/order'}>Order</Link></Menu.Item>
+                                                    <Menu.Item key={'2'}><Link to={'/menu'}>Our Menu</Link></Menu.Item>
+                                                    {/* <Menu.Item key={'3'}><Link to={'/order'}>Order</Link></Menu.Item> */}
                                                     {/* <Menu.Item key={'12'}><Link to={'/history'}>History</Link></Menu.Item> */}
                                                     <Menu.Item key={'4'}><Link to={'/contact'}>Contact</Link></Menu.Item>
+                                                    <Menu.Item key={'13'}><Link to={'/about'}>About</Link></Menu.Item>
                                                 </Menu>  
                                             </Col>
                                         </>
@@ -136,29 +138,25 @@ export default function HeaderComp() {
                                 {
                                     <Col>
                                         <div 
-                                            className='flex items-center cursor-pointer'
+                                            className='flex items-center'
                                         >
-                                            <div
-                                                className='relative lg:w-10 md:w-10 w-8 lg:h-10 md:h-8 h-6 lg:mr-3 md:mr-3 mr-1' 
-                                                onClick={() => navigate("/order")}
-                                            >
-                                                <IconRosetteFilled 
-                                                    color='#E83600'
-                                                    size={setSize(40, 35, 24)}
-                                                    className='absolute'
-                                                />
-                                                <IconShoppingBag 
-                                                    color='#FFFFFF'
-                                                    size={setSize(20, 20, 16)}
-                                                    className='absolute lg:top-2.5 lg:left-2.5 md:top-2 md:left-2 top-1 left-1'
-                                                />
-                                            </div>
+                                            <IconShoppingBag 
+                                                color='#FF6B00'
+                                                size={setSize(30, 26, 22)}
+                                                style={{
+                                                    border: '1px solid #FF6B00',
+                                                    borderRadius: 50,
+                                                    padding: 3,
+                                                    marginRight: setSize(10, 8, 5),
+                                                    cursor: 'pointer'
+                                                }}
+                                            />
                                             <Button
                                                 type='primary'
                                                 onClick={() => navigate("/order")}
                                                 style={{
-                                                    height: setSize(30, 30, 20),
-                                                    fontSize: setSize(14, 12 ,10)
+                                                    height: setSize(30, 28, 22),
+                                                    fontSize: setSize(12, 11 ,10)
                                                 }}
                                             >
                                                 Order Now!

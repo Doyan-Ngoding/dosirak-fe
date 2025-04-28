@@ -37,6 +37,8 @@ const Menu = ({children }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [resMessage, setResMessage] = useState();
 
+    const [showHistory, setShowHistory] = useState(false);
+
     const location = useLocation()
 
     const searchVal = (location && location.search) ? location.search.split('=')[1].replace('%20', ' ') : ''
@@ -276,6 +278,8 @@ const Menu = ({children }) => {
         getDetailMenu,
         handleEditMenu,
         handleDeleteMenu,
+        
+        showHistory, setShowHistory,
     }
 
     return (
