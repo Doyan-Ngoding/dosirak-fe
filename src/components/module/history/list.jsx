@@ -1,9 +1,12 @@
-import React from 'react'
-import { Anchor, Button, Col, ConfigProvider, DatePicker, Input, Row, Select } from 'antd'
+import React, { useState } from 'react'
+import { Anchor, Breadcrumb, Button, Col, ConfigProvider, DatePicker, Input, Row, Select, Table } from 'antd'
 import { IconBuildingStore, IconCalendarWeek, IconChevronDown, IconChevronRight, IconClock, IconNotes, IconSearch, IconToolsKitchen2, IconXboxXFilled } from '@tabler/icons-react';
 import dayjs from 'dayjs';
 import { useAuth } from '../../../context/AuthContext';
 import { useOrder } from '../../../context/OrderContext';
+import { columnOrderListUser } from '../../global/consts/columns'
+import { useHistory } from '../../../context/HistoryContext'
+import ModalDetailOrder from '../../global/modal/detailOrder'
 
 export default function ListHistory() {
     
@@ -16,19 +19,31 @@ export default function ListHistory() {
         selectedTempTime, setSelectedTempTime,
     } = useOrder();
 
-    const disabledDate = (current) => {
-        return current && current < dayjs().add(1, 'day').endOf('day');
-    };
+    const { listHistoryOrder } = useHistory()
+ 
+    const [modalDetail, setModalDetail] = useState(false);
+    const [dataDetail, setDataDetail] = useState();
 
     const [openDate, setOpenDate] = useState(false);
     const [openTime, setOpenTime] = useState(false);
     const [openAlert, setOpenAlert] = useState(true);
 
+    const disabledDate = (current) => {
+        return current && current < dayjs().add(1, 'day').endOf('day');
+    };
+
     return (
         <>
             <div
-                className='lg:pt-[30px] md:pt-[20px] pt-[15px] lg:px-[50px] md:px-[30px] px-[20px]'
+                className='lg:pt-[100px] md:pt-[80px] pt-[70px] lg:px-[50px] md:px-[30px] px-[20px]'
             >
+                <div
+                    style={{
+                        marginBottom: setSize(20, 16, 12)
+                    }}
+                >
+                    <img src='/assets-v2/banner/little-2.png' width={"100%"} />
+                </div>
                 <ConfigProvider
                     theme={{
                         token: {
@@ -60,10 +75,28 @@ export default function ListHistory() {
                             Button: {
                                 controlHeight: setSize(32, 24, 24),
                                 fontSize: setSize(12, 10, 10),
-                            }
+                            },
+                            Breadcrumb: {
+                                fontSize: setSize(11, 10, 9),
+                                fontFamily: 'Noto Sans KR',
+                                itemColor: '#FF6B00',
+                                lastItemColor: '#FF6B00',
+                                linkColor: '#FF6B00',
+                                separatorMargin: 3
+                            }    
                         }
                     }}
                 >
+                    <Breadcrumb 
+                        items={[
+                            {
+                              title: <a href="/menu" style={{ textDecoration: 'underline' }}>MENU</a>,
+                            },
+                            {
+                              title: <span style={{ textDecoration: 'underline' }}>SEE ORDER HISTORY</span>
+                            },
+                        ]}
+                    />
                     <Row
                         align={"bottom"}
                     >
@@ -73,12 +106,12 @@ export default function ListHistory() {
                             <div 
                                 className='text-[#FF6B00] font-[Noto Sans KR] font-bold lg:text-[30px] md:text-[24px] text-[18px]'
                             >
-                                Schedule your delivery time
+                                See Order History
                             </div>
                             <div
                                 className='text-[#818182] leading-3 font-[Noto Sans KR] font-semibold lg:text-[14px] md:text-[12px] text-[10px] pt-1'
                             >
-                                Pick the time that works best for you, and we’ll make sure your food arrives fresh and on time
+                                Any question or remarks? Just us a message!
                             </div>
                         </Col>
                         <Col
@@ -257,7 +290,41 @@ export default function ListHistory() {
                         </Col>
                     </Row>
                 </ConfigProvider>
+                <div
+                    className='lg:pt-[50px] md:pt-[30px] pt-[20px]'
+                >
+                    <div
+                        // className='bg-[#D8D8D8]'
+                    >
+                        <Table 
+                            columns={columnOrderListUser(listHistoryOrder, setModalDetail, setDataDetail)}
+                            dataSource={listHistoryOrder}
+                            size={setSize('small', 'small', 'small')}
+                            pagination={{
+                                total: listHistoryOrder && listHistoryOrder?.length,
+                                showTotal: (total, range) =>
+                                    `${range[0]}-${range[1]} of ${
+                                    total ? total.toLocaleString() : ""
+                                    } items`,
+                                defaultPageSize: 10,
+                                defaultCurrent: 1,
+                                showSizeChanger: true,
+                                hideOnSinglePage: false,
+                                pageSizeOptions: [10, 20, 50, 100],
+                                size: setSize('small', 'small', 'small'),
+                            }}
+                            scroll={{
+                                x: setSize(0, 1000, 800),
+                            }}
+                        />
+                    </div>
+                </div>
             </div>
+            <ModalDetailOrder 
+                 isOpen={modalDetail}
+                 setIsopen={setModalDetail}
+                 data={dataDetail}
+             />
         </>
     )
 }

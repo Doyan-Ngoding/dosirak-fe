@@ -38,7 +38,7 @@ export default function RestoComp() {
                     Food Tastes Better With KDosirak!
                 </div>
                 <div
-                    className='flex overflow-x-auto space-x-10 w-full no-scrollbar mt-10 justify-center'
+                    className='flex overflow-x-auto space-x-10 w-full no-scrollbar mt-10 lg:justify-center md:justify-center'
                 >
                     {
                         listNearRestaurant && listNearRestaurant.map((value, key) => (
@@ -78,7 +78,7 @@ export default function RestoComp() {
                                     </div>
                                     <div>
                                         <Button
-                                            size={setSize('medium', 'small', 'small')}
+                                            size={setSize('small', 'small', 'small')}
                                             style={{
                                                 display: "flex",
                                                 alignItems: "center",

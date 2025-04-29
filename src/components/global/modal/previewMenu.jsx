@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Col, ConfigProvider, Modal, Row, Tooltip } from 'antd';
 import { useAuth } from '../../../context/AuthContext';
-import { IconCircleMinus, IconCirclePlusFilled } from '@tabler/icons-react';
+import { IconCircleMinus, IconCirclePlusFilled, IconForbid2Filled, IconForbidFilled } from '@tabler/icons-react';
 import { useOrder } from '../../../context/OrderContext';
 
 export default function PreviewMenu({
@@ -137,7 +137,7 @@ export default function PreviewMenu({
                     open={visible}
                     onCancel={() => setVisible(false)}
                     footer={false}
-                    width={setSize("60%", "80%", "80%")}
+                    width={setSize("50%", "80%", "80%")}
                 >
                     <Row
                         gutter={[24, 12]}
@@ -161,9 +161,9 @@ export default function PreviewMenu({
                             >
                                 <div
                                     style={{
-                                        fontSize: setSize(24, 18, 16),
-                                        fontFamily: 'Plus Jakarta Sans',
-                                        fontWeight: 800,
+                                        fontSize: setSize(18, 16, 16),
+                                        fontFamily: 'Noto Sans KR',
+                                        fontWeight: 500,
                                     }}
                                 >
                                     {
@@ -172,9 +172,9 @@ export default function PreviewMenu({
                                 </div>
                                 <div
                                     style={{
-                                        fontSize: setSize(16, 10, 10),
-                                        fontFamily: 'Plus Jakarta Sans',
-                                        fontWeight: 600
+                                        fontSize: setSize(12, 10, 10),
+                                        fontFamily: 'Noto Sans KR',
+                                        fontWeight: 400
                                     }}
                                 >
                                     {
@@ -185,8 +185,8 @@ export default function PreviewMenu({
                             {
                                 (data?.is_parent_menu && parsedVariants.length > 0) && (
                                     <>
-                                        <div style={{ marginTop: 20 }}>
-                                            <div style={{ fontWeight: 700, fontSize: setSize(14, 12, 12), marginBottom: 6 }}>Variant</div>
+                                        <div style={{ marginTop: setSize(20, 20, -20) }}>
+                                            <div style={{ fontWeight: 600, fontSize: setSize(12, 12, 12), marginBottom: 6 }}>Variant</div>
                                             <Row gutter={[8, 8]}>
                                                 {parsedVariants.map((v, i) => (
                                                 <Col key={i}>
@@ -197,6 +197,9 @@ export default function PreviewMenu({
                                                         setSelectedVariant(v.variant);
                                                         setSelectedSize(v.sizes[0].size);
                                                     }}
+                                                    style={{
+                                                        fontSize: setSize(12, 10, 10)
+                                                    }}
                                                     >
                                                     {v.variant}
                                                     </Button>
@@ -204,8 +207,8 @@ export default function PreviewMenu({
                                                 ))}
                                             </Row>
                                         </div>
-                                        <div style={{ marginTop: 15, marginBottom: 20 }}>
-                                            <div style={{ fontWeight: 700, fontSize: setSize(14, 12, 12), marginBottom: 6 }}>Size</div>
+                                        <div style={{ marginTop: setSize(15, 15, 20), marginBotom: setSize(20, 20, 20) }}>
+                                            <div style={{ fontWeight: 600, fontSize: setSize(12, 12, 12), marginBottom: 6 }}>Size</div>
                                             <Row gutter={[8, 8]}>
                                                 {parsedVariants.find(v => v.variant === selectedVariant)?.sizes.map((s, i) => (
                                                 <Col key={i}>
@@ -213,6 +216,9 @@ export default function PreviewMenu({
                                                         size="small"
                                                         type={selectedSize === s.size ? 'primary' : 'default'}
                                                         onClick={() => setSelectedSize(s.size)}
+                                                        style={{
+                                                            fontSize: setSize(12, 10, 10)
+                                                        }}
                                                     >
                                                     {s.size}
                                                     </Button>
@@ -226,9 +232,10 @@ export default function PreviewMenu({
 
                             <div
                                 style={{
-                                    bottom: 0,
+                                    bottom: setSize(0, -15, 0),
                                     position: setSize('absolute', 'absolute', ''),
                                     width: '100%',
+                                    marginTop: setSize(0, 0, 20)
                                 }}
                             >
                                 <Row
@@ -240,9 +247,9 @@ export default function PreviewMenu({
                                     >
                                         <div
                                             style={{
-                                                fontSize: setSize(18, 12, 12),
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                fontWeight: 800
+                                                fontSize: setSize(16, 12, 12),
+                                                fontFamily: 'Noto Sans KR',
+                                                fontWeight: 700
                                             }}
                                         >
                                             Rp. {(data && currentPrice) ? parseFloat(currentPrice).toLocaleString() : '-'}
@@ -261,21 +268,21 @@ export default function PreviewMenu({
                                             <Col
                                                 className='icon-hover'
                                             >
-                                                <IconCircleMinus 
-                                                    size={setSize(28, 18, 16)}
+                                                <IconForbidFilled
+                                                    size={setSize(20, 18, 16)}
                                                     style={{
-                                                        cursor: 'pointer'
+                                                        cursor: 'pointer',
+                                                        transform: 'rotate(-45deg)',
                                                     }}
                                                     onClick={() => qtyTemp > 0 && setQtyTemp(qtyTemp - 1)}
+                                                    color='#9E9E9E'
                                                 />
                                             </Col>
                                             <Col>
                                                 <div
                                                     style={{
-                                                        color: '#FF815B',
-                                                        fontSize: setSize(20, 12, 12),
-                                                        padding: setSize('0px 10px', '0px 5px', '0px 5px'),
-                                                        fontWeight: 'bold'
+                                                        fontSize: setSize(14, 12, 12),
+                                                        padding: setSize('0px 8px', '0px 5px', '0px 5px'),
                                                     }}
                                                 >
                                                     {qtyTemp}
@@ -285,7 +292,7 @@ export default function PreviewMenu({
                                                 className='icon-hover-2'
                                             >
                                                 <IconCirclePlusFilled 
-                                                    size={setSize(28, 18, 16)}
+                                                    size={setSize(20, 18, 16)}
                                                     style={{
                                                         cursor: 'pointer',
                                                     }}
@@ -326,6 +333,7 @@ export default function PreviewMenu({
                                             style={{
                                                 width: "100%",
                                                 cursor:  (!selectedResto || selectedResto === (data.restaurant_name)) ? 'pointer' : 'not-allowed',
+                                                fontSize: setSize(12, 12, 12)
                                             }}
                                             onClick={() => {(!selectedResto || selectedResto === (data.restaurant_name)) && addedToCart(data), setVisible(false)}}
                                         >

@@ -90,61 +90,61 @@ export default function MenuComp() {
     const [searchTextResto, setSearchTextResto] = useState(null);
     const [filteredResto, setFilteredResto] = useState([]);
 
-    useEffect(() => {
-        setFilteredData(listMenu.filter((item) => 
-            item.restaurant_name.includes(selectedRestaurant)
-        ))
-    }, [listMenu, selectedRestaurant]);
+    // useEffect(() => {
+    //     setFilteredData(listMenu.filter((item) => 
+    //         item.restaurant_name.includes(selectedRestaurant)
+    //     ))
+    // }, [listMenu, selectedRestaurant]);
 
-    const handleSearchResto = (e) => {
-        const value = e.toLowerCase();
+    // const handleSearchResto = (e) => {
+    //     const value = e.toLowerCase();
     
-        if (!value || value === null) {
-            setFilteredData(listMenu);
-            return;
-        }
+    //     if (!value || value === null) {
+    //         setFilteredData(listMenu);
+    //         return;
+    //     }
         
-        const filtered = listMenu.filter((item) => 
-            item.restaurant_name.toLowerCase().includes(value)
-        );
+    //     const filtered = listMenu.filter((item) => 
+    //         item.restaurant_name.toLowerCase().includes(value)
+    //     );
     
-        setFilteredData(filtered);
-    };
+    //     setFilteredData(filtered);
+    // };
 
-    useEffect(() => {
-        setFilteredResto(listNearRestaurant)
-    }, [listNearRestaurant]);
+    // useEffect(() => {
+    //     setFilteredResto(listNearRestaurant)
+    // }, [listNearRestaurant]);
 
-    const handleSearchRestos = (e) => {
-        const value = e.target.value.toLowerCase();
-        setSearchTextResto(value);
+    // const handleSearchRestos = (e) => {
+    //     const value = e.target.value.toLowerCase();
+    //     setSearchTextResto(value);
     
-        if (!value || value === null) {
-            setFilteredResto(listNearRestaurant);
-            return;
-        }
+    //     if (!value || value === null) {
+    //         setFilteredResto(listNearRestaurant);
+    //         return;
+    //     }
         
-        const filtered = listNearRestaurant.filter((item) => 
-            item.name.toLowerCase().includes(value)
-        );
+    //     const filtered = listNearRestaurant.filter((item) => 
+    //         item.name.toLowerCase().includes(value)
+    //     );
     
-        setFilteredResto(filtered);
-    };
+    //     setFilteredResto(filtered);
+    // };
 
-    const handleSearchCatrgory = (e) => {
-        if (!e || e === null ) {
-            setFilteredData(listMenu);
-            return;
-        }
-        const value = e.toLowerCase();
+    // const handleSearchCatrgory = (e) => {
+    //     if (!e || e === null ) {
+    //         setFilteredData(listMenu);
+    //         return;
+    //     }
+    //     const value = e.toLowerCase();
 
-        const filtered = listMenu.filter((item) => 
-            item.category_name.toLowerCase().includes(value)
-            && item.restaurant_name.includes(selectedRestaurant)
-        );
+    //     const filtered = listMenu.filter((item) => 
+    //         item.category_name.toLowerCase().includes(value)
+    //         && item.restaurant_name.includes(selectedRestaurant)
+    //     );
     
-        setFilteredData(filtered);
-    };
+    //     setFilteredData(filtered);
+    // };
 
     
     useEffect(() => {
@@ -155,7 +155,7 @@ export default function MenuComp() {
         }
     }, [selectedTempDate, selectedTempTime]);
 
-    console.log(selectedMenu);
+    console.log(listMenu);
     
     
     return (
@@ -176,33 +176,40 @@ export default function MenuComp() {
                 <div
                     className='lg:mt-10 md:mt-8 mt-5'
                 >
-                    <Row
-                        justify={'center'}
-                        align={"center"}
-                        gutter={[12, 12]}
+                    <div
+                        className='flex overflow-x-auto space-x-3 w-full no-scrollbar mt-10'
                     >
                         {
-                            filteredData && filteredData.slice(0, 4).map((value) => (
-                                <Col
-                                    span={setSize(5, 5, 8)}
-                                >
-                                    <CardMenuHome 
-                                        image={value.image}
-                                        restaurant={value.restaurant_name}
-                                        title={value.name}
-                                        desc={value.description}
-                                        price={value.price || (Number(JSON.parse(value.variant)[0].sizes[0]?.base_price) || 0)}
-                                        stock={value.qty}
-                                        showResto={false}
-                                        id_menu={value.id}
-                                        addToCart={() => {addedToCart(value)}}
-                                        detail={value}
-                                        isParent={value.is_parent_menu}
-                                    />
-                                </Col>
-                            ))
+                            listMenu && listMenu.map((value) => {
+                                const parsedVariant = value.variant ? JSON.parse(value.variant) : [];
+
+                                const basePrices = parsedVariant.flatMap(v => v.sizes.map(s => Number(s.base_price)));
+                            
+                                const minBasePrice = basePrices.length > 0 ? Math.min(...basePrices) : 0;
+                                const maxBasePrice = basePrices.length > 0 ? Math.max(...basePrices) : 0;
+                                return (
+                                    <Col
+                                        span={setSize(4, 5, 8)}
+                                    >
+                                        <CardMenuHome 
+                                            image={value.image}
+                                            restaurant={value.restaurant_name}
+                                            title={value.name}
+                                            desc={value.description}
+                                            price={value.price || (minBasePrice)}
+                                            maxPrice={maxBasePrice || ''}
+                                            stock={value.qty}
+                                            showResto={false}
+                                            id_menu={value.id}
+                                            addToCart={() => {addedToCart(value)}}
+                                            detail={value}
+                                            isParent={value.is_parent_menu}
+                                        />
+                                    </Col>
+                                )
+                            })
                         }
-                    </Row>
+                    </div>
                 </div>
             </div>
         </>

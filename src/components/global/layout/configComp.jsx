@@ -80,8 +80,7 @@ export default function ConfigComp(props) {
                             colorText: '#5A5A5A',
                             colorPrimaryBg: 'green',
                             lineWidthFocus: setSize('200px', '150px', '100px' ),
-                        }, 
-                    }
+                        },                    }
                 }}
             >
                 {props.children}

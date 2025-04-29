@@ -92,7 +92,8 @@ export default function CoverComp() {
     return (
         <>
             <Carousel 
-                autoplay
+                autoplay={{ dotDuration: true }}
+                autoplaySpeed={10000}
             >
                 <div
                     className={`bg-[url(/assets-v2/banner/main-1.png)] bg-cover ${setSize('bg-left', 'bg-left', 'bg-left')} bg-no-repeat ${setSize('h-[80vh]', 'h-[400px]', 'h-[250px]')} w-full max-w-full xl:w-[100%]`}

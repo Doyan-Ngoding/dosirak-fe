@@ -1,12 +1,15 @@
 import React from 'react'
 import AuthProvider from '../context/AuthContext'
 import AboutComp from '../components/module/about'
+import OrderProvider from '../context/OrderContext'
 
 export default function AboutPage() {
     return (
         <>
             <AuthProvider>
-                <AboutComp />
+                <OrderProvider>
+                    <AboutComp />
+                </OrderProvider>
             </AuthProvider>
         </>
     )

@@ -115,6 +115,8 @@ export default function ContentListComp() {
         setFilteredTab(filteredTabs)
     };
 
+    console.log(listMenuGroupedRestaurant);
+    
     return (
         <>
             <div
@@ -371,7 +373,7 @@ export default function ContentListComp() {
                             }
                         />
                     </div>
-                </div> */}
+                </div>
                 <div
                     // className='lg:pt-10 md:pt-7 pt-5'
                 >
@@ -495,7 +497,95 @@ export default function ContentListComp() {
                             </>
                         ))
                     }
-                </div>
+                </div> */}
+                {
+                        listMenuGroupedRestaurant && listMenuGroupedRestaurant.map((value, key) => (
+                            <>
+                                <div
+                                    className='pb-10 w-full'
+                                >
+                                    <div
+                                        style={{ position: 'relative' }}
+                                    >
+                                        <img src={`/assets-v2/restaurants/banner/${value.restaurant}.png`} style={{ height: setSize('120px', '80px', '60px'), width: '100%', objectFit: 'cover', objectPosition: 'left', borderRadius: 8 }} />
+                                        <div
+                                            style={{
+                                                position: 'absolute',
+                                                top: setSize(18, 10, 8),
+                                                left: setSize(30, 20, 15),
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: setSize(30, 20, 10),
+                                                borderRadius: 6,
+                                                color: 'white',
+                                                fontWeight: 800,
+                                            }}
+                                        >
+                                            <div
+                                                style={{ backgroundColor: '#ffffff', borderRadius: '100%', padding: setSize(12, 9, 7) }}
+                                            >
+                                                <img src={`/assets/more-resto/${value.restaurant}.png`}  style={{ height: setSize('60px', '40px', '30px'), width: setSize('60px', '40px', '30px') }} />
+                                            </div>
+                                            <div
+                                                className='lg:text-[18px] md:text-[15px] text-[12px]'
+                                            >
+                                                {value.restaurant}
+                                            </div>
+                                        </div>
+                                        <div
+                                            style={{
+                                                position: 'absolute',
+                                                top: setSize(45, 25, 15),
+                                                right: setSize(30, 20, 15),
+                                            }}
+                                        >
+                                            <ConfigProvider
+                                                theme={{
+                                                    components: {
+                                                        Select: {
+                                                            colorBgContainer: '#FFFFFF',
+                                                            colorTextPlaceholder: '#6B6B6B',
+                                                            colorText: '#000000',
+                                                            colorBorder: '#A5ABB3',
+                                                            controlHeight: setSize(34, 28, 22),
+                                                            fontSize: setSize(12, 10, 8),
+                                                            borderRadius: 50,
+                                                            colorBgElevated: '#FFFFFF',
+                                                            optionSelectedBg: '#E83600',
+                                                            optionSelectedColor: '#FFFFFF',
+                                                            fontSizeIcon: setSize(12, 10, 8)
+                                                        },
+                                                    }
+                                                }}
+                                            >
+                                                <Select 
+                                                    placeholder="Select branch near you"
+                                                    options={
+                                                        newListSubRestaurant.filter(item => item.restaurant.name === value.restaurant).map(val => ({
+                                                            label: val.name, 
+                                                            value: val.id
+                                                        }))
+                                                    }
+                                                    value={newListSubRestaurant.some(item =>  item.restaurant.name === value.restaurant && item.id === currSelectedResto) ? currSelectedResto : (newListSubRestaurant.some(item =>  item.restaurant.name === value.restaurant && item.id === selectedSubRestaurant) ? selectedSubRestaurant : undefined)}
+                                                    defaultValue={newListSubRestaurant.some(item =>  item.restaurant.name === value.restaurant && item.id === currSelectedResto) ? currSelectedResto : (newListSubRestaurant.some(item =>  item.restaurant.name === value.restaurant && item.id === selectedSubRestaurant) ? selectedSubRestaurant : undefined)}
+                                                    onChange={(e) => {setSelectedSubRestaurant(e), getDetailSubRestaurant((e)), setCurrSelectedResto(e)}}
+                                                    className='lg:w-[95%] md:w-[90%] w-[100%]'
+                                                    style={{
+                                                        width: setSize('200px', '180px', '120px')
+                                                    }}
+                                                />
+                                            </ConfigProvider>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className='text-center lg:mt-5 md:mt-4 mt-3 text-[#818182] font-bold lg:text-[16px] md:text-[14px] text-[14px]'
+                                    >
+                                        Menu
+                                    </div>
+                                </div>
+                            </>
+                        ))
+                }
                 <style>
                 {`
                     .ant-anchor-link {
