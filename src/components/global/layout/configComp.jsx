@@ -40,14 +40,14 @@ export default function ConfigComp(props) {
                             fontSize: setSize(16, 12, 12),
                         },
                         Select: {
-                            colorBgContainer: '#FA5523',
+                            colorBgContainer: '#FF6B00',
                             colorTextPlaceholder: '#F9F9F9',
                             colorText: '#F9F9F9',
                             colorBorder: '#D9D9D9',
                             controlHeight: setSize(42, 32, 32),
                             fontSize: setSize(14, 12, 12),
                             borderRadius: 50,
-                            colorBgElevated: '#FA5523',
+                            colorBgElevated: '#FF6B00',
                             optionSelectedBg: '#E53905'
                         },
                         Tabs: {

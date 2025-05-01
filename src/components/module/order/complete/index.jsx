@@ -2,17 +2,23 @@ import React, { useEffect } from 'react'
 import { useOrder } from '../../../../context/OrderContext';
 import LayoutComp from '../../../global/layout';
 import { 
+    Breadcrumb,
     Button,
     Col,
+    ConfigProvider,
+    Input,
     message,
     Row 
 } from 'antd';
 import CardTitleStep from '../../../global/title/cardTitleStep';
-import { IconCreditCardPay, IconHomeFilled, IconShoppingBagCheck } from '@tabler/icons-react';
+import { IconChevronCompactRight, IconChevronRight, IconCreditCardPay, IconHomeFilled, IconMapPin, IconShoppingBagCheck } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../../context/AuthContext';
 import RedirectComp from '../payment/redirect';
 import dayjs from 'dayjs';
+import ConfigComp from '../../../global/layout/configComp';
+import HeaderComp from '../../../global/layout/header';
+import FooterComp from '../../landing/footer';
 
 export default function CompleteComp() {
 
@@ -60,7 +66,7 @@ export default function CompleteComp() {
         if (!token && !authUser) {
             setResMessage(['error', 'Log In First!'])
             setTimeout(() => {
-                navigate('/order')
+                navigate('/cart')
             }, 2000)
         }
     }, [token, authUser]);
@@ -86,7 +92,127 @@ export default function CompleteComp() {
     return (
         <>
             {contextHolder}
-            <LayoutComp>
+            <ConfigComp>
+                <HeaderComp />
+                <div
+                    className='lg:pt-[100px] md:pt-[80px] pt-[70px] lg:px-[50px] md:px-[30px] px-[20px]'
+                >
+                    <div
+                        style={{
+                            marginBottom: setSize(20, 16, 12)
+                        }}
+                    >
+                        <img src='/assets-v2/banner/little-1.png' width={"100%"} />
+                    </div>
+                    <ConfigProvider
+                        theme={{
+                            token: {
+                                colorPrimary: '#FF6B00',
+                            },
+                            components: {
+                                Select: {
+                                    colorBgContainer: '#FFFFFF',
+                                    colorTextPlaceholder: '#84888E',
+                                    colorText: '#000000',
+                                    colorBorder: '#A5ABB3',
+                                    controlHeight: setSize(32, 28, 28),
+                                    fontSize: setSize(12, 10, 10),
+                                    borderRadius: 4,
+                                    colorBgElevated: '#FFFFFF',
+                                    optionSelectedBg: '#E83600',
+                                    optionSelectedColor: '#FFFFFF',
+                                    fontSizeIcon: setSize(12, 10, 8)
+                                },
+                                DatePicker: {
+                                    controlHeight: setSize(34, 32, 32),
+                                    fontSize: setSize(12, 10, 10),
+                                    borderRadius: 4,
+                                    colorBorder: '#A5ABB3',
+                                    fontSizeIcon: setSize(12, 10, 8),
+                                    cellWidth: setSize(40, 30, 25),
+                                    colorTextPlaceholder: '#84888E'
+                                },
+                                Button: {
+                                    controlHeight: setSize(32, 24, 24),
+                                    fontSize: setSize(12, 10, 10),
+                                },
+                                Breadcrumb: {
+                                    fontSize: setSize(11, 10, 9),
+                                    fontFamily: 'Noto Sans KR',
+                                    itemColor: '#FF6B00',
+                                    lastItemColor: '#FF6B00',
+                                    linkColor: '#FF6B00',
+                                    separatorMargin: 3
+                                },
+                                Input: {
+                                    fontSize: setSize(12, 10, 8)
+                                }  ,
+                                Card: {
+                                    colorBorderSecondary: '#A5ABB3'
+                                } 
+                            }
+                        }}
+                    >
+                        <Breadcrumb 
+                            items={[
+                                {
+                                title: <a href="/menu" style={{ textDecoration: 'underline' }}>MENU</a>,
+                                },
+                                {
+                                title: <a href="/menu" style={{ textDecoration: 'underline' }}>CHECKOUT PROCESS</a>
+                                },
+                                {
+                                    title: <span style={{ textDecoration: 'underline' }}>CONFIRM ORDER</span>
+                                },
+                            ]}
+                        />
+                        <Row
+                            align={"bottom"}
+                        >
+                            <Col
+                                span={setSize(12, 12, 24)}
+                            >
+                                <div 
+                                    className='text-[#FF6B00] font-[Noto Sans KR] font-bold lg:text-[30px] md:text-[24px] text-[18px]'
+                                >
+                                    Your Order has been Recorded
+                                </div>
+                                <div
+                                className='text-[#818182] leading-3 font-[Noto Sans KR] font-semibold lg:text-[14px] md:text-[12px] text-[10px] pt-1'
+                                >
+                                    Please wait until the food arrived
+                                </div>
+                            </Col>
+                        </Row>
+                        <div>
+                            <div
+                                style={{
+                                    color: '#393939',
+                                    fontSize: setSize(12, 10, 9),
+                                    fontWeight: 500,
+                                    marginBottom: setSize(10, 8, 8),
+                                    marginTop: setSize(20, 18, 16)
+                                }}
+                            >
+                                Confirm Address
+                            </div>
+                                <Input 
+                                    prefix={
+                                        <IconMapPin 
+                                            size={setSize(14, 12, 10)}
+                                            color='#838383'
+                                            style={{
+                                                marginRight: setSize(5, 3, 0),
+                                                marginTop: '-2px'
+                                            }}
+                                        />
+                                    }
+                                    readOnly
+                                    value={resOrder && resOrder.address_order}
+                                />
+                        </div>
+                    </ConfigProvider>
+                </div>
                 {/* {
                     newResPayment && (newResPayment.status !== "paid" || newResPayment.status !== 'settlement') ? (
                         <>
@@ -95,25 +221,11 @@ export default function CompleteComp() {
                     ) : ( */}
                         <div
                             style={{
-                                backgroundColor: '#F4F6F9',
+                                backgroundColor: '#FFFFFF',
                                 width: '100%'
                             }}
                         >
-                            <Row
-                                style={{
-                                    padding: setSize("30px 80px 10px 80px", "30px 50px 10px 50px", "30px 30px 10px 30px"),
-                                }}
-                            >
-                                <Col
-                                    span={24}
-                                >
-                                    <CardTitleStep 
-                                        step={currStep}
-                                        subTitle={"Complete the Step!"}
-                                        title={"COMPLETE"}
-                                    />
-                                </Col>
-                            </Row>
+                            
                             <Row
                                 justify={"center"}
                                 align={"center"}
@@ -125,6 +237,8 @@ export default function CompleteComp() {
                                     span={setSize(12, 18, 20)}
                                     style={{
                                         backgroundColor: '#FFFFFF',
+                                        border: '1px solid #A5ABB3',
+                                        marginTop: setSize(15, 12, 10),
                                         borderRadius: 10,
                                         padding: 20,
                                         textAlign: 'center'
@@ -144,7 +258,7 @@ export default function CompleteComp() {
                                         <div
                                             style={{
                                                 color: '#287D3C',
-                                                fontSize: setSize(16, 14, 12),
+                                                fontSize: setSize(14, 12, 12),
                                                 fontWeight: 600,
                                                 paddingLeft: 5 
                                             }}
@@ -154,44 +268,44 @@ export default function CompleteComp() {
                                     </div>
                                     <div
                                         style={{
-                                            fontSize: setSize(32, 28, 24),
+                                            fontSize: setSize(24, 22, 20),
                                             fontWeight: 600,
                                             padding: "10px 0"
                                         }}
                                     >
-                                        Your Order has Been Recorded
-                                    </div>
-                                    <div>
-                                        <span style={{ color: '#838383' }} className='lg:text-[14px] md:text-[12px] text-[10px]'>Estimated delivery time <span style={{ backgroundColor: 'rgba(232, 54, 0, 0.1)', color: '#E83600', textDecoration: 'underline', padding: 4 }}>{exDate}</span></span>
-                                    </div>
-                                    <div
-                                        className='border border-[#287D3C] bg-[#287D3C0D] flex items-center mt-3 lg:px-[20px] lg:py-[12px] md:px-[18px] md:py-[10px] px-[10px] py-[8px] rounded-[10px]'
-                                    >
-                                        <IconHomeFilled 
-                                            color='#287D3C'
-                                            size={setSize(20, 18, 16)}
-                                            style={{
-                                                marginRight: setSize(10, 8, 5)
-                                            }}
-                                        />
-                                        <span
-                                            className='text-[#287D3C] lg:text-[14px] md:text-[12px] text-[10px]'
-                                        >
-                                            {resOrder && resOrder.address_order}
-                                        </span>
+                                        Thank you for your purchase!
                                     </div>
                                     <div
                                         className='flex justify-center'
                                     >
                                         <img src='/assets/img-complete.jpg' style={{ width: '50%'}} />
                                     </div>
+                                    <div>
+                                        <span style={{ color: '#000000' }} className='lg:text-[14px] md:text-[12px] text-[10px]'>Estimated delivery time <br />   <br /> <span style={{ marginTop: 10, backgroundColor: 'rgba(232, 54, 0, 0.1)', color: '#E83600', padding: 4 }}>{exDate}</span></span>
+                                    </div>
                                     <Button
-                                        size={setSize('large', 'medium', 'medium')}
+                                        type='primary'
+                                        size={setSize('medium', 'medium', 'medium')}
                                         style={{
-                                        color: '#E83600',
-                                        border: '1px solid #E83600',
-                                        borderRadius: 50,
-                                        width: '100%'
+                                            color: '#ffffff',
+                                            border: '1px solid #FF6B00',
+                                            borderRadius: 50,
+                                            width: '100%',
+                                            fontSize: setSize(12, 10, 10),
+                                            margin: '20px 0px 10px 0px'
+                                        }}
+                                        onClick={() => {localStorage.removeItem("resOrder"), navigate("/history")}}
+                                    >
+                                        See Order History <IconChevronRight size={setSize(12, 10, 10)} style={{ marginTop: 2 }} />
+                                    </Button>
+                                    <Button
+                                        size={setSize('medium', 'medium', 'medium')}
+                                        style={{
+                                            color: '#FF6B00',
+                                            border: '1px solid #FF6B00',
+                                            borderRadius: 50,
+                                            width: '100%',
+                                            fontSize: setSize(12, 10, 10)
                                         }}
                                         onClick={() => {localStorage.removeItem("resOrder"), navigate("/")}}
                                     >
@@ -202,7 +316,8 @@ export default function CompleteComp() {
                         </div>
                     {/* )
                 } */}
-            </LayoutComp>
+                <FooterComp />
+            </ConfigComp>
         </>
     )
 }

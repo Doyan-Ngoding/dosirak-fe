@@ -70,14 +70,14 @@ body {
 }
 
 .menu-price-1 {
-  color: #FA5523;
+  color: #FF6B00;
   font-size: 24px;
   font-weight: 700;
 }
 
 .menu-price-2 {
-  color: #FA5523;
-  font-size: 20px;
+  color: #FF6B00;
+  font-size: 14px;
   font-weight: 600;
 }
 
@@ -90,7 +90,7 @@ body {
 }
 
 .icon-hover-2 {
-  color: #FA5523;
+  color: #FF6B00;
 }
 
 .icon-hover-2:hover {
@@ -98,7 +98,7 @@ body {
 }
 
 .icon-hover-3 {
-  background-color: #FA5523;
+  background-color: #FF6B00;
 }
 
 .icon-hover-3:hover {
@@ -136,7 +136,7 @@ body {
   display: flex;
   justify-content: end;
   align-items: center;
-  color: #FA5523;
+  color: #FF6B00;
   font-size: 16;
   font-weight: 600;
 }
@@ -147,7 +147,7 @@ body {
 }
 
 .title {
-  color: #FA5523;
+  color: #FF6B00;
   font-size: 56px;
   font-family: Vina Sans;
   line-height: 0.7;

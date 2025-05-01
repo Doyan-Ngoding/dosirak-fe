@@ -66,6 +66,69 @@ const iconFilter = () => {
     }
 };
 
+const iconSorts = () => {
+    const { setSize } = useAuth();
+
+    return {
+        sortIcon: (order) => {
+            if (order.sortOrder === "ascend") {
+                return ( 
+                    <IconChevronUp 
+                        style={{
+                            border: "1px solid #FF6B00",
+                            padding: "1px",
+                            borderRadius: "4px",
+                            color: "#FF6B00",
+                        }}
+                        size={setSize(20, 14, 12)}
+                    />
+                )
+            } else if (order.sortOrder === "descend") {
+                return (
+                    <IconChevronDown 
+                        style={{
+                            border: "1px solid #FF6B00",
+                            padding: "1px",
+                            borderRadius: "4px",
+                            color: "#FF6B00",
+                        }}
+                        size={setSize(20, 14, 12)}
+                    />
+                )
+            }
+            return ( 
+                <IconSelector 
+                    style={{
+                        border: "1px solid #FF6B00",
+                        padding: "1px",
+                        borderRadius: "4px",
+                        color: "#FF6B00",
+                    }}
+                    size={setSize(20, 14, 12)}
+                />
+            )
+        },
+    }
+};
+
+const iconFilters = () => {
+    const { setSize } = useAuth();
+    return {
+        filterIcon: (filtered) => (
+            <IconFilter
+                style={{
+                    color: "#FF6B00",
+                    border: "1px solid #FF6B00",
+                    padding: "2px",
+                    borderRadius: "4px",
+                    fill: filtered ? "#FF6B00" : undefined,
+                }}
+                size={setSize(20, 14, 12)}
+            />
+        ),
+    }
+};
+
 export const columnInvoiceList = (data = []) => [
     {
         title: "Invoice Number",
@@ -639,26 +702,49 @@ export const columnOrderListUser = (data = [], modalDetail, dataDetail) => {
 
     return [
         {
-            title: "Order ID",
-            key: "format_id",
-            dataIndex: "format_id",
-            sorter: (a, b) => String(a.format_id || '').localeCompare(String(b.format_id || '')),
-            ...iconSort(),
+            title: "No",
+            key: "index",
+            dataIndex: "index",
+            render: (text, record, index) => index + 1,
+            sorter: (a, b) => String(a.index || '').localeCompare(String(b.index || '')),
+            ...iconSorts(),
         },
         {
-            title: "Pre Order Date",
+            title: "Order List",
+            key: "detail_menus",
+            dataIndex: "detail_menus",
+            render: (text) => text ? text.map(value => ( <span>{value.qty}x {value.name}, </span> )) : '',
+        },
+        {
+            title: "Restaurant",
+            key: "detail_menus",
+            dataIndex: "detail_menus",
+            render: (text) => text ? text[0].restaurant_name : '',
+            sorter: (a, b) => String(a.restaurant_name || '').localeCompare(String(b.restaurant_name || '')),
+            ...iconSorts(),
+        },
+        {
+            title: "Order Date",
             key: "pre_order",
             dataIndex: "pre_order",
-            render: (text) => text ? dayjs(text).format('dddd, DD MMM YYYY HH:mm') + '-' + dayjs(text).add(1, 'hour').format('HH:mm') : '',
+            render: (text) => text ? dayjs(text).format('DD MMMM YYYY') : '',
             sorter: (a, b) => String(a.pre_order || '').localeCompare(String(b.pre_order || '')),
-            ...iconSort(),
+            ...iconSorts(),
+        },
+        {
+            title: "Delivery Time",
+            key: "pre_order",
+            dataIndex: "pre_order",
+            render: (text) => text ? dayjs(text).format('HH:mm') + '-' + dayjs(text).add(1, 'hour').format('HH:mm') : '',
+            sorter: (a, b) => String(a.pre_order || '').localeCompare(String(b.pre_order || '')),
+            ...iconSorts(),
         },
         {
             title: "Qty",
             key: "qty",
             dataIndex: "qty",
             sorter: (a, b) => String(a.qty || '').localeCompare(String(b.qty || '')),
-            ...iconSort(),
+            ...iconSorts(),
         },
         {
             title: "Amount",
@@ -666,43 +752,19 @@ export const columnOrderListUser = (data = [], modalDetail, dataDetail) => {
             dataIndex: "amount",
             render: (text) => 'Rp. ' + (text ? parseFloat(text).toLocaleString() : '-'),
             sorter: (a, b) => String(a.amount || '').localeCompare(String(b.amount || '')),
-            ...iconSort(),
+            ...iconSorts(),
         },
         {
-            title: 'Status',
-            key: 'status',
-            dataIndex: 'status',
-            render: (text) => (
-                <div
-                    className={`${text === 'success' ? 'bg-green-100' : 'bg-blue-50'} rounded-lg text-center cursor-pointer`}
-                >
-                    {
-                        text === 'success' ? (
-                            'Success Payment'
-                        ) : text
-                    }
-                </div>
-            ),
-            filters: [
-                ...new Set(data?.map((item) => (item.status))),
-                ].map((el) => {
-                return { text: el, value: el };
-            }),
-            onFilter: (value, record) => (record.status).indexOf(value) === 0,
-            filterSearch: true,
-            ...iconFilter(),
-        },
-        {
-            title: '',
+            title: 'Action',
             width: 150,
             align: 'center',
             render: (text, record, index) => (
                 <>
                     <div
                         className="flex items-center justify-between w-full text-[#E83600] cursor-pointer"
-                        onClick={() => {modalDetail(true), dataDetail(record)}}
+                        // onClick={() => {modalDetail(true), dataDetail(record)}}
                     >
-                        See Details
+                        Order Again
                     </div>
                 </>
             )

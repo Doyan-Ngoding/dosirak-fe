@@ -155,9 +155,6 @@ export default function MenuComp() {
         }
     }, [selectedTempDate, selectedTempTime]);
 
-    console.log(listMenu);
-    
-    
     return (
         <>
             <div

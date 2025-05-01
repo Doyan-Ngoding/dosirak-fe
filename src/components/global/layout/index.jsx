@@ -95,7 +95,7 @@ export default function LayoutComp(props) {
                                 />
                             </div>
                             {
-                                (pathname === '/order') ? (
+                                (pathname === '/order' || pathname === '/cart') ? (
                                     !authUser ? (
                                         <Button
                                             type='primary'

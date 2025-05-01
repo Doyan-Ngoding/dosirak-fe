@@ -1,16 +1,14 @@
 import React from 'react'
 import AuthProvider from '../context/AuthContext'
 import OrderProvider from '../context/OrderContext'
-import OrderSummaryComp from '../components/module/order/summary'
-import OrderSummaryCompNew from '../components/module/order/summary/indexv2'
+import CartComp from '../components/module/cart'
 
-export default function OrderSummaryPage() {
+export default function CartPage() {
     return (
         <>
             <AuthProvider>
                 <OrderProvider>
-                    {/* <OrderSummaryComp /> */}
-                    <OrderSummaryCompNew />
+                    <CartComp />
                 </OrderProvider>
             </AuthProvider>
         </>

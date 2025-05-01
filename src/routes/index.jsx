@@ -18,6 +18,7 @@ import FinishPage from "../pages/finish";
 import CmsOrderPage from "../pages/cms/order";
 import HistoryPage from "../pages/history";
 import AboutPage from "../pages/about";
+import CartPage from "../pages/cart";
 
 function Index() {
   return (
@@ -41,6 +42,7 @@ function Index() {
       <Route path="/cms/order" element={<CmsOrderPage />} />
       <Route path="/history" element={<HistoryPage />} />
       <Route path="/about" element={<AboutPage />} />
+      <Route path="/cart" element={<CartPage />} />
     </Routes>
   );
 }

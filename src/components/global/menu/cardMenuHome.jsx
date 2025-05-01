@@ -50,7 +50,7 @@ export default function CardMenuHome({
                     onClick={() => setVisible(true)}
                 />
                 <div
-                    className='text-[#393939] font-medium lg:text-[12px] md:text-[10px] text-[9px] lg:px-2 md:px-2 px-1 pt-1'
+                    className='text-[#393939] font-medium lg:text-[12px] md:text-[10px] text-[9px] lg:px-1 md:px-1 px-1 pt-1'
                     onClick={() => setVisible(true)}
                 >
                     {title}
@@ -60,7 +60,7 @@ export default function CardMenuHome({
                         color: '#6B6B6B',
                         fontSize: setSize(10, 9, 8),
                         fontWeight: 300,
-                        margin: setSize('5px 10px 10px 10px', '3px 8px 8px 8px', '2px 5px 5px 5px'),
+                        margin: setSize('5px 5px 10px 5px', '3px 4px 8px 4px', '2px 4px 5px 4px'),
                         display: "-webkit-box",
                         WebkitBoxOrient: "vertical",
                         WebkitLineClamp: 3,
@@ -75,7 +75,7 @@ export default function CardMenuHome({
                 <Row
                     justify={"space-between"}
                     align={"middle"}
-                    className='lg:px-[10px] md:px-[8px] px-[5px] lg:pb-[10px] md:pb-[10px] pb-3 pt-3'
+                    className='lg:px-[5px] md:px-[4px] px-[3px] lg:pb-[10px] md:pb-[10px] pb-3 pt-3'
                 >
                     <Col>
                         <div

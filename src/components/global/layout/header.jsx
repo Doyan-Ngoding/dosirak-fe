@@ -48,7 +48,9 @@ export default function HeaderComp() {
     }, []);
     
     useEffect(() => {
-        setQtyTemp(cart.reduce((sum, item) => sum + (item.qty || 0), 0))
+        if (cart) {
+            setQtyTemp(cart.reduce((sum, item) => sum + (item.qty || 0), 0))
+        }
     }, [cart]);
     console.log(cart)
     return (
@@ -72,7 +74,7 @@ export default function HeaderComp() {
                                 fontSize: 16,
                                 colorText: '#838383',
                                 itemBg: '#FFFFFF',
-                                colorSplit: `${(pathname === '/contact' || pathname === '/about' || pathname === '/history') ? '#D8D8D8' : 'none'}`,
+                                colorSplit: `${(pathname === '/contact' || pathname === '/about' || pathname === '/history'  || pathname === '/cart' || pathname === '/order-summary' || pathname === '/payment' || pathname === '/complete') ? '#D8D8D8' : 'none'}`,
                             },
                             Button: {
                                 fontFamily: 'Noto Sans KR',
@@ -83,10 +85,10 @@ export default function HeaderComp() {
                 >
                     <Layout>
                         <Header
-                            className={`fixed top-0 transition-all z-50 bg-white self-center ${isScrolled ? 'w-full mt-0 border-b border-gray-300' : 'w-[90%] mt-5 mx-auto self-center rounded-lg'} ${(pathname === '/contact' || pathname === '/about' || pathname === '/history') && 'border border-[#D8D8D8]'}`}
+                            className={`fixed top-0 transition-all z-50 bg-white self-center ${isScrolled ? 'w-full mt-0 border-b border-gray-300' : 'w-[90%] mt-5 mx-auto self-center rounded-lg'} ${(pathname === '/contact' || pathname === '/about' || pathname === '/history'  || pathname === '/cart' || pathname === '/order-summary' || pathname === '/payment'  || pathname === '/complete') && 'border border-[#D8D8D8]'}`}
                         >
                             <Row
-                                justify={"space-between"}
+                                justify={(pathname != '/payment' || pathname != '/complete')? "space-between" : 'start'}
                                 align={"middle"}
                                 gutter={[12, 12]}
                                 className='h-full'
@@ -123,7 +125,7 @@ export default function HeaderComp() {
                                                 </div>
                                             </Col>
                                             <Col
-                                                className='w-[50%]'
+                                                className={`${(pathname !== '/payment' || pathname !== '/complete') ? 'w-[50%]' : 'w-[80%]'}`}
                                             >
                                                 <Menu
                                                     theme='light'
@@ -134,19 +136,48 @@ export default function HeaderComp() {
                                                     className={`flex flex-1 ${setSize("justify-center", "justify-start", "justify-start")} min-w-0 relative`}
                                                     overflowedIndicator={<IconMenu2 />}
                                                     disabledOverflow={true}
-                                                >
-                                                    <Menu.Item key={'1'}><Link to={'/'}>Home</Link></Menu.Item>
-                                                    <Menu.Item key={'2'}><Link to={'/menu'}>Our Menu</Link></Menu.Item>
-                                                    {/* <Menu.Item key={'3'}><Link to={'/order'}>Order</Link></Menu.Item> */}
-                                                    {/* <Menu.Item key={'12'}><Link to={'/history'}>History</Link></Menu.Item> */}
-                                                    <Menu.Item key={'4'}><Link to={'/contact'}>Contact</Link></Menu.Item>
-                                                    <Menu.Item key={'13'}><Link to={'/about'}>About</Link></Menu.Item>
+                                                > 
+                                                    {
+                                                        pathname === '/cart' ? (
+                                                            <>
+                                                                <Menu.Item key={'14'}>Complete Order</Menu.Item>
+                                                            </>
+                                                        ) : (
+                                                            pathname == "/order-summary" ? (
+                                                                <>
+                                                                    <Menu.Item key={'15'}>Complete Order</Menu.Item>
+                                                                </>
+                                                            ) : (
+                                                                pathname == "/payment" ? (
+                                                                    <>
+                                                                        <Menu.Item key={'16'}>Complete Order</Menu.Item>
+                                                                    </> 
+                                                                ) : (
+                                                                    pathname == "/complete" ? (
+                                                                        <>
+                                                                            <Menu.Item key={'17'}>Complete Order</Menu.Item>
+                                                                        </> 
+                                                                    ) : (
+                                                                        <>
+                                                                            <Menu.Item key={'1'}><Link to={'/'}>Home</Link></Menu.Item>
+                                                                            <Menu.Item key={'2'}><Link to={'/menu'}>Our Menu</Link></Menu.Item>
+                                                                            {/* <Menu.Item key={'3'}><Link to={'/order'}>Order</Link></Menu.Item> */}
+                                                                            {/* <Menu.Item key={'12'}><Link to={'/history'}>History</Link></Menu.Item> */}
+                                                                            <Menu.Item key={'4'}><Link to={'/contact'}>Contact</Link></Menu.Item>
+                                                                            <Menu.Item key={'13'}><Link to={'/about'}>About</Link></Menu.Item>
+                                                                        </>
+                                                                    )
+                                                                )
+                                                            )
+                                                        )
+                                                    }
                                                 </Menu>  
                                             </Col>
                                         </>
                                     )   
                                 }
                                 {
+                                    pathname !== '/payment' &&
                                     <Col>
                                         <div 
                                             className='flex items-center'
@@ -258,7 +289,7 @@ export default function HeaderComp() {
                                                                     width: '100%',
                                                                     marginTop: setSize(5, 3, 2),
                                                                 }}
-                                                                onClick={() => navigate('/order')}
+                                                                onClick={() => navigate('/cart')}
                                                             >
                                                                 Proceed Checkout
                                                             </Button>       
@@ -294,7 +325,7 @@ export default function HeaderComp() {
                                             </Popover>
                                             <Button
                                                 type='primary'
-                                                onClick={() => navigate("/order")}
+                                                onClick={() => navigate("/order-summary")}
                                                 style={{
                                                     height: setSize(30, 28, 22),
                                                     fontSize: setSize(12, 11 ,10)

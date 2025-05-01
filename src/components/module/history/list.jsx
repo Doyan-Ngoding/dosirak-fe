@@ -295,28 +295,58 @@ export default function ListHistory() {
                 >
                     <div
                         // className='bg-[#D8D8D8]'
+                        style={{
+                            padding: 10,
+                            backgroundColor: '#FAFAFA',
+                            borderRadius: 8,
+                            border: '1px solid #D8D8D8'
+                        }}
                     >
-                        <Table 
-                            columns={columnOrderListUser(listHistoryOrder, setModalDetail, setDataDetail)}
-                            dataSource={listHistoryOrder}
-                            size={setSize('small', 'small', 'small')}
-                            pagination={{
-                                total: listHistoryOrder && listHistoryOrder?.length,
-                                showTotal: (total, range) =>
-                                    `${range[0]}-${range[1]} of ${
-                                    total ? total.toLocaleString() : ""
-                                    } items`,
-                                defaultPageSize: 10,
-                                defaultCurrent: 1,
-                                showSizeChanger: true,
-                                hideOnSinglePage: false,
-                                pageSizeOptions: [10, 20, 50, 100],
-                                size: setSize('small', 'small', 'small'),
+                        <ConfigProvider
+                            theme={{
+                                token: {
+                                    colorPrimary: '#FF6B00'
+                                },
+                                components: {
+                                    Table: {
+                                        fontSize: setSize(12, 10, 10),
+                                        headerBg: '#EEEEEE',
+                                        colorBgContainer: '#FAFAFA',
+                                        cellPaddingBlockSM: 10,
+                                        colorText: '#595959'
+                                    },
+                                    Pagination: {
+                                        fontSize: setSize(12, 10, 10)
+                                    },
+                                    Select: {
+                                        fontSize: setSize(12, 10, 10),
+                                        colorIcon: '#ffffff'
+                                    }
+                                }
                             }}
-                            scroll={{
-                                x: setSize(0, 1000, 800),
-                            }}
-                        />
+                        >
+                            <Table 
+                                columns={columnOrderListUser(listHistoryOrder, setModalDetail, setDataDetail)}
+                                dataSource={listHistoryOrder}
+                                size={setSize('small', 'small', 'small')}
+                                pagination={{
+                                    total: listHistoryOrder && listHistoryOrder?.length,
+                                    showTotal: (total, range) =>
+                                        `${range[0]}-${range[1]} of ${
+                                        total ? total.toLocaleString() : ""
+                                        } items`,
+                                    defaultPageSize: 10,
+                                    defaultCurrent: 1,
+                                    showSizeChanger: true,
+                                    hideOnSinglePage: false,
+                                    pageSizeOptions: [10, 20, 50, 100],
+                                    size: setSize('small', 'small', 'small'),
+                                }}
+                                scroll={{
+                                    x: setSize(0, 1000, 800),
+                                }}
+                            />
+                        </ConfigProvider>
                     </div>
                 </div>
             </div>
