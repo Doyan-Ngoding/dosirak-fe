@@ -40,11 +40,16 @@ const Auth = ({children }) => {
         10: '/cms/restaurant',
         11: '/cms/order',
         12: '/history',
+        13: '/about',
+        14: '/cart',
+        15: '/order-summary',
+        16: '/payment',
+        17: '/complete',
     }
 
     const allowAdmin = ['/cms', '/cms/product', '/cms/user', '/cms/category', '/cms/restaurant'] 
     const allowUser = ['/order-summary', '/payment-method', '/payment', '/complete']
-    const allowGeneral = ['/', '/menu', '/order', '/cms/login', '/finish', '/history', '/contact']
+    const allowGeneral = ['/', '/menu', '/order', '/cms/login', '/finish', '/history', '/contact', '/about', '/cart']
 
     const [modalLogin, setModalLogin] = useState(false);
     const [modalSignup, setModalSignup] = useState(false);
@@ -101,7 +106,7 @@ const Auth = ({children }) => {
                                 navigate('/cms/login')  
                             }, 2000)
                         }
-                    } else if (pathname === '/order') {
+                    } else if (pathname === '/order' || pathname === '/cart') {
                         if (res.data.user?.role === 'user') {
                             setModalLogin(false);
                             if (localStorage.getItem("cart") && JSON.parse(localStorage.getItem("cart")).length > 0) {
@@ -112,7 +117,7 @@ const Auth = ({children }) => {
                             } else {
                                 setResMessage(['success', 'Log In Success!'])
                                 setTimeout(() => {
-                                    navigate('/order');
+                                    navigate('/cart');
                                 }, 2000)
                             }
                         } else {
@@ -121,7 +126,20 @@ const Auth = ({children }) => {
                                 navigate('/')
                             }, 2000)
                         }
-                    } 
+                    } else if (pathname === '/menu') {
+                        if (res.data.user?.role === 'user') {
+                            setModalLogin(false);
+                            setResMessage(['success', 'Log In Success!'])
+                            setTimeout(() => {
+                                navigate('/history')
+                            }, 2000)
+                        } else {
+                            setResMessage(['error', 'Log In Failed! Your No a User!'])
+                            setTimeout(() => {
+                                navigate('/')
+                            }, 2000)
+                        }
+                    }
                 } 
             })
             .catch(err => {
@@ -143,7 +161,7 @@ const Auth = ({children }) => {
             setAuthUser(res.data.results.user)
             setIsLoading(false);
             setModalSignup(false);
-            if (pathname === '/order') {
+            if (pathname === '/order' || pathname == '/cart') {
                 if (localStorage.getItem("cart") && JSON.parse(localStorage.getItem("cart")).length > 0) {
                     setResMessage(['success', 'Sign Up Success!'])
                     setTimeout(() => {
@@ -152,7 +170,7 @@ const Auth = ({children }) => {
                 } else {
                     setResMessage(['success', 'Sign Up Success!'])
                     setTimeout(() => {
-                        navigate('/order');
+                        navigate('/cart');
                     }, 2000)
                 }
             } 
@@ -263,7 +281,7 @@ const Auth = ({children }) => {
                                 navigate('/cms/login')  
                             }, 2000)
                         }
-                    } else if (pathname === '/order') {
+                    } else if (pathname === '/order' || pathname === '/cart') {
                         if (res.data.user?.role === 'user') {
                             setModalLogin(false);
                             if (localStorage.getItem("cart") && JSON.parse(localStorage.getItem("cart")).length > 0) {
@@ -274,7 +292,7 @@ const Auth = ({children }) => {
                             } else {
                                 setResMessage(['success', 'Log In Success!'])
                                 setTimeout(() => {
-                                    navigate('/order');
+                                    navigate('/cart');
                                 }, 2000)
                             }
                         } else {
@@ -394,7 +412,7 @@ const Auth = ({children }) => {
                                 navigate('/cms/login')  
                             }, 2000)
                         }
-                    } else if (pathname === '/order') {
+                    } else if (pathname === '/order' || pathname == '/cart') {
                         if (res.data.user?.role === 'user') {
                             setModalLogin(false);
                             if (localStorage.getItem("cart") && JSON.parse(localStorage.getItem("cart")).length > 0) {
@@ -405,7 +423,7 @@ const Auth = ({children }) => {
                             } else {
                                 setResMessage(['success', 'Log In Success!'])
                                 setTimeout(() => {
-                                    navigate('/order');
+                                    navigate('/cart');
                                 }, 2000)
                             }
                         } else {

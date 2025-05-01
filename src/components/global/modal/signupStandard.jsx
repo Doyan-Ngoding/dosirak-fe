@@ -37,7 +37,7 @@ export default function SignupStandard({ isOpen, setIsOpen }) {
             setAuthUser(response.data.results.user)
             setModalOtp(false);
             setIsOpen(false);
-            if (pathname === '/order') {
+            if (pathname === '/order' || pathname === '/cart') {
                 if (localStorage.getItem("cart") && JSON.parse(localStorage.getItem("cart")).length > 0) {
                     setResMessage(['success', 'Registration Success!'])
                     setTimeout(() => {

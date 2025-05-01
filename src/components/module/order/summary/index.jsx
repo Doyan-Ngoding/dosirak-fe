@@ -63,17 +63,17 @@ export default function OrderSummaryComp() {
         if (!token && !authUser) {
             setResMessage(['error', 'Log In First!'])
             setTimeout(() => {
-                navigate('/order')
+                navigate('/cart')
             }, 2000)
         } else if (!selectedMenu) {
             setResMessage(['error', 'Select The Menu First!'])
             setTimeout(() => {
-                navigate('/order')
+                navigate('/cart')
             }, 2000)
         } else if (authUser && authUser.role !== 'user') {
             setResMessage(["error", "You Can't Access this Page!"])
             setTimeout(() => {
-                navigate('/order')
+                navigate('/cart')
             }, 2000)
         }
     }, [token, authUser, cart]);

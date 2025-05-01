@@ -13,6 +13,7 @@ import OperationalComp from './operational'
 import LocationComp from './location'
 import FooterComp from './footer'
 import RestoComp from './resto'
+import DescComp from './desc'
 
 export default function LandingComp() {
     return (
@@ -68,13 +69,14 @@ export default function LandingComp() {
                     <Col
                         span={24}
                     >
-                        <OperationalComp />
+                        {/* <OperationalComp /> */}
+                        <DescComp />
                     </Col>
-                    <Col
+                    {/* <Col
                         span={24}
                     >
                         <LocationComp />
-                    </Col>
+                    </Col> */}
                     {/* <Col
                         span={24}
                     >

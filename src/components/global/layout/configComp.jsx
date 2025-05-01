@@ -11,7 +11,8 @@ export default function ConfigComp(props) {
             <ConfigProvider
                 theme={{
                     token: {
-                        colorPrimary: '#E83600',
+                        colorPrimary: '#FF6B00',
+                        fontFamily: 'Noto Sans KR'
                     },
                     components: {
                         Layout: {
@@ -39,14 +40,14 @@ export default function ConfigComp(props) {
                             fontSize: setSize(16, 12, 12),
                         },
                         Select: {
-                            colorBgContainer: '#FA5523',
+                            colorBgContainer: '#FF6B00',
                             colorTextPlaceholder: '#F9F9F9',
                             colorText: '#F9F9F9',
                             colorBorder: '#D9D9D9',
                             controlHeight: setSize(42, 32, 32),
                             fontSize: setSize(14, 12, 12),
                             borderRadius: 50,
-                            colorBgElevated: '#FA5523',
+                            colorBgElevated: '#FF6B00',
                             optionSelectedBg: '#E53905'
                         },
                         Tabs: {
@@ -79,8 +80,7 @@ export default function ConfigComp(props) {
                             colorText: '#5A5A5A',
                             colorPrimaryBg: 'green',
                             lineWidthFocus: setSize('200px', '150px', '100px' ),
-                        }, 
-                    }
+                        },                    }
                 }}
             >
                 {props.children}

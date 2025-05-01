@@ -8,7 +8,8 @@ const routes = {
     2: '/menu',
     3: '/order',
     // 4: '/history',
-    5: '/contact'
+    5: '/contact',
+    6: '/about'
 }
 
 export default function DrawerMenu({
@@ -35,9 +36,9 @@ export default function DrawerMenu({
                 theme={{
                     components: {
                         Menu: {
-                            itemHeight: '150%',
-                            fontSize: setSize(0, 20, 16),
-                            fontFamily: 'Bebas Neue',
+                            itemHeight: '180%',
+                            fontSize: setSize(0, 14, 12),
+                            fontFamily: 'Noto Sans KR',
                             itemPaddingInline: 10
                         }
                     }
@@ -55,13 +56,13 @@ export default function DrawerMenu({
                         selectedKeys={[activeKey]} 
                         defaultSelectedKeys={['1']} 
                         onClick={e => setActiveKey(e)}
-                        className={`font-semibold text-[20px]`}
                     >
-                        <Menu.Item key={'1'} className='pt-1'><Link to={'/'}>Home</Link></Menu.Item>
-                        <Menu.Item key={'2'} className='pt-1'><Link to={'/menu'}>Menu</Link></Menu.Item>
-                        <Menu.Item key={'3'} className='pt-1'><Link to={'/order'}>Order</Link></Menu.Item>
-                        {/* <Menu.Item key={'4'} className='pt-1'><Link to={'/history'}>History</Link></Menu.Item> */}
-                        <Menu.Item key={'4'} className='pt-1'><Link to={'/contact'}>Contact</Link></Menu.Item>
+                        <Menu.Item key={'1'}><Link to={'/'}>Home</Link></Menu.Item>
+                        <Menu.Item key={'2'}><Link to={'/menu'}>Our Menu</Link></Menu.Item>
+                        {/* <Menu.Item key={'3'}><Link to={'/order'}>Order</Link></Menu.Item> */}
+                        {/* <Menu.Item key={'4'}><Link to={'/history'}>History</Link></Menu.Item> */}
+                        <Menu.Item key={'4'}><Link to={'/contact'}>Contact</Link></Menu.Item>
+                        <Menu.Item key={'6'}><Link to={'/about'}>About</Link></Menu.Item>
                     </Menu>   
                 </Drawer>
             </ConfigProvider>

@@ -25,40 +25,41 @@ export default function RestoComp() {
     return (
         <>
             <div
-                className='lg:py-[100px] md:py-[80px] py-[50px] text-center px-10'
+                className='lg:py-[50px] md:py-[30px] py-[20px] text-center px-10'
             >
                 <div
-                    className='text-[#A5ABB3] leading-1 font-[Plus Jakarta Sans] font-semibold lg:text-[20px] md:text-[14px] text-[10px]'
+                    className='text-[#818182] leading-1 font-[Noto Sans KR] font-semibold lg:text-[16px] md:text-[14px] text-[10px]'
                 >
-                    WHAT WE SERVE
+                    What We Serve
                 </div>
                 <div 
-                    className='text-[#E83600] bebas-neue-regular font-bold lg:text-[60px] md:text-[40px] text-[24px]'
+                    className='text-[#FF6B00] font-[Noto Sans KR] font-bold lg:text-[30px] md:text-[24px] text-[18px] lg:pt-5 md:pt-4 pt-3'
                 >
-                    YOUR REALIABLE KOREAN FOOD DELIVERY
+                    Food Tastes Better With KDosirak!
                 </div>
                 <div
-                    className='flex overflow-x-auto space-x-5 w-full no-scrollbar mt-10'
+                    className='flex overflow-x-auto space-x-10 w-full no-scrollbar mt-10 lg:justify-center md:justify-center'
                 >
                     {
                         listNearRestaurant && listNearRestaurant.map((value, key) => (
                             <>
                                 <Col
                                     key={key}
-                                    span={setSize(6, 8, 12)}
+                                    span={setSize(4, 6, 12)}
                                     style={{
                                         border: '1px solid lightGrey',
                                         borderRadius: 10,
                                         display: 'flex',
                                         flexDirection: 'column',
                                         alignItems: 'center',
-                                        justifyContent: 'center'
+                                        justifyContent: 'center',
+                                        height: setSize('250px', '250px', '180px')
                                     }}
                                 >
                                     <div
                                         style={{
-                                            height: setSize('70%', '55%', '60%'),
-                                            paddingBottom: '10px',
+                                            height: setSize('60%', '55%', '55%'),
+                                            paddingBottom: '15px',
                                         }}
                                     >
                                         <img  
@@ -77,18 +78,19 @@ export default function RestoComp() {
                                     </div>
                                     <div>
                                         <Button
-                                            size={setSize('large', 'medium', 'small')}
+                                            size={setSize('small', 'small', 'small')}
                                             style={{
                                                 display: "flex",
                                                 alignItems: "center",
                                                 margin: '0 auto',
                                                 borderRadius: 50,
-                                                color: '#E83600',
-                                                borderColor: '#E83600',
+                                                color: '#FF6B00',
+                                                borderColor: '#FF6B00',
+                                                fontSize: setSize(12, 10, 8)
                                             }}
                                             onClick={() => (setSelectedResto(value.name), navigate(`/menu?s=${value.name}`))}
                                         >
-                                            See Restaurant Menu <IconChevronRight size={setSize(18, 18, 12)} color='#E83600' />
+                                            See Restaurant Menu <IconChevronRight size={setSize(14, 12, 10)} color='#FF6B00' />
                                         </Button>
                                     </div>
                                 </Col>       
