@@ -46,7 +46,7 @@ export default function CardMenuHome({
             >
                 <div
                     className={`bg-cover bg-center bg-no-repeat rounded-lg border border-[#D8D8D8] flex items-end ${isMenu ? 'lg:h-[180px] md:h-[100px] h-[80px]' : 'lg:h-[180px] md:h-[150px] h-[120px]'}`}
-                    style={{ backgroundImage: `url('/assets${image}')` }}
+                    style={{ backgroundImage: `url('${import.meta.env.VITE_API_BE.replace(/api/g, '')}${image}')` }}
                     onClick={() => setVisible(true)}
                 />
                 <div

@@ -26,6 +26,11 @@ export default function HeaderComp() {
     const router = useLocation();
     const pathname = router.pathname
 
+    const {
+        token,
+        authUser
+    } = useAuth()
+
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -52,7 +57,15 @@ export default function HeaderComp() {
             setQtyTemp(cart.reduce((sum, item) => sum + (item.qty || 0), 0))
         }
     }, [cart]);
-    console.log(cart)
+    
+    function handleCheckoutClick() {
+        if (token && authUser) {
+            navigate('/order-summary')
+        } else {
+            navigate('/cart');
+        }
+    }
+
     return (
         <>
             <ConfigComp>
@@ -227,7 +240,7 @@ export default function HeaderComp() {
                                                                                 <div
                                                                                     className='flex items-center'
                                                                                 >
-                                                                                    <img src={`assets${value.image}`} width={setSize(30, 26, 24)} />
+                                                                                    <img src={`${import.meta.env.VITE_API_BE.replace(/api/g, '')}${value.image}`} width={setSize(30, 26, 24)} />
                                                                                     <div
                                                                                         className='lg:text-[12px] md:text-[11px] text-[10px] ml-1 text-[#262626]'
                                                                                     >
@@ -289,7 +302,7 @@ export default function HeaderComp() {
                                                                     width: '100%',
                                                                     marginTop: setSize(5, 3, 2),
                                                                 }}
-                                                                onClick={() => navigate('/cart')}
+                                                                onClick={handleCheckoutClick}
                                                             >
                                                                 Proceed Checkout
                                                             </Button>       

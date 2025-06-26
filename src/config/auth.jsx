@@ -4,4 +4,5 @@ export default {
     registerEndPoint: `${import.meta.env.VITE_API_BE}/register/users`,
     storageTokenKeyName: 'accessToken',
     onTokenExpiration: 'refreshToken',
+    uploadEndPoint: `${import.meta.env.VITE_API_BE}/storage/upload`,
 }

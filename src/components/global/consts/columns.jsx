@@ -310,7 +310,7 @@ export const columnProductList = (data = [], getDetail, modalEdit, handleDelete)
             render: (text) => (
                 <Image 
                     width={70}
-                    src={`/assets${text}`}
+                    src={`${import.meta.env.VITE_API_BE.replace(/api/g, '')}${text}`}
                 />
             )   
         },
@@ -538,7 +538,7 @@ export const columnRestaurantList = (data = [], getDetail, modalEdit, handleDele
             render: (text) => (
                 <Image 
                     width={50}
-                    src={`/assets${text}`}
+                    src={`${import.meta.env.VITE_API_BE.replace(/api/g, '')}${text}`}
                 />
             )
         },
@@ -730,7 +730,7 @@ export const columnOrderListUser = (data = [], modalDetail, dataDetail) => {
             render: (text) => text ? dayjs(text).format('DD MMMM YYYY') : '',
             sorter: (a, b) => String(a.pre_order || '').localeCompare(String(b.pre_order || '')),
             ...iconSorts(),
-        },
+        }, 
         {
             title: "Delivery Time",
             key: "pre_order",
@@ -753,6 +753,16 @@ export const columnOrderListUser = (data = [], modalDetail, dataDetail) => {
             render: (text) => 'Rp. ' + (text ? parseFloat(text).toLocaleString() : '-'),
             sorter: (a, b) => String(a.amount || '').localeCompare(String(b.amount || '')),
             ...iconSorts(),
+        },
+        {
+            title: "Status",
+            key: "status",
+            dataIndex: "status",
+            render: (text) => (
+                <div className={`${text === 'success' ? 'bg-green-100' : 'bg-blue-50'} rounded-lg text-center cursor-pointer`}>
+                    {text[0].toUpperCase() + text.slice(1)}
+                </div>
+            ),
         },
         {
             title: 'Action',

@@ -34,7 +34,7 @@ export default function PaymentComp() {
         if (!token && !authUser) {
             setResMessage(['error', 'Log In First!'])
             setTimeout(() => {
-                navigate('/cart')
+                navigate('/')
             }, 2000)
         } 
     }, [token, authUser]);

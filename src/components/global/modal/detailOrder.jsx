@@ -97,6 +97,18 @@ export default function ModalDetailOrder({
                             : {data && (data.status === 'success' ? 'Success Payment' : data.status)}
                         </div>
                     </div>
+                    <div
+                        className='flex items-center mb-1'
+                    >
+                        <div
+                            className='w-[30%] font-semibold'
+                        >
+                            Delivery Price
+                        </div>
+                        <div className='w-[70%]'>
+                            : Rp. {data && (data.delivery_cost ? parseFloat(data.delivery_cost).toLocaleString() : '-')}
+                        </div>
+                    </div>
                     <div 
                         className='mt-5'
                     >

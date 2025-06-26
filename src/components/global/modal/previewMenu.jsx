@@ -36,7 +36,7 @@ export default function PreviewMenu({
     }, [cart]);
 
     useEffect(() => {
-        if (data?.is_parent_menu && data?.variant) {
+        if (data?.is_parent_menu && data?.variant.length > 0) {
             const parsed = JSON.parse(data.variant);
             setParsedVariants(parsed);
             setSelectedVariant(parsed[0]?.variant);
@@ -79,6 +79,13 @@ export default function PreviewMenu({
               subTotal: (qtyTemp) * finalPrice,
             };
           } else {
+            console.log(menuItem, "menuItem");
+            console.log(qtyTemp, "qtyTemp");
+            console.log(currentPrice, "currentPrice");
+            console.log(variant, "variant");
+            console.log(size, "size");
+            console.log(updated, "updated");
+
             updated.push({
               ...menuItem,
               qty: qtyTemp,
@@ -147,7 +154,7 @@ export default function PreviewMenu({
                         >
                             <div>
                                 <div>
-                                    <img src={`/assets${(data && data.image) ? data.image : ''}`} width={setSize("100%", "100%", "100%")} />
+                                    <img src={`${import.meta.env.VITE_API_BE.replace(/api/g, '')}${data && data.image}`} width={setSize("100%", "100%", "100%")} />
                                 </div>
                             </div>
                         </Col>
