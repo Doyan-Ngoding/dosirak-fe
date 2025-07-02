@@ -210,6 +210,7 @@ export default function HeaderComp() {
                                                         >
                                                             <div
                                                                 className='text-[#FF6B00] lg:text-[12px] md:text-[11px] text-[10px] cursor-pointer font-bold' 
+                                                                onClick={() => navigate("/cart")}
                                                             >
                                                                 See My Cart
                                                             </div>
@@ -240,7 +241,7 @@ export default function HeaderComp() {
                                                                                 <div
                                                                                     className='flex items-center'
                                                                                 >
-                                                                                    <img src={`${import.meta.env.VITE_API_BE.replace(/api/g, '')}${value.image}`} width={setSize(30, 26, 24)} />
+                                                                                    <img src={`${import.meta.env.VITE_API_BE_BASE_URL}/${value.image}`} width={setSize(30, 26, 24)} />
                                                                                     <div
                                                                                         className='lg:text-[12px] md:text-[11px] text-[10px] ml-1 text-[#262626]'
                                                                                     >

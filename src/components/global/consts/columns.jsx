@@ -310,7 +310,7 @@ export const columnProductList = (data = [], getDetail, modalEdit, handleDelete)
             render: (text) => (
                 <Image 
                     width={70}
-                    src={`${import.meta.env.VITE_API_BE.replace(/api/g, '')}${text}`}
+                    src={`${import.meta.env.VITE_API_BE_BASE_URL}/${text}`}
                 />
             )   
         },
@@ -538,7 +538,7 @@ export const columnRestaurantList = (data = [], getDetail, modalEdit, handleDele
             render: (text) => (
                 <Image 
                     width={50}
-                    src={`${import.meta.env.VITE_API_BE.replace(/api/g, '')}${text}`}
+                    src={`${import.meta.env.VITE_API_BE_BASE_URL}/${text}`}
                 />
             )
         },

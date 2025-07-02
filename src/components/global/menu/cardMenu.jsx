@@ -38,7 +38,7 @@ export default function CardMenu({
             >
                 <div
                     className="bg-cover bg-center bg-no-repeat rounded-t-xl flex items-end lg:h-[180px] md:h-[120px] h-[100px]"
-                    style={{ backgroundImage: `url('${import.meta.env.VITE_API_BE.replace(/api/g, '')}${image}')` }}
+                    style={{ backgroundImage: `url('${import.meta.env.VITE_API_BE_BASE_URL}/${image}')` }}
                 >
                     {
                         showResto && (

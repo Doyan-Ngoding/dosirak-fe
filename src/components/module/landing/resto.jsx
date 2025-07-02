@@ -70,7 +70,7 @@ export default function RestoComp() {
                   >
                     <img
                       // src={`/assets/more-resto/${value.name}.png`}
-                      src={`${import.meta.env.VITE_API_BE.replace(/api/g, '')}${value.image}`}
+                      src={`${import.meta.env.VITE_API_BE_BASE_URL}/${value.image}`}
                       alt={value.name}
                     //   onError={(e) => {
                     //     e.target.onerror = null;

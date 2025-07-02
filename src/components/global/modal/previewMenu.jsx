@@ -154,7 +154,7 @@ export default function PreviewMenu({
                         >
                             <div>
                                 <div>
-                                    <img src={`${import.meta.env.VITE_API_BE.replace(/api/g, '')}${data && data.image}`} width={setSize("100%", "100%", "100%")} />
+                                    <img src={`${import.meta.env.VITE_API_BE_BASE_URL}/${data && data.image}`} width={setSize("100%", "100%", "100%")} />
                                 </div>
                             </div>
                         </Col>
