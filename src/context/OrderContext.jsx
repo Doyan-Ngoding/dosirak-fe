@@ -50,6 +50,8 @@ const Order = ({ children }) => {
   const [resCallback, setResCallback] = useLocalStorage("resCallback");
   const [resHistory, setResHistory] = useLocalStorage("resHistory");
   const [resOrder, setResOrder] = useLocalStorage("resOrder");
+  const [quotationId, setQuotationId] = useLocalStorage("quotationId");
+  const [stopDetail, setStopDetail] = useLocalStorage("stopDetail");
 
   const [selectedResto, setSelectedResto] = useLocalStorage("selectedResto");
 
@@ -149,6 +151,9 @@ const Order = ({ children }) => {
         amount: total,
         address_order: addressUserCurr.address,
         sub_restaurant_id: resto.id,
+        quotation_id: quotationId,
+        delivery_cost: deliveryFee,
+        stop_detail: stopDetail,
       })
       .then((res) => {
         setOrderTemp(res.data.order);
@@ -165,6 +170,8 @@ const Order = ({ children }) => {
           localStorage.removeItem("selectedDate");
           localStorage.removeItem("selectedTempDate");
           localStorage.removeItem("selectedTempTime");
+          localStorage.removeItem("quotationId");
+          localStorage.removeItem("stopDetail");
           setIsLoading(false);
           setResPayment(res.data.order);
           navigate(`/payment?order=${res.data.order.id}`);
@@ -389,6 +396,8 @@ const Order = ({ children }) => {
 
   const handleCreateQuotationTemp = async () => {
     const resto = JSON.parse(localStorage.getItem("subRestoAddress"));
+    delete resto.id;
+
     const users = JSON.parse(localStorage.getItem("addressUserCurr"));
     await axios
       .post(`${import.meta.env.VITE_API_BE}/deliveries/quotation-temp`, {
@@ -398,6 +407,8 @@ const Order = ({ children }) => {
       .then((res) => {
         if (res.data) {
           setDeliveryFee(res.data.data.data.priceBreakdown.total);
+          setQuotationId(res.data.data.data.quotationId);
+          setStopDetail(res.data.data.data.stops);
         }
       })
       .catch((err) => {
@@ -561,6 +572,12 @@ const Order = ({ children }) => {
     orderDetail,
     setOrderDetail,
     getOrderDetail,
+
+    quotationId,
+    setQuotationId,
+
+    stopDetail,
+    setStopDetail,
   };
 
   return (

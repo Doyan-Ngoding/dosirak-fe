@@ -151,16 +151,16 @@ const Restaurant = ({children }) => {
         .then(res => {
             setListSubRestaurant(res.data.results)
             setSelectedSubRestaurant((res.data.results && res.data.results.length > 0) && res.data.results?.[0].id)
-            setSubRestoAddress((res.data.results && res.data.results.length > 0) && (
-                {
-                    coordinates: {
-                        lat: res.data.results?.[0].latitude,
-                        lng: res.data.results?.[0].longitude
-                    },
-                    address: res.data.results?.[0].address,
-                    id: res.data.results?.[0].id
-                }
-            ))
+            // setSubRestoAddress((res.data.results && res.data.results.length > 0) && (
+            //     {
+            //         coordinates: {
+            //             lat: res.data.results?.[0].latitude,
+            //             lng: res.data.results?.[0].longitude
+            //         },
+            //         address: res.data.results?.[0].address,
+            //         id: res.data.results?.[0].id
+            //     }
+            // ))
         })
         .catch(err => {
             // setResMessage(['error', err.response?.data?.message || "Failed Get Restaurants!"])
